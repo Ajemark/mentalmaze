@@ -8,8 +8,13 @@ import Box7 from "./../../assets/games/Box7.png"
 import Box8 from "./../../assets/games/Box8.png"
 import Box9 from "./../../assets/games/Box9.png"
 
+type gameType = {
+    image: string,
+    title: string
+}
 
-export const games: Array<object> = [
+
+export const games: Array<gameType> = [
     {
       image: Box,
       title: "Math puzzle"

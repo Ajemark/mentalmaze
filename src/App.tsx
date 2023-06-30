@@ -4,7 +4,7 @@ import {
   RouterProvider,
 } from "react-router-dom"
 import Home from './routes/Home/Home'
-import ErrorPage from './error-page'
+// import ErrorPage from './error-page'
 import Header from './component/ui/Header'
 import Sidebar from './component/ui/Sidebar'
 import UserProfile from './routes/UserProfile/UserProfile'
@@ -18,12 +18,12 @@ function App() {
     {
       path: "/",
       element: <Home/>,
-      errorElement: <ErrorPage/>
+      // errorElement: <ErrorPage/>
     },
     {
       path: "/profile",
       element: <UserProfile/>,
-      errorElement: <ErrorPage/>
+      // errorElement: <ErrorPage/>
     },
   ]);
 

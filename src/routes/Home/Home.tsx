@@ -1,8 +1,6 @@
-import React from "react";
 import arrow_bottom from "./../../assets/header/arrow_bottom.png"
 import { games } from "./GamesData";
-import Background from "./../../assets/Background.png"
-import Overlay from "./../../assets/Overlay.png"
+
 
 const TitleBar = () => { 
   return( 
@@ -31,7 +29,7 @@ const Home = () => {
       <div className="relative  z-10 py-[72px] px-14">
         <TitleBar />
         <div className="grid grid-cols-3 gap-x-[45px] gap-y-[44px] py-12">
-        {games.map((gam) => <div><img src={gam.image} alt="" /></div>
+        {games.map((gam) => <div><img src={gam?.image} alt="" /></div>
         )}
         </div>
         </div>
