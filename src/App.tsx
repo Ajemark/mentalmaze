@@ -11,43 +11,30 @@ import UserProfile from './routes/UserProfile/UserProfile'
 import Background from "./assets/Background.png"
 import Overlay from "./assets/Overlay.png"
 import jointbg from "./assets/jointbg.png"
+import { Layout } from './Layout/Layout'
 
 
 function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Home/>,
-      // errorElement: <ErrorPage/>
-    },
-    {
-      path: "/profile",
-      element: <UserProfile/>,
-      // errorElement: <ErrorPage/>
+      element: <Layout/>,
+      children: [
+        {
+          path: "/",
+          element: <Home />
+        },
+        {
+          path: "/profile",
+          element: <UserProfile />
+        }
+      ]
     },
   ]);
 
   return (
-    <div className='gamehome rounded-none min-h-screen h-full'>
-      <div className='mx-auto fixed w-full  left-0 top-0'>
-      <img src={jointbg} className='w-full  '/> 
-      </div>
-      {/* <div className='mx-auto fixed w-full  left-0 top-0'>
-      <img src={Background} className='w-full  '/> 
-      </div>
-      <div className='mx-auto fixed w-full  left-0 top-0'>
-      <img src={Overlay} className='w-full '/> 
-      </div> */}
-      <div className=' mx-auto rounded-none flex flex-col'>
-        <Header />
-        <div className='flex flex-1 h-fit mx-auto w-full '>
-          <Sidebar />
-          <div className='  w-full'>
           <RouterProvider router={router} />
-          </div>
-        </div>
-    </div>
-    </div>
+          
   )
 }
 
