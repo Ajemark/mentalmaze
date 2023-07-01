@@ -10,7 +10,7 @@ import Sidebar from './component/ui/Sidebar'
 import UserProfile from './routes/UserProfile/UserProfile'
 import Background from "./assets/Background.png"
 import Overlay from "./assets/Overlay.png"
-
+import jointbg from "./assets/jointbg.png"
 
 
 function App() {
@@ -30,16 +30,19 @@ function App() {
   return (
     <div className='gamehome rounded-none min-h-screen h-full'>
       <div className='mx-auto fixed w-full  left-0 top-0'>
+      <img src={jointbg} className='w-full  '/> 
+      </div>
+      {/* <div className='mx-auto fixed w-full  left-0 top-0'>
       <img src={Background} className='w-full  '/> 
       </div>
       <div className='mx-auto fixed w-full  left-0 top-0'>
       <img src={Overlay} className='w-full '/> 
-      </div>
+      </div> */}
       <div className=' mx-auto rounded-none flex flex-col'>
         <Header />
         <div className='flex flex-1 h-fit mx-auto w-full '>
           <Sidebar />
-          <div className=' ml-[104px]'>
+          <div className='  w-full'>
           <RouterProvider router={router} />
           </div>
         </div>

@@ -3,6 +3,7 @@ import Logo from "./../../assets/header/Logo.png"
 
 import { ConnectWalletbtn, HeaderInput } from '../Ui'
 import Boarder from "./../../assets/header/Boarder.png"
+import { NavLink } from "react-router-dom"
 
 const Header = () => {
   return (
@@ -16,7 +17,7 @@ const Header = () => {
         </div>
 
         <div className='flex items-center gap-8'>
-          <img src={Boarder} alt="" />
+          <NavLink to={'/profile'}><div> <img src={Boarder} alt="" /></div></NavLink>
           <ConnectWalletbtn />
         </div>
 
