@@ -14,6 +14,15 @@ html, body {
   }
 
   @font-face {
+    font-family: "droid";
+    src: url("./fonts/IDroid.otf");
+  }
+  @font-face {
+    font-family: "droidbold";
+    src: url("./fonts/IDroid\Bold.otf");
+  }
+
+  @font-face {
     font-family: "Archivo-Regular";
     src: url("./fonts/Archivo-Regular.ttf");
   }

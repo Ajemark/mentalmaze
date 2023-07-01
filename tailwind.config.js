@@ -17,6 +17,8 @@ export default {
       fontFamily: {
         'Archivo_Regular': ['Archivo-Regular'],
         'Archivo-Bold': ['Archivo-Bold'],
+        'droid': ['droid'],
+        'droidbold': ['droidbold']
       },
       backgroundImage: {
         "bg-sky": "url('./assets/Background.png')",

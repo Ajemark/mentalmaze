@@ -32,7 +32,7 @@ const ProfileHeader = () => {
             <div className='flex items-center  gap-[50px] relative z-10'>
             <div className='rounded-2xl border-blue-90 border-4'><img src={Title} alt="" /></div>
             <div className='text-white flex flex-col items-center'>
-                <p className="text-[32px] text-white font-normal font-Archivo-Bold">GRACE J.</p>
+                <p className="text-[32px] text-white font-normal font-droid">GRACE J.</p>
                 <div className="font-Archivo_Regular text-sm font-normal flex justify-center gap-2 items-center">
             <div><img src={ranking} alt="" /></div>
                 <div className='text-wb-40 flex gap-2 items-center'>Mode: <span className='text-white'>Solver</span></div>
