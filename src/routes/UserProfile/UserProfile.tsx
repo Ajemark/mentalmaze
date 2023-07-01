@@ -75,7 +75,7 @@ const Stat = () => {
         <div className='border-4 rounded-3xl py-4 flex flex-col gap-8 border-blue-80'>
             <h2 className='px-[75px] font-400 font-droidbold
             text-[2rem] text-white py-4 text-center border-b-blue-80 border-b-4'>
-                STATS
+                STATS  
             </h2>
             <div className='flex flex-col gap-8'>
                 <p className='flex flex-col items-center px-[63px] py-4'>
