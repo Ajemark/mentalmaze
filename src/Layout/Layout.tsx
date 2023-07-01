@@ -1,4 +1,3 @@
-import React from 'react'
 import { Outlet } from 'react-router-dom'
 import Header from '../component/ui/Header'
 import Sidebar from '../component/ui/Sidebar'
