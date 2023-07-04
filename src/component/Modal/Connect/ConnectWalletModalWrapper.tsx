@@ -1,12 +1,14 @@
-import React from 'react'
-import icon_bg from "./../../assets/icon_bg.png"
-import slices from "./../../../assets/slices.png"
-import metalmask from "./../../assets/metalmask.png"
-import Close from "./../../../assets/Close.png"
 
+import slices from "./../../../assets/slices.png"
+import Close from "./../../../assets/Close.png"
+import  {ReactNode} from "react"
 import Overlay from '../../ui/Overlay'
-// 
-const ConnectWalletModal = ({children}) => {
+
+
+type LayoutProps = {children?: ReactNode}
+
+
+const ConnectWalletModal =  ({ children }:LayoutProps) => {
   return (
     <div className='w-screen h-screen fixed left-0 z-[99999999] top-0 flex justify-center items-center'>
                 <Overlay />

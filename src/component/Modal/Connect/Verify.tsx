@@ -1,5 +1,4 @@
-import React from 'react'
-import metalmask from "./../../../assets/metalmask.png"
+
 
 const Verify = () => {
   return (

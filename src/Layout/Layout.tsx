@@ -1,13 +1,13 @@
 import { Outlet } from 'react-router-dom'
 import Header from '../component/ui/Header'
 import Sidebar from '../component/ui/Sidebar'
-import jointbg from "./../assets/jointbg.png"
+// import jointbg from "./../assets/jointbg.png"
 import ConnectWalletModal from "../component/Modal/Connect/ConnectWalletModalWrapper"
-import Overlay from '../component/ui/Overlay'
-import Connect from '../component/Modal/Connect/Connect'
-import Install from '../component/Modal/Connect/Install'
-import Installed from '../component/Modal/Connect/Installed'
-import Verify from '../component/Modal/Connect/Verify'
+// import Overlay from '../component/ui/Overlay'
+// import Connect from '../component/Modal/Connect/Connect'
+// import Install from '../component/Modal/Connect/Install'
+// import Installed from '../component/Modal/Connect/Installed'
+// import Verify from '../component/Modal/Connect/Verify'
 import ChooseANickname from '../component/Modal/Connect/ChooseANickname'
 
 
