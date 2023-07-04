@@ -22,7 +22,8 @@ export default {
       },
       backgroundImage: {
         "bg-sky": "url('./assets/Background.png')",
-        "overlay": "url('./assets/Overlay.png')"
+        "overlay": "url('./assets/Overlay.png')",
+        "connect_wallet": "url('./assets/connectwalletbg.png')"
       }
     },
   },
