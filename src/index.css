@@ -28,13 +28,25 @@ html, body {
   }
 
 .headerbg {
-  background: linear-gradient(46deg, rgba(1, 12, 24, 0.80) 0%, rgba(1, 12, 24, 0.45) 100%);
+  background:  linear-gradient(46deg, rgba(1, 12, 24, 0.80) 0%, rgba(1, 12, 24, 0.45) 100%);
   backdrop-filter: blur(24px);
 }
 
 .home {
   background-color:  #010C18;
   
+}
+
+.image::before{
+  content: "";
+  display: block;
+  width: 100vw ;
+  height: 100vh; 
+  position: fixed;
+  backdrop-filter: blur(8px);
+  /* background-color: red; */
+  z-index: 99;
+  background: linear-gradient(130deg, rgba(3, 36, 73, 0.60) 0%, rgba(11, 119, 240, 0.45) 100%);
 }
 
 

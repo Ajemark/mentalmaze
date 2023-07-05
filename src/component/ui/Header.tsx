@@ -25,7 +25,7 @@ const Header = () => {
   }, [])
 
   return (
-    <div className={`headerbg px-10 z-20 fixed h-[104px] w-full ${fixed?"shadow-lg":"shadow-none"}`}>
+    <div className={`headerbg px-10 z-[5000000000] fixed h-[104px] w-full  ${fixed?"shadow-lg":"shadow-none"}`}>
     <div className='flex justify-between items-center py-6 mx-auto'>
         <div className='flex items-center gap-8'>
         <Link to={'/'}><img src={Logo} /></Link>

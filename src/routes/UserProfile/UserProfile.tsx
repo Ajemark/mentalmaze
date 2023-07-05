@@ -25,7 +25,7 @@ export default UserProfile
 
 const ProfileHeader = () => {
     return (
-        <div className="border-4 border-blue-80 w-full rounded-3xl bg-blue-[#010C18] flex justify-between p-5">
+        <div className=" border-4 border-blue-80 w-full rounded-3xl bg-blue-[#010C18] flex justify-between p-5">
             <div className='absolute'>
                 <img src={Stars} className='w-full h-full blur-sm'/>
             </div>
@@ -53,7 +53,7 @@ const Mode = () => {
     const [creatorMode, setCreatorMode] = useState(false)
 
     return(
-    <div className='flex w-full h-24 border-blue-80 border-4 rounded-3xl items-center px-6 text-white py-[10px] justify-between mt-12'>
+    <div className='flex w-full h-24 border-blue-80 border-4 rounded-3xl items-center px-6 text-white py-[10px] justify-between mt-12 relative z-[999] home'>
         <p className="font-Archivo_Regular text-[40px] font-normal">CREATOR’S MODE</p>
         <button className='h-full w-[128px] border-blue-80 rounded-[80px] p-2 border-2' onClick={() => {
             setCreatorMode(!creatorMode)

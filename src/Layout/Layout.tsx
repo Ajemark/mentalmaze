@@ -1,11 +1,12 @@
 import { Outlet } from 'react-router-dom'
 import Header from '../component/ui/Header'
 import Sidebar from '../component/ui/Sidebar'
-import jointbg from "./../assets/jointbg.png"
+import Background from "./../assets/Background.png"
 import ConnectWalletModal from "../component/Modal/Connect/ConnectWalletModalWrapper"
 // import Overlay from '../component/ui/Overlay'
 import { ConnectModals } from './Modals'
 import { useModalContext } from '../context/ModalContext'
+
 
 export const Layout = () => {
   const {modal, ModalMode}  = useModalContext()
@@ -13,8 +14,8 @@ export const Layout = () => {
 
   return (
     <div className='home rounded-none min-h-screen h-full flex justify-center w-full items-center'>
-      <div className='mx-auto fixed w-full  left-0 top-0 '>
-      <img src={jointbg} className='w-full bg-joint'/> 
+      <div className='mx-auto fixed w-full  left-0 top-0 z-10 image'>
+      <img src={Background} className='w-full bg-joint  '/> 
       </div>
       <div className=' mx-auto rounded-none flex flex-col w-full'>
         <Header />
