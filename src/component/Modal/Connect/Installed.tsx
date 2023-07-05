@@ -4,6 +4,12 @@ import metalmask from "./../../../assets/metalmask.png"
 
 const Installed = () => {
     return (
+        <div>
+            <div>
+                <h1 className='font-droid border-b-blue-80 border-b-[8px] mt-[24px] pt-[16px] pb-[32px] leading-[37.78px] text-[32px] text-center'>
+                    Connect Wallet
+                </h1>
+      </div>
         <div className='pt-[48px] flex flex-col gap-[24px] h-full '>
     
     <p className='font-Archivo_Regular text-[32px] leading-[40px] text-center max-w-md mx-auto'>
@@ -26,6 +32,8 @@ const Installed = () => {
             </p>
         </div>
         </div>
+        </div>
+
       )
     }
 

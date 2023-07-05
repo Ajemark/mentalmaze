@@ -3,14 +3,28 @@ import slices from "./../../../assets/slices.png"
 import Close from "./../../../assets/Close.png"
 import  {ReactNode} from "react"
 import Overlay from '../../ui/Overlay'
+import { useModalContext } from "../../../context/ModalContext"
 
 
-type LayoutProps = {children?: ReactNode}
+type LayoutProps = {children?: ReactNode, show}
 
 
-const ConnectWalletModal =  ({ children }:LayoutProps) => {
+const ConnectWalletModal =  ({ children, show }:LayoutProps) => {
+
+  const {switchModal} = useModalContext()
+
+  const Handler = () => {
+    console.log("closing")
+    switchModal()
+  }
+
   return (
-    <div className='w-screen h-screen fixed left-0 z-[99999999] top-0 flex justify-center items-center'>
+    <div className='w-screen h-screen fixed left-0 z-[99999999] top-0 flex justify-center items-center' 
+    style={{  
+        transform: show?"translate(0)":"translate(-100%)"
+    }}
+    
+    >
                 <Overlay />
 
         <div className=' 
@@ -25,20 +39,12 @@ const ConnectWalletModal =  ({ children }:LayoutProps) => {
         max-w-[700px]
         border-blue-80 rounded-[60px] border-[8px]
         '>
-
             <img src={slices} alt="" className='w-[240px] h-[24px] absolute right-0 ' />
-            <div>
-            <div>
-                <h1 className='font-droid border-b-blue-80 border-b-[8px] mt-[24px] pt-[16px] pb-[32px] leading-[37.78px] text-[32px] text-center'>
-                    Connect Wallet
-                </h1>
-                </div>
                     {children}
-                </div>
 
                 <img src={slices} alt="" className='w-[240px] h-[24px] absolute bottom-0' />
         </div>
-        <img src={Close}  className='absolute right-[62px] z-[9999999999]'/>
+        <img src={Close}  className='absolute right-[62px] z-[9999999999]' onClick = {Handler} />
         </div>
   )
 }

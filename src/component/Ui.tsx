@@ -8,11 +8,13 @@ export const HeaderInput = () => {
         </div>
     )
 }
+type ConnectTyype = {
+    clickHandler: () => void
+}
 
-
-export const ConnectWalletbtn = () => {
+export const ConnectWalletbtn = ({clickHandler}:ConnectTyype) => {
     return(
-        <button className=" rounded-2xl border-2 py-4 px-10 font-normal font-Archivo_Regular text-[15px] leading-[16.32px] button text-[#ffffff]">
+        <button className=" rounded-2xl border-2 py-4 px-10 font-normal font-Archivo_Regular text-[15px] leading-[16.32px] button text-[#ffffff]" onClick={clickHandler}>
             CONNECT WALLET
           </button>
     )

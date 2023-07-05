@@ -2,6 +2,14 @@
 
 const Install = () => {
   return (
+
+
+    <div>
+      <div>
+                <h1 className='font-droid border-b-blue-80 border-b-[8px] mt-[24px] pt-[16px] pb-[32px] leading-[37.78px] text-[32px] text-center'>
+                    Connect Wallet
+                </h1>
+      </div>
     <div className='pt-[48px] flex flex-col gap-[24px] h-full '>
 
     <p className='font-Archivo_Regular text-[20px] leading-[40px] text-center max-w-md mx-auto'>
@@ -20,6 +28,8 @@ const Install = () => {
         your wallet? <p className='text-blue-80'>Chat us on discord</p>
         </p>
     </div>
+    </div>
+    
     </div>
   )
 }
