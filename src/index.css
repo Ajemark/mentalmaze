@@ -44,8 +44,8 @@ html, body {
   height: 100vh; 
   position: fixed;
   backdrop-filter: blur(8px);
-  /* background-color: red; */
-  z-index: 99;
+  background-color: red;
+  z-index: 50;
   background: linear-gradient(130deg, rgba(3, 36, 73, 0.60) 0%, rgba(11, 119, 240, 0.45) 100%);
 }
 

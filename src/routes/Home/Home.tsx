@@ -29,7 +29,7 @@ const Home = () => {
       <div className="relative z-[999] py-[72px] px-14 ">
         <TitleBar />
         <div className="grid grid-cols-3 gap-x-[45px] gap-y-[44px] py-12">
-        {games.map((gam) => <div><img src={gam?.image} alt="" /></div>
+        {games.map((gam) => <div className="relative"><img src={gam?.image} alt="" /></div>
         )}
         </div>
         </div>
