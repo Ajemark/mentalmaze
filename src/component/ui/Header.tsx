@@ -5,12 +5,27 @@ import { ConnectWalletbtn, HeaderInput } from '../Ui'
 import Boarder from "./../../assets/header/Boarder.png"
 import { Link, NavLink } from "react-router-dom"
 import { useModalContext } from "../../context/ModalContext"
+import { useEffect, useState } from "react"
+
+type fixedType = boolean 
 
 const Header = () => {
   const {switchModal} = useModalContext()
+  const {fixed, setFixed} = useState<fixedType>(false)
+
+  useEffect(() => {
+    window.addEventListener('scroll', () => {
+    if(window.scrollY > 104){
+      setFixed(!true)
+    }
+    else {
+      setFixed(false)
+    }
+    })
+  }, [])
 
   return (
-    <div className='headerbg px-10 z-20 fixed h-[104px] w-full'>
+    <div className={`headerbg px-10 z-20 fixed h-[104px] w-full ${fixed?"shadow-lg":"shadow-none"}`}>
     <div className='flex justify-between items-center py-6 mx-auto'>
         <div className='flex items-center gap-8'>
         <Link to={'/'}><img src={Logo} /></Link>

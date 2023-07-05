@@ -10,7 +10,7 @@ import twitter from "./../../assets/sidebar/twitter.svg"
 
 const Sidebar = () => {
   return (
-    <div className='w-[104px] flex flex-col justify-start gap-56 py-[46px] bg-[#010C18] items-center z-10 mt-[104px]'>
+    <div className='w-[104px] flex flex-col justify-start gap-56 py-[46px] bg-[#010C18] opacity-[0.4000000059604645] items-center z-10 mt-[104px]'>
         <div className='flex flex-col gap-8'>
           {[nav1, nav2, nav3].map((src) => {
             return <div className='w-fit'>

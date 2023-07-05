@@ -25,7 +25,7 @@ const TitleBar = () => {
 
 const Home = () => {
     return (
-      <div className=" w-full h-fit relative mt-[104px] bg-gamehome">
+      <div className=" w-full h-fit relative mt-[104px] home">
       <div className="relative  z-10 py-[72px] px-14">
         <TitleBar />
         <div className="grid grid-cols-3 gap-x-[45px] gap-y-[44px] py-12">

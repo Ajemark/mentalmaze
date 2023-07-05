@@ -29,12 +29,12 @@ html, body {
 
 .headerbg {
   background: linear-gradient(46deg, rgba(1, 12, 24, 0.80) 0%, rgba(1, 12, 24, 0.45) 100%);
-  position: relative;
-  
+  backdrop-filter: blur(24px);
 }
 
-.gamehome {
+.home {
   background-color:  #010C18;
+  
 }
 
 
@@ -50,6 +50,10 @@ html, body {
   /* backdrop-filter: blur(2px); */
 }
 
+
+.bg-joint {
+  backdrop-filter: blur(8px);
+}
 .metamask {
   background: var(--grad-glas, linear-gradient(130deg, rgba(3, 36, 73, 0.45) 0%, rgba(11, 119, 240, 0.10) 100%));
   border:2px;
