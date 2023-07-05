@@ -6,7 +6,8 @@ import Overlay from '../../ui/Overlay'
 import { useModalContext } from "../../../context/ModalContext"
 
 
-type LayoutProps = {children?: ReactNode, show}
+
+type LayoutProps = {children?: ReactNode, show: boolean}
 
 
 const ConnectWalletModal =  ({ children, show }:LayoutProps) => {

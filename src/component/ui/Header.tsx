@@ -5,21 +5,22 @@ import { ConnectWalletbtn, HeaderInput } from '../Ui'
 import Boarder from "./../../assets/header/Boarder.png"
 import { Link, NavLink } from "react-router-dom"
 import { useModalContext } from "../../context/ModalContext"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 
-type fixedType = boolean 
+// type fixedType = boolean 
 
 const Header = () => {
   const {switchModal} = useModalContext()
-  const {fixed, setFixed} = useState<fixedType>(false)
+  // const {fixed, setFixed} = useState(false)
+  const fixed = true
 
   useEffect(() => {
     window.addEventListener('scroll', () => {
     if(window.scrollY > 104){
-      setFixed(!true)
+      // setFixed(!true)
     }
     else {
-      setFixed(false)
+      // setFixed(false)
     }
     })
   }, [])

@@ -3,7 +3,6 @@ import { createContext, ReactNode, useContext, useState } from "react";
 
 export type Modal = "installed" | "verify" | "connect" | "chooseNickname" | "install" | "installed" 
 
-type ActionType = "switch_modal";
 
 type ModalContextType = {
     modal: Modal,

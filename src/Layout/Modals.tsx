@@ -5,7 +5,6 @@ import Install from '../component/Modal/Connect/Install'
 import ChooseANickname from '../component/Modal/Connect/ChooseANickname'
 import Installed from '../component/Modal/Connect/Installed'
 import Verify from '../component/Modal/Connect/Verify'
-import {useModalContext} from "../context/ModalContext"
 import { ReactNode } from 'react'
 
 type Modal = {
