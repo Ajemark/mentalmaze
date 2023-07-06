@@ -14,7 +14,7 @@ const Connect = () => {
       </div>
     <div className='pt-[16px] pb-[32px] flex flex-col justify-between h-full '>
                 <div className='flex justify-center '>
-                <button className='metamask flex gap-[24px] items-center justify-center font-droid text-[24px]  border-blue-80 ' onClick={() => switchModalcontent('connect')}>
+                <button className='metamask flex gap-[24px] items-center justify-center font-droid text-[24px]  border-blue-80 ' onClick={() => switchModalcontent('install')}>
                     <div>
                     <img src={metalmask} />
                     </div>

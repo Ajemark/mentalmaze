@@ -20,14 +20,13 @@ const ConnectWalletModal =  ({ children, show }:LayoutProps) => {
   }
 
   return (
-    <div className='w-screen h-screen fixed left-0 z-[99999999] top-0 flex justify-center items-center' 
+    <div className='w-screen h-screen fixed left-0 z-[999999999999] top-0 flex justify-center items-center' 
     style={{  
         transform: show?"translate(0)":"translate(-100%)"
     }}
     
     >
                 <Overlay />
-
         <div className=' 
         relative
 
