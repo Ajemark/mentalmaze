@@ -1,9 +1,9 @@
 import { useModalContext } from "../../../context/ModalContext"
 import metalmask from "./../../../assets/metalmask.png"
-import {MetaMaskEthereumProvider} from '@metamask/detect-provider'
+// import {MetaMaskEthereumProvider} from '@metamask/detect-provider'
 declare global {
   interface Window {
-    ethereum?: MetaMaskEthereumProvider;
+    ethereum?: object;
   }
 }
 

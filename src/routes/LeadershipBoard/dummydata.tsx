@@ -1,4 +1,4 @@
-import { Leadertype } from "./index-type";
+import { Leadertype } from "./Index-type";
 
 export const leaders: Leadertype[] = [
     {
