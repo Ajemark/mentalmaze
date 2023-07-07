@@ -9,7 +9,7 @@ import { useModalContext } from '../context/ModalContext'
 
 
 export const Layout = () => {
-  const {modal, ModalMode}  = useModalContext()
+  const {ModalMode}  = useModalContext()
 
 
   return (
