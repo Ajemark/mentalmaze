@@ -1,10 +1,24 @@
 import { useModalContext } from "../../../context/ModalContext"
 import metalmask from "./../../../assets/metalmask.png"
-
+import {MetaMaskEthereumProvider} from '@metamask/detect-provider'
+declare global {
+  interface Window {
+    ethereum?: MetaMaskEthereumProvider;
+  }
+}
 
 const Connect = () => {
   const {switchModalcontent} =  useModalContext()
 
+  const connectWallet = () => {
+    if(window.ethereum){
+      console.log("detected")
+      return ;
+    }
+    console.log("undetected")
+    return switchModalcontent('install')
+  }
+  
   return (
     <div className="flex flex-col h-full">
       <div>
@@ -14,7 +28,7 @@ const Connect = () => {
       </div>
     <div className='pt-[16px] pb-[32px] flex flex-col justify-between h-full '>
                 <div className='flex justify-center '>
-                <button className='metamask flex gap-[24px] items-center justify-center font-droid text-[24px]  border-blue-80 ' onClick={() => switchModalcontent('install')}>
+                <button className='metamask flex gap-[24px] items-center justify-center font-droid text-[24px]  border-blue-80 ' onClick={connectWallet }>
                     <div>
                     <img src={metalmask} />
                     </div>

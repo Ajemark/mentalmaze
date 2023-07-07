@@ -14,15 +14,15 @@ export const Layout = () => {
 
   return (
     <div className='home rounded-none min-h-screen h-full flex justify-center w-full items-center'>
-      <div className='mx-auto fixed w-full  left-0 top-0 image'>
-      <img src={Background} className='w-full bg-joint z-[70] relative'/> 
+      <div className='mx-auto fixed w-full  left-0 top-0 '>
+      <img src={Background} className='w-full bg-joint z-[70] relative '/> 
       </div>
       <div className=' mx-auto rounded-none flex flex-col w-full'>
         <Header />
         <div className='flex flex-1 h-fit mx-auto w-full justify-center'>
           <Sidebar />
           <ConnectWalletModal show={ModalMode}>
-            {ConnectModals[modal]}
+            {ConnectModals['verify']}
             </ConnectWalletModal>
           <div className='  w-full'>
           <Outlet />

@@ -18,7 +18,9 @@ export default {
         'Archivo_Regular': ['Archivo-Regular'],
         'Archivo-Bold': ['Archivo-Bold'],
         'droid': ['droid'],
-        'droidbold': ['droidbold']
+        'droidbold': ['droidbold'],
+        'Archivo_thin': ['Archivo-thin'],
+        'Archivo_Condensed-Black': ['Archivo_Condensed-Black']
       },
       backgroundImage: {
         "bg-sky": "url('./assets/Background.png')",

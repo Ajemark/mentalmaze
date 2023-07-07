@@ -20,7 +20,7 @@ const Install = () => {
     MetaMask extension is not installed in your browser
     </p>
 
-    <button className='flex items-center justify-center font-droid text-[24px] install border-blue-80 border-solid border-[2px] w-[256px] h-[80px] rounded-[1rem] mx-auto' onClick={() => switchModalcontent('installed')}>
+    <button className='flex items-center justify-center font-droid text-[24px] modalButton border-blue-80 border-solid border-[2px] w-[256px] h-[80px] rounded-[1rem] mx-auto' onClick={() => switchModalcontent('installed')}>
         Install
     </button>
 

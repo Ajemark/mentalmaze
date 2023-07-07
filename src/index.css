@@ -26,18 +26,39 @@ html, body {
     font-family: "Archivo-Regular";
     src: url("./fonts/Archivo-Regular.ttf");
   }
+  @font-face {
+    font-family: "Archivo-thin";
+    src: url("./fonts/Archivo_Condensed-Thin.ttf");
+  }
+  @font-face {
+    font-family: "Archivo_Condensed-Black";
+    src: url("./fonts/Archivo_Condensed-Black.ttf");
+  }
 
-.headerbg {
-  background:  linear-gradient(46deg, rgba(1, 12, 24, 0.80) 0%, rgba(1, 12, 24, 0.45) 100%);
-  backdrop-filter: blur(24px);
+@layer utilities {
+  .grad-dar {
+    background: linear-gradient(130deg, rgba(3, 36, 73, 0.45) 0%, rgba(11, 119, 240, 0.10) 100%);
+  }
 }
 
-.home {
-  background-color:  #010C18;
+
+@layer components {
+  .headerbg {
+    background:  linear-gradient(46deg, rgba(1, 12, 24, 0.80) 0%, rgba(1, 12, 24, 0.45) 100%);
+    backdrop-filter: blur(24px);
+  }
+  .home {
+    background-color:  #010C18; 
+  }
+  .header-button {
+    background:  linear-gradient(130deg, rgba(3, 36, 73, 0.60) 0%, rgba(11, 119, 240, 0.45) 100%);
+    border: 2px solid var(--blue-50, #2486F5);
+  }
+  .level {
+    background: var(--grad-glas, linear-gradient(130deg, rgba(3, 36, 73, 0.45) 0%, rgba(11, 119, 240, 0.10) 100%));
+  }
   
-}
-
-.image::before{
+  .image::before{
   content: "";
   display: block;
   width: 100vw ;
@@ -48,25 +69,7 @@ html, body {
   z-index: 50;
   background: linear-gradient(130deg, rgba(3, 36, 73, 0.60) 0%, rgba(11, 119, 240, 0.45) 100%);
 }
-
-
-.button {
-  background:  linear-gradient(130deg, rgba(3, 36, 73, 0.60) 0%, rgba(11, 119, 240, 0.45) 100%);
-  border: 2px solid var(--blue-50, #2486F5);
-}
-
-.load {
-  background: var(--grad-glas, linear-gradient(130deg, rgba(3, 36, 73, 0.45) 0%, rgba(11, 119, 240, 0.10) 100%));
-}
-.overlay {
-  /* backdrop-filter: blur(2px); */
-}
-
-
-.bg-joint {
-  backdrop-filter: blur(8px);
-}
-.metamask {
+.modalButton {
   background: var(--grad-glas, linear-gradient(130deg, rgba(3, 36, 73, 0.45) 0%, rgba(11, 119, 240, 0.10) 100%));
   border:2px;
   border-style: solid;
@@ -75,8 +78,24 @@ html, body {
   height: 80px;
   border-color: #063C7A;
 }
+}
 
 
-.install {
+
+
+
+
+
+
+.overlay {
+  /* backdrop-filter: blur(2px); */
+}
+
+
+.image {
+  backdrop-filter: blur(8px);
+}
+
+.modalButton {
   background: var(--grad-glas, linear-gradient(130deg, rgba(3, 36, 73, 0.45) 0%, rgba(11, 119, 240, 0.10) 100%));
 }

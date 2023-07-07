@@ -9,7 +9,7 @@ const Verify = () => {
                 </h1>
       </div>
     <div className='pt-[48px] flex flex-col h-full gap-[100px]'>
-        <button className='metamask flex gap-[24px] items-center justify-center font-droid text-[24px]  border-blue-80 mx-auto'>
+        <button className='modalButton flex gap-[24px] items-center justify-center font-droid text-[24px]  border-blue-80 mx-auto'>
                     Verify
                 </button>
     

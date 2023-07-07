@@ -8,7 +8,7 @@ import Ball from "./../../assets/userProfile/Ball.png"
 
 const UserProfile = () => {
   return (
-    <div className='w-full py-[72px] home relative px-[52px] mt-[104px]'>
+    <div className='w-full py-[72px] relative z-[999] px-[52px] mt-[104px]'>
         <ProfileHeader />
         <Mode />
         <div className="flex mt-12 gap-[34px]">
@@ -107,7 +107,7 @@ const Level = () => {
                 </div>
             </div>
             <div className='w-full px-6'>
-            <div className='w-full h-2 load mt-3  rounded-xl flex'>
+            <div className='w-full h-2 level mt-3  rounded-xl flex'>
                 <div className='h-full w-1/2 bg-blue-50 rounded-xl'></div>
                 <div className='h-full flex-1 flex items-center relative right-1'>
                     <img src={Ball} />

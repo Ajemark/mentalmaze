@@ -9,6 +9,7 @@ import Home from './routes/Home/Home'
 import UserProfile from './routes/UserProfile/UserProfile'
 
 import { Layout } from './Layout/Layout'
+import LeaderShipBoard from './routes/LeadershipBoard/LeaderShipBoard'
 
 
 
@@ -27,6 +28,10 @@ function App() {
         {
           path: "/profile",
           element: <UserProfile />
+        },
+        {
+          path: '/leadership',
+          element: <LeaderShipBoard />
         }
       ]
     },
