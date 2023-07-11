@@ -21,7 +21,7 @@ const Sidebar = ({showSideMobile, switchSideMode}:CompType) => {
   return (
     width > 768 ?<div className='w-[104px] md:flex flex-col justify-start gap-56 py-[46px] relative bg-[#010C18] z-20  opacity-[0.4000000059604645] items-center  mt-[104px] hidden'>
         <div className='flex flex-col gap-8'>
-          {[{image: nav1, title: "/solver"}, {image: nav2, title: '/solver/leadership'},{image: nav3, title: "/"}].map((src) => {
+          {[{image: nav1, title: "/"}, {image: nav2, title: '/leadership'},{image: nav3, title: "/"}].map((src) => {
             return <div className='w-fit' onClick={() => navigate(src.title)}>
             <img src={src.image} /> 
           </div>
@@ -47,7 +47,7 @@ const Sidebar = ({showSideMobile, switchSideMode}:CompType) => {
       <div>
         <AiOutlineClose fontSize={36} className = "mx-auto mb-[48px]" onClick={switchSideMode}/>
             <div>
-            {[{image: nav3, path: "/solver", title: "Games"}, {image: nav2, path: '/solver/leadership', title: "Leaderboard"},{image: nav1, path: "/solver", title: "Create game"}].map((src, index) => {
+            {[{image: nav3, path: "/", title: "Games"}, {image: nav2, path: '/leadership', title: "Leaderboard"},{image: nav1, path: "/", title: "Create game"}].map((src, index) => {
             return <div className='w-full flex items-center gap-[8px] px-[12px] h-[72px]' key={index} onClick={() => navigate(src.path)}>
             <img src={src.image} /> <p className="text-[16px] font-Archivo_Regular leading-[17.41px] font-medium">
               {src.title}

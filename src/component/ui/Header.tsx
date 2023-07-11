@@ -33,7 +33,7 @@ const Header = () => {
           <div className="text-white text-[36px] " onClick={switchSideMode}>
             <HiMenuAlt3 className="block md:hidden h-[32px]" />
           </div>
-          <Link to={'/solver'} className="flex gap-[8px] md:gap-4 text-white font-Archivo_Regular items-center text-[22px]">
+          <Link to={'/'} className="flex gap-[8px] md:gap-4 text-white font-Archivo_Regular items-center text-[22px]">
             <img src={Logo} className=" h-8 md:h-full " />
             Mental Maze
           </Link>
@@ -42,7 +42,7 @@ const Header = () => {
           </div>
         </div>
         <div className='flex items-center gap-8'>
-          <NavLink to={'/solver/profile'}><div className="hidden md:block"> <img src={Boarder} alt="" /></div></NavLink>
+          <NavLink to={'/profile'}><div className="hidden md:block"> <img src={Boarder} alt="" /></div></NavLink>
           <ConnectWalletbtn clickHandler={() => { switchModal() }} />
         </div>
       </div>
