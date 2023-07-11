@@ -18,23 +18,27 @@ import LeaderShipBoard from './routes/LeadershipBoard/LeaderShipBoard'
 function App() {
   const router = createBrowserRouter([
     {
-      path: "/",
+      path: "/solver",
       element: <Layout/>,
       children: [
         {
-          path: "/",
+          path: "/solver",
           element: <Home />
         },
         {
-          path: "/profile",
+          path: "/solver/profile",
           element: <UserProfile />
         },
         {
-          path: '/leadership',
+          path: '/solver/leadership',
           element: <LeaderShipBoard />
         }
-      ]
+      ],
     },
+    {
+      path: "/creator",
+      // element: 
+    }
   ]);
 
   return (

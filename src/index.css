@@ -56,8 +56,9 @@ html, body {
   }
   .level {
     background: var(--grad-glas, linear-gradient(130deg, rgba(3, 36, 73, 0.45) 0%, rgba(11, 119, 240, 0.10) 100%));
+
   }
-  
+/*   
   .image::before{
   content: "";
   display: block;
@@ -68,16 +69,32 @@ html, body {
   background-color: red;
   z-index: 50;
   background: linear-gradient(130deg, rgba(3, 36, 73, 0.60) 0%, rgba(11, 119, 240, 0.45) 100%);
-}
+} */
+
 .modalButton {
   background: var(--grad-glas, linear-gradient(130deg, rgba(3, 36, 73, 0.45) 0%, rgba(11, 119, 240, 0.10) 100%));
-  border:2px;
+  width: 218px;
+  height: 56px;
   border-style: solid;
   border-radius: 16px;
-  width: 368px;
-  height: 80px;
+  border:2px;
   border-color: #063C7A;
+  background: var(--grad-glas, linear-gradient(130deg, rgba(3, 36, 73, 0.45) 0%, rgba(11, 119, 240, 0.10) 100%));
+  border-style: solid;
+
 }
+@media (min-width: 768px) {
+  .modalButton {
+    background: var(--grad-glas, linear-gradient(130deg, rgba(3, 36, 73, 0.45) 0%, rgba(11, 119, 240, 0.10) 100%));
+    border:2px;
+    border-style: solid;
+    border-radius: 16px;
+    width: 368px;
+    height: 80px;
+    border-color: #063C7A;
+  }
+}
+
 }
 
 

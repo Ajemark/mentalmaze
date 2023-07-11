@@ -9,18 +9,17 @@ import { useModalContext } from '../context/ModalContext'
 
 
 export const Layout = () => {
-  const {ModalMode}  = useModalContext()
-
-
+  const {ModalMode, sideBarMode, switchSideMode}  = useModalContext()
+  console.log(sideBarMode)
   return (
     <div className='home rounded-none min-h-screen h-full flex justify-center w-full items-center'>
       <div className='mx-auto fixed w-full  left-0 top-0 '>
-      <img src={Background} className='w-full bg-joint z-[70] relative '/> 
+      <img src={Background} className='w-full bg-joint  '/> 
       </div>
-      <div className=' mx-auto rounded-none flex flex-col w-full'>
+      <div className='mx-auto rounded-none flex flex-col w-full min-h-screen '>
         <Header />
         <div className='flex flex-1 h-fit mx-auto w-full justify-center'>
-          <Sidebar />
+          <Sidebar showSideMobile={sideBarMode} switchSideMode={switchSideMode}/>
           <ConnectWalletModal show={ModalMode}>
             {ConnectModals['verify']}
             </ConnectWalletModal>

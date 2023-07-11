@@ -2,7 +2,7 @@ import {AiOutlineDown} from "react-icons/ai"
 import medal from "./../../assets/Leadership/medal_star.png"
 import medalMaster from "./../../assets/Leadership/medalstarMaster.png"
 import { Leadertype } from './Indextype'
-import { leaders } from './dummydata'
+import { leaders } from "./Dummydata"
 import empty from "./../../assets/Leadership/empty.png"
 
 

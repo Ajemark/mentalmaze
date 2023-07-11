@@ -3,7 +3,7 @@ const ChooseANickname = () => {
   return (
     <div>
       <div>
-                <h1 className='font-droid border-b-blue-80 border-b-[8px] mt-[24px] pt-[16px] pb-[32px] leading-[37.78px] text-[32px] text-center'>
+                <h1 className='font-droid border-b-blue-80 border-b-[8px] mt-[24px] pt-[16px] pb-[32px] leading-[23.61px] md:leading-[37.78px] text-[20px] md:text-[32px] text-center'>
                     Connect Wallet
                 </h1>
     </div>

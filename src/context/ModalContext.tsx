@@ -8,7 +8,9 @@ type ModalContextType = {
     modal: Modal,
     ModalMode: boolean,
     switchModal: () => void,
-    switchModalcontent: (value:Modal) => void
+    switchModalcontent: (value:Modal) => void,
+    sideBarMode: boolean,
+    switchSideMode: () => void
 };
 
 const ModalContext = createContext<ModalContextType>({
@@ -16,12 +18,15 @@ const ModalContext = createContext<ModalContextType>({
   ModalMode: false,
   switchModalcontent: () => {},
   switchModal: () => {},
+  sideBarMode: true,
+  switchSideMode: () => {}
 });
 
 
 export const ModalProvider = ({ children }: { children: ReactNode }) => {
   const [modal, setModal] = useState<Modal>("connect");
   const [modalMode, setmodalMode] = useState<boolean>(false)
+  const [sideBarMode, setSideBarMode] = useState<boolean>(false)
 
   const switchModal = () => {
     setmodalMode(!modalMode);
@@ -31,6 +36,10 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
     setModal(modal)
   }
 
+  const switchSideMode = () => {
+    setSideBarMode(!sideBarMode)
+  }
+
 
   return (
     <ModalContext.Provider
@@ -38,7 +47,9 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
         modal,
         ModalMode:modalMode,
         switchModal,
-        switchModalcontent
+        switchModalcontent,
+        switchSideMode,
+        sideBarMode
       }}
     >
       {children}
