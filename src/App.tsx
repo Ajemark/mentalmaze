@@ -10,6 +10,7 @@ import UserProfile from './routes/UserProfile/UserProfile'
 
 import { Layout } from './Layout/Layout'
 import LeaderShipBoard from './routes/LeadershipBoard/LeaderShipBoard'
+import Create from './routes/Creator/Create'
 
 
 
@@ -32,6 +33,10 @@ function App() {
         {
           path: '/leadership',
           element: <LeaderShipBoard />
+        },
+        {
+          path: "/create-game",
+          element: <Create />
         }
       ],
     },

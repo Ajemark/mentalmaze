@@ -13,7 +13,9 @@ export default {
         'blue-80': "#063C7A",
         'wb-40': "#A6A6A6",
         'blue-90': "#032449",
-        'blue-100': "#010C18"
+        'blue-100': "#010C18",
+        'wb-90': "#262626",
+        'blue-70': '#0855AB'
       },
       fontFamily: {
         'Archivo_Regular': ['Archivo-Regular'],
