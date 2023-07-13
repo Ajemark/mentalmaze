@@ -13,8 +13,8 @@ export const Layout = () => {
   console.log(sideBarMode)
   return (
     <div className='home rounded-none min-h-screen h-full flex justify-center w-full items-center'>
-      <div className='mx-auto fixed w-full  left-0 top-0 image'>
-      <img src={Background} className='w-full bg-joint  '/> 
+      <div className='mx-auto fixed w-screen h-screen  left-0 top-0 image bg-bg-sky bg-cover bg-center right-0 '>
+      
       </div>
       <div className='mx-auto rounded-none flex flex-col w-full min-h-screen '>
         <Header />
@@ -23,7 +23,7 @@ export const Layout = () => {
           <ConnectWalletModal show={ModalMode}>
             {ConnectModals['verify']}
             </ConnectWalletModal>
-          <div className='  w-full'>
+          <div className='  w-full mt-[176px] '>
           <Outlet />
           </div>
         </div>

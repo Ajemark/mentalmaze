@@ -23,7 +23,8 @@ export default {
         'droid': ['droid'],
         'droidbold': ['droidbold'],
         'Archivo_thin': ['Archivo-thin'],
-        'Archivo_Condensed-Black': ['Archivo_Condensed-Black']
+        'Archivo_Condensed-Black': ['Archivo_Condensed-Black'],
+        'Inter_Regular': ['Inter_Regular']
       },
       backgroundImage: {
         "bg-sky": "url('./assets/Background.png')",

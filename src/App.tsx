@@ -11,6 +11,9 @@ import UserProfile from './routes/UserProfile/UserProfile'
 import { Layout } from './Layout/Layout'
 import LeaderShipBoard from './routes/LeadershipBoard/LeaderShipBoard'
 import Create from './routes/Creator/Create'
+import GameRequirement from './routes/Creator/GameRequirement'
+import Settings from './routes/Creator/settings'
+import TestProgress from './routes/Creator/TestProgress'
 
 
 
@@ -37,6 +40,18 @@ function App() {
         {
           path: "/create-game",
           element: <Create />
+        },
+        {
+          path: "/game-Requirement",
+          element: <GameRequirement />
+        },
+        {
+          path: "/settings",
+          element: <Settings />
+        },
+        {
+          path: "/test",
+          element: <TestProgress />
         }
       ],
     },

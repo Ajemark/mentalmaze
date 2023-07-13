@@ -12,6 +12,12 @@ import {BsSearch} from "react-icons/bs"
 import Boarder from "./../../assets/header/Boarder.png"
 import emptywallet from "./../../assets/sidebar/emptywallet.svg"
 import useroctagon from "./../../assets/sidebar/useroctagon.svg"
+import cup from "./../../assets/sidebar/mobile/cup.svg"
+import game from "./../../assets/sidebar/mobile/game.svg"
+import notification from "./../../assets/sidebar/mobile/notification.svg"
+import create from "./../../assets/sidebar/mobile/create.svg"
+
+
 
 import Discord from "./../../assets/sidebar/mobile/discord.svg"
 import Telegram from "./../../assets/sidebar/mobile/Telegram (2).svg"
@@ -29,7 +35,7 @@ const Sidebar = ({showSideMobile, switchSideMode}:CompType) => {
   return (
     width > 768 ?<div className='w-[104px] md:flex flex-col justify-start gap-56 py-[46px] relative bg-[#010C18] z-20  opacity-[0.4000000059604645] items-center  mt-[104px] hidden'>
         <div className='flex flex-col gap-8'>
-          {[{image: nav1, title: "/"}, {image: nav2, title: '/leadership'},{image: nav3, title: "/"}].map((src) => {
+          {[{image: nav1, title: "/create-game"}, {image: nav2, title: '/leadership'},{image: nav3, title: "/"}].map((src) => {
             return <div className='w-fit' onClick={() => navigate(src.title)}>
             <img src={src.image} /> 
           </div>
@@ -58,7 +64,7 @@ const Sidebar = ({showSideMobile, switchSideMode}:CompType) => {
               <div className="flex sidebarItem border-blue-50 border-solid border-[1px] rounded-lg h-[44px] gap-[8px]   items-center px-[16px] justify-center">
                 <div> <BsSearch fontSize={24} /></div> <input type="text" className="bg-inherit flex-1 w-full placeholder:text-blue-70 font-Archivo_Regular leading-[24px] text-[16px]" placeholder="Search"  />
               </div>
-            {[{image: nav3, path: "/", title: "Games"}, {image: nav2, path: '/leadership', title: "Leaderboard"},{image: nav1, path: "/", title: "Create game"}].map((src, index) => {
+            {[{image: game, path: "/", title: "Games"}, {image: cup, path: '/leadership', title: "Leaderboard"},{image: create, path: "/", title: "Create game"},{image: notification, path: "/", title: "Notification"}].map((src, index) => {
             return <div className='w-full flex items-center gap-[8px] px-[12px] h-[46px] hover:sidebarItem cursor-pointer  rounded-lg hover:border-blue-50 hover:border-solid hover:border-[1px]' key={index} onClick={() => navigate(src.path)}>
             <img src={src.image} /> <p className="text-[16px] font-Archivo_Regular leading-[17.41px] font-medium">
               {src.title}
@@ -69,7 +75,7 @@ const Sidebar = ({showSideMobile, switchSideMode}:CompType) => {
             <div className='flex flex-col gap-3 px-[12px] mt-[60px]'>
           {[{image:Discord, title: "Discord"}, {image: Telegram, title: "Telegram"}, {image: Twitter, title: "Twitter"}].map((src) => {
             return <div className='w-full flex items-center gap-[8px] px-[12px]  h-[46px] hover:sidebarItem cursor-pointer  rounded-lg hover:border-blue-50 hover:border-solid hover:border-[1px]'>
-            <img src={src.image} className="w-[16px] h-[16px]"/>
+            <img src={src.image} className=""/>
             <p className="text-[16px] font-Archivo_Regular leading-[17.41px] font-medium">
               {src.title}
             </p>

@@ -25,8 +25,8 @@ const TitleBar = () => {
 
 const Home = () => {
     return (
-      <div className=" w-full h-fit mt-[104px] ">
-      <div className="relative z-[999] py-[72px] px-14">
+      <div className=" w-full h-fit ">
+      <div className="relative z-[999] px-14">
         <TitleBar />
         <div className="grid  grid-cols-2 md:grid-cols-3 gap-x-[45px] gap-y-[44px] py-12">
         {games.map((gam, index) => <div className="relative" key={index}><img src={gam?.image} alt="" /></div>
