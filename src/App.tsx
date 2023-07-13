@@ -12,7 +12,7 @@ import { Layout } from './Layout/Layout'
 import LeaderShipBoard from './routes/LeadershipBoard/LeaderShipBoard'
 import Create from './routes/Creator/Create'
 import GameRequirement from './routes/Creator/GameRequirement'
-import Settings from './routes/Creator/Settings'
+import Settings from './routes/Creator/settings'
 
 
 
