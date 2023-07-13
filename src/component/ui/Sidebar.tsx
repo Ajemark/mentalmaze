@@ -68,7 +68,7 @@ const Sidebar = ({showSideMobile, switchSideMode}:CompType) => {
               <div className="flex sidebarItem border-blue-50 border-solid border-[1px] rounded-lg h-[44px] gap-[8px]   items-center px-[16px] justify-center">
                 <div> <BsSearch fontSize={24} /></div> <input type="text" className="bg-inherit flex-1 w-full placeholder:text-blue-70 font-Archivo_Regular leading-[24px] text-[16px]" placeholder="Search"  />
               </div>
-            {[{image: game, path: "/", title: "Games"}, {image: cup, path: '/leadership', title: "Leaderboard"},{image: create, path: "/", title: "Create game"},{image: notification, path: "/", title: "Notification"}].map((src, index) => {
+            {[{image: game, path: "/create-game", title: "Games"}, {image: cup, path: '/leadership', title: "Leaderboard"},{image: create, path: "/", title: "Create game"},{image: notification, path: "/", title: "Notification"}].map((src, index) => {
             return <div className='w-full flex items-center gap-[8px] px-[12px] h-[46px] hover:sidebarItem cursor-pointer  rounded-lg hover:border-blue-50 hover:border-solid hover:border-[1px]' key={index} onClick={() => navigate(src.path)}>
             <img src={src.image} /> <p className="text-[16px] font-Archivo_Regular leading-[17.41px] font-medium">
               {src.title}
