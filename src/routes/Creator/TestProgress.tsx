@@ -4,7 +4,8 @@ import Tick from "./../../assets/settings/Tick.svg"
 export interface ModeType {
     title: string,
     text: string,
-    mode: string
+    mode: string,
+
 }
 const TestProgress = ({modes}: {modes: ModeType[]}) => {
     

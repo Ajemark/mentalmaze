@@ -49,10 +49,6 @@ function App() {
           path: "/settings",
           element: <Settings />
         },
-        {
-          path: "/test",
-          element: <TestProgress />
-        }
       ],
     },
     {
