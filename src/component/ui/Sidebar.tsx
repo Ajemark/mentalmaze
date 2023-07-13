@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom"
 import useQuery from "../../hooks/useQuery"
 import {AiOutlineClose} from "react-icons/ai"
 import {BsSearch} from "react-icons/bs"
-import Boarder from "./../../assets/header/Boarder.png"
 import emptywallet from "./../../assets/sidebar/emptywallet.svg"
 import useroctagon from "./../../assets/sidebar/useroctagon.svg"
 import cup from "./../../assets/sidebar/mobile/cup.svg"
@@ -59,6 +58,11 @@ const Sidebar = ({showSideMobile, switchSideMode}:CompType) => {
     }}
     >
       <div>
+      {/* <div className="menu-btn">
+                <div className=".menu-btn__burger">
+                    
+                </div>
+      </div> */}
         <AiOutlineClose fontSize={24} className = "mx-auto mb-[48px]" onClick={switchSideMode}/>
             <div className="px-[12px] flex flex-col gap-[18px]">
               <div className="flex sidebarItem border-blue-50 border-solid border-[1px] rounded-lg h-[44px] gap-[8px]   items-center px-[16px] justify-center">

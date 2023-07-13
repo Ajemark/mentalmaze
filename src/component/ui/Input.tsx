@@ -1,4 +1,3 @@
-import React from 'react'
 
 const Input = ({placeholder, title, center}:{placeholder: string, title?:string, center?:boolean}) => {
   return (

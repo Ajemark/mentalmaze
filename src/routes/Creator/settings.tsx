@@ -1,26 +1,25 @@
-import React, { useState } from 'react'
-import dots from "./../../assets/settings/Dot.svg"
-import Tick from "./../../assets/settings/Tick.svg"
+// import  { useState } from 'react'
+
 import { GamedetailForm } from './settings/SettingsInner'
 
 
 const Settings = () => {
-  const [formmode, setFormode] = useState('first') 
+  // const [formmode, setFormode] = useState('first') 
 
-  const steps = [
-    {
-    title: "Game Details",
-    text: "Please provide your name and email"
-  },
-  {
-    title: "Payment",
-    text: "A few details about your company"
-  },
-  {
-    title: "Submit",
-    text: "Start collaborating with your team"
-  }
-  ]
+  // const steps = [
+  //   {
+  //   title: "Game Details",
+  //   text: "Please provide your name and email"
+  // },
+  // {
+  //   title: "Payment",
+  //   text: "A few details about your company"
+  // },
+  // {
+  //   title: "Submit",
+  //   text: "Start collaborating with your team"
+  // }
+  // ]
 
 
 
@@ -43,15 +42,15 @@ const Settings = () => {
 
 
 
-const Step = ({title, text, state}:{title: string, text: string, state: string}) => {
-  return (
-    <div className='flex flex-col items-center'>
-      <h1 className='text-[16px] font-medium font-Archivo_Regular leading-[24px]'>{title}</h1>
-      <p className='text-[16px] font-Archivo_Regular leading-[24px] text-center'>
-        {text}
-      </p>
-    </div>
-  )
-}
+// const Step = ({title, text}:{title: string, text: string}) => {
+//   return (
+//     <div className='flex flex-col items-center'>
+//       <h1 className='text-[16px] font-medium font-Archivo_Regular leading-[24px]'>{title}</h1>
+//       <p className='text-[16px] font-Archivo_Regular leading-[24px] text-center'>
+//         {text}
+//       </p>
+//     </div>
+//   )
+// }
 
 export default Settings

@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import Dot from "./../../assets/settings/Dot.svg"
 import Tick from "./../../assets/settings/Tick.svg"
 export interface ModeType {

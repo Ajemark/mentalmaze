@@ -1,4 +1,3 @@
-import arrow_bottom from "./../../assets/header/arrow_bottom.png"
 import { games } from "./GamesData";
 import {VscUnlock} from "react-icons/vsc"
 
@@ -9,7 +8,7 @@ const TitleBar = () => {
       <h2 className="font-normal text-[20px]   md:text-5xl">
     MATH PUZZLE
     </h2>
-    <p className="border-blue-50 h-[24px] w-[27px] md:h-0 md:w-0 text-center md:py-4 md:px-6 rounded-lg leading-[21.76px] text-[10px] md:text-xl border-2 ">
+    <p className="border-blue-50 h-[24px] w-[27px] md:h-[initial] md:w-[initial] text-center md:py-4 md:px-6 rounded-lg leading-[21.76px] text-[10px] md:text-xl border-2 ">
       12
     </p>
     </div>

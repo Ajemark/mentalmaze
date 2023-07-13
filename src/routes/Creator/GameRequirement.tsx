@@ -1,9 +1,13 @@
 // import React from 'react'
 
-import { useState } from "react"
+// import { useState } from "react"
 
 const GameRequirement = () => {
-  const [no, setNo] = useState(false)
+  const no = false
+  // const dummy = () => {
+  //   setNo(!no)
+  // }
+  
   let pageContent = <>
   <div className="text-[20px] leading-[21.76px] font-Archivo_Regular font-normal text-white flex flex-col gap-10  py-[32px] px-[48px] ">
           <p>Hi there!</p>

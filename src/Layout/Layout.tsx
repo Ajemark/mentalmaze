@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom'
 import Header from '../component/ui/Header'
 import Sidebar from '../component/ui/Sidebar'
-import Background from "./../assets/Background.png"
+// import Background from "./../assets/Background.png"
 import ConnectWalletModal from "../component/Modal/Connect/ConnectWalletModalWrapper"
 // import Overlay from '../component/ui/Overlay'
 import { ConnectModals } from './Modals'

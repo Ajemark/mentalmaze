@@ -1,15 +1,13 @@
 import  {useEffect, useRef, useState} from 'react'
 
-import Progrss_final from "./../../../assets/settings/Progrss_final.png"
-import Progress_initial from "./../../../assets/settings/Progress_initial.png"
 
-import {FiUploadCloud} from "react-icons/fi"
 import Input from '../../../component/ui/Input'
 import { HiPlus } from 'react-icons/hi'
 import TestProgress, { ModeType } from '../TestProgress'
-import {useFormik} from "formik"
+// import {useFormik} from "formik"
+import {FiUploadCloud} from "react-icons/fi"
 export const GamedetailForm = () => {
-    const contRef = useRef(null)
+    const contRef = useRef<HTMLDivElement>(null)
     const [modes, setMode] = useState<ModeType[]>([{
         title: "Game Details",
         text: "Please provide your name and email",
@@ -26,14 +24,14 @@ export const GamedetailForm = () => {
     },
 ])
 
-    const formik = useFormik(
-        {
-            initialValues: {
-                title: "",
-            },
-            onSubmit: () => console.log("working")
-        }
-    )
+    // const formik = useFormik(
+    //     {
+    //         initialValues: {
+    //             title: "",
+    //         },
+    //         onSubmit: () => console.log("working")
+    //     }
+    // )
 
     const updateMode = (param: string):void => {
         const mode = [...modes]
@@ -52,19 +50,18 @@ export const GamedetailForm = () => {
 
     useEffect(() => {
         if(contRef){
-            contRef.current.scrollIntoView()
+            contRef.current?.scrollIntoView()
         }
-       
     }, [modes])
 
   return (
     <div className='px-[48px]' >
-        <div className='mx-auto w-full mt-[32px]' ref={contRef}>
-        <TestProgress modes={modes}/>
+        <div className='mx-auto w-full mt-[32px]' ref={contRef} >
+        <TestProgress modes={modes} />
         </div>
         {modes[0]['mode'] == "current"?<GameDetails next={updateMode}/>:null}
         {modes[1]['mode'] == "current"?<Payments next={updateMode}/>:null}
-        {modes[2]['mode'] == "current"?<Submit next={updateMode}/>:null}
+        {modes[2]['mode'] == "current"?<Submit />:null}
 
     </div>
   )
