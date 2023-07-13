@@ -18,7 +18,7 @@ import create from "./../../assets/sidebar/mobile/create.svg"
 
 
 
-import Discord from "./../../assets/sidebar/mobile/discord.svg"
+import Discord from "./../../assets/sidebar/mobile/Discord.svg"
 import Telegram from "./../../assets/sidebar/mobile/Telegram (2).svg"
 import Twitter from "./../../assets/sidebar/mobile/Twitter.svg"
 
