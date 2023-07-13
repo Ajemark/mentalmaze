@@ -2,7 +2,7 @@
 import nav1 from "./../../assets/sidebar/nav1.png"
 import nav2 from "./../../assets/sidebar/nav2.png"
 import nav3 from "./../../assets/sidebar/nav3.png"
-import discord from "./../../assets/sidebar/Discord.svg"
+import discord from "./../../assets/sidebar/discord.png"
 import telegram from "./../../assets/sidebar/telegram.svg"
 import twitter from "./../../assets/sidebar/twitter.svg"
 import { useNavigate } from "react-router-dom"
