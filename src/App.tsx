@@ -18,6 +18,7 @@ import Settings from './routes/Creator/Settings'
 
 
 
+
 function App() {
   const router = createBrowserRouter([
     {
@@ -41,13 +42,14 @@ function App() {
           element: <Create />
         },
         {
-          path: "/game-Requirement",
-          element: <GameRequirement />
-        },
-        {
           path: "/settings",
           element: <Settings />
         },
+        {
+          path: "/game-Requirement",
+          element: <GameRequirement />
+        },
+        
       ],
     },
     {
