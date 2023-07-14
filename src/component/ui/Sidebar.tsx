@@ -15,6 +15,8 @@ import cup from "./../../assets/sidebar/mobile/cup.svg"
 import game from "./../../assets/sidebar/mobile/game.svg"
 import notification from "./../../assets/sidebar/mobile/notification.svg"
 import create from "./../../assets/sidebar/mobile/create.svg"
+import {motion} from "framer-motion"
+
 
 import { useModalContext } from "../../context/ModalContext"
 
@@ -46,7 +48,13 @@ const Sidebar = ({showSideMobile, switchSideMode}:CompType) => {
             return <div className={`sideBartitle pl-[16px]  md:pl-[34px] w-full relative items-center    cursor-pointer flex overflow-visible`} onClick={() => navigate(src.link)}>
              
           <span>  <img src={src.image} className=""/> </span>
-          <div className="absolute hidden  text-white w-28 left-20 bg-black px-2 font-Archivo_Regular">{src.title}</div>
+          <motion.div className="absolute hidden  text-white w-28 left-20 bg-black px-2 font-Archivo_Regular"
+          animate={{x: 100}}
+          transition={{delay: 1, type:"spring"}}
+          
+          >
+            {src.title}
+          </motion.div>
           </div>
           })}
         </div>
