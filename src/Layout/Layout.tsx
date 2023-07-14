@@ -18,12 +18,12 @@ export const Layout = () => {
       </div>
       <div className='mx-auto rounded-none flex flex-col w-full min-h-screen '>
         <Header />
-        <div className='flex flex-1 h-fit mx-auto w-full justify-center'>
+        <div className='flex flex-1 h-fit mx-auto w-full justify-center items-stretch'>
           <Sidebar showSideMobile={sideBarMode} switchSideMode={switchSideMode}/>
           <ConnectWalletModal show={ModalMode}>
             {ConnectModals['verify']}
             </ConnectWalletModal>
-          <div className='  w-full mt-[96px] md:mt-[176px] '>
+          <div className='  w-full mt-[96px] md:mt-[176px] md:ml-[104px]'>
           <Outlet />
           </div>
         </div>

@@ -14,7 +14,7 @@ type LayoutProps = { children?: ReactNode, show: boolean }
 
 const ConnectWalletModal = ({ children, show }: LayoutProps) => {
 
-  const { switchModal } = useModalContext()
+  const { switchModal, modal } = useModalContext()
   const {width} = useQuery()
 
   const HandlerAnimation = (): string => {
@@ -38,18 +38,19 @@ const ConnectWalletModal = ({ children, show }: LayoutProps) => {
 
 
   const Handler = () => {
-    console.log("closing")
     switchModal()
   }
 
   return (
+    <>
+    {show && <Overlay />}
     <div className='w-screen h-screen bottom-0 fixed left-0 z-[999999999999] top-0 flex flex-row justify-center items-end md:items-center'
-      style={{
-        transform: HandlerAnimation(),
-        transition: "all 0.5s"
-      }}
+    style={{
+      transform: HandlerAnimation(),
+      transition: "all 0.5s"
+    }}
     >
-      <Overlay />
+     
       <div className=' 
         relative
 
@@ -61,7 +62,9 @@ const ConnectWalletModal = ({ children, show }: LayoutProps) => {
         flex flex-col
         max-w-[700px]
         border-blue-80 rounded-b-none md:rounded-b-[60px] rounded-[60px] border-[8px]
-        '>
+        '
+        
+        >
         <img src={slices} alt="" className='w-[230px] md:w-[240px] md:h-[24px] absolute right-0 ' />
         {children}
 
@@ -71,6 +74,7 @@ const ConnectWalletModal = ({ children, show }: LayoutProps) => {
       </div>
       <img src={Close} className='absolute top-0 md:top-[initial] md:right-[62px] z-[9999999999]' onClick={Handler} />
     </div>
+    </>
   )
 }
 

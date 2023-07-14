@@ -19,3 +19,7 @@ export const ConnectWalletbtn = ({clickHandler}:ConnectTyype) => {
           </button>
     )
 }
+
+export const Instruction = () => {
+    return  <p className='font-[300] text-wb-40 font-Archivo_Regular mt-[4px] md:mt-[8px] leading-[17.41px] text-[14px] md:text-[16px]'> You Are Advised To Use The Same Discord</p>
+}

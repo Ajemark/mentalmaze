@@ -90,6 +90,10 @@ html, body {
 }
 .sidebarItem{
   background:  linear-gradient(130deg, rgba(3, 36, 73, 0.60) 0%, rgba(11, 119, 240, 0.45) 100%);
+  @apply hover:border-blue-50  hover:border-solid hover:border-[1px]
+}
+.sideBartitle:hover > div {
+    display: block;
 } 
 .settingsFormbutton {
   background: var(--grad-glas, linear-gradient(130deg, rgba(3, 36, 73, 0.45) 0%, rgba(11, 119, 240, 0.10) 100%));

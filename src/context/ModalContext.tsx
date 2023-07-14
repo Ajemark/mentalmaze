@@ -29,6 +29,7 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
   const [sideBarMode, setSideBarMode] = useState<boolean>(false)
 
   const switchModal = () => {
+    console.log("switching modal")
     setmodalMode(!modalMode);
   };
 

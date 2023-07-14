@@ -16,7 +16,7 @@ import game from "./../../assets/sidebar/mobile/game.svg"
 import notification from "./../../assets/sidebar/mobile/notification.svg"
 import create from "./../../assets/sidebar/mobile/create.svg"
 
-
+import { useModalContext } from "../../context/ModalContext"
 
 import Discord from "./../../assets/sidebar/mobile/Discord.svg"
 import Telegram from "./../../assets/sidebar/mobile/Telegram (2).svg"
@@ -29,19 +29,29 @@ interface CompType {
 
 
 const Sidebar = ({showSideMobile, switchSideMode}:CompType) => {
+  const { switchModal,  } = useModalContext()
+
+  const openModal = (value: string) => {
+      if(value == "Connect wallet"){
+        switchSideMode()
+        switchModal()
+      }
+  }
   const navigate = useNavigate()
   const {width} = useQuery()
   return (
-    width > 768 ?<div className='w-[104px] md:flex flex-col justify-start gap-56 py-[46px] relative bg-[#010C18] z-20  opacity-[0.4000000059604645] items-center  mt-[104px] hidden'>
-        <div className='flex flex-col gap-8'>
-          {[{image: nav1, title: "/create-game"}, {image: nav2, title: '/leadership'},{image: nav3, title: "/"}].map((src) => {
-            return <div className='w-fit' onClick={() => navigate(src.title)}>
-            <img src={src.image} /> 
+    width > 768 ?<div className='w-[104px] h-[90vh] fixed md:flex flex-col justify-between py-[46px] left-0 bg-[#010C18] z-20  opacity-[0.4000000059604645] items-center  mt-[104px] hidden'>
+        <div className='flex flex-col gap-6 w-full'>
+          {[{image: nav1, link: "/create-game", title: "Create Game"}, {image: nav2, link: '/leadership', title: "Leadership"},{image: nav3, link: "/", title: "Games"}].map((src) => {
+            return <div className={`sideBartitle pl-[16px]  md:pl-[34px] w-full relative items-center    cursor-pointer flex overflow-visible`} onClick={() => navigate(src.link)}>
+             
+          <span>  <img src={src.image} className=""/> </span>
+          <div className="absolute hidden  text-white w-28 left-20 bg-black px-2 font-Archivo_Regular">{src.title}</div>
           </div>
           })}
         </div>
-        <div className='flex flex-col gap-3'>
-          {[discord, telegram, twitter].map((src) => {
+        <div className='flex flex-col '>
+          {[ discord, telegram, twitter].map((src) => {
             return <div className='w-fit'>
             <img src={src} />
           </div>
@@ -68,8 +78,12 @@ const Sidebar = ({showSideMobile, switchSideMode}:CompType) => {
               <div className="flex sidebarItem border-blue-50 border-solid border-[1px] rounded-lg h-[44px] gap-[8px]   items-center px-[16px] justify-center">
                 <div> <BsSearch fontSize={24} /></div> <input type="text" className="bg-inherit flex-1 w-full placeholder:text-blue-70 font-Archivo_Regular leading-[24px] text-[16px]" placeholder="Search"  />
               </div>
-            {[{image: game, path: "/create-game", title: "Games"}, {image: cup, path: '/leadership', title: "Leaderboard"},{image: create, path: "/", title: "Create game"},{image: notification, path: "/", title: "Notification"}].map((src, index) => {
-            return <div className='w-full flex items-center gap-[8px] px-[12px] h-[46px] hover:sidebarItem cursor-pointer  rounded-lg hover:border-blue-50 hover:border-solid hover:border-[1px]' key={index} onClick={() => navigate(src.path)}>
+            {[{image: game, path: "/", title: "Games"}, {image: cup, path: '/leadership', title: "Leaderboard"},{image: create, path: "/create-game", title: "Create game"},{image: notification, path: "/", title: "Notification"}].map((src, index) => {
+            return <div className='w-full flex items-center gap-[8px] px-[12px] h-[46px] hover:sidebarItem cursor-pointer  rounded-lg' key={index} onClick={() => 
+            {
+              navigate(src.path)
+              switchSideMode()
+            }}>
             <img src={src.image} /> <p className="text-[16px] font-Archivo_Regular leading-[17.41px] font-medium">
               {src.title}
             </p>
@@ -88,8 +102,9 @@ const Sidebar = ({showSideMobile, switchSideMode}:CompType) => {
         </div>
             </div>
             <div className="flex flex-col gap-3 items-center px-[12px] py-[34px] border-solid border-t-blue-80 border-t-[2px]">
-            {[ {image: useroctagon, title: "Create game"}, {image: emptywallet, title: "Leaderboard"} ].map((src, index) => {
-            return <div className='w-full flex items-center gap-[8px]  h-[46px] hover:sidebarItem cursor-pointer px-[12px]  rounded-lg hover:border-blue-50 hover:border-solid hover:border-[1px]' key={index}>
+            {[ {image: useroctagon, title: "Create game"}, {image: emptywallet, title: "Connect wallet"} ].map((src, index) => {
+  
+            return <div className='w-full flex items-center gap-[8px]  h-[46px] hover:sidebarItem cursor-pointer px-[12px]  rounded-lg hover:border-blue-50 hover:border-solid hover:border-[1px]' key={index} onClick={() => openModal(src.title)}>
             <img src={src.image} />
             <p className="text-[16px] font-Archivo_Regular leading-[17.41px] font-medium">{src.title}</p>
           </div>
