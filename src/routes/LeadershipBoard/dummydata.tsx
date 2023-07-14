@@ -17,12 +17,12 @@ export const leaders: Leadertype[] = [
         point: 365
     },
     {
-        rank: 4,
+        rank: "ultimate",
         solver: "Grace J.",
         point: 365
     },
     {
-        rank: 5,
+        rank: "ultimate",
         solver: "Grace J.",
         point: 368
     }

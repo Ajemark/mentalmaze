@@ -49,9 +49,8 @@ const Sidebar = ({showSideMobile, switchSideMode}:CompType) => {
              
           <span>  <img src={src.image} className=""/> </span>
           <motion.div className="absolute hidden  text-white w-28 left-20 bg-black px-2 font-Archivo_Regular"
-          animate={{x: 100}}
-          transition={{delay: 1, type:"spring"}}
-          
+          animate={{y: [-100, 0], x:[20, 0]  }}
+          transition={{delay: 1, type:"spring", bounce: 0.5}}
           >
             {src.title}
           </motion.div>
