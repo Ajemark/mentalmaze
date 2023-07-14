@@ -4,14 +4,17 @@ import ranking from "./../../assets/userProfile/ranking.png"
 import Stars from "./../../assets/userProfile/Stars.png"
 import edit from "./../../assets/userProfile/edit.png"
 import Ball from "./../../assets/userProfile/Ball.png"
+import StarsM from "./../../assets/userProfile/StarsMobile.svg"
+
+
 
 
 const UserProfile = () => {
   return (
-    <div className='w-full  relative z-[999] px-[52px] '>
+    <div className='w-full  relative z-[999] px-[16px] md:px-[52px] '>
         <ProfileHeader />
         <Mode />
-        <div className="flex mt-12 gap-[34px]">
+        <div className="flex mt-12 gap-[34px] flex-col md:flex-row">
             <Stat/><Level />
         </div>
     </div>
@@ -25,22 +28,24 @@ export default UserProfile
 
 const ProfileHeader = () => {
     return (
-        <div className=" border-4 border-blue-80 w-full rounded-3xl bg-blue-[#010C18] flex justify-between p-5">
-            <div className='absolute'>
-                <img src={Stars} className='w-full h-full blur-sm'/>
+        <div className="profile border-4 border-blue-80 w-full overflow-hidden rounded-3xl bg-blue-[#010C18] flex justify-between flex-col md:flex-row p-[24px] md:p-5 gap-[24px] md:gap-0 relative">
+            <div className='absolute h-full w-full '>
+                <img src={Stars} className='w-full h-full blur-sm hidden md:block'/>
+                <img src={StarsM} className='w-full h-full blur-sm block md:hidden'/>
+
             </div>
-            <div className='flex items-center  gap-[50px] relative z-10'>
-            <div className='rounded-2xl border-blue-90 border-4'><img src={Title} alt="" /></div>
+            <div className='flex items-center  gap-[16px] md:gap-[50px] relative z-10'>
+            <div className='rounded-[8px] md:rounded-2xl border-blue-90 border md:border-4'><img src={Title} alt="" className='w-[96px] h-[96px] md:w-[initial] md:h-[initial]'/></div>
             <div className='text-white flex flex-col items-center'>
-                <p className="text-[32px] text-white font-normal font-droid">GRACE J.</p>
+                <p className="md:text-[32px] text-white font-normal font-droid">GRACE J.</p>
                 <div className="font-Archivo_Regular text-sm font-normal flex justify-center gap-2 items-center">
             <div><img src={ranking} alt="" /></div>
-                <div className='text-wb-40 flex gap-2 items-center'>Mode: <span className='text-white'>Solver</span></div>
+                <div className='text-wb-40 flex gap-2 items-center text-[11px] md:text-base'>Mode: <span className='text-white'>Solver</span></div>
                 </div>
             </div>
             </div>
 
-            <button className='flex gap-4 text-white font-Archivo_Regular border-blue-50 border-2 rounded-2xl py-4 px-6 h-fit mt-auto'>
+            <button className='flex gap-4 text-white font-Archivo_Regular border-blue-50 border-2 rounded-2xl py-[9.5px] px-[12px] md:py-4 md:px-6 h-fit mt-auto'>
                   <img src={edit} />
                   <p>EDIT PROFILE</p>
             </button>
@@ -53,12 +58,12 @@ const Mode = () => {
     const [creatorMode, setCreatorMode] = useState(false)
 
     return(
-    <div className='flex w-full h-24 border-blue-80 border-4 rounded-3xl items-center px-6 text-white py-[10px] justify-between mt-12 relative z-[999] home'>
-        <p className="font-Archivo_Regular text-[40px] font-normal">CREATOR’S MODE</p>
-        <button className='h-full w-[128px] border-blue-80 rounded-[80px] p-2 border-2' onClick={() => {
+    <div className='flex w-full h-[70px] md:h-24 border-blue-80 border-4 rounded-3xl items-center px-6 creatorsModebuttonbg text-white py-[10px] justify-between mt-12 relative z-[999] home'>
+        <p className="font-Archivo_Regular md:text-[40px] leading-[17.41px] md:leading-normal font-normal ">CREATOR’S MODE</p>
+        <button className='h-full w-[64px] md:w-[128px] border-blue-80 rounded-[80px] p-2 border-2 creatorsModebutton' onClick={() => {
             setCreatorMode(!creatorMode)
         }}>
-                <div className="bg-black w-[48px] h-full rounded-[100%]" 
+                <div className="bg-black w-[24px] md:w-[48px] h-full rounded-[100%]" 
                 style={{
                     marginLeft: !creatorMode?0:"55%",
                     
@@ -72,7 +77,7 @@ const Mode = () => {
 
 const Stat = () => {
     return (
-        <div className='border-4 rounded-3xl py-4 flex flex-col gap-8 border-blue-80'>
+        <div className='border-4 rounded-3xl py-4 flex flex-col gap-8 border-blue-80 userProfileStat'>
             <h2 className='px-[75px] font-400 font-droidbold
             text-[2rem] text-white py-4 text-center border-b-blue-80 border-b-4'>
                 STATS  
@@ -94,7 +99,7 @@ const Stat = () => {
 
 const Level = () => {
     return (
-        <div className='flex-1 border-blue-80 py-4 border-4 rounded-3xl '>
+        <div className='flex-1 border-blue-80 py-4 border-4 rounded-3xl userProfileStat '>
             <h2  className="font-Archivo-Bold text-[32px] text-white py-4 text-center border-b-blue-80 border-b-4">MY LEVEL</h2>
             <div>
             <div className='flex justify-between px-6 mt-8'>

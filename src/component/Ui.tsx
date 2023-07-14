@@ -14,7 +14,7 @@ type ConnectTyype = {
 
 export const ConnectWalletbtn = ({clickHandler}:ConnectTyype) => {
     return(
-        <button className=" rounded-2xl border-2 md:py-4 px-[8px] py-[8px] md:px-10 font-normal font-Archivo_Regular text-[10px] md:text-[15px] leading-[10px] md:leading-[16.32px] header-button text-[#ffffff]" onClick={clickHandler}>
+        <button className="hidden md:block rounded-2xl border-2 md:py-4 px-[8px] py-[8px] md:px-10 font-normal font-Archivo_Regular text-[10px] md:text-[15px] leading-[10px] md:leading-[16.32px] header-button text-[#ffffff]" onClick={clickHandler}>
             CONNECT WALLET
           </button>
     )

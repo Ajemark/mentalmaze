@@ -23,7 +23,7 @@ export const Layout = () => {
           <ConnectWalletModal show={ModalMode}>
             {ConnectModals['verify']}
             </ConnectWalletModal>
-          <div className='  w-full mt-[176px] '>
+          <div className='  w-full mt-[96px] md:mt-[176px] '>
           <Outlet />
           </div>
         </div>

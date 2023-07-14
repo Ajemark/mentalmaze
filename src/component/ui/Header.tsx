@@ -27,16 +27,16 @@ const Header = () => {
   }, [])
 
   return (
-    <div className={`headerbg px-[16px] md:px-0 md:pr-[16px]  z-[5000000000] fixed md:h-[104px] w-full pb-8 md:pb-0  ${fixed ? "shadow-lg" : "shadow-none"}`}>
-      <div className='flex justify-between items-center py-6 mx-auto w-full '>
-        <div className='flex items-center gap-[16px] md:gap-8 '>
-          <div className="text-white text-[36px] " onClick={switchSideMode}>
-            <HiMenuAlt3 className="block md:hidden h-[32px]" />
-          </div>
-          <Link to={'/'} className="flex gap-[8px] md:gap-4 text-white font-Archivo_Regular items-center text-[1rem] md:text-[22px]">
+    <div className={`headerbg px-[16px]  md:px-[34px]  z-[5000000000] fixed h-[64px]  md:h-[104px] w-full   ${fixed ? "shadow-lg" : "shadow-none"}`}>
+      <div className='flex justify-between items-center h-full mx-auto w-full '>
+        <div className='flex items-center gap-[16px] md:gap-8 justify-between w-full md:w-fit md:justify-center'>
+          <Link to={'/'} className=" flex gap-[8px] md:gap-4 text-white font-Archivo_Regular items-center text-[1rem] md:text-[22px]">
             <img src={Logo} className=" h-5 md:h-full " />
             Mental Maze
           </Link>
+          <div className="text-white text-[36px]" onClick={switchSideMode}>
+            <HiMenuAlt3 className="block md:hidden h-[32px]" />
+          </div>
           <div className="hidden md:block">
             <HeaderInput />
           </div>
@@ -45,12 +45,6 @@ const Header = () => {
           <NavLink to={'/profile'}><div className="hidden md:block"> <img src={Boarder} alt="" /></div></NavLink>
           <ConnectWalletbtn clickHandler={() => { switchModal() }} />
         </div>
-      </div>
-      <div>
-        <div className="md:hidden">
-          <HeaderInput />
-        </div>
-
       </div>
     </div>
   )
