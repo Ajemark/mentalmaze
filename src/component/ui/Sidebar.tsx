@@ -16,10 +16,7 @@ import game from "./../../assets/sidebar/mobile/game.svg"
 import notification from "./../../assets/sidebar/mobile/notification.svg"
 import create from "./../../assets/sidebar/mobile/create.svg"
 import {motion} from "framer-motion"
-
-
 import { useModalContext } from "../../context/ModalContext"
-
 import Discord from "./../../assets/sidebar/mobile/Discord.svg"
 import Telegram from "./../../assets/sidebar/mobile/Telegram (2).svg"
 import Twitter from "./../../assets/sidebar/mobile/Twitter.svg"

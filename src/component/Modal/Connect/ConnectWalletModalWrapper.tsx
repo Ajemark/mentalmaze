@@ -14,7 +14,7 @@ type LayoutProps = { children?: ReactNode, show: boolean }
 
 const ConnectWalletModal = ({ children, show }: LayoutProps) => {
 
-  const { switchModal, modal } = useModalContext()
+  const { switchModal } = useModalContext()
   const {width} = useQuery()
 
   const HandlerAnimation = (): string => {
