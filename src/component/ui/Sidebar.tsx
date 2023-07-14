@@ -20,6 +20,7 @@ import { useModalContext } from "../../context/ModalContext"
 import Discord from "./../../assets/sidebar/mobile/Discord.svg"
 import Telegram from "./../../assets/sidebar/mobile/Telegram (2).svg"
 import Twitter from "./../../assets/sidebar/mobile/Twitter.svg"
+import { useState } from "react"
 
 interface CompType {
   showSideMobile: boolean,
@@ -27,8 +28,28 @@ interface CompType {
 }
 
 
+
+const NavItemMobile = (src: {link: string, title: string, image:string}) => {
+  const navigate = useNavigate()
+  const [show, setShow] = useState(false)
+  
+  return(
+  <div className={`pl-[16px]  md:pl-[34px] w-full relative items-center    cursor-pointer flex overflow-visible`} onClick={() => navigate(src.link)} onMouseEnter={() =>  setTimeout(() => setShow(!show), 500)} onMouseLeave={() => setShow(!show)}>
+  <span>  <img src={src.image} className=""/> </span>
+  {show&&<motion.div className="absolute  text-white w-28 left-20 bg-black px-2 font-Archivo_Regular"
+  animate={{y: [-100, 0], x:[20, 0]  }}
+  transition={{type:"spring", bounce: 0.5, duration: 0.5}}
+  >
+    {src.title}
+  </motion.div>
+}
+  </div>
+  )
+}
+
 const Sidebar = ({showSideMobile, switchSideMode}:CompType) => {
   const { switchModal,  } = useModalContext()
+
 
   const openModal = (value: string) => {
       if(value == "Connect wallet"){
@@ -42,16 +63,7 @@ const Sidebar = ({showSideMobile, switchSideMode}:CompType) => {
     width > 768 ?<div className='w-[104px] h-[90vh] fixed md:flex flex-col justify-between py-[46px] left-0 bg-[#010C18] z-20  opacity-[0.4000000059604645] items-center  mt-[104px] hidden'>
         <div className='flex flex-col gap-6 w-full'>
           {[{image: nav1, link: "/create-game", title: "Create Game"}, {image: nav2, link: '/leadership', title: "Leadership"},{image: nav3, link: "/", title: "Games"}].map((src) => {
-            return <div className={`sideBartitle pl-[16px]  md:pl-[34px] w-full relative items-center    cursor-pointer flex overflow-visible`} onClick={() => navigate(src.link)}>
-             
-          <span>  <img src={src.image} className=""/> </span>
-          <motion.div className="absolute hidden  text-white w-28 left-20 bg-black px-2 font-Archivo_Regular"
-          animate={{y: [-100, 0], x:[20, 0]  }}
-          transition={{delay: 1, type:"spring", bounce: 0.5}}
-          >
-            {src.title}
-          </motion.div>
-          </div>
+            return <NavItemMobile {...src}/>
           })}
         </div>
         <div className='flex flex-col '>
