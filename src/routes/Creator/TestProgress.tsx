@@ -6,7 +6,7 @@ export interface ModeType {
     mode: string,
 
 }
-const TestProgress = ({modes}: {modes: ModeType[]}) => {
+const TestProgress = ({modes}: {modes: ModeType[], action: (val:string) => void}) => {
     
 
 
@@ -27,15 +27,10 @@ const TestProgress = ({modes}: {modes: ModeType[]}) => {
             </div>
         )
     }
-
   return (
     <div className='relative flex justify-center gap-[16px] progrssBar w-[343px] sm:w-[550px]   md:w-[650px] lg:w-full lg:max-w-[1200px] ' >
         {modes.map((mode) => <Progress {...mode}/>)}
     </div>
   )
-}
-
-
-
-
+}                   
 export default TestProgress

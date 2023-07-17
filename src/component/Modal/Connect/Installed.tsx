@@ -1,12 +1,14 @@
 
+import { useModalContext } from "../../../context/ModalContext"
 import metalmask from "./../../../assets/metalmask.png"
 
 
 const Installed = () => {
+    const {switchModalcontent} = useModalContext()
     return (
         <div>
             <div>
-                <h1 className='font-droid border-b-blue-80 border-b-[8px] mt-[24px] pt-[16px] pb-[32px] leading-[37.78px] text-[32px] text-center'>
+            <h1 className='font-droid border-b-blue-80 border-b-[4px] md:border-b-[8px] pt-[20px] mt-[24px] md:pt-[16px] pb-[32px] leading-[37.78px] text-[20px] md:text-[32px] text-center w-fit mx-auto'>
                     Connect Wallet
                 </h1>
       </div>
@@ -16,7 +18,7 @@ const Installed = () => {
     Done Installing? Reconnect
     </p>
     
-        <button className='metamask flex gap-[24px] items-center justify-center font-droid text-[24px]  border-blue-80 mx-auto'>
+        <button className='metamask flex gap-[24px] items-center justify-center font-droid text-[16px] md:text-[24px]  border-blue-80 mx-auto' onClick={() => switchModalcontent('verify')}>
                     <div>
                     <img src={metalmask} />
                     </div>

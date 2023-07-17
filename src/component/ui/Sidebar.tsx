@@ -22,6 +22,7 @@ import Telegram from "./../../assets/sidebar/mobile/Telegram (2).svg"
 import Twitter from "./../../assets/sidebar/mobile/Twitter.svg"
 import { useState } from "react"
 
+
 interface CompType {
   showSideMobile: boolean,
   switchSideMode: () => void;
@@ -34,11 +35,11 @@ const NavItemMobile = (src: {link: string, title: string, image:string}) => {
   const [show, setShow] = useState(false)
   
   return(
-  <div className={`pl-[16px]  md:pl-[34px] w-full relative items-center    cursor-pointer flex overflow-visible`} onClick={() => navigate(src.link)} onMouseEnter={() =>  setTimeout(() => setShow(!show), 500)} onMouseLeave={() => setShow(!show)}>
+  <div className={`pl-[16px]  md:pl-[34px] w-full relative items-center    cursor-pointer flex overflow-visible`} onClick={() => navigate(src.link)} onMouseEnter={() =>  setShow(!show)} onMouseLeave={() => setShow(!show)}>
   <span>  <img src={src.image} className=""/> </span>
-  {show&&<motion.div className="absolute  text-white w-28 left-20 bg-black px-2 font-Archivo_Regular"
+  {show&&<motion.div className="absolute  text-white w-28 left-20  px-2 font-Archivo_Regular bg-hover text-center"
   animate={{y: [-100, 0], x:[20, 0]  }}
-  transition={{type:"spring", bounce: 0.5, duration: 0.5}}
+  transition={{type:"spring", bounce: 0.5, duration: 0.2}}
   >
     {src.title}
   </motion.div>
@@ -46,7 +47,12 @@ const NavItemMobile = (src: {link: string, title: string, image:string}) => {
   </div>
   )
 }
-
+// things to take note of
+// link settings page to create mode
+// make the progress bar clickable
+// chat us on discord 
+// search box
+// user cant create game if they add a certain amount
 const Sidebar = ({showSideMobile, switchSideMode}:CompType) => {
   const { switchModal,  } = useModalContext()
 
@@ -67,10 +73,10 @@ const Sidebar = ({showSideMobile, switchSideMode}:CompType) => {
           })}
         </div>
         <div className='flex flex-col '>
-          {[ discord, telegram, twitter].map((src) => {
-            return <div className='w-fit'>
-            <img src={src} />
-          </div>
+          {[ {image: discord, link: "https://discord.gg/8STEwMEu"}, {image: telegram, link: "https://t.me/official_mentalmaze"}, {image : twitter, link: "https://twitter.com/mazemental?s=11&t=meAljIy1rKjh6LjNVYwIFQ"}].map((src) => {
+            return <a className='w-fit' href={src.link}>
+            <img src={src.image} />
+          </a>
           })}
         </div>
     </div>
@@ -107,7 +113,7 @@ const Sidebar = ({showSideMobile, switchSideMode}:CompType) => {
           })}
             </div>
             <div className='flex flex-col gap-3 px-[12px] mt-[60px]'>
-          {[{image:Discord, title: "Discord"}, {image: Telegram, title: "Telegram"}, {image: Twitter, title: "Twitter"}].map((src) => {
+          {[{image:Discord, title: "Discord", link: "https://discord.gg/8STEwMEu"}, {image: Telegram, title: "Telegram", link: "https://t.me/official_mentalmaze"}, {image: Twitter, title: "Twitter", link: "https://twitter.com/mazemental?s=11&t=meAljIy1rKjh6LjNVYwIFQ"}].map((src) => {
             return <div className='w-full flex items-center gap-[8px] px-[12px]  h-[46px] hover:sidebarItem cursor-pointer  rounded-lg hover:border-blue-50 hover:border-solid hover:border-[1px]'>
             <img src={src.image} className=""/>
             <p className="text-[16px] font-Archivo_Regular leading-[17.41px] font-medium">

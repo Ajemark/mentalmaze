@@ -120,6 +120,18 @@ html, body {
   background: var(--grad-glas, linear-gradient(130deg, rgba(3, 36, 73, 0.45) 0%, rgba(11, 119, 240, 0.10) 100%));
   border-style: solid;
 }
+
+.metamask{
+  background: var(--grad-glas, linear-gradient(130deg, rgba(3, 36, 73, 0.45) 0%, rgba(11, 119, 240, 0.10) 100%));
+  width: 218px;
+  height: 56px;
+  border-style: solid;
+  border-radius: 16px;
+  border:2px;
+  border-color: #063C7A;
+  background: var(--grad-glas, linear-gradient(130deg, rgba(3, 36, 73, 0.45) 0%, rgba(11, 119, 240, 0.10) 100%));
+  border-style: solid;
+}
 .menu-btn {
   position: relative;
   display: flex;

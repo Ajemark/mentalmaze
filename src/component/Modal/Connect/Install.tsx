@@ -10,7 +10,7 @@ const Install = () => {
 
     <div>
       <div>
-                <h1 className='font-droid border-b-blue-80 border-b-[8px] mt-[24px] pt-[16px] pb-[32px] leading-[37.78px] text-[32px] text-center'>
+      <h1 className='font-droid border-b-blue-80 border-b-[4px] md:border-b-[8px] pt-[20px] mt-[24px] md:pt-[16px] pb-[32px] leading-[37.78px] text-[20px] md:text-[32px] text-center w-fit mx-auto'>
                     Connect Wallet
                 </h1>
       </div>
@@ -24,11 +24,11 @@ const Install = () => {
         Install
     </button>
 
-    <div className='flex flex-col gap-1 font-Archivo_Regular font-normal'>
-        <p className='leading-[21.76px]  text-[20px] text-center'>
+    <div className='flex flex-col gap-1 font-Archivo_Regular font-normal text-[15px] md:text-[20px]'>
+        <p className='leading-[21.76px]  text-center'>
         Do you need help with connecting 
         </p>
-        <p className='flex justify-center leading-[21.76px] gap-2  text-[20px] text-center'>
+        <p className='flex justify-center leading-[21.76px] gap-2   text-center'>
         your wallet? <p className='text-blue-80'>Chat us on discord</p>
         </p>
     </div>

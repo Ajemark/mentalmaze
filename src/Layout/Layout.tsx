@@ -9,7 +9,7 @@ import { useModalContext } from '../context/ModalContext'
 
 
 export const Layout = () => {
-  const {ModalMode, sideBarMode, switchSideMode}  = useModalContext()
+  const {ModalMode, sideBarMode, switchSideMode, modal}  = useModalContext()
   console.log(sideBarMode)
   return (
     <div className='home rounded-none min-h-screen h-full flex justify-center w-full items-center'>
@@ -21,7 +21,7 @@ export const Layout = () => {
         <div className='flex flex-1 h-fit mx-auto w-full justify-center items-stretch'>
           <Sidebar showSideMobile={sideBarMode} switchSideMode={switchSideMode}/>
           <ConnectWalletModal show={ModalMode}>
-            {ConnectModals['verify']}
+            {ConnectModals[modal]}
             </ConnectWalletModal>
           <div className='  w-full mt-[96px] md:mt-[176px] md:ml-[104px]'>
           <Outlet />
