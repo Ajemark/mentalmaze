@@ -4,7 +4,7 @@ export const HeaderInput = () => {
     return(
         <div className="border-blue-50 rounded-2xl   border-2 flex items-center justify-center gap-6 px-10 font-normal text-sm  font-Archivo_Regular w-full">
             <img src={Search} />
-            <input type="text" placeholder="Search Games Or Collections..." className="bg-[inherit] py-4  outline-none border-0"/>
+            <input type="text" placeholder="Search Games Or Collections..." className="bg-[inherit] py-4  outline-none border-0 text-white"/>
         </div>
     )
 }
