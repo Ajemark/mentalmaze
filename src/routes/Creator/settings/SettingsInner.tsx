@@ -3,7 +3,7 @@ import { useRef } from 'react'
 
 import Input from '../../../component/ui/Input'
 import { HiPlus } from 'react-icons/hi'
-import TestProgress, { ModeType } from '../TestProgress'
+import TestProgress  from '../TestProgress'
 import { Instruction } from '../../../component/Ui'
 import { useSearchParams } from 'react-router-dom'
 // import {useFormik} from "formik"
@@ -196,7 +196,7 @@ const Payments = () => {
                 </div>
             </div>
             <div className=" flex flex-col gap-[24px] mt-[48px] w-full ">
-                <button className="w-full bg-blue-50 text-white text-[15px] font-Archivo_Regular rounded-[16px] border-[2px] border-blue-main py-[16px]" onClick={() => next('Payments')}>
+                <button className="w-full bg-blue-50 text-white text-[15px] font-Archivo_Regular rounded-[16px] border-[2px] border-blue-main py-[16px]">
                     Proceed To make Deposit
                 </button>
             </div>
