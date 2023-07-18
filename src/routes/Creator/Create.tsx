@@ -16,7 +16,7 @@ const Create = () => {
     <div className="grid  sm:grid-cols-2 md:grid-cols-3 gap-x-[45px] gap-y-[44px]  px-[16px]">
         <div className= 'relative bg-blue-100 border-[4px] border-solid border-blue-100 flex flex-col items-center justify-center w-full py-[32px]'>
         <img src={createmobile} className=' '/>
-        <Link className='font-droid text-[12px] md:text-[24px] md:leading-[28.34px] text-white py-[16px] level px-[24px] rounded-[8px] border-[2px]  border-[#063C7A]' to={'/settings'}>
+        <Link className='font-droid text-[12px] md:text-[24px] md:leading-[28.34px] text-white py-[16px] level px-[24px] rounded-[8px] border-[2px]  border-[#063C7A]' to={'/settings?title=game-details'}>
             CREATE GAME
         </Link>
         </div>
