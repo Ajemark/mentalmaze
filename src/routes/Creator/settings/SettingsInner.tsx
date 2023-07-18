@@ -202,4 +202,4 @@ const Payments = () => {
             </div>
         </div>
     )
-}
+} 
