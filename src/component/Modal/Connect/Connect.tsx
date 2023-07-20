@@ -1,5 +1,7 @@
 import { useModalContext } from "../../../context/ModalContext"
 import metalmask from "./../../../assets/metalmask.png"
+import {motion, AnimatePresence} from "framer-motion"
+import Animation from "./Animation";
 declare global {
   interface Window {
     ethereum?: object;
@@ -10,23 +12,22 @@ const Connect = () => {
   const {switchModalcontent} =  useModalContext()
 
   const connectWallet = () => {
-    // console.log("Connectin")
-    // if(window.ethereum){
-    //   console.log("detected")
-    //   return ;
-    // }
-    console.log("undetected")
+    console.log("Connectin")
+    if(window.ethereum){
+      console.log("detected")
+      return ;
+    }
     switchModalcontent('install')
   }
   
   return (
-    <div className="flex flex-col h-full">
+    <>
       <div>
-      <h1 className='font-droid border-b-blue-80 border-b-[4px] md:border-b-[8px] pt-[20px] mt-[24px] md:pt-[16px] pb-[32px] leading-[37.78px] text-[20px] md:text-[32px] text-center w-fit mx-auto'>
+      <h1 className='font-droid border-b-blue-80 border-b-[4px] md:border-b-[8px] pt-[20px] mt-[24px] md:pt-[16px] pb-[32px] leading-[37.78px] text-[20px] md:text-[32px] text-center w-fit md:w-full mx-auto'>
                     Connect Wallet
                 </h1>
       </div>
-    <div className='pt-[16px] pb-[32px] flex flex-col justify-between h-full '>
+    <Animation className='pt-[16px] pb-[32px] flex flex-col justify-between h-full '>
                 <div className='flex justify-center '>
                 <button className=' metamask flex gap-[24px] items-center justify-center font-droid text-[16px] md:text-[24px]  border-blue-80 ' onClick={connectWallet}>
                     <div>
@@ -44,9 +45,8 @@ const Connect = () => {
                     your wallet? <p className='text-blue-80'>Chat us on discord</p>
                     </p>
                 </div>
-      </div>
-        </div>
-
+      </Animation>
+      </>
   )
 }
 

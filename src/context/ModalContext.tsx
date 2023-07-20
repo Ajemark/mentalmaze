@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { createContext, ReactNode, useContext, useState } from "react";
 
-export type Modal = "installed" | "verify" | "connect" | "chooseNickname" | "install" | "installed" 
+export type Modal = "installed" | "verify" | "connect" | "chooseNickname" | "install" | "installed" | "welcome" | "example"
 
 
 type ModalContextType = {
@@ -10,7 +10,9 @@ type ModalContextType = {
     switchModal: () => void,
     switchModalcontent: (value:Modal) => void,
     sideBarMode: boolean,
-    switchSideMode: () => void
+    switchSideMode: () => void,
+    username: string | null,
+    usernameHandler: (val: string) => void
 };
 
 const ModalContext = createContext<ModalContextType>({
@@ -19,7 +21,9 @@ const ModalContext = createContext<ModalContextType>({
   switchModalcontent: () => {},
   switchModal: () => {},
   sideBarMode: true,
-  switchSideMode: () => {}
+  switchSideMode: () => {},
+  username: null,
+  usernameHandler: (val: string) => {}
 });
 
 
@@ -27,6 +31,7 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
   const [modal, setModal] = useState<Modal>("connect");
   const [modalMode, setmodalMode] = useState<boolean>(false)
   const [sideBarMode, setSideBarMode] = useState<boolean>(false)
+  const [username, setUsername] = useState<string | null>(null)
 
   const switchModal = () => {
     console.log("switching modal")
@@ -41,6 +46,9 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
     setSideBarMode(!sideBarMode)
   }
 
+  const usernameHandler = (vale:string) => {
+    setUsername(vale)
+  }
 
   return (
     <ModalContext.Provider
@@ -50,7 +58,9 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
         switchModal,
         switchModalcontent,
         switchSideMode,
-        sideBarMode
+        sideBarMode,
+        usernameHandler,
+        username
       }}
     >
       {children}

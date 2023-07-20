@@ -6,7 +6,7 @@ import ConnectWalletModal from "../component/Modal/Connect/ConnectWalletModalWra
 // import Overlay from '../component/ui/Overlay'
 import { ConnectModals } from './Modals'
 import { useModalContext } from '../context/ModalContext'
-
+import { AnimatePresence } from 'framer-motion'
 
 export const Layout = () => {
   const {ModalMode, sideBarMode, switchSideMode, modal}  = useModalContext()
@@ -21,7 +21,10 @@ export const Layout = () => {
         <div className='flex flex-1 h-fit mx-auto w-full justify-center items-stretch'>
           <Sidebar showSideMobile={sideBarMode} switchSideMode={switchSideMode}/>
           <ConnectWalletModal show={ModalMode}>
-            {ConnectModals[modal]}
+          
+          {ConnectModals[modal]}
+            
+            
             </ConnectWalletModal>
           <div className='  w-full mt-[96px] md:mt-[176px] md:ml-[104px]'>
           <Outlet />
