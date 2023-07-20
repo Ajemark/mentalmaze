@@ -1,4 +1,4 @@
-import React from 'react'
+// import React from 'react'
 import {AiOutlineLeft, AiOutlineRight} from "react-icons/ai"
 import Coloum from "./../../../../assets/modal/Coloum.svg"
 import Animation from '../Animation'

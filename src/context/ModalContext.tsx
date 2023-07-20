@@ -23,7 +23,7 @@ const ModalContext = createContext<ModalContextType>({
   sideBarMode: true,
   switchSideMode: () => {},
   username: null,
-  usernameHandler: (val: string) => {}
+  usernameHandler: () => {}
 });
 
 

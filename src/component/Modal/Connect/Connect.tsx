@@ -1,6 +1,5 @@
 import { useModalContext } from "../../../context/ModalContext"
 import metalmask from "./../../../assets/metalmask.png"
-import {motion, AnimatePresence} from "framer-motion"
 import Animation from "./Animation";
 declare global {
   interface Window {

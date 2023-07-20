@@ -1,5 +1,4 @@
 import { useModalContext } from "../../../context/ModalContext"
-import {motion, AnimatePresence} from "framer-motion"
 import Animation from "./Animation"
 
 const Install = () => {

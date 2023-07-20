@@ -6,7 +6,7 @@ import ConnectWalletModal from "../component/Modal/Connect/ConnectWalletModalWra
 // import Overlay from '../component/ui/Overlay'
 import { ConnectModals } from './Modals'
 import { useModalContext } from '../context/ModalContext'
-import { AnimatePresence } from 'framer-motion'
+// import { AnimatePresence } from 'framer-motion'
 
 export const Layout = () => {
   const {ModalMode, sideBarMode, switchSideMode, modal}  = useModalContext()
