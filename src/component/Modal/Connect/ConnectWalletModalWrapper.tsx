@@ -55,7 +55,7 @@ const ConnectWalletModal = ({ children, show }: LayoutProps) => {
         relative
 
         text-white
-        w-[80vw]
+        w-[90vw]
         h-[80vh]
         z-[999999999]
         bg-center bg-cover bg-no-repeat

@@ -18,6 +18,7 @@ const Example = () => {
                 </button>
                 <>
                 <img src={Coloum} />
+                
                 </>
                 <button className='next rounded-[8px] p-[1px]'>
                 <button className='rounded-[8px] bg-[#010C18] p-[8px] font-Archivo_Regular leading-normal text-[16px] flex items-center gap-[8px] w-[131px] justify-center'>

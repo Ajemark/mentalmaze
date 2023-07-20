@@ -14,7 +14,7 @@ const Install = () => {
       </div>
     <Animation className='pt-[48px] flex flex-col gap-[24px] h-full '>
 
-    <p className='font-Archivo_Regular text-[20px] leading-[40px] text-center max-w-md mx-auto'>
+    <p className='font-Archivo_Regular md:text-[20px] md:leading-[40px] text-center max-w-md mx-auto'>
     MetaMask extension is not installed in your browser
     </p>
 
