@@ -2,7 +2,6 @@
 import {AiOutlineLeft, AiOutlineRight} from "react-icons/ai"
 import Coloum from "./../../../../assets/modal/Coloum.svg"
 import Animation from '../Animation'
-import { useNavigate } from "react-router-dom"
 
 const Example = () => {
 

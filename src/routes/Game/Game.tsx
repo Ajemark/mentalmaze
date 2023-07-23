@@ -1,4 +1,4 @@
-import React from 'react'
+
 import {AiOutlineClockCircle} from "react-icons/ai"
 import {IoDiamondSharp} from "react-icons/io5"
 import messagequestion from "./../../assets/play/messagequestion.svg"
