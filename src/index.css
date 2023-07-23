@@ -105,11 +105,14 @@ html, body {
   @apply hover:border-blue-50  hover:border-solid hover:border-[1px]
 }
 .next {
-  background: linear-gradient(130deg,#032449, #0B77F0);
+  background: linear-gradient(130deg,#032449, #78aae4);
   /* border-style: solid; */
   /* border-width: 1px; */
 }
 
+.gambtn {
+ background:   linear-gradient(130deg, rgba(3, 36, 73, 0.45) 0%, rgba(11, 119, 240, 0.10) 100%);
+}
 
 .sideBartitle:hover > div {
     display: block;

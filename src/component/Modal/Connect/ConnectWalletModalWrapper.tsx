@@ -6,6 +6,7 @@ import { ReactNode } from "react"
 import Overlay from '../../ui/Overlay'
 import { useModalContext } from "../../../context/ModalContext"
 import useQuery from "../../../hooks/useQuery"
+import { useNavigate } from "react-router-dom"
 
 
 
@@ -14,8 +15,9 @@ type LayoutProps = { children?: ReactNode, show: boolean }
 
 const ConnectWalletModal = ({ children, show }: LayoutProps) => {
 
-  const { switchModal, modal } = useModalContext()
+  const { switchModal, modal, } = useModalContext()
   const {width} = useQuery()
+  const navigate = useNavigate()
 
   const HandlerAnimation = (): string => {
     if(show) {
@@ -77,7 +79,10 @@ const ConnectWalletModal = ({ children, show }: LayoutProps) => {
       <img src={Close} className='absolute top-0 md:top-[initial] md:right-[62px] z-[9999999999]' onClick={Handler} />}
       {
       modal == "example" &&  <button className='next rounded-[8px] p-[1px] absolute top-0 md:top-[initial] md:right-[62px] z-[9999999999] text-white text-[24px]'>
-      <button className="rounded-[8px] bg-[#010C18] p-[8px] font- leading-normal text-[16px] flex items-center gap-[8px] w-[131px] justify-center">
+      <button className="rounded-[8px] bg-[#010C18] p-[8px] font- leading-normal text-[16px] flex items-center gap-[8px] w-[131px] justify-center" onClick={() => {
+        navigate('/game')
+        switchModal()
+      }}>
         SKIP
       </button>
       </button>

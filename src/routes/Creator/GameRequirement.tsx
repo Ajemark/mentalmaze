@@ -55,7 +55,7 @@ Thank you for your time. We can’t wait to have your rectified game live. We lo
     </>
   }
   return (
-    <div className="relative px-[16px] md:px-10">
+    <div className="relative px-[16px] md:px-10 mt-[96px] md:mt-[176px]">
       <div className="border-blue-80 border-[4px] border-solid rounded-[24px] w-full max-w-[1000px] mx-auto pb-[72px] bg-blue-100"> 
         <h1 className="font-droid text-[32px] text-white text-center border-blue-80 border-b-[4px] border-solid pt-[8px] pb-[16px] leading-[37px]">GAME REQUIREMENT</h1>
         {pageContent}

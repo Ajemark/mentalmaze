@@ -26,7 +26,7 @@ export const Layout = () => {
             
             
             </ConnectWalletModal>
-          <div className='  w-full mt-[96px] md:mt-[176px] md:ml-[104px]'>
+          <div className='  w-full  md:ml-[104px]'>
           <Outlet />
           </div>
         </div>

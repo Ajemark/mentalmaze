@@ -11,7 +11,7 @@ const LeaderShipBoard = () => {
   return (
     
     <div> 
-        <div className='w-full h-fit'>
+        <div className='w-full h-fit mt-[96px] md:mt-[176px]'>
         {leaders.length > 0 ?
         <div className="relative z-[999]  px-[16px] md:px-14  text-white">
             <h2 className='font-Archivo_Regular font-normal tracking-[0.5px] md:text-[40px] mb-[64px] text-[20px] leading-[21px] md:leading-normal'>LEADERBOARD</h2>

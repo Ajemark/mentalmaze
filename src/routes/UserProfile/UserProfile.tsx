@@ -11,7 +11,7 @@ import StarsM from "./../../assets/userProfile/StarsMobile.svg"
 
 const UserProfile = () => {
   return (
-    <div className='w-full  relative z-[999] px-[16px] md:px-[52px] '>
+    <div className='w-full  relative z-[999] px-[16px] md:px-[52px] mt-[96px] md:mt-[176px]'>
         <ProfileHeader />
         <Mode />
         <div className="flex mt-12 gap-[34px] flex-col md:flex-row">

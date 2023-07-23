@@ -25,7 +25,7 @@ const Settings = () => {
 
 
   return (
-    <div className="relative px-[16px] md:px-10 mb-[96px]">
+    <div className="relative px-[16px] md:px-10 mb-[96px] mt-[96px] md:mt-[176px]">
       <h1 className='font-Archivo_Regular py-[16px] md:py-0 text-[20px] md:text-[48px] leading-[21px] md:leading-[52px] font-normal text-white mb-[32px] md:mb-[57px]'>
         CREATE GAME
       </h1>

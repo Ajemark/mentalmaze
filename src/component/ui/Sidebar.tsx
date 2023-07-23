@@ -63,6 +63,8 @@ const Sidebar = ({showSideMobile, switchSideMode}:CompType) => {
         switchModal()
       }
   }
+
+  
   const navigate = useNavigate()
   const {width} = useQuery()
   return (
