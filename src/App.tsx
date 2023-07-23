@@ -13,6 +13,7 @@ import LeaderShipBoard from './routes/LeadershipBoard/LeaderShipBoard'
 import Create from './routes/Creator/Create'
 import GameRequirement from './routes/Creator/GameRequirement'
 import Settings from './routes/Creator/settings'
+import Game from './routes/Game/Game'
 
 
 
@@ -49,6 +50,10 @@ function App() {
           path: "/game-Requirement",
           element: <GameRequirement />
         },
+        {
+          path: "/game",
+          element: <Game />
+        }
         
       ],
     },

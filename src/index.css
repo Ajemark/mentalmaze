@@ -59,6 +59,18 @@ html, body {
     background:  linear-gradient(46deg, rgba(1, 12, 24, 0.80) 0%, rgba(1, 12, 24, 0.45) 100%);
     backdrop-filter: blur(24px);
   }
+  .sponsorbtn{
+    border-radius: 16px;
+    background: var(--grad-dar, linear-gradient(130deg, #032449 0%, #0B77F0 100%));
+    backdrop-filter: blur(30px);
+    font-size: 15px;
+    line-height: 16.32px;
+    color: white;
+    padding: 16px;
+    font-family: Archivo-Regular;
+    margin-top: 48px;
+  }
+
   .home {
     background-color:  #010C18; 
   }
