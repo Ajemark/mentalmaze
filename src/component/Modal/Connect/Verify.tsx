@@ -15,7 +15,7 @@ const Verify = () => {
                     Verify
                 </button>
     
-        <div className='flex flex-col gap-1 font-Archivo_Regular font-normal'>
+        <div className='flex flex-col gap-1 font-Archivo_Regular font-normal tracking-wider'>
             <p className='leading-[21.76px]  text-[15px] md:text-[20px] text-center'>
             Do you need help with connecting 
             </p>

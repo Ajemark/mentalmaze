@@ -58,7 +58,7 @@ const ConnectWalletModal = ({ children, show }: LayoutProps) => {
 
         text-white
         w-[90vw]
-        h-[80vh]
+        h-[85vh]
         z-[999999999]
         bg-center bg-cover bg-no-repeat
         flex flex-col
@@ -69,7 +69,7 @@ const ConnectWalletModal = ({ children, show }: LayoutProps) => {
         
         >
         <img src={slices} alt="" className='w-[230px] md:w-[240px] md:h-[24px] absolute right-0 ' />
-        {children}
+       <div className="mb-[30px] md:mb-0 h-full"> {children}</div>
 
         <img src={slices} alt="" className='w-[230px] h-[24px] md:w-[240px] md:h-[24px] absolute bottom-0 left-0 hidden md:block' />
         <img src={sliceMobile} alt="" className='w-[230px] h-[24px] md:w-[240px] md:h-[24px] absolute bottom-0 left-0 block md:hidden' />

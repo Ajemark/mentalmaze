@@ -1,32 +1,25 @@
+import React from 'react'
 import { games } from '../Home/GamesData'
 import create from "./../../assets/create/create.svg"
 import createmobile from "./../../assets/create/createmobile.svg"
-import { Link } from 'react-router-dom'
-
+import { useNavigate } from 'react-router-dom'
 const Create = () => {
+  const navigate = useNavigate()
   return (
     games.length > 0?
-    <> 
-    <div className="flex  items-center gap-6 relative px-[15px] md:px-14 text-white font-Archivo_Regular py-[16px]">
-      <h2 className="font-normal text-[20px]   md:text-5xl mt-[16px] leading-[21.76px] mb-[16px] md:mt-0">
-    CREATED GAMES
-    </h2>
-    </div>
-
-    <div className="grid  sm:grid-cols-2 md:grid-cols-3 gap-x-[45px] gap-y-[44px]  px-[16px]">
+    <div className="grid  grid-cols-2 md:grid-cols-3 gap-x-[45px] gap-y-[44px] py-[72px] mt-[104px] px-[16px] mt-[96px] md:mt-[176px]">
         <div className= 'relative bg-blue-100 border-[4px] border-solid border-blue-100 flex flex-col items-center justify-center w-full py-[32px]'>
         <img src={createmobile} className=' '/>
-        <Link className='font-droid text-[12px] md:text-[24px] md:leading-[28.34px] text-white py-[16px] level px-[24px] rounded-[8px] border-[2px]  border-[#063C7A]' to={'/settings?title=game-details'}>
+        <button className='font-droid text-[12px] md:text-[24px] md:leading-[28.34px] text-white py-[16px] level px-[24px] rounded-[8px] border-[2px]  border-[#063C7A]' onClick={() => navigate('/settings?title=game-details')}>
             CREATE GAME
-        </Link>
+        </button>
         </div>
         
         {games.slice(0, 3).map((gam, index) => <div className="relative w-full h-full " key={index}><img src={gam?.image}  className="w-full" alt="" /></div>
         )}
     </div>
-    </>
     :
-    <div className='w-full flex flex-col  items-center justify-center h-full text-white'>
+    <div className='w-full flex flex-col  items-center justify-center h-full text-white mt-[96px] md:mt-[176px]'>
         <div>
         <img src={create} />
         </div>

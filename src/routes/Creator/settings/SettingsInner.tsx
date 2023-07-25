@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useEffect } from 'react'
 
 
 import Input from '../../../component/ui/Input'
@@ -6,12 +6,30 @@ import { HiPlus } from 'react-icons/hi'
 import TestProgress  from '../TestProgress'
 import { Instruction } from '../../../component/Ui'
 import { useSearchParams } from 'react-router-dom'
+import { useState } from 'react'
+import { ModeType } from '../TestProgress'
 // import {useFormik} from "formik"
 import { FiUploadCloud } from "react-icons/fi"
 export const GamedetailForm = () => {
     const [searchParams] = useSearchParams();
     const contRef = useRef<HTMLDivElement>(null)
-   
+    const [modes, setMode] = useState<ModeType[]>([{
+        title: "Game Details",
+        text: "Please provide your name and email",
+        mode: "current",
+        link: "game-details"
+    },
+    {
+        title: "Payments",
+        text: "A few details about your company",
+        mode: "pending",
+        link: "payments"
+    }, {
+        title: "Start Collaborating with your team",
+        text: "Please provide your name and email",
+        mode: "pending",
+        link: "collaborate"
+    },])
 
     // const formik = useFormik(
     //     {
@@ -22,45 +40,45 @@ export const GamedetailForm = () => {
     //     }
     // )
 
-    // const updateMode = (param: string): void => {
-    //     const mode = [...modes]
-    //     if (param == "Game Details") {
-    //         mode[0]['mode'] = "completed"
-    //         mode[1]['mode'] = "current"
-    //     }
-    //     else
-    //         if (param == "Payments") {
-    //             mode[1]['mode'] = "completed"
-    //             mode[2]['mode'] = "current"
-    //         }
-    //     setMode(mode)
-    //     return;
-    // }
+    const updateMode = (param: string): void => {
+        const mode = [...modes]
+        if (param == "Game Details") {
+            mode[0]['mode'] = "completed"
+            mode[1]['mode'] = "current"
+        }
+        else
+            if (param == "Payments") {
+                mode[1]['mode'] = "completed"
+                mode[2]['mode'] = "current"
+            }
+        setMode(mode)
+        return;
+    }
 
-    // useEffect(() => {
-    //     if (contRef) {
-    //         contRef.current?.scrollIntoView()
-    //     }
-    // }, [modes])
+    useEffect(() => {
+        if (contRef) {
+            contRef.current?.scrollIntoView()
+        }
+    }, [modes])
 
     return (
         <div className='' >
             <div className='mx-auto w-fit mt-[32px]' ref={contRef} >
-                <TestProgress  />
+                <TestProgress  modes={modes}/>
             </div>
             {searchParams.get('title') == "game-details"?<GameDetails  />:null}
             {searchParams.get('title') == "payments"?<Payments  />:null}
             {searchParams.get('title') == "collaborate"?<Submit  />:null}
-            {/* {modes[0]['mode'] == "current" ? <GameDetails next={updateMode} /> : null}
-            {modes[1]['mode'] == "current" ? <Payments next={updateMode} /> : null}
-            {modes[2]['mode'] == "current" ? <Submit /> : null} */}
+            {modes[0]['mode'] == "current" ? <GameDetails next={updateMode} /> : null}
+            {/* {modes[1]['mode'] == "current" ? <Payments next={updateMode} /> : null} */}
+            {/* {modes[2]['mode'] == "current" ? <Submit /> : null} */}
         </div>
     )
 }
 
 
 
-const GameDetails = () => {
+const GameDetails = ({next}: {next: (value) => {}}) => {
     const [searchParams, setSearchParams] = useSearchParams();
 
     console.log(searchParams.get('title'))
@@ -115,7 +133,10 @@ const GameDetails = () => {
                     <Instruction />
                 </div>
                 <div className='mt-[48px]'>
-                    <button className="w-full bg-blue-50 text-white text-[15px] font-Archivo_Regular rounded-[16px] border-[2px] border-blue-main py-[16px]" onClick={() => setSearchParams({title:'payments', completed: ['game-details', 'payments']})}>
+                    <button className="w-full bg-blue-50 text-white text-[15px] font-Archivo_Regular rounded-[16px] border-[2px] border-blue-main py-[16px]" onClick={() => { 
+                        setSearchParams({title:'payments'});
+                        next("Game Details")
+                }}>
                         GENERATE
                     </button>
                 </div>

@@ -26,6 +26,7 @@ import { useState } from "react"
 interface CompType {
   showSideMobile: boolean,
   switchSideMode: () => void;
+  challenger: boolean
 }
 
 
@@ -53,7 +54,7 @@ const NavItemMobile = (src: {link: string, title: string, image:string}) => {
 // chat us on discord 
 // search box
 // user cant create game if they add a certain amount
-const Sidebar = ({showSideMobile, switchSideMode}:CompType) => {
+const Sidebar = ({showSideMobile, switchSideMode, challenger}:CompType) => {
   const { switchModal,  } = useModalContext()
 
 
@@ -68,7 +69,7 @@ const Sidebar = ({showSideMobile, switchSideMode}:CompType) => {
   const navigate = useNavigate()
   const {width} = useQuery()
   return (
-    width > 768 ?<div className='w-[104px] h-[90vh] fixed md:flex flex-col justify-between py-[46px] left-0 bg-[#010C18] z-20  opacity-[0.4000000059604645] items-center  mt-[104px] hidden'>
+    width > 768 ?<div className={`w-[104px] h-[90vh] fixed md:flex flex-col justify-between py-[46px] left-0  z-20  opacity-[0.4000000059604645] items-center  mt-[104px] hidden ${challenger?"bg-[#000000]":"bg-[#010C18]"}`}>
         <div className='flex flex-col gap-6 w-full'>
           {[{image: nav1, link: "/create-game", title: "Create Game"}, {image: nav2, link: '/leadership', title: "Leadership"},{image: nav3, link: "/", title: "Games"}].map((src) => {
             return <NavItemMobile {...src}/>

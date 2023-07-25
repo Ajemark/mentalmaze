@@ -14,6 +14,10 @@ import Create from './routes/Creator/Create'
 import GameRequirement from './routes/Creator/GameRequirement'
 import Settings from './routes/Creator/settings'
 import Game from './routes/Game/Game'
+import { ChallengerLayout } from './ChallengerLayout/ChallengerLAyout'
+import ChallengerHome from './ChallengerLayout/Pages/ChallengerHome'
+import ChallengerGames from './ChallengerLayout/Pages/ChallengerGames'
+import ChallengerGame from './ChallengerLayout/Pages/ChallengerGame'
 
 
 
@@ -54,13 +58,26 @@ function App() {
           path: "/game",
           element: <Game />
         }
-        
       ],
     },
     {
-      path: "/creator",
-      // element: 
-    }
+      path: "/challenger",
+      element: <ChallengerLayout />,
+      children: [
+        {
+          path: "/challenger",
+          element: <ChallengerHome />
+        },
+        {
+          path: "/challenger/uploadedgames",
+          element: <ChallengerGames />
+        },
+        {
+          path: "/challenger/singlegame",
+          element: <ChallengerGame />
+        }
+      ]
+    },
   ]);
 
   return (

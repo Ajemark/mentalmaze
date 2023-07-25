@@ -8,6 +8,11 @@ import Verify from '../component/Modal/Connect/Verify'
 import { ReactNode } from 'react'
 import Welcome from '../component/Modal/Connect/Welcome'
 import Example from '../component/Modal/Connect/Example/Example'
+import Congratulations from '../component/Modal/Connect/game/Congratulations'
+import Getmore from '../component/Modal/Connect/game/Getmore'
+import Hurray from '../component/Modal/Connect/game/Hurray'
+import Reveal from '../component/Modal/Connect/game/Reveal'
+import Collating from '../component/Modal/Connect/game/Collating'
 
 
 type Modal = {
@@ -17,7 +22,12 @@ type Modal = {
     chooseNickname: ReactNode,
     installed: ReactNode,
     welcome: ReactNode,
-    example: ReactNode
+    example: ReactNode,
+    congratulations: ReactNode, 
+    getmore: ReactNode,
+    hurray: ReactNode,
+    reveal: ReactNode,
+    collate: ReactNode
 }
 
 
@@ -28,5 +38,10 @@ export const ConnectModals:Modal = {
     chooseNickname: <ChooseANickname />,
     installed: <Installed />,
     welcome: <Welcome />,
-    example: <Example />
+    example: <Example />,
+    congratulations: <Congratulations />,
+    getmore: <Getmore />,
+    hurray: <Hurray />,
+    reveal: <Reveal />,
+    collate: <Collating />
 }
