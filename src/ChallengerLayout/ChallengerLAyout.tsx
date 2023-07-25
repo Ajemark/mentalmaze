@@ -9,7 +9,7 @@ import { useModalContext } from '../context/ModalContext'
 // import { AnimatePresence } from 'framer-motion'
 
 export const ChallengerLayout = () => {
-  const {ModalMode, sideBarMode, switchSideMode, modal}  = useModalContext()
+  const { sideBarMode, switchSideMode}  = useModalContext()
   return (
     <div className='bg-[#000000] rounded-none min-h-screen h-full flex justify-center w-full items-center'>
       {/* <div className='mx-auto fixed w-screen h-screen  left-0 top-0 image bg-bg-sky bg-cover bg-center right-0 '>

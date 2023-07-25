@@ -1,5 +1,6 @@
 import { games } from "./GamesData";
 import {VscUnlock} from "react-icons/vsc"
+import {RiArrowDownSLine} from "react-icons/ri";
 
 const TitleBar = () => { 
   return( 
@@ -13,10 +14,10 @@ const TitleBar = () => {
     </p>
     </div>
 
-    {/* <div className="px-6 py-[12.5px] outline-none border-blue-main border-[2px] rounded-lg hidden md:flex items-center justify-center gap-6">
+    <div className="px-6 py-[12.5px] outline-none border-blue-main border-[2px] rounded-lg hidden md:flex items-center justify-center gap-6 modalButton">
       <p className="font-Archivo_Regular font-normal text-2xl text-white bg-inherit">Select preferred creator</p> 
-      <img src={arrow_bottom} />
-      </div> */}
+      <RiArrowDownSLine size={25} />
+      </div>
   </div>
   );
 }

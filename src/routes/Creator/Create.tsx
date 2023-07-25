@@ -1,4 +1,3 @@
-import React from 'react'
 import { games } from '../Home/GamesData'
 import create from "./../../assets/create/create.svg"
 import createmobile from "./../../assets/create/createmobile.svg"

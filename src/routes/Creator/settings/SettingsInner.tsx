@@ -31,15 +31,6 @@ export const GamedetailForm = () => {
         link: "collaborate"
     },])
 
-    // const formik = useFormik(
-    //     {
-    //         initialValues: {
-    //             title: "",
-    //         },
-    //         onSubmit: () => console.log("working")
-    //     }
-    // )
-
     const updateMode = (param: string): void => {
         const mode = [...modes]
         if (param == "Game Details") {
@@ -78,7 +69,7 @@ export const GamedetailForm = () => {
 
 
 
-const GameDetails = ({next}: {next: (value) => {}}) => {
+const GameDetails = ({next}: {next: (value:string) => void}) => {
     const [searchParams, setSearchParams] = useSearchParams();
 
     console.log(searchParams.get('title'))

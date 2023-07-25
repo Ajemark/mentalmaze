@@ -26,7 +26,7 @@ const Connect = () => {
                     Connect Wallet
                 </h1>
       </div>
-    <Animation className='pt-[16px] pb-[32px] flex flex-col justify-between h-full '>
+    <Animation className='pt-[16px] pb-[32px] flex flex-col justify-start h-full '>
                 <div className='flex justify-center '>
                 <button className=' metamask flex gap-[24px] items-center justify-center font-droid text-[16px] md:text-[24px]  border-blue-80 ' onClick={connectWallet}>
                     <div>
@@ -36,7 +36,7 @@ const Connect = () => {
                 </button>
                 </div>
 
-                <div className='flex flex-col gap-1 font-Archivo_Regular font-normal text-[15px] md:text-[20px]'>
+                <div className='flex flex-col gap-1 mt-[80px] font-Archivo_Regular font-normal text-[15px] md:text-[20px]'>
                     <p className='leading-[21.76px]   text-center'>
                     Do you need help with connecting 
                     </p>

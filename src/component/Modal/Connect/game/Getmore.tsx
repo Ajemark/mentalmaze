@@ -1,4 +1,3 @@
-import React from 'react'
 import {IoDiamondSharp} from "react-icons/io5"
 const Getmore = () => {
   return (

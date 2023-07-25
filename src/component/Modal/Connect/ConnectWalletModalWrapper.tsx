@@ -46,7 +46,7 @@ const ConnectWalletModal = ({ children, show }: LayoutProps) => {
   return (
     <>
     {show && <Overlay />}
-    <div className=' w-screen h-screen bottom-0 fixed left-0 z-[999999999999] top-0 flex flex-row justify-center items-end md:items-center overflow-x-hidden'
+    <div className=' w-screen h-screen bottom-0 fixed left-0 z-[999999999999] top-0 flex flex-row justify-center items-end md:items-center '
     style={{
       transform: HandlerAnimation(),
       transition: "all 0.5s"
