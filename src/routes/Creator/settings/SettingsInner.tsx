@@ -57,7 +57,7 @@ export const GamedetailForm = () => {
             <div className='mx-auto w-fit mt-[32px]' ref={contRef} >
                 <TestProgress  modes={modes}/>
             </div>
-            {searchParams.get('title') == "game-details"?<GameDetails  />:null}
+            {searchParams.get('title') == "game-details"?<GameDetails next={updateMode} />:null}
             {searchParams.get('title') == "payments"?<Payments  />:null}
             {searchParams.get('title') == "collaborate"?<Submit  />:null}
             {modes[0]['mode'] == "current" ? <GameDetails next={updateMode} /> : null}
