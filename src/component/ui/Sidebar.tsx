@@ -75,9 +75,9 @@ const Sidebar = ({showSideMobile, switchSideMode, challenger}:CompType) => {
             return <NavItemMobile {...src}/>
           })}
         </div>
-        <div className='flex flex-col gap-6 w-full'>
-          {[ {image: discord, link: "https://discord.gg/8STEwMEu"}, {image: telegram, link: "https://t.me/official_mentalmaze"}, {image : twitter, link: "https://twitter.com/mazemental?s=11&t=meAljIy1rKjh6LjNVYwIFQ"}].map((src) => {
-            return <a className='w-full pl-[8px] md:pl-[15px]' href={src.link}>
+        <div className='flex flex-col gap-8 w-full '>
+          {[ {image: discord, link: "https://discord.gg/8STEwMEu"}, {image: telegram, link: "https://t.me/official_mentalmaze"}, {image : twitter, link: "https://twitter.com/mazemental?s=11&t=meAljIy1rKjh6LjNVYwIFQ"}].map((src, index) => {
+            return <a className={`w-[72px] mx-auto flex relative justify-center ${index == 0&&"border-solid border-t-[2px] border-t-[#85BCF9] pt-[22px]"}`} href={src.link}>
             <img src={src.image} />
           </a>
           })}
