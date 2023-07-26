@@ -1,8 +1,8 @@
 // import React from 'react'
-import nav1 from "./../../assets/sidebar/nav1.png"
-import nav2 from "./../../assets/sidebar/nav2.png"
-import nav3 from "./../../assets/sidebar/nav3.png"
-import discord from "./../../assets/sidebar/discord.png"
+import nav1 from "./../../assets/sidebar/nav1.svg"
+import nav2 from "./../../assets/sidebar/nav2.svg"
+import nav3 from "./../../assets/sidebar/nav3.svg"
+import discord from "./../../assets/sidebar/discord.svg"
 import telegram from "./../../assets/sidebar/telegram.svg"
 import twitter from "./../../assets/sidebar/twitter.svg"
 import { useNavigate } from "react-router-dom"
@@ -36,7 +36,7 @@ const NavItemMobile = (src: {link: string, title: string, image:string}) => {
   const [show, setShow] = useState(false)
   
   return(
-  <div className={`pl-[16px]  md:pl-[34px] w-full relative items-center    cursor-pointer flex overflow-visible`} onClick={() => navigate(src.link)} onMouseEnter={() =>  setShow(!show)} onMouseLeave={() => setShow(!show)}>
+  <div className={`pl-[8px]  md:pl-[15px] w-full relative items-center    cursor-pointer flex overflow-visible`} onClick={() => navigate(src.link)} onMouseEnter={() =>  setShow(!show)} onMouseLeave={() => setShow(!show)}>
   <span>  <img src={src.image} className=""/> </span>
   {show&&<motion.div className="absolute  text-white w-28 left-20  px-2 font-Archivo_Regular bg-hover text-center"
   animate={{y: [-100, 0], x:[20, 0]  }}
@@ -75,9 +75,9 @@ const Sidebar = ({showSideMobile, switchSideMode, challenger}:CompType) => {
             return <NavItemMobile {...src}/>
           })}
         </div>
-        <div className='flex flex-col '>
+        <div className='flex flex-col gap-6 w-full'>
           {[ {image: discord, link: "https://discord.gg/8STEwMEu"}, {image: telegram, link: "https://t.me/official_mentalmaze"}, {image : twitter, link: "https://twitter.com/mazemental?s=11&t=meAljIy1rKjh6LjNVYwIFQ"}].map((src) => {
-            return <a className='w-fit' href={src.link}>
+            return <a className='w-full pl-[8px] md:pl-[15px]' href={src.link}>
             <img src={src.image} />
           </a>
           })}

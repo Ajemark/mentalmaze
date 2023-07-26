@@ -1,0 +1,20 @@
+<svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_b_1659_7836)">
+<path d="M33.9178 53.5H38.1179C39.7179 53.5 40.7512 52.3667 40.4512 50.9834L39.7678 47.9668H32.2678L31.5845 50.9834C31.2845 52.2834 32.4178 53.5 33.9178 53.5Z" stroke="#85BCF9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M39.7682 47.9503L42.6516 45.3836C44.2682 43.9502 44.3349 42.9502 43.0516 41.3335L37.9682 34.8836C36.9015 33.5336 35.1516 33.5336 34.0849 34.8836L29.0016 41.3335C27.7182 42.9502 27.7182 44.0002 29.4015 45.3836L32.2849 47.9503" stroke="#85BCF9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M36.0186 34.5332V38.7499" stroke="#85BCF9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M36.8665 24.334H35.1999C34.2832 24.334 33.5332 23.584 33.5332 22.6673V21.0007C33.5332 20.084 34.2832 19.334 35.1999 19.334H36.8665C37.7832 19.334 38.5332 20.084 38.5332 21.0007V22.6673C38.5332 23.584 37.7832 24.334 36.8665 24.334Z" stroke="#85BCF9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M21.4499 39.6173H23.1165C24.0332 39.6173 24.7832 38.8673 24.7832 37.9506V36.284C24.7832 35.3673 24.0332 34.6172 23.1165 34.6172H21.4499C20.5332 34.6172 19.7832 35.3673 19.7832 36.284V37.9506C19.7832 38.8673 20.5332 39.6173 21.4499 39.6173Z" stroke="#85BCF9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M50.5501 39.6173H48.8835C47.9668 39.6173 47.2168 38.8673 47.2168 37.9506V36.284C47.2168 35.3673 47.9668 34.6172 48.8835 34.6172H50.5501C51.4668 34.6172 52.2168 35.3673 52.2168 36.284V37.9506C52.2168 38.8673 51.4668 39.6173 50.5501 39.6173Z" stroke="#85BCF9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M33.5333 21.9336C27.1833 22.6836 22.25 28.0669 22.25 34.6169" stroke="#85BCF9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M49.7499 34.6169C49.7499 28.0836 44.8499 22.7169 38.5332 21.9336" stroke="#85BCF9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<defs>
+<filter id="filter0_b_1659_7836" x="-60" y="-60" width="192" height="192" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feGaussianBlur in="BackgroundImageFix" stdDeviation="30"/>
+<feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_1659_7836"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_1659_7836" result="shape"/>
+</filter>
+</defs>
+</svg>

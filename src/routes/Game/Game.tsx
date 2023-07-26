@@ -32,7 +32,7 @@ const Game = () => {
           </div>
           <div >
           <img src={Modules} className="hidden md:block"/>
-          <div className="flex items-center">
+          <div className="flex items-center md:hidden">
           <div className='flex flex-col items-center gap-[8px] text-white font-droid text-[15px] md:text-[32px]'>
          <div
         className="w-[32px] h-[32px] text-center"

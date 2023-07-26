@@ -35,13 +35,13 @@ const Connect = () => {
                     MentalMask
                 </button>
                 </div>
-
+                
                 <div className='flex flex-col gap-1 mt-[80px] font-Archivo_Regular font-normal text-[15px] md:text-[20px]'>
                     <p className='leading-[21.76px]   text-center'>
                     Do you need help with connecting 
                     </p>
                     <p className='flex justify-center leading-[21.76px]  text-center'>
-                    your wallet? <p className='text-blue-80'>Chat us on discord</p>
+                    your wallet? <a className='text-blue-80' href="https://discord.gg/8STEwMEu">Chat us on discord</a>
                     </p>
                 </div>
       </Animation>
