@@ -19,7 +19,7 @@ export const ChallengerLayout = () => {
         <Header challenger/>
         <div className='flex flex-1 h-fit mx-auto w-full justify-center '>
           <Sidebar showSideMobile={sideBarMode} switchSideMode={switchSideMode} challenger={true}/>
-          <div className='  w-full  md:ml-[104px] mt-[96px] md:mt-[176px]'>
+          <div className='  w-full  md:ml-[104px] '>
           <Outlet />
           </div>
         </div>

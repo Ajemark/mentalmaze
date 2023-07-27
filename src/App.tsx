@@ -18,6 +18,7 @@ import { ChallengerLayout } from './ChallengerLayout/ChallengerLAyout'
 import ChallengerHome from './ChallengerLayout/Pages/ChallengerHome'
 import ChallengerGames from './ChallengerLayout/Pages/ChallengerGames'
 import ChallengerGame from './ChallengerLayout/Pages/ChallengerGame'
+import Dashboard from './ChallengerLayout/Pages/Dashboard/Dashboard'
 
 
 
@@ -75,6 +76,10 @@ function App() {
         {
           path: "/challenger/singlegame",
           element: <ChallengerGame />
+        },
+        {
+          path: "/challenger/dashboard",
+          element: <Dashboard />
         }
       ]
     },

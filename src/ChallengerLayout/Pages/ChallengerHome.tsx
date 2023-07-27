@@ -1,7 +1,7 @@
 
 const ChallengerHome = () => {
   return (
-    <div className='relative  text-white px-[20px] md:px-[52px] max-w-[1368px] mx-auto tracking-normal md:tracking-widest text-[16px] md:text-[32px]'>
+    <div className='relative  text-white px-[20px] md:px-[52px] max-w-[1368px] mx-auto tracking-normal md:tracking-widest text-[16px] md:text-[32px] mt-[96px] md:mt-[176px]'>
       <div>
         <h2 className='font-droid leading-[37.78px]'>Hello UNDERCOVER SOLVER</h2>
         <p className='flex flex-col gap-10 mt-[48px]'>

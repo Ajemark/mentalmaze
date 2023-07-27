@@ -86,7 +86,7 @@ html, body {
   .userProfileStat {
     border-radius: 16px;
     border: 2px solid var(--blue-80, #063C7A);
-    background: var(--overlay-glas, linear-gradient(46deg, rgba(1, 12, 24, 0.80) 0%, rgba(1, 12, 24, 0.45) 100%));
+    background: #010C18;
     box-shadow: 61.33333969116211px 61.33333969116211px 92.00000762939453px 0px rgba(1, 12, 24, 0.25);
   }
   

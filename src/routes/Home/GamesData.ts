@@ -7,7 +7,7 @@ import Box6 from "./../../assets/games/Box6.png"
 import Box7 from "./../../assets/games/Box7.png"
 import Box8 from "./../../assets/games/Box8.png"
 import Box9 from "./../../assets/games/Box9.png"
-
+import Game from "./../../assets/challengerGames/game.png"
 type gameType = {
     image: string,
     title: string
@@ -46,3 +46,25 @@ export const games: Array<gameType> = [
     },
   ]
   
+
+  export type challengergametype = {
+    image: string,
+    title: string,
+    vetted: boolean
+  }
+  export const challengergames: Array<challengergametype> = [
+    {
+      image: Game,
+      title: "Math puzzle",
+      vetted: true
+    },
+    {
+      image: Game,
+      title: "Math puzzle",
+      vetted: true
+    },{
+      image: Game,
+      title: "Math puzzle",
+      vetted: true
+    },
+  ]

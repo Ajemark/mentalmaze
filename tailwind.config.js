@@ -15,6 +15,7 @@ export default {
         'blue-90': "#032449",
         'blue-100': "#010C18",
         'wb-90': "#262626",
+        'wb-100': "#0D0D0D",
         'blue-70': '#0855AB'
       },
       fontFamily: {
@@ -31,6 +32,9 @@ export default {
         "overlay": "url('./assets/Overlay.png')",
         "connect_wallet": "url('./assets/connectwalletbg.png')",
         "hover": "url('./assets/sidebar/hover.svg')"
+      },
+      gridTemplateColumns: {
+        "custom": "minmax(468px, 1fr) minmax(350px, 1fr) minmax(250px, 1fr)"
       }
     },
   },

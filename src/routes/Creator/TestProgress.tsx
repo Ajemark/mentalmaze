@@ -32,7 +32,7 @@ const TestProgress = ({modes}: {modes: ModeType[]}) => {
         }
 
         return (
-            <div className='flex flex-col items-center steps w-full' onClick={mode==="completed" || mode==="current"?() => setSearchParams({title:link}):() => console.log("eas")}>
+            <div className='flex flex-col items-center steps w-full' onClick={mode==="completed" || mode == "current"?() => setSearchParams({title:link}):() => console.log("eas")}>
             <div className='bullet bg-white w-[32px] h-[32px] rounded-full flex justify-center items-center relative 
             before:block before:absolute before:content-[""] before:h-[4px] before:w-[120px] sm:before:w-[160px] md:before:w-[220px] lg:before:w-[265px] before:bg-blue-50 before:-right-[120px] sm:before:-right-[160px] md:before:-right-[220px] lg:before:-right-[265px]
             after:block after:absolute after:content-[""]  after:h-[4px] after:w-[120px] sm:after:w-[160px] md:after:w-[220px] lg:after:w-[265px] after  after:bg-blue-50 after:-right-[120px] sm:after:-right-[160px] md:after:-right-[220px] lg:after:-right-[265px]'>

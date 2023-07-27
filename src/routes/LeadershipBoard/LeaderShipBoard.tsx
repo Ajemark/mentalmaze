@@ -14,7 +14,15 @@ const LeaderShipBoard = () => {
         <div className='w-full h-fit mt-[96px] md:mt-[176px]'>
         {leaders.length > 0 ?
         <div className="relative z-[999]  px-[16px] md:px-14  text-white">
-            <h2 className='font-Archivo_Regular font-normal tracking-[0.5px] md:text-[40px] mb-[64px] text-[20px] leading-[21px] md:leading-normal'>LEADERBOARD</h2>
+           <div className="flex justify-between items-center mb-[64px] "> 
+           <h2 className='font-Archivo_Regular font-normal tracking-[0.5px] md:text-[40px] text-[20px] leading-[21px] md:leading-normal'>LEADERBOARD</h2>
+           <p style={{
+            "background": "var(--grad-glas, linear-gradient(130deg, rgba(3, 36, 73, 0.45) 0%, rgba(11, 119, 240, 0.10) 100%))"
+           }} className="font-droid text-[15px] flex items-center gap-[93px] h-full rounded-[16px] py-[24px] px-[16px] border-blue-80 border-[2px]">
+            FILTER BOARD 
+            <AiOutlineDown />
+           </p>
+           </div>
             <div className='rounded-3xl border-blue-80 border-solid border-[2px] pb-[55px]'>
                 <div  className='flex grad-dar  justify-between items-center px-[32px] rounded-t-3xl py-[16px] '>
                     <p className='flex gap-[25px] font-droid text-[20px] leading-[23.61px]    items-center'><span className=' font-Archivo_thin text-wb-40 leading-[21.76px] font-normal'> Title: </span> Math Puzzle </p>

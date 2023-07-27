@@ -5,8 +5,61 @@ import Stars from "./../../assets/userProfile/Stars.png"
 import edit from "./../../assets/userProfile/edit.png"
 import Ball from "./../../assets/userProfile/Ball.png"
 import StarsM from "./../../assets/userProfile/StarsMobile.svg"
+import medalMaster from "./../../assets/Leadership/medalstarMaster.png"
+import medal from "./../../assets/Leadership/medal_star.png"
+
+const data = [
+    {
+        name: "Math Puzzle",
+        status: "Pending"
+    },
+    {
+        name: "Math Puzzle",
+        status: "View Result"
+    },
+    {
+        name: "Math Puzzle",
+        status: 25
+    },
+    {
+        name: "Math Puzzle",
+        status: 25
+    },
+    {
+        name: "Math Puzzle",
+        status: 25
+    }
+]
+
+const RANK = ({name, status}:{name: string, status:string | number}) => {
+    return (
+        <div className='flex justify-between font-droid text-[15px] md:text-[32px] font-normal px-[16px]  md:px-[48px] mt-[32px] grad-dar rounded-[16px] border-blue-50 border-solid border-[2px] py-[16px] md:py-[24px]'>
+        <div className='col-span-2 flex items-center gap-[16px] md:gap-[48px] '>
+            <div className=' bg-blue-main w-[48px] h-[48px] md:w-[72px] md:h-[72px] rounded-[8px] '>
+
+            </div>
+        <div className='flex flex-col items-start text-white'> <p>{name}</p>
+        </div>
+        </div>
+        <div className='text-white flex items-center'>
+                {status == "Pending"?"Pending":status == "View Result"?"View Result": status == 25 ?
+                <div className='flex text-white text-[24px] leading-[26.11px] items-center gap-3'><img src = {medalMaster} />{status.toString()}</div>:null}
+        </div>
+    </div>
+    )
+}
 
 
+const RANKS = () => {
+    return (
+    <div className='flex-1 border-blue-80 py-4 border-4 rounded-3xl userProfileStat mt-[34px]'>
+        <h2  className=" font-droidbold text-[32px] text-white py-4 text-center border-b-blue-80 border-b-4">RANK HISTORY</h2>
+        <div className='md:px-[40px] px-[20px]'>
+        {data.map((item) => <RANK {...item}/>)}
+        </div>
+    </div>
+    )
+}
 
 
 const UserProfile = () => {
@@ -14,8 +67,12 @@ const UserProfile = () => {
     <div className='w-full  relative z-[999] px-[16px] md:px-[52px] mt-[96px] md:mt-[176px]'>
         <ProfileHeader />
         <Mode />
-        <div className="flex mt-12 gap-[34px] flex-col md:flex-row">
-            <Stat/><Level />
+        <div className="flex mt-12 gap-[34px] flex-col md:flex-row w-full">
+            <Stat/>
+            <div className='w-full'>
+            <Level />
+            <RANKS />
+            </div>
         </div>
     </div>
   )
@@ -77,7 +134,7 @@ const Mode = () => {
 
 const Stat = () => {
     return (
-        <div className='border-4 rounded-3xl py-4 flex flex-col gap-8 border-blue-80 userProfileStat'>
+        <div className='border-4 rounded-3xl py-4 flex flex-col gap-8 border-blue-80 userProfileStat h-fit'>
             <h2 className='px-[75px] font-400 font-droidbold
             text-[2rem] text-white py-4 text-center border-b-blue-80 border-b-4'>
                 STATS  
@@ -100,9 +157,9 @@ const Stat = () => {
 const Level = () => {
     return (
         <div className='flex-1 border-blue-80 py-4 border-4 rounded-3xl userProfileStat '>
-            <h2  className="font-Archivo-Bold text-[32px] text-white py-4 text-center border-b-blue-80 border-b-4">MY LEVEL</h2>
+            <h2  className=" font-droidbold text-[32px] text-white py-4 text-center border-b-blue-80 border-b-4">ACHIEVEMENTS</h2>
             <div>
-            <div className='flex justify-between px-6 mt-8'>
+            <div className='flex justify-between px-[40px] mt-8'>
                 <div className='flex text-wb-40 text-xl gap-2 items-center'>
                     <div><img src={ranking} /></div>
                     <p className='font-Archivo_Regular'>Level 2</p>
@@ -111,7 +168,7 @@ const Level = () => {
                     200/400 MP
                 </div>
             </div>
-            <div className='w-full px-6'>
+            <div className='w-full px-[40px]'>
             <div className='w-full h-2 level mt-3  rounded-xl flex'>
                 <div className='h-full w-1/2 bg-blue-50 rounded-xl'></div>
                 <div className='h-full flex-1 flex items-center relative right-1'>
