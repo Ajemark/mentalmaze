@@ -14,8 +14,8 @@ export interface ModeType {
 
 
 const StepperControl = ({currentStep, steps, checkHandler}: {steps: (string | object)[], currentStep:number, checkHandler: (val:number) => void}) => {
-    const stepRef = useRef();
-    const [newStep, setNewStep] = useState([]);
+    const stepRef = useRef<object[]>();
+    const [newStep, setNewStep] = useState<object[]>([]);
 
     const updateStep = (stepNumber:number, steps:object[]) => {
       const newSteps = [...steps]

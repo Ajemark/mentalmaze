@@ -24,10 +24,7 @@ export const Layout = () => {
         <div className='flex flex-1 h-fit mx-auto w-full justify-center items-stretch'>
           <Sidebar showSideMobile={sideBarMode} switchSideMode={switchSideMode} challenger={false}/>
           <ConnectWalletModal show={ModalMode}>
-          
           {ConnectModals[modal]}
-            
-            
             </ConnectWalletModal>
           <div className='  w-full  md:ml-[104px]'>
           <Outlet />
