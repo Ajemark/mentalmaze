@@ -18,7 +18,7 @@ const ConnectWalletModal = ({ children, show }: LayoutProps) => {
   const { switchModal, modal, } = useModalContext()
   const {width} = useQuery()
   const navigate = useNavigate()
-
+  
   const HandlerAnimation = (): string => {
     if(show) {
       if(width > 768) {

@@ -12,10 +12,10 @@ export const Layout = () => {
 
   return (
     <div className='home rounded-none min-h-screen h-full flex justify-center w-full items-center'>
-            <div className='fixed h-screen bottom-0 bg-overlay w-screen mix-blend-multiply backdrop-blur-[4px] bg-cover'>
+            <div className='fixed h-screen bottom-0 bg-overlay w-screen mix-blend-multiply backdrop-blur-[4px] bg-cover '>
               
             </div>
-      <div className='mx-auto fixed w-screen h-screen  left-0 top-0 bg-bg-sky bg-cover bg-center right-0 after  '>
+      <div className='mx-auto fixed w-screen h-screen  left-0 top-0 bg-bg-sky bg-cover bg-center right-0 after  bg-fixed'>
       
       </div>
 

@@ -1,13 +1,14 @@
 import { games } from "./GamesData";
 import {VscUnlock} from "react-icons/vsc"
 import {RiArrowDownSLine} from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
 
 const TitleBar = () => { 
   return( 
   <div className="text-white font-Archivo_Regular  flex w-full justify-between items-center mt-[16px] md:mt-0 py-[15px]" >
     <div className="flex  items-center gap-6">
       <h2 className="font-normal text-[20px]   md:text-5xl">
-    MATH PUZZLE
+    PUZZLE
     </h2>
     <p className="border-blue-50 h-[24px] w-[27px] md:h-[initial] md:w-[initial] text-center md:py-4 md:px-6 rounded-lg leading-[21.76px] text-[10px] md:text-xl border-2 ">
       12
@@ -22,8 +23,28 @@ const TitleBar = () => {
   );
 }
 
+const Game = ({image}:{image: string}) => {
+  return (
+    <div className="relative flex justify-center items-center w-full">
+      <img src={image}  />
+      <div className="absolute p-[2px]" style={{
+        "background" : "linear-gradient(90deg, #032449, #0B77F0)"
+      }} >
+      <button className=" w-[143px] text-white py-[16px] rounded-[8px] font-droid tracking-[0.2px] left-0" style={{
+        "background": "linear-gradient(130deg, #032449 0%, #0B77F0 100%)",
+        "backdropFilter": "blur(4px)"
+      }}>
+        PLAY NOW
+      </button>
+      </div>
+    </div>
+  )
+}
+
 
 const Home = () => {
+    const navigate = useNavigate()
+
     return (
       <div className=" w-full h-fit mt-[96px] md:mt-[176px]">
       <div className="relative z-[999]  px-[15px] md:px-14">
@@ -33,8 +54,8 @@ const Home = () => {
             <p className="flex gap-[8px] items-center justify-center">Level: <span className=" font-droid text-white">Easy</span></p>
           <div className="text-[18px] md:text-[24px]"><VscUnlock color={"white"} /></div>  
           </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-[15px] gap-y-[15px] md:gap-x-[45px] md:gap-y-[44px] py-12 w-full px-0 ">
-        {games.map((gam, index) => <div className="relative" key={index}><img src={gam?.image} alt="" className="w-full"/></div>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-[15px] gap-y-[15px] md:gap-x-[45px] md:gap-y-[44px] py-12 w-full px-0" onClick={() => navigate('/game')}>
+        {games.map((gam, index) => <Game {...gam} key={index}/>
         )}
         </div>
         </div>

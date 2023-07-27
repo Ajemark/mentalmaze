@@ -31,7 +31,8 @@ export default {
         "bg-sky": "url('./assets/Background.png')",
         "overlay": "url('./assets/Overlay.png')",
         "connect_wallet": "url('./assets/connectwalletbg.png')",
-        "hover": "url('./assets/sidebar/hover.svg')"
+        "hover": "url('./assets/sidebar/hover.svg')",
+        "background": "url('./assets/Background.svg')"
       },
       gridTemplateColumns: {
         "custom": "minmax(468px, 1fr) minmax(350px, 1fr) minmax(250px, 1fr)"

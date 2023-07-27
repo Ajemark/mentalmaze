@@ -12,10 +12,9 @@ import { useModalContext } from "../../context/ModalContext"
 const Game = () => {
   const {switchModalcontent, switchModal} = useModalContext()
   useEffect(() => {
-    const timeout = setTimeout(() => {switchModalcontent('hurray'); switchModal()}, 2000)
+    const timeout = setTimeout(() => {switchModalcontent('hurray'); switchModal()}, 10000)
     return () => clearTimeout(timeout)
   }, [])
-
   
 
   return (

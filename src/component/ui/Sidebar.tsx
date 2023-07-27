@@ -101,7 +101,7 @@ const Sidebar = ({showSideMobile, switchSideMode, challenger}:CompType) => {
         <AiOutlineClose fontSize={24} className = "mx-auto mb-[48px]" onClick={switchSideMode}/>
             <div className="px-[12px] flex flex-col gap-[18px]">
               <div className="flex sidebarItem border-blue-50 border-solid border-[1px] rounded-lg h-[44px] gap-[8px]   items-center px-[16px] justify-center">
-                <div> <BsSearch fontSize={24} /></div> <input type="text" className="bg-inherit flex-1 w-full placeholder:text-blue-70 font-Archivo_Regular leading-[24px] text-[16px]" placeholder="Search"  />
+                <div> <BsSearch fontSize={24} /></div> <input type="text" className="bg-inherit outline-none flex-1 w-full placeholder:text-blue-70 font-Archivo_Regular leading-[24px] text-[16px]" placeholder="Search"  />
               </div>
             {[{image: game, path: "/", title: "Games"}, {image: cup, path: '/leaderboard', title: "Leaderboard"},{image: create, path: "/create-game", title: "Create game"},{image: notification, path: "/", title: "Notification"}].map((src, index) => {
             return <div className='w-full flex items-center gap-[8px] px-[12px] h-[46px] hover:sidebarItem cursor-pointer  rounded-lg' key={index} onClick={() => 
