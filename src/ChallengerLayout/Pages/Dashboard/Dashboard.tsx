@@ -1,4 +1,3 @@
-import React from 'react'
 import Title from "./../../../assets/challengerGames/dashboard/Title.png"
 import Paginationbuttongroup from "./../../../assets/challengerGames/dashboard//Paginationbuttongroup.svg"
 

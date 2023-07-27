@@ -6,7 +6,7 @@ import edit from "./../../assets/userProfile/edit.png"
 import Ball from "./../../assets/userProfile/Ball.png"
 import StarsM from "./../../assets/userProfile/StarsMobile.svg"
 import medalMaster from "./../../assets/Leadership/medalstarMaster.png"
-import medal from "./../../assets/Leadership/medal_star.png"
+// import medal from "./../../assets/Leadership/medal_star.png"
 
 const data = [
     {
