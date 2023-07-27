@@ -14,11 +14,11 @@ const LeaderShipBoard = () => {
         <div className='w-full h-fit mt-[96px] md:mt-[176px]'>
         {leaders.length > 0 ?
         <div className="relative z-[999]  px-[16px] md:px-14  text-white">
-           <div className="flex justify-between items-center mb-[64px] "> 
+           <div className="flex justify-between md:items-center mb-[64px] flex-col md:flex-row gap-[16px] md:gap-0"> 
            <h2 className='font-Archivo_Regular font-normal tracking-[0.5px] md:text-[40px] text-[20px] leading-[21px] md:leading-normal'>LEADERBOARD</h2>
            <p style={{
             "background": "var(--grad-glas, linear-gradient(130deg, rgba(3, 36, 73, 0.45) 0%, rgba(11, 119, 240, 0.10) 100%))"
-           }} className="font-droid text-[15px] flex items-center gap-[93px] h-full rounded-[16px] py-[24px] px-[16px] border-blue-80 border-[2px]">
+           }} className="font-droid text-[15px] flex items-center justify-between md:gap-[93px] h-full rounded-[16px] py-[24px] px-[16px] border-blue-80 border-[2px]">
             FILTER BOARD 
             <AiOutlineDown />
            </p>

@@ -2,20 +2,54 @@ import { games } from '../Home/GamesData'
 import create from "./../../assets/create/create.svg"
 import createmobile from "./../../assets/create/createmobile.svg"
 import { useNavigate } from 'react-router-dom'
+
+
+const Game = ({title, image}: {title: string, image: string}) => {
+  return (
+    <div className='relative'>
+      <img src={image} alt="" />
+      <div className='absolute bottom-[32px] left-[32px] p-[2px] rounded-[8px]' style={{
+        background: "linear-gradient( #032449, #0B77F0)"
+      }}>
+      <button className='  
+      font-droid text-[12px] md:text-[24px]
+      md:leading-[28.34px] text-white py-[16px]
+      px-[24px] rounded-[5px] border-[2px]border-[#063C7A]' style={{
+        "background": "black",
+        "opacity": "0.8",
+        "backdropFilter": "blur(4px)"
+      }}>
+        {title}
+      </button>
+      </div>
+    </div>
+  )
+}
+
 const Create = () => {
   const navigate = useNavigate()
   return (
     games.length > 0?
     <div className="grid  grid-cols-2 md:grid-cols-3 gap-x-[45px] gap-y-[44px] py-[72px] mt-[104px] px-[16px] mt-[96px] md:mt-[176px]">
-        <div className= 'relative bg-blue-100 border-[4px] border-solid border-blue-100 flex flex-col items-center justify-center w-full py-[32px]'>
-        <img src={createmobile} className=' '/>
-        <button className='font-droid text-[12px] md:text-[24px] md:leading-[28.34px] text-white py-[16px] level px-[24px] rounded-[8px] border-[2px]  border-[#063C7A]' onClick={() => navigate('/settings?title=game-details')}>
-            CREATE GAME
-        </button>
-        </div>
+        <div className='relative bg-[#010C18] flex flex-col items-center py-[41.8px] '>
+      <div ><img src={createmobile} alt="" /></div>
+      <div className='absolute bottom-[32px]  p-[1px] rounded-[8px]' style={{
+        background: "linear-gradient( #032449, #0B77F0)"
+      }}>
+      <button className=' 
+      font-droid text-[12px] md:text-[24px]
+      md:leading-[28.34px] text-white py-[16px]
+      px-[24px] rounded-[8px] border-[2px]border-[#063C7A]' 
+      style={{
+        "background": "#010C18",
+        "backdropFilter": "blur(4px)"
+      }} onClick={() => navigate('/settings')}>
+        Create Game
+      </button>
+      </div>
+    </div>
         
-        {games.slice(0, 3).map((gam, index) => <div className="relative w-full h-full " key={index}><img src={gam?.image}  className="w-full" alt="" /></div>
-        )}
+        {games.slice(0, 3).map((gam, index) => <Game key={index}  {...gam} />)}
     </div>
     :
     <div className='w-full flex flex-col  items-center justify-center h-full text-white mt-[96px] md:mt-[176px]'>

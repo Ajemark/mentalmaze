@@ -21,8 +21,12 @@ const Getmore = () => {
                 </button>
               </div>
             </div>
-            <div className='flex justify-between gap-[28px] md:gap-0 mx-auto mt-[24px] max-w-[461px] h-[80px] px-[32px] items-center border-blue-50 border-[2px] rounded-[16px]'>
-              <p className='font-droid text-[20px] md:text-[24px]  '>
+            <div
+            style={{
+              "background": "var(--grad-glas, linear-gradient(130deg, rgba(3, 36, 73, 0.45) 0%, rgba(11, 119, 240, 0.10) 100%))"
+            }}
+            className='flex justify-between gap-[28px] md:gap-0 mx-auto mt-[24px] w-[258px] md:max-w-[461px] h-[80px] px-[32px] items-center border-blue-50 border-[2px] rounded-[16px]'>
+              <p className='font-droid text-[16px] md:text-[24px]  '>
                 REFILL <span className='hidden md:block'>POPS</span>
               </p>
               <div className='flex gap-[8px] items-center '>
