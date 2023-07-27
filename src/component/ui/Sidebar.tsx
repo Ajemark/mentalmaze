@@ -71,7 +71,7 @@ const Sidebar = ({showSideMobile, switchSideMode, challenger}:CompType) => {
   return (
     width > 768 ?<div className={`w-[104px] h-[90vh] fixed md:flex flex-col justify-between py-[46px] left-0  z-20  opacity-[0.4000000059604645] items-center  mt-[104px] hidden ${challenger?"bg-[#000000]":"bg-[#010C18]"}`}>
         <div className='flex flex-col gap-6 w-full'>
-          {[{image: nav1, link: "/create-game", title: "Create Game"}, {image: nav2, link: '/leadership', title: "Leadership"},{image: nav3, link: "/", title: "Games"}].map((src) => {
+          {[{image: nav1, link: "/create-game", title: "Create Game"}, {image: nav2, link: '/leaderboard', title: "leaderboard"},{image: nav3, link: "/", title: "Games"}].map((src) => {
             return <NavItemMobile {...src}/>
           })}
         </div>
@@ -103,7 +103,7 @@ const Sidebar = ({showSideMobile, switchSideMode, challenger}:CompType) => {
               <div className="flex sidebarItem border-blue-50 border-solid border-[1px] rounded-lg h-[44px] gap-[8px]   items-center px-[16px] justify-center">
                 <div> <BsSearch fontSize={24} /></div> <input type="text" className="bg-inherit flex-1 w-full placeholder:text-blue-70 font-Archivo_Regular leading-[24px] text-[16px]" placeholder="Search"  />
               </div>
-            {[{image: game, path: "/", title: "Games"}, {image: cup, path: '/leadership', title: "Leaderboard"},{image: create, path: "/create-game", title: "Create game"},{image: notification, path: "/", title: "Notification"}].map((src, index) => {
+            {[{image: game, path: "/", title: "Games"}, {image: cup, path: '/leaderboard', title: "Leaderboard"},{image: create, path: "/create-game", title: "Create game"},{image: notification, path: "/", title: "Notification"}].map((src, index) => {
             return <div className='w-full flex items-center gap-[8px] px-[12px] h-[46px] hover:sidebarItem cursor-pointer  rounded-lg' key={index} onClick={() => 
             {
               navigate(src.path)
