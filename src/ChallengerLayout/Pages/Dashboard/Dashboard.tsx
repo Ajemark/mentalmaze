@@ -22,6 +22,7 @@ const games = [
     {
         image: Title,
         title: "math puzzle",
+        status: "approved"
 
     }
 ]
@@ -125,7 +126,7 @@ const Games = () => {
 
 
 
-const Game = ({image, title, status}) => {
+const Game = ({image, title, status}: {image: string, title: string, status: string}) => {
     return (
         <div className='grid md:grid-cols-custom grid-cols-2 p-[24px]'>
             <div className='flex gap-[8px] md:gap-6 items-center '>
