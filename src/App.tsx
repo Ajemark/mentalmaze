@@ -40,7 +40,7 @@ function App() {
           element: <UserProfile />
         },
         {
-          path: '/leadership',
+          path: '/leaderboard',
           element: <LeaderShipBoard />
         },
         {
