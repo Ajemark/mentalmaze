@@ -33,7 +33,7 @@ const Home = () => {
             <p className="flex gap-[8px] items-center justify-center">Level: <span className=" font-droid text-white">Easy</span></p>
           <div className="text-[18px] md:text-[24px]"><VscUnlock color={"white"} /></div>  
           </div>
-        <div className="grid  grid-cols-2 md:grid-cols-3 gap-x-[15px] gap-y-[15px] md:gap-x-[45px] md:gap-y-[44px] py-12 w-full px-0 ">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-[15px] gap-y-[15px] md:gap-x-[45px] md:gap-y-[44px] py-12 w-full px-0 ">
         {games.map((gam, index) => <div className="relative" key={index}><img src={gam?.image} alt="" className="w-full"/></div>
         )}
         </div>

@@ -6,9 +6,9 @@ import { useNavigate } from 'react-router-dom'
 
 const Game = ({title, image}: {title: string, image: string}) => {
   return (
-    <div className='relative flex items-center'>
+    <div className='relative flex items-center justify-center'>
       <img src={image} alt="" />
-      <div className='absolute bottom-[32px] left-[32px] p-[2px] rounded-[8px]' style={{
+      <div className='absolute bottom-[32px] md:left-[32px] p-[2px] rounded-[8px]' style={{
         background: "linear-gradient(#032449, #0B77F0)"
       }}>
       <button className='  
