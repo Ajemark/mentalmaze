@@ -139,11 +139,11 @@ const Game = ({image, title, status}: {image: string, title: string, status: str
                 <p className='text-blue-main'>
                     360
                 </p>
-                <p className='text-[#D92D20]'>
+                <p className=' text-disppaprove'>
                     120
                 </p>
                 </div>
-                <div className='bg-[#D92D20] h-[8px] w-full rounded-[20px]'>
+                <div className='bg-disppaprove h-[8px] w-full rounded-[20px]'>
                     <div className="bg-blue-main h-[8px] w-[30%] rounded-[20px]">
 
                     </div>

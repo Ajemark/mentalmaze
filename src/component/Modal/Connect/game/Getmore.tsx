@@ -15,7 +15,7 @@ const Getmore = () => {
               <div className='flex gap-[8px] items-center'>
                 <IoDiamondSharp color="#0B77F0" fontSize={24}/>
                 <button className='next rounded-[16px] p-[1px]'>
-                <button className='rounded-[16px] bg-[#010C18] p-[8px] font-droid leading-normal text-[16px] flex items-center gap-[8px] w-[57px] justify-center'>
+                <button className='rounded-[16px] bg-blue-100 p-[8px] font-droid leading-normal text-[16px] flex items-center gap-[8px] w-[57px] justify-center'>
                     10
                 </button>
                 </button>
@@ -32,7 +32,7 @@ const Getmore = () => {
               <div className='flex gap-[8px] items-center '>
                 <IoDiamondSharp color="#0B77F0" fontSize={24}/>
                 <button className='next rounded-[16px] p-[1px]' >
-                <button className='rounded-[16px] bg-[#010C18] p-[8px] font-droid leading-normal text-[16px] flex items-center gap-[8px] w-[57px] justify-center'>
+                <button className='rounded-[16px] bg-blue-100 p-[8px] font-droid leading-normal text-[16px] flex items-center gap-[8px] w-[57px] justify-center'>
                     25
                 </button>
                 </button>

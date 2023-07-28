@@ -1,12 +1,12 @@
 import { Instruction } from "../../../../component/Ui";
 import Input from "../../../../component/ui/Input";
 import { FiUploadCloud } from "react-icons/fi";
-import { useSearchParams } from "react-router-dom";
+// import { useSearchParams } from "react-router-dom";
 import useQuery from "../../../../hooks/useQuery";
 
 
 const GameDetails = ({handleClick}: {handleClick: () => void}) => {
-    const [searchParams] = useSearchParams();
+    // const [searchParams] = useSearchParams();
     const {width} = useQuery()
 
     const numbers = [];

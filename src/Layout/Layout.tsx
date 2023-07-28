@@ -6,7 +6,7 @@ import { ConnectModals } from './Modals';
 import { useModalContext } from '../context/ModalContext';
 
 
-export const Layout = () => {
+export const MainLayout = () => {
   const {ModalMode, sideBarMode, switchSideMode, modal}  = useModalContext()
 
 

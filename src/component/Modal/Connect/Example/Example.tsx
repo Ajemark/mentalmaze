@@ -13,7 +13,7 @@ const Example = () => {
             </h1>
             <Animation className='justify-between flex flex-col md:flex-row w-full items-center h-full px-[8px]'>
                 <button className='next rounded-[8px] p-[1px] hidden md:block'>
-                <button className='rounded-[8px] bg-[#010C18] p-[8px] font-Archivo_Regular leading-normal text-[16px] flex items-center gap-[8px] w-[131px] justify-center'>
+                <button className='rounded-[8px] bg-blue-100 p-[8px] font-Archivo_Regular leading-normal text-[16px] flex items-center gap-[8px] w-[131px] justify-center'>
                     <AiOutlineLeft />
                     {"previous".toLocaleUpperCase()}
                 </button>
@@ -25,13 +25,13 @@ const Example = () => {
                 
                 <div className="flex gap-[32px]">
                 <button className='next rounded-[8px] p-[1px] block md:hidden'>
-                <button className='rounded-[8px] bg-[#010C18] p-[8px] font-Archivo_Regular leading-normal text-[16px] flex items-center gap-[8px] w-[131px] justify-center'>
+                <button className='rounded-[8px] bg-blue-100 p-[8px] font-Archivo_Regular leading-normal text-[16px] flex items-center gap-[8px] w-[131px] justify-center'>
                     <AiOutlineLeft />
                     {"previous".toLocaleUpperCase()}
                 </button>
                 </button>
                 <button className='next rounded-[8px] p-[1px] block' >
-                <button className='rounded-[8px] bg-[#010C18] p-[8px] font-Archivo_Regular leading-normal text-[16px] flex items-center gap-[8px] w-[131px] justify-center'>
+                <button className='rounded-[8px] bg-blue-100 p-[8px] font-Archivo_Regular leading-normal text-[16px] flex items-center gap-[8px] w-[131px] justify-center'>
                     {"next".toLocaleUpperCase()}
                     <AiOutlineRight />
                 </button>

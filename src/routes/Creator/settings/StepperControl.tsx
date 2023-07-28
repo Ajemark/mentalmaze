@@ -1,7 +1,7 @@
 import Dot from "./../../../assets/settings/Dot.svg"
 import Tick from "./../../../assets/settings/Tick.svg"
 import { useState, useEffect, useRef } from "react"
-import { useSearchParams } from "react-router-dom"
+// import { useSearchParams } from "react-router-dom"
 export interface ModeType {
 
     title: string,
@@ -9,15 +9,24 @@ export interface ModeType {
     mode: string,
     link: string,
 }
+interface stepType {
+    description: {
+        title: string,
+        text: string
+    },
+    completed: boolean,
+    highlighted: boolean,
+    selected: boolean
+}
 
 
 
 
 const StepperControl = ({currentStep, steps, checkHandler}: {steps: (string | object)[], currentStep:number, checkHandler: (val:number) => void}) => {
-    const stepRef = useRef<object[]>();
-    const [newStep, setNewStep] = useState<object[]>([]);
+    const stepRef = useRef<stepType[]>();
+    const [newStep, setNewStep] = useState<stepType[]>([]);
 
-    const updateStep = (stepNumber:number, steps:object[]) => {
+    const updateStep = (stepNumber:number, steps:stepType[]) => {
         // console.log(stepNumber)
       const newSteps = [...steps]
       let count = 0;
@@ -51,7 +60,7 @@ const StepperControl = ({currentStep, steps, checkHandler}: {steps: (string | ob
         else {
             newSteps[count] = {
                 ...newSteps[count],
-                hightlighted: false,
+                highlighted: false,
                 selected: false,
                 completed: false,
             };
@@ -96,15 +105,7 @@ const runFunction = (text:(string | object)) => {
         setNewStep(current)
     }, [steps, currentStep])
 
-    interface stepType {
-        description: {
-            title: string,
-            text: string
-        },
-        completed: boolean,
-        highlighted: boolean,
-        selected: boolean
-    }
+   
     const Progress = ({step, index}: {step: stepType, index:number}) => {
         useEffect(() => {
             console.log("render Progress")

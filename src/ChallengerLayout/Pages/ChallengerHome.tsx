@@ -20,10 +20,10 @@ const ChallengerHome = () => {
         </p>
         </div>
         <div className='flex flex-col gap-[24px]'>
-        <button className='bg-[#0D0D0D] py-[24px] md:py-[32px] mt-[80px] rounded-[16px] text-[16px] md:text-[20px] font-Archivo_Regular'>
+        <button className=' bg-wb-100 py-[24px] md:py-[32px] mt-[80px] rounded-[16px] text-[16px] md:text-[20px] font-Archivo_Regular'>
           JOIN THE CHALLENGERS
         </button>
-        <button className='bg-[#0D0D0D] py-[24px] md:py-[32px] rounded-[16px] text-[16px] md:text-[20px] font-Archivo_Regular'>
+        <button className='bg-wb-100 py-[24px] md:py-[32px] rounded-[16px] text-[16px] md:text-[20px] font-Archivo_Regular'>
           I'D RATHER BE THE SOLVER
         </button>
         </div>

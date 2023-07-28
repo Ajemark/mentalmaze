@@ -5,7 +5,8 @@ import nav3 from "./../../assets/sidebar/nav3.svg"
 import discord from "./../../assets/sidebar/discord.svg"
 import telegram from "./../../assets/sidebar/telegram.svg"
 import twitter from "./../../assets/sidebar/twitter.svg"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
+
 import useQuery from "../../hooks/useQuery"
 import {AiOutlineClose} from "react-icons/ai"
 import {BsSearch} from "react-icons/bs"
@@ -33,10 +34,29 @@ interface CompType {
 
 const NavItemMobile = (src: {link: string, title: string, image:string}) => {
   const navigate = useNavigate()
+  const location = useLocation()
+  const goto = (go:string) => {
+    const locationContainsChallenger = () => {
+      let answer = false;
+      for(let i = 0; i < location.pathname.length - 1; i++) {
+        if(location.pathname.slice(i, location.pathname.length) == "challenger") {
+        answer = true
+    }
+      return answer
+    }
+    }
+    
+    if(locationContainsChallenger()) {
+      navigate(`/challenger${go}`)
+    }
+    else{
+      navigate(`${go}`)
+    }
+  }
   const [show, setShow] = useState(false)
   
   return(
-  <div className={`pl-[8px]  md:pl-[15px] w-full relative items-center    cursor-pointer flex overflow-visible`} onClick={() => navigate(src.link)} onMouseEnter={() =>  setShow(!show)} onMouseLeave={() => setShow(!show)}>
+  <div className={`pl-[8px]  md:pl-[15px] w-full relative items-center    cursor-pointer flex overflow-visible`} onClick={() => goto(src.link)} onMouseEnter={() =>  setShow(!show)} onMouseLeave={() => setShow(!show)}>
   <span>  <img src={src.image} className=""/> </span>
   {show&&<motion.div className="absolute  text-white w-28 left-20  px-2 font-Archivo_Regular bg-hover text-center"
   animate={{y: [-100, 0], x:[20, 0]  }}
@@ -69,7 +89,9 @@ const Sidebar = ({showSideMobile, switchSideMode, challenger}:CompType) => {
   const navigate = useNavigate()
   const {width} = useQuery()
   return (
-    width > 768 ?<div className={`w-[104px] h-[90vh] fixed md:flex flex-col justify-between py-[46px] left-0  z-20  opacity-[0.4000000059604645] items-center  mt-[104px] hidden ${challenger?"bg-[#000000]":"bg-[#010C18]"}`}>
+    // sidebar for desktopview
+    // it had to be seperated because it has different structure with that of the mobile
+    width > 768 ?<div className={`w-[104px] h-[90vh] fixed md:flex flex-col justify-between py-[46px] left-0  z-20  opacity-[0.4000000059604645] items-center  mt-[104px] hidden ${challenger?"bg-black":"bg-blue-100"}`}>
         <div className='flex flex-col gap-6 w-full'>
           {[{image: nav1, link: "/create-game", title: "Create Game"}, {image: nav2, link: '/leaderboard', title: "leaderboard"},{image: nav3, link: "/", title: "Games"}].map((src) => {
             return <NavItemMobile {...src}/>

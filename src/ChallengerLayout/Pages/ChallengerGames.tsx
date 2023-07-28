@@ -22,7 +22,7 @@ const Game = ({vetted, image, title}:challengergametype) => {
       <img src={image} className='w-full bg-center' alt="" />
       <div className='absolute bottom-0 bg-black backdrop-blur-[2.2068965435028076px] h-[68px] w-full opacity-80 flex justify-between px-[17.65px] items-center'>
       <p className='font-droid text-[20px] leading-[23.61px]'>{title}</p>
-      <button className='font-normal text-[14px] font-droid leading-[16.53px] bg-[#000000] px-[8px] py-[12px] rounded-[6px] border border-solid border-[#0D0D0D] opacity-80 backdrop-blur-[2.310344934463501px] w-[86px]  '>
+      <button className='font-normal text-[14px] font-droid leading-[16.53px] bg-black px-[8px] py-[12px] rounded-[6px] border border-solid border-[#0D0D0D] opacity-80 backdrop-blur-[2.310344934463501px] w-[86px]  '>
         {vetted?"vetted":"VET NOW"}
       </button>
       </div>

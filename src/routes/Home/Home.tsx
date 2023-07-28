@@ -27,7 +27,7 @@ const Game = ({image}:{image: string}) => {
   return (
     <div className="relative flex justify-center items-center w-full">
       <img src={image}  />
-      <div className="absolute p-[2px]" style={{
+      <div className="absolute p-[2px rounded-[8px] p-[2px]" style={{
         "background" : "linear-gradient(90deg, #032449, #0B77F0)"
       }} >
       <button className=" w-[143px] text-white py-[16px] rounded-[8px] font-droid tracking-[0.2px] left-0" style={{

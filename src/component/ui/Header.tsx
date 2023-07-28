@@ -27,7 +27,7 @@ const Header = ({challenger}: {challenger: boolean}) => {
   }, [])
 
   return (
-    <div className={`${challenger?"bg-[#000000]":"headerbg"} px-[16px]  md:px-[34px]  z-[5000000000] fixed h-[64px]  md:h-[104px] w-full   ${fixed ? "shadow-lg" : "shadow-none"}`}>
+    <div className={`${challenger?"bg-black":"headerbg"} px-[16px]  md:px-[34px]  z-[5000000000] fixed h-[64px]  md:h-[104px] w-full   ${fixed ? "shadow-lg" : "shadow-none"}`}>
       <div className='flex justify-between items-center h-full mx-auto w-full '>
         <div className='flex items-center gap-[16px] md:gap-8 justify-between w-full md:w-fit md:justify-center'>
           <Link to={'/'} className=" flex gap-[8px] md:gap-4 text-white font-Archivo_Regular items-center text-[1rem] md:text-[22px]">

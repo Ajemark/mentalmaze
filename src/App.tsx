@@ -8,7 +8,7 @@ import Home from './routes/Home/Home'
 
 import UserProfile from './routes/UserProfile/UserProfile'
 
-import { Layout } from './Layout/Layout'
+import { MainLayout } from './Layout/Layout'
 import LeaderShipBoard from './routes/LeadershipBoard/LeaderShipBoard'
 import Create from './routes/Creator/Create'
 import GameRequirement from './routes/Creator/GameRequirement'
@@ -29,7 +29,7 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Layout/>,
+      element: <MainLayout/>,
       children: [
         {
           path: "/",

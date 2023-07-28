@@ -17,7 +17,8 @@ export default {
         'wb-90': "#262626",
         'wb-100': "#0D0D0D",
         'blue-70': '#0855AB',
-        'black': '#000000'
+        'black': '#000000',
+        'disppaprove': '#D92D20'
       },
       fontFamily: {
         'Archivo_Regular': ['Archivo-Regular'],

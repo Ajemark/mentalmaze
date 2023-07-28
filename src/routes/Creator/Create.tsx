@@ -31,7 +31,7 @@ const Create = () => {
   return (
     games.length > 0?
     <div className="grid  grid-cols-1 md:grid-cols-3 gap-x-[45px] gap-y-[44px] py-[72px]  px-[16px] mt-[96px] md:mt-[176px]">
-        <div className='relative bg-[#010C18] flex flex-col items-center py-[41.8px] h-[232px] md:h-full'>
+        <div className='relative bg-blue-100 flex flex-col items-center py-[41.8px] h-[232px] md:h-full'>
       <div ><img src={createmobile} alt="" /></div>
       <div className='absolute bottom-[32px]  p-[1px] rounded-[8px]' style={{
         background: "linear-gradient( #032449, #0B77F0)"
@@ -39,9 +39,8 @@ const Create = () => {
       <button className=' 
       font-droid text-[12px] md:text-[24px]
       md:leading-[28.34px] text-white py-[16px]
-      px-[24px] rounded-[8px] border-[2px]border-[#063C7A]' 
+      px-[24px] rounded-[8px] border-[2px]border-[#063C7A] bg-blue-100' 
       style={{
-        "background": "#010C18",
         "backdropFilter": "blur(4px)"
       }} onClick={() => navigate('/settings')}>
         Create Game
