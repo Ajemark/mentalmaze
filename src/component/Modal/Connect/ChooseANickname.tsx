@@ -31,7 +31,7 @@ const ChooseANickname = () => {
         <p className='flex justify-center leading-[21.76px] gap-2 md:text-[20px] text-center'>
         username for easy stat tracking.
         </p>
-        <button className="md:hidden flex items-center justify-center font-droid text-[16px] modalButton border-blue-80 border-solid border-[2px] w-[218px] h-[56px] rounded-[1rem] mx-auto" onClick={() => {
+        <button className="lg:hidden flex items-center justify-center font-droid text-[16px] modalButton border-blue-80 border-solid border-[2px] w-[218px] h-[56px] rounded-[1rem] mx-auto" onClick={() => {
           inputRef.current && usernameHandler(inputRef.current.value)
           switchModalcontent('welcome')
         }}>
