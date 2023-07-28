@@ -2,15 +2,18 @@ import { Instruction } from "../../../../component/Ui";
 import Input from "../../../../component/ui/Input";
 import { FiUploadCloud } from "react-icons/fi";
 import { useSearchParams } from "react-router-dom";
+import useQuery from "../../../../hooks/useQuery";
 
 
 const GameDetails = ({handleClick}: {handleClick: () => void}) => {
     const [searchParams] = useSearchParams();
+    const {width} = useQuery()
 
     const numbers = [];
-  for (let i = 1; i < 11; i++) {
+    for (let i = 1; i < 11; i++) {
   numbers.push(i);
   }
+  console.log(numbers)
 
     console.log("displaying")
     return (
@@ -40,14 +43,27 @@ const GameDetails = ({handleClick}: {handleClick: () => void}) => {
 
                 <div className='border-solid border-blue-main border-[2px] rounded-[8px] px-[12px] md:px-[32px] mt-[32px] pb-[48px]'>
 
-                    <div className="flex justify-end mt-[32px] font-Archivo_Regular">
-                    <div className="relative ">
-                    {numbers.map((num) => <button className={`bg-blue-70 relative text-white rounded-[8px] w-[48px] h-[40px]`}>{num}</button>)}
+                    <div className="flex justify-end mt-[32px] font-Archivo_Regular w-full ">
+                    <div className={`relative  ${width > 730?"left-[105px]":""} `} >
+                    {numbers.slice(0, width>730?10:4).map((num) =>
+                    
+                    <button className={`relative text-white rounded-[8px] w-[27px] h-[30px] text-[12px] md:text-base md:w-[48px] md:h-[40px] p-[2px] border-solid shadow-lg`}
+
+                    style={{
+                        // transform: `translateX(${num * -15}px)`,
+                        right: `${num * 15}px`,
+                        background: "linear-gradient( rgba(3, 36, 73, 1), rgba(11, 119, 240, 1))",
+                        
+                    }}
+                    >
+                    <button  className={` w-full h-full rounded-[10px] ${num == (width > 730 ?numbers.length:4)?"bg-blue-100":"bg-blue-70"}`}>
+                        {num}</button>
+                        </button>)}
                     </div>
                     <button style={{
                         background: 'var(--grad-glas, linear-gradient(130deg, rgba(3, 36, 73, 0.45) 0%, rgba(11, 119, 240, 0.10) 100%))'
                     }}
-                    className="text-white py-[10px] px-[16px] rounded-[8px] border-[1px] border-blue-main shadow-[0px 1px 2px 0px rgba(16, 24, 40, 0.05)] block"
+                    className="text-white py-[10px] text-[14px] md:text-base px-[16px] rounded-[8px] border-[1px] border-blue-main shadow-[0px 1px 2px 0px rgba(16, 24, 40, 0.05)] block"
                     >
                      +  Add question
                     </button>
