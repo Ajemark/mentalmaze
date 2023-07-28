@@ -1,4 +1,4 @@
-// import React from 'react'
+import {useState} from 'react'
 import Logo from "./../../assets/header/Logo.png"
 
 import { ConnectWalletbtn, HeaderInput } from '../Ui'
@@ -7,14 +7,14 @@ import { Link, NavLink } from "react-router-dom"
 import { useModalContext } from "../../context/ModalContext"
 import { useEffect } from "react"
 import { HiMenuAlt3 } from "react-icons/hi"
-
+import {motion} from "framer-motion"
 // type fixedType = boolean 
 
 const Header = ({challenger}: {challenger: boolean}) => {
   const { switchModal, switchSideMode } = useModalContext()
   // const {fixed, setFixed} = useState(false)
   const fixed = true
-
+  const [show, setShow] = useState(false)
   useEffect(() => {
     window.addEventListener('scroll', () => {
       if (window.scrollY > 104) {
@@ -42,7 +42,14 @@ const Header = ({challenger}: {challenger: boolean}) => {
           </div>
         </div>
         <div className='flex items-center gap-8'>
-          <NavLink to={'/profile'}><div className="hidden md:block"> <img src={Boarder} alt="" /></div></NavLink>
+          <NavLink to={'/profile'}><div className="hidden items-center  relative md:flex justify-center" onMouseEnter={() =>  setShow(!show)} onMouseLeave={() => setShow(!show)}> <img src={Boarder} alt="" />
+          {show&&  <motion.div className="absolute  text-white w-28 left-14  px-2 font-Archivo_Regular bg-hover text-center"
+  animate={{y: [-100, 0], x:[20, 0]  }}
+  transition={{type:"spring", bounce: 0.5, duration: 0.2}}
+  >
+    profile
+  </motion.div>}
+  </div></NavLink>
           <ConnectWalletbtn clickHandler={() => { switchModal() }} />
         </div>
       </div>
