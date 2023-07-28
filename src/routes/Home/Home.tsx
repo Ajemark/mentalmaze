@@ -14,10 +14,25 @@ const TitleBar = () => {
       12
     </p>
     </div>
-
-    <div className="px-6 py-[12.5px] outline-none border-blue-main border-[2px] rounded-lg hidden md:flex items-center justify-center gap-6 modalButton">
-      <p className="font-Archivo_Regular font-normal text-2xl text-white bg-inherit">Select preferred creator</p> 
+    <div className="">
+    <select name="" id="" style={{
+      background: "var(--grad-glas, linear-gradient(130deg, rgba(3, 36, 73, 0.45) 0%, rgba(11, 119, 240, 0.10) 100%))",
+    }} className="font-droid p-[16px]">
+    <option className="px-6 py-[24.5px] outline-none border-blue-main border-[2px] rounded-lg hidden md:flex items-center justify-center gap-6 ">
+      <p className=" font-normal text-[15px] text-white bg-inherit font-droid ">Select  creator</p> 
+      <select name="" id=""></select>
       <RiArrowDownSLine size={25} />
+      </option>
+      <option className="px-6 py-[24.5px] outline-none border-blue-main border-[2px] rounded-lg hidden md:flex items-center justify-center gap-6 ">
+      <p className=" font-normal text-[15px] text-white bg-inherit font-droid ">Mental Maze</p> 
+      <select name="" id=""></select>
+      <RiArrowDownSLine size={25} />
+      </option> <option className="px-6 py-[24.5px] outline-none border-blue-main border-[2px] rounded-lg hidden md:flex items-center justify-center gap-6 ">
+      <p className=" font-normal text-[15px] text-white bg-inherit font-droid ">Other Contributor</p> 
+      <select name="" id=""></select>
+      <RiArrowDownSLine size={25} />
+      </option>
+      </select>
       </div>
   </div>
   );
@@ -25,8 +40,8 @@ const TitleBar = () => {
 
 const Game = ({image}:{image: string}) => {
   return (
-    <div className="relative flex justify-center items-center w-full">
-      <img src={image}  />
+    <div className="relative flex justify-center items-center w-full border-blue-100 border-[4px] border-solid">
+      <img src={image}  className="w-full" />
       <div className="absolute p-[2px rounded-[8px] p-[2px]" style={{
         "background" : "linear-gradient(90deg, #032449, #0B77F0)"
       }} >

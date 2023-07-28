@@ -88,6 +88,7 @@ html, body {
     border: 2px solid var(--blue-80, #063C7A);
     background: #010C18;
     box-shadow: 61.33333969116211px 61.33333969116211px 92.00000762939453px 0px rgba(1, 12, 24, 0.25);
+    /* background: linear-gradient(100deg, rgba(3, 36, 73, 1), rgba(11, 119, 240, 1)) */
   }
   
   .image::before{
@@ -232,8 +233,4 @@ html, body {
 
 .image {
   backdrop-filter: blur(8px);
-}
-
-.modalButton {
-  background: var(--grad-glas, linear-gradient(130deg, rgba(3, 36, 73, 0.45) 0%, rgba(11, 119, 240, 0.10) 100%));
 }

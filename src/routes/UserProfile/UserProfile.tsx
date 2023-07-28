@@ -119,8 +119,12 @@ const Mode = () => {
         <p className="font-Archivo_Regular md:text-[40px] leading-[17.41px] md:leading-normal font-normal ">CREATOR’S MODE</p>
         <button className='h-full w-[64px] md:w-[128px] border-blue-80 rounded-[80px] p-2 border-2 creatorsModebutton' onClick={() => {
             setCreatorMode(!creatorMode)
-        }}>
-                <div className="bg-black w-[24px] md:w-[48px] h-full rounded-[100%]" 
+        }}
+        style={{
+            background: !creatorMode?"linear-gradient(130deg, rgba(3, 36, 73, 0.45) 0%, rgba(11, 119, 240, 0.10) 100%)":"linear-gradient(130deg, #063C7A, rgba(6, 60, 122, 1))"
+        }}
+        >
+                <div className={` w-[24px] md:w-[48px] h-full rounded-[100%] ${creatorMode?"bg-blue-50":"bg-black"}`}
                 style={{
                     marginLeft: !creatorMode?0:"55%",
                     
