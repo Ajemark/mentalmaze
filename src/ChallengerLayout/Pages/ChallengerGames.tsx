@@ -3,7 +3,7 @@ import { challengergames, challengergametype } from '../../routes/Home/GamesData
 
 const ChallengerGames = () => {
   return (
-    <div className='relative text-white px-[20px] md:px-[52px] mt-[96px] md:mt-[176px]'>
+    <div className='relative text-white px-[20px] mt-[96px] md:mt-[104px] md:pt-[96px] md:border-t-solid border-t-2 border-l-2 border-1 border-blue-50'>
         <h1 className='font-droid text-[16px] md:text-[32px]'>NEWLY UPLOADED GAME</h1>
         <div className="grid  grid-cols-2 md:grid-cols-3 gap-x-[15px] gap-y-[15px] md:gap-x-[45px] md:gap-y-[44px] py-12 w-full px-0 ">
         {

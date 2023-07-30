@@ -8,10 +8,12 @@ import { useModalContext } from "../../context/ModalContext"
 import { useEffect } from "react"
 import { HiMenuAlt3 } from "react-icons/hi"
 import {motion} from "framer-motion"
+import useMode from '../../hooks/useMode'
 // type fixedType = boolean 
 
-const Header = ({challenger}: {challenger: boolean}) => {
+const Header = () => {
   const { switchModal, switchSideMode } = useModalContext()
+  const {challenger} = useMode()
   // const {fixed, setFixed} = useState(false)
   const fixed = true
   const [show, setShow] = useState(false)

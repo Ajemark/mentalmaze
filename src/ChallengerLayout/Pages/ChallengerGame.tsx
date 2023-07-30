@@ -7,8 +7,8 @@ const ChallengerGame = () => {
   numbers.push(i);
   }
   return (
-    <div className='flex flex-col items-center mt-[64px] md:mt-[104px] '>
-        <div className='flex gap-[2.76px] wb-100 w-full pl-[24px] md:px-[56px] h-[40px] md:h-[90px] items-center overflow-scroll'>
+    <div className='flex flex-col relative items-center mt-[96px] md:mt-[104px]  md:border-t-solid border-t-2 border-l-2 border-1 border-blue-50 px-[20px] '>
+        <div className='flex gap-[2.76px] wb-100 w-full pl-[24px] md:px-[56px] h-[40px] md:h-[90px] items-center overflow-scroll md:overflow-hidden'>
         {
         numbers.map((item) => 
         <div className={`${item==1?"w-[46.22px] md:w-[104px] bg-black h-[40px] md:h-[90px] rounded-t-[7px] md:rounded-t-[8px] ":"bg-wb-90 h-[25.22px] md:h-[58px] w-[46.22px] md:w-[104px] rounded-[7px] md:rounded-[16px]"}

@@ -28,7 +28,8 @@ const games = [
 
 const Dashboard = () => {
   return (
-    <div className='relative text-white mt-[96px] md:mt-[176px] px-[20px]'>
+    <div className="mt-[96px] md:mt-[104px] md:pt-[96px] md:border-t-solid border-t-2 border-l-2 border-1 border-blue-50 px-[20px] relative overflow-hidden bg-fixed">
+    <div className='relative text-white '>
         <div>
             <div className='flex justify-between mb-[72px] flex-col md:flex-row md:items-center'>
                 <h2 className='font-droid text-[32px] hidden md:block'>DASHBOARD </h2>
@@ -73,6 +74,7 @@ const Dashboard = () => {
             </div>
             <Games/>
         </div>
+    </div>
     </div>
   )
 }

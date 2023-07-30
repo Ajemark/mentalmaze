@@ -12,7 +12,7 @@ interface ItemType {
 const TitleBar = () => { 
   const [dropDownItem, setDropdownItems] = useState<ItemType[]>([{id:0,text:"Select  creator"},{id:1,text:"Mental Maze"},  {id:2,text:"Other Contributor"}])
   const [current, setCurrent] = useState<number>(0)
-  const [showDropDown, setShowDropDown] = useState<boolean>(true)
+  const [showDropDown, setShowDropDown] = useState<boolean>(false)
 
   
 
@@ -20,14 +20,14 @@ const TitleBar = () => {
     console.log(id)
     return (
       <div className={`outline-none cursor-pointer  rounded-[16px] hidden md:flex items-center justify-between gap-6 w-full h-[66px]  px-[16px] ${!current?"hover:headerdropDown-hover-effect hover:border-blue-main hover:border-[2px]":"" }`}
-      onClick={() => setCurrent(id)}
+      onClick={current?  () => setShowDropDown(!showDropDown):() => setCurrent(id)}
       style={{
         
         background: current?"var(--grad-glas, linear-gradient(130deg, rgba(3, 36, 73, 0.45) 0%, rgba(11, 119, 240, 0.10) 100%))":""
       }}
       >
       <p className=" font-normal text-[15px] text-white bg-inherit font-droid ">{text}</p> 
-      {current? <RiArrowDownSLine size={25}  onClick={() => setShowDropDown(!showDropDown)}/>:null}
+      {current? <RiArrowDownSLine size={25}/>:null}
       </div>
     )
   }

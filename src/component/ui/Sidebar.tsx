@@ -22,12 +22,11 @@ import Discord from "./../../assets/sidebar/mobile/Discord.svg"
 import Telegram from "./../../assets/sidebar/mobile/Telegram (2).svg"
 import Twitter from "./../../assets/sidebar/mobile/Twitter.svg"
 import { useState } from "react"
-
+import useMode from "../../hooks/useMode"
 
 interface CompType {
   showSideMobile: boolean,
   switchSideMode: () => void;
-  challenger: boolean
 }
 
 
@@ -74,9 +73,9 @@ const NavItemMobile = (src: {link: string, title: string, image:string}) => {
 // chat us on discord 
 // search box
 // user cant create game if they add a certain amount
-const Sidebar = ({showSideMobile, switchSideMode, challenger}:CompType) => {
+const Sidebar = ({showSideMobile, switchSideMode}:CompType) => {
   const { switchModal,  } = useModalContext()
-
+  const {challenger} = useMode()
 
   const openModal = (value: string) => {
       if(value == "Connect wallet"){
@@ -91,7 +90,7 @@ const Sidebar = ({showSideMobile, switchSideMode, challenger}:CompType) => {
   return (
     // sidebar for desktopview
     // it had to be seperated because it has different structure with that of the mobile
-    width > 768 ?<div className={`w-[104px] h-[90vh] fixed md:flex flex-col justify-between py-[46px] left-0  z-20  opacity-[0.4000000059604645] items-center  mt-[104px] hidden ${challenger?"bg-black":"bg-blue-100"}`}>
+    width > 768 ?<div className={` w-[104px] h-[90vh] fixed md:flex flex-col justify-between py-[46px] left-0  z-20  opacity-[0.4000000059604645] items-center  mt-[104px] hidden ${challenger?"bg-black":"bg-blue-100"}`}>
         <div className='flex flex-col gap-6 w-full'>
           {[{image: nav1, link: "/create-game", title: "Create Game"}, {image: nav2, link: '/leaderboard', title: "leaderboard"},{image: nav3, link: "/", title: "Games"}].map((src) => {
             return <NavItemMobile {...src}/>

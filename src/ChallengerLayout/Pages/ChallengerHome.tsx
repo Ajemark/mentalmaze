@@ -1,7 +1,10 @@
+import { useNavigate } from "react-router-dom"
+
 
 const ChallengerHome = () => {
+  const navigate = useNavigate()
   return (
-    <div className='relative  text-white px-[20px] md:px-[52px] max-w-[1368px] mx-auto tracking-normal md:tracking-widest text-[16px] md:text-[32px] mt-[96px] md:mt-[176px]'>
+    <div className='relative  text-white px-[20px] md:px-[52px] max-w-[1368px] mx-auto tracking-normal md:tracking-widest text-[16px] md:text-[32px] mt-[96px] md:mt-[104px] md:pt-[96px] md:border-t-solid border-t-2 border-l-2 border-1 border-blue-50'>
       <div>
         <h2 className='font-droid leading-[37.78px]'>Hello UNDERCOVER SOLVER</h2>
         <p className='flex flex-col gap-10 mt-[48px]'>
@@ -20,10 +23,10 @@ const ChallengerHome = () => {
         </p>
         </div>
         <div className='flex flex-col gap-[24px]'>
-        <button className=' bg-wb-100 py-[24px] md:py-[32px] mt-[80px] rounded-[16px] text-[16px] md:text-[20px] font-Archivo_Regular'>
+        <button className=' bg-wb-100 py-[24px] md:py-[32px] mt-[80px] rounded-[16px] text-[16px] md:text-[20px] font-Archivo_Regular' onClick={() => navigate('/challenger/uploadedgames')}>
           JOIN THE CHALLENGERS
         </button>
-        <button className='bg-wb-100 py-[24px] md:py-[32px] rounded-[16px] text-[16px] md:text-[20px] font-Archivo_Regular'>
+        <button className='bg-wb-100 py-[24px] md:py-[32px] rounded-[16px] text-[16px] md:text-[20px] font-Archivo_Regular' onClick={() => navigate('/')}>
           I'D RATHER BE THE SOLVER
         </button>
         </div>

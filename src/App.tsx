@@ -58,13 +58,7 @@ function App() {
         {
           path: "/game",
           element: <Game />
-        }
-      ],
-    },
-    {
-      path: "/challenger",
-      element: <ChallengerLayout />,
-      children: [
+        },
         {
           path: "/challenger",
           element: <ChallengerHome />
@@ -81,8 +75,31 @@ function App() {
           path: "/challenger/dashboard",
           element: <Dashboard />
         }
-      ]
+        
+      ],
     },
+    // {
+    //   path: "/challenger",
+    //   element: <ChallengerLayout />,
+    //   children: [
+    //     {
+    //       path: "/challenger",
+    //       element: <ChallengerHome />
+    //     },
+    //     {
+    //       path: "/challenger/uploadedgames",
+    //       element: <ChallengerGames />
+    //     },
+    //     {
+    //       path: "/challenger/singlegame",
+    //       element: <ChallengerGame />
+    //     },
+    //     {
+    //       path: "/challenger/dashboard",
+    //       element: <Dashboard />
+    //     }
+    //   ]
+    // },
   ]);
 
   return (

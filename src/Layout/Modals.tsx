@@ -13,6 +13,7 @@ import Getmore from '../component/Modal/Connect/game/Getmore'
 import Hurray from '../component/Modal/Connect/game/Hurray'
 import Reveal from '../component/Modal/Connect/game/Reveal'
 import Collating from '../component/Modal/Connect/game/Collating'
+import ChallengerModal from '../component/Modal/ChallengerModal'
 
 
 type Modal = {
@@ -27,7 +28,8 @@ type Modal = {
     getmore: ReactNode,
     hurray: ReactNode,
     reveal: ReactNode,
-    collate: ReactNode
+    collate: ReactNode,
+    challenger: ReactNode
 }
 
 
@@ -43,5 +45,6 @@ export const ConnectModals:Modal = {
     getmore: <Getmore />,
     hurray: <Hurray />,
     reveal: <Reveal />,
-    collate: <Collating />
+    collate: <Collating />,
+    challenger: <ChallengerModal />
 }
