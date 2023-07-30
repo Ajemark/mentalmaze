@@ -4,24 +4,56 @@ import medalMaster from "./../../assets/Leadership/medalstarMaster.png"
 import { Leadertype } from './Indextype'
 import { leaders } from "./dummydata"
 import empty from "./../../assets/Leadership/empty.png"
-
-
-
+import { RiArrowDownSLine } from "react-icons/ri"
+import { useState } from "react"
+interface ItemType {
+    id: number,
+    text: string
+  }
+  
 const LeaderShipBoard = () => {
+    const [dropDownItem, setDropdownItems] = useState<ItemType[]>([{id:0,text:"Filter Board"},{id:1,text:"All Games"},  {id:2,text:"CLaimed Games"}])
+    const [current, setCurrent] = useState<number>(0)
+    const [showDropDown, setShowDropDown] = useState<boolean>(false)
+
+    const DropDownComp = ({text, current, id}:{text:string, current:boolean,id: number, }) => {
+        console.log(id)
+        return (
+          <div className={`outline-none cursor-pointer  rounded-[16px] hidden md:flex items-center justify-between gap-6 w-full h-[66px]  px-[16px] ${!current?"hover:headerdropDown-hover-effect hover:border-blue-main hover:border-[2px]":"" }`}
+          onClick={current?  () => setShowDropDown(!showDropDown):() => setCurrent(id)}
+          style={{
+            
+            background: current?"var(--grad-glas, linear-gradient(130deg, rgba(3, 36, 73, 0.45) 0%, rgba(11, 119, 240, 0.10) 100%))":""
+          }}
+          >
+          <p className=" font-normal text-[15px] text-white bg-inherit font-droid ">{text}</p> 
+          {current? <RiArrowDownSLine size={25}/>:null}
+          </div>
+        )
+      }
+
     return (
 
         <div>
             <div className='w-full h-fit mt-[96px] md:mt-[176px]'>
                 {leaders.length > 0 ?
                     <div className="relative z-[999]  px-[16px] md:px-14  text-white">
-                        <div className="flex justify-between md:items-center mb-[64px] flex-col md:flex-row gap-[16px] md:gap-0">
+                        <div className="flex justify-between md:items-center mb-[64px] flex-col md:flex-row gap-[16px] md:gap-0 relative">
                             <h2 className='font-Archivo_Regular font-normal tracking-[0.5px] md:text-[40px] text-[20px] leading-[21px] md:leading-normal'>LEADERBOARD</h2>
-                            <p style={{
-                                "background": "var(--grad-glas, linear-gradient(130deg, rgba(3, 36, 73, 0.45) 0%, rgba(11, 119, 240, 0.10) 100%))"
-                            }} className="font-droid text-[15px] flex items-center justify-between md:gap-[93px] h-full rounded-[16px] py-[24px] px-[16px] border-blue-80 border-[2px]">
-                                FILTER BOARD
-                                <AiOutlineDown />
-                            </p>
+                            <div  id=""  className="font-droid  outline-none bg-blue-50 border-blue-main border-[2px] overflow-hidden rounded-[16px] absolute right-0 top-[0px]"
+    style={{
+      "background": "rgba(0, 0, 0, 0.80)",
+      "boxShadow": "61.33333969116211px 61.33333969116211px 92.00000762939453px 0px rgba(1, 12, 24, 0.25)",
+      "height": showDropDown?"220px":"66px",
+      "transition": "all 0.2s"
+    }}
+    >
+    <DropDownComp text={dropDownItem[current].text} current={true} id={current}/>
+    <div className="flex items-start flex-col mt-2 px-[16px]" >
+    {/* {dropDownItem.filter(item => item.id !== current).map((item) => <DropDownComp {...item} current={false}  />)} */}
+    {dropDownItem.filter(item => item.id !== current).map((item) => <DropDownComp {...item}  current={false}/>)}
+    </div>
+      </div>
                         </div>
                         <div className='rounded-3xl border-blue-80 border-solid border-[2px] pb-[55px]'>
                             <div className='flex grad-dar  justify-between items-center px-[32px] rounded-t-3xl py-[16px] '>
