@@ -26,7 +26,7 @@ export const MainLayout = () => {
         <div className='flex flex-1 h-fit mx-auto w-full justify-center items-stretch'>
           <Sidebar showSideMobile={sideBarMode} switchSideMode={switchSideMode} />
           <ConnectWalletModal show={ModalMode}>
-          {ConnectModals['challenger']}
+          {ConnectModals[modal]}
             </ConnectWalletModal>
           <div className='  w-full  md:ml-[104px]'>
           <Outlet />

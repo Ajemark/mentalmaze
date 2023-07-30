@@ -12,9 +12,10 @@ interface ItemType {
   }
   
 const LeaderShipBoard = () => {
-    const [dropDownItem, setDropdownItems] = useState<ItemType[]>([{id:0,text:"Filter Board"},{id:1,text:"All Games"},  {id:2,text:"CLaimed Games"}])
+    const [dropDownItem] = useState<ItemType[]>([{id:0,text:"Filter Board"},{id:1,text:"All Games"},  {id:2,text:"CLaimed Games"}])
     const [current, setCurrent] = useState<number>(0)
     const [showDropDown, setShowDropDown] = useState<boolean>(false)
+
 
     const DropDownComp = ({text, current, id}:{text:string, current:boolean,id: number, }) => {
         console.log(id)

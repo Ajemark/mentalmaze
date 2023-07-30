@@ -1,4 +1,3 @@
-import React from 'react'
 import challenger from "./../../assets/modal/Challenger.svg"
 
 

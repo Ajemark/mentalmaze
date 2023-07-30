@@ -10,7 +10,7 @@ interface ItemType {
 }
 
 const TitleBar = () => { 
-  const [dropDownItem, setDropdownItems] = useState<ItemType[]>([{id:0,text:"Select  creator"},{id:1,text:"Mental Maze"},  {id:2,text:"Other Contributor"}])
+  const [dropDownItem] = useState<ItemType[]>([{id:0,text:"Select  creator"},{id:1,text:"Mental Maze"},  {id:2,text:"Other Contributor"}])
   const [current, setCurrent] = useState<number>(0)
   const [showDropDown, setShowDropDown] = useState<boolean>(false)
 
