@@ -35,7 +35,7 @@ const TitleBar = () => {
       </select>
       </div>
   </div>
-  );
+  ); 
 }
 
 const Game = ({image}:{image: string}) => {
