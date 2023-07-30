@@ -60,6 +60,9 @@ html, body {
     background:  linear-gradient(46deg, rgba(1, 12, 24, 0.80) 0%, rgba(1, 12, 24, 0.45) 100%);
     backdrop-filter: blur(24px);
   }
+  .headerdropDown-hover-effect {
+    background:  linear-gradient(130deg, rgba(3, 36, 73, 0.45) 0%, rgba(11, 119, 240, 0.10) 100%);
+  }
   .sponsorbtn{
     border-radius: 16px;
     background: var(--grad-dar, linear-gradient(130deg, #032449 0%, #0B77F0 100%));
@@ -234,3 +237,4 @@ html, body {
 .image {
   backdrop-filter: blur(8px);
 }
+

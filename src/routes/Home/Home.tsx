@@ -2,10 +2,41 @@ import { games } from "./GamesData";
 import {VscUnlock} from "react-icons/vsc"
 import {RiArrowDownSLine} from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+
+interface ItemType {
+  id: number,
+  text: string
+}
 
 const TitleBar = () => { 
+  const [dropDownItem, setDropdownItems] = useState<ItemType[]>([{id:0,text:"Select  creator"},{id:1,text:"Mental Maze"},  {id:2,text:"Other Contributor"}])
+  const [current, setCurrent] = useState<number>(0)
+  const [showDropDown, setShowDropDown] = useState<boolean>(true)
+
+  
+
+  const DropDownComp = ({text, current, id}:{text:string, current:boolean,id: number, }) => {
+    console.log(id)
+    return (
+      <div className={`outline-none cursor-pointer  rounded-[16px] hidden md:flex items-center justify-between gap-6 w-full h-[66px]  px-[16px] ${!current?"hover:headerdropDown-hover-effect hover:border-blue-main hover:border-[2px]":"" }`}
+      onClick={() => setCurrent(id)}
+      style={{
+        
+        background: current?"var(--grad-glas, linear-gradient(130deg, rgba(3, 36, 73, 0.45) 0%, rgba(11, 119, 240, 0.10) 100%))":""
+      }}
+      >
+      <p className=" font-normal text-[15px] text-white bg-inherit font-droid ">{text}</p> 
+      {current? <RiArrowDownSLine size={25}  onClick={() => setShowDropDown(!showDropDown)}/>:null}
+      </div>
+    )
+  }
+
+
+  
+
   return( 
-  <div className="text-white font-Archivo_Regular  flex w-full justify-between items-center mt-[16px] md:mt-0 py-[15px]" >
+  <div className="text-white font-Archivo_Regular  flex w-full justify-between items-center mt-[16px] md:mt-0 h-[66px] relative" >
     <div className="flex  items-center gap-6">
       <h2 className="font-normal text-[20px]   md:text-5xl">
     PUZZLE
@@ -14,25 +45,20 @@ const TitleBar = () => {
       12
     </p>
     </div>
-    <div className="">
-    <select name="" id="" style={{
-      background: "var(--grad-glas, linear-gradient(130deg, rgba(3, 36, 73, 0.45) 0%, rgba(11, 119, 240, 0.10) 100%))",
-    }} className="font-droid p-[16px]">
-    <option className="px-6 py-[24.5px] outline-none border-blue-main border-[2px] rounded-lg hidden md:flex items-center justify-center gap-6 ">
-      <p className=" font-normal text-[15px] text-white bg-inherit font-droid ">Select  creator</p> 
-      <select name="" id=""></select>
-      <RiArrowDownSLine size={25} />
-      </option>
-      <option className="px-6 py-[24.5px] outline-none border-blue-main border-[2px] rounded-lg hidden md:flex items-center justify-center gap-6 ">
-      <p className=" font-normal text-[15px] text-white bg-inherit font-droid ">Mental Maze</p> 
-      <select name="" id=""></select>
-      <RiArrowDownSLine size={25} />
-      </option> <option className="px-6 py-[24.5px] outline-none border-blue-main border-[2px] rounded-lg hidden md:flex items-center justify-center gap-6 ">
-      <p className=" font-normal text-[15px] text-white bg-inherit font-droid ">Other Contributor</p> 
-      <select name="" id=""></select>
-      <RiArrowDownSLine size={25} />
-      </option>
-      </select>
+    
+    <div  id=""  className="font-droid  outline-none bg-blue-50 border-blue-main border-[2px] overflow-hidden rounded-[16px] absolute right-0 top-[0px]"
+    style={{
+      "background": "rgba(0, 0, 0, 0.80)",
+      "boxShadow": "61.33333969116211px 61.33333969116211px 92.00000762939453px 0px rgba(1, 12, 24, 0.25)",
+      "height": showDropDown?"220px":"66px",
+      "transition": "all 0.2s"
+    }}
+    >
+    <DropDownComp text={dropDownItem[current].text} current={true} id={current}/>
+    <div className="flex items-start flex-col mt-2 px-[16px]" >
+    {/* {dropDownItem.filter(item => item.id !== current).map((item) => <DropDownComp {...item} current={false}  />)} */}
+    {dropDownItem.filter(item => item.id !== current).map((item) => <DropDownComp {...item}  current={false}/>)}
+    </div>
       </div>
   </div>
   ); 
