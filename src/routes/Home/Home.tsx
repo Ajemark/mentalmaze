@@ -19,7 +19,7 @@ const TitleBar = () => {
   const DropDownComp = ({text, current, id}:{text:string, current:boolean,id: number, }) => {
     console.log(id)
     return (
-      <div className={`outline-none cursor-pointer  rounded-[16px] hidden md:flex items-center justify-between gap-6 w-full h-[66px]  px-[16px] ${!current?"hover:headerdropDown-hover-effect hover:border-blue-main hover:border-[2px]":"" }`}
+      <div className={`outline-none cursor-pointer  rounded-[16px]  flex items-center justify-between gap-6 w-full h-[66px]  px-[16px] ${!current?"hover:headerdropDown-hover-effect hover:border-blue-main hover:border-[2px]":"" }`}
       onClick={current?  () => setShowDropDown(!showDropDown):() => setCurrent(id)}
       style={{
         
@@ -36,9 +36,9 @@ const TitleBar = () => {
   
 
   return( 
-  <div className="text-white font-Archivo_Regular  flex w-full justify-between items-center mt-[16px] md:mt-0 h-[66px] relative" >
-    <div className="flex  items-center gap-6">
-      <h2 className="font-normal text-[20px]   md:text-5xl">
+  <div className="text-white font-Archivo_Regular  flex w-full justify-between flex-col md:flex-row md:items-center mt-[6px] md:mt-0 h-[99px] md:h-[66px] z-50 relative" >
+    <div className="flex  md:items-center gap-6">
+      <h2 className="font-normal text-[20px]    md:text-5xl">
     PUZZLE
     </h2>
     <p className="border-blue-50 h-[24px] w-[27px] md:h-[initial] md:w-[initial] text-center md:py-4 md:px-6 rounded-lg leading-[21.76px] text-[10px] md:text-xl border-2 ">
@@ -46,7 +46,7 @@ const TitleBar = () => {
     </p>
     </div>
     
-    <div  id=""  className="font-droid  outline-none bg-blue-50 border-blue-main border-[2px] hidden md:block overflow-hidden rounded-[16px] absolute right-0 top-[0px]"
+    <div  id=""  className="w-full md:w-[initial] font-droid  outline-none bg-blue-50 border-blue-main border-[2px] block overflow-hidden rounded-[16px] absolute right-0 top-10 md:top-[0px]"
     style={{
       "background": "rgba(0, 0, 0, 0.80)",
       "boxShadow": "61.33333969116211px 61.33333969116211px 92.00000762939453px 0px rgba(1, 12, 24, 0.25)",
@@ -65,8 +65,9 @@ const TitleBar = () => {
 }
 
 const Game = ({image}:{image: string}) => {
+  const navigate = useNavigate()
   return (
-    <div className="relative flex justify-center items-center w-full border-blue-100 border-[4px] border-solid">
+    <div className="relative flex justify-center items-center w-full border-blue-100 border-[4px] border-solid" >
       <img src={image}  className="w-full" />
       <div className="absolute p-[2px rounded-[8px] p-[2px]" style={{
         "background" : "linear-gradient(90deg, #032449, #0B77F0)"
@@ -74,7 +75,7 @@ const Game = ({image}:{image: string}) => {
       <button className=" w-[143px] text-white py-[16px] rounded-[8px] font-droid tracking-[0.2px] left-0" style={{
         "background": "linear-gradient(130deg, #032449 0%, #0B77F0 100%)",
         "backdropFilter": "blur(4px)"
-      }}>
+      }} onClick={() => navigate('/game')}>
         PLAY NOW
       </button>
       </div>
@@ -84,7 +85,7 @@ const Game = ({image}:{image: string}) => {
 
 
 const Home = () => {
-    const navigate = useNavigate()
+    
 
     return (
       <div className=" w-full h-fit mt-[96px] md:mt-[176px]">
@@ -95,7 +96,7 @@ const Home = () => {
             <p className="flex gap-[8px] items-center justify-center font-Archivo_Regular font-normal leading-[21.76px]">Level: <span className=" font-droid text-white">Easy</span></p>
           <div className="text-[18px] md:text-[24px]"><VscUnlock color={"white"} /></div>  
           </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-[15px] gap-y-[15px] md:gap-x-[45px] md:gap-y-[44px] py-12 w-full px-0" onClick={() => navigate('/game')}>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-[15px] gap-y-[15px] md:gap-x-[45px] md:gap-y-[44px] py-12 w-full px-0" >
         {games.map((gam, index) => <Game {...gam} key={index}/>
         )}
         </div>

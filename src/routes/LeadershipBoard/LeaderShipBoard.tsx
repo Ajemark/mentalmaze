@@ -20,7 +20,7 @@ const LeaderShipBoard = () => {
     const DropDownComp = ({text, current, id}:{text:string, current:boolean,id: number, }) => {
         console.log(id)
         return (
-          <div className={`outline-none cursor-pointer  rounded-[16px] hidden md:flex items-center justify-between gap-6 w-full h-[66px]  px-[16px] ${!current?"hover:headerdropDown-hover-effect hover:border-blue-main hover:border-[2px]":"" }`}
+          <div className={`outline-none cursor-pointer  rounded-[16px] flex items-center justify-between gap-6 w-full h-[66px]  px-[16px] ${!current?"hover:headerdropDown-hover-effect hover:border-blue-main hover:border-[2px]":"" }`}
           onClick={current?  () => setShowDropDown(!showDropDown):() => setCurrent(id)}
           style={{
             
@@ -39,9 +39,9 @@ const LeaderShipBoard = () => {
             <div className='w-full h-fit mt-[96px] md:mt-[176px]'>
                 {leaders.length > 0 ?
                     <div className="relative z-[999]  px-[16px] md:px-14  text-white">
-                        <div className="flex justify-between md:items-center mb-[64px] flex-col md:flex-row gap-[16px] md:gap-0 relative">
+                        <div className="flex justify-between md:items-center mb-[64px] flex-col md:flex-row gap-[16px] md:gap-0 relative h-[99px] md:h-[initial]">
                             <h2 className='font-Archivo_Regular font-normal tracking-[0.5px] md:text-[40px] text-[20px] leading-[21px] md:leading-normal'>LEADERBOARD</h2>
-                            <div  id=""  className="font-droid  outline-none bg-blue-50 border-blue-main border-[2px] overflow-hidden rounded-[16px] absolute right-0 top-[0px]"
+                            <div  id=""  className="font-droid  outline-none bg-blue-50 border-blue-main border-[2px] overflow-hidden rounded-[16px] absolute right-0 md:top-[0px] top-10 w-full md:w-fit"
     style={{
       "background": "rgba(0, 0, 0, 0.80)",
       "boxShadow": "61.33333969116211px 61.33333969116211px 92.00000762939453px 0px rgba(1, 12, 24, 0.25)",
