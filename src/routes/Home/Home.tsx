@@ -46,7 +46,7 @@ const TitleBar = () => {
     </p>
     </div>
     
-    <div  id=""  className="font-droid  outline-none bg-blue-50 border-blue-main border-[2px] overflow-hidden rounded-[16px] absolute right-0 top-[0px]"
+    <div  id=""  className="font-droid  outline-none bg-blue-50 border-blue-main border-[2px] hidden md:block overflow-hidden rounded-[16px] absolute right-0 top-[0px]"
     style={{
       "background": "rgba(0, 0, 0, 0.80)",
       "boxShadow": "61.33333969116211px 61.33333969116211px 92.00000762939453px 0px rgba(1, 12, 24, 0.25)",
@@ -92,7 +92,7 @@ const Home = () => {
         <TitleBar />
         <div>
           <div className="level flex justify-between border-[2px] border-blue-main mt-[32px] md:mt-[96px] font-Archivo_thin text-wb-40 text-[12px] md:text-[20px] font-normal rounded-2xl leading-[21.76px] py-[16px] px-[24px]">
-            <p className="flex gap-[8px] items-center justify-center">Level: <span className=" font-droid text-white">Easy</span></p>
+            <p className="flex gap-[8px] items-center justify-center font-Archivo_Regular font-normal leading-[21.76px]">Level: <span className=" font-droid text-white">Easy</span></p>
           <div className="text-[18px] md:text-[24px]"><VscUnlock color={"white"} /></div>  
           </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-[15px] gap-y-[15px] md:gap-x-[45px] md:gap-y-[44px] py-12 w-full px-0" onClick={() => navigate('/game')}>
