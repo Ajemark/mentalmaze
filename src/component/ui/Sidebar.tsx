@@ -119,7 +119,7 @@ const Sidebar = ({showSideMobile, switchSideMode}:CompType) => {
                     
                 </div>
       </div> */}
-        <AiOutlineClose fontSize={24} className = "mx-auto mb-[48px]" onClick={switchSideMode}/>
+        <AiOutlineClose fontSize={24} className = "mx-auto mb-[10px]" onClick={switchSideMode}/>
             <div className="px-[12px] flex flex-col gap-[18px]">
               <div className="flex sidebarItem border-blue-50 border-solid border-[1px] rounded-lg h-[44px] gap-[8px]   items-center px-[16px] justify-center">
                 <div> <BsSearch fontSize={24} /></div> <input type="text" className="bg-inherit outline-none flex-1 w-full placeholder:text-blue-70 font-Archivo_Regular leading-[24px] text-[16px]" placeholder="Search"  />
@@ -147,7 +147,8 @@ const Sidebar = ({showSideMobile, switchSideMode}:CompType) => {
           })}
         </div>
             </div>
-            <div className="flex flex-col gap-3 items-center px-[12px] py-[34px] border-solid border-t-blue-80 border-t-[2px]">
+            <div className="flex flex-col gap-3 items-center px-[12px] py-[34px] border-solid border-t-blue-80 border-t-[2px]"
+            >
             {[ {image: useroctagon, title: "Create game"}, {image: emptywallet, title: "Connect wallet"} ].map((src, index) => {
   
             return <div className='w-full flex items-center gap-[8px]  h-[46px] hover:sidebarItem cursor-pointer px-[12px]  rounded-lg hover:border-blue-50 hover:border-solid hover:border-[1px]' key={index} onClick={() => openModal(src.title)}>

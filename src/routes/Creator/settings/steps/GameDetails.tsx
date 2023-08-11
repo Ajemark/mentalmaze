@@ -20,7 +20,7 @@ const GameDetails = ({handleClick}: {handleClick: () => void}) => {
         <div className=''>
             <div className='px-[16px] md:px-[48px]'>
                 <div className='text-white '>
-                    <Input title='Title of Game' placeholder='Please enter the title of your game' />
+                    <Input title='Title of Game' placeholder='Please enter the game title' />
                     <Instruction />
                 </div>
                 <div className='w-full mt-[32px]'>
@@ -111,7 +111,7 @@ const GameDetails = ({handleClick}: {handleClick: () => void}) => {
                         <Instruction />
                     </div>
                     <div className='text-white '>
-                    <Input title='Answer to the game' placeholder='Please enter the title of your game' />
+                    <Input title='Answer to the game' placeholder='' />
                     <Instruction />
                 </div>
                     <div className='flex justify-end mt-[24px] md:mt-0'>
@@ -122,7 +122,7 @@ const GameDetails = ({handleClick}: {handleClick: () => void}) => {
 
 
                 <div className='text-white '>
-                    <Input title='What is the duration of the game?' placeholder='Please enter the title of your game' />
+                    <Input title='What is the duration of the game?' placeholder='' />
                     <Instruction />
                 </div>
                 <div className='mt-[48px]'>
