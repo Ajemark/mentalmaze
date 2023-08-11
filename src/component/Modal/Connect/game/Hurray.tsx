@@ -3,10 +3,10 @@ import { useModalContext } from '../../../../context/ModalContext'
 const Hurray = () => {
     const {switchModalcontent} = useModalContext()
 
-    const onSubmitHandler = () => {
-        switchModalcontent('collate')
-        setTimeout(() => switchModalcontent('congratulations'), 2000)
-    }
+    // const onSubmitHandler = () => {
+    //     switchModalcontent('collate')
+    //     setTimeout(() => switchModalcontent('congratulations'), 2000)
+    // }
 
   return (
     <div>

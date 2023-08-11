@@ -24,10 +24,6 @@ export const UserContext = createContext<UserContextType | null>(null)
 export const UserContextProvider = ({children}:UserContextProviderProps)=>{
     const [address,setAddress] = useState('')
 
-    const userData = {
-        address,
-        setAddress
-    }
 
     return <UserContext.Provider value={{address,setAddress}}>
         {children}

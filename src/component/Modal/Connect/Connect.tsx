@@ -3,7 +3,6 @@ import metalmask from "./../../../assets/metalmask.png"
 import Animation from "./Animation";
 import Web3Modal from 'web3modal'
 import {ethers} from 'ethers'
-import {CoinbaseWalletSDK} from '@coinbase/wallet-sdk'
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../../context/UserContext";
 
@@ -18,7 +17,7 @@ import { UserContext } from "../../../context/UserContext";
 const Connect = () => {
   const {switchModalcontent} =  useModalContext()
   const {address,setAddress}:any = useContext(UserContext)
-  const [signedMessage, setSignedMessage] = useState('')
+
 
 
 
