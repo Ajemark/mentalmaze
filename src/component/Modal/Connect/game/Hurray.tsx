@@ -1,7 +1,7 @@
-import { useModalContext } from '../../../../context/ModalContext'
+
 
 const Hurray = () => {
-    const {switchModalcontent} = useModalContext()
+ 
 
     // const onSubmitHandler = () => {
     //     switchModalcontent('collate')

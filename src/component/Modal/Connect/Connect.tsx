@@ -40,6 +40,7 @@ const Connect = () => {
 
       const web3ModalInstance = await web3Modal.connect()
       const web3ModalProvider = new ethers.BrowserProvider(web3ModalInstance);
+      console.log(web3Provider)
       const walletAddress = await (await web3ModalProvider.getSigner()).getAddress()
       await fetch(`https://mentalmaze-game.onrender.com/api/authenticate/login?address=${walletAddress}`)
       .then(response =>{
