@@ -29,15 +29,15 @@ const Header = () => {
   }, [])
 
   return (
-    <div className={`${challenger?"bg-black":"headerbg"} px-[16px]  md:px-[34px]  z-[5000000000] fixed h-[64px]  md:h-[104px] w-full   ${fixed ? "shadow-lg" : "shadow-none"}`}>
-      <div className='flex justify-between items-center h-full mx-auto w-full '>
+    <div className={`${challenger?"bg-black":"headerbg"} px-[16px] md:px-[34px] z-[5000000000] fixed h-[64px]  md:h-[104px] w-full ${fixed ? "shadow-lg" : "shadow-none"}`}>
+      <div className='flex justify-between items-center h-full w-full'>
         <div className='flex items-center gap-[16px] md:gap-8 justify-between w-full md:w-fit md:justify-center'>
           <Link to={'/'} className=" flex gap-[8px] md:gap-4 text-white font-Archivo_Regular items-center text-[1rem] md:text-[22px]">
-            <img src={Logo} className=" h-5 md:h-full " />
+            <img src={Logo} className=" h-5 md:h-full" />
             Mental Maze
           </Link>
           <div className="text-white text-[36px]" onClick={switchSideMode}>
-            <HiMenuAlt3 className="block md:hidden h-[32px]" />
+            <HiMenuAlt3 className="block md:hidden h-[32px] mr-[-30px]" />
           </div>
           <div className="hidden md:block">
             <HeaderInput />
@@ -53,7 +53,7 @@ const Header = () => {
   </motion.div>}
   </div></NavLink>
   <div className='flex items-center justify-center'>
-    <p className='text-white mr-[10px] uppercase'>{username}</p>
+    <p className='text-white mr-[10px] capitalize'>{username}</p>
   <ConnectWalletbtn clickHandler={() => { switchModal() }} />
   </div>
     

@@ -3,14 +3,14 @@ import { useModalContext } from "../../../context/ModalContext"
 import { UserContext } from "../../../context/UserContext"
 import Animation from "./Animation"
 import Loading from "../../ui/Loading"
-import toast, { Toaster } from 'react-hot-toast';
+
 
 
 const Verify = () => {
   const {switchModalcontent} = useModalContext()
-  const {setSignInDetails,signInDetails, setToken,token, loading,setLoading}:any = useContext(UserContext)
+  const {signInDetails, setToken, loading,setLoading}:any = useContext(UserContext)
 
-  const{address,role,signature}=signInDetails
+  const{address,signature}=signInDetails
 
 
 

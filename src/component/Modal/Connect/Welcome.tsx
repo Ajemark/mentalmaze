@@ -6,15 +6,15 @@ import { toast } from 'react-hot-toast'
 
 const Welcome = () => {
   const {username,  switchModal} = useModalContext()
-  const {setSignInDetails,signInDetails, setToken,token}:any = useContext(UserContext)
+  const {signInDetails,token}:any = useContext(UserContext)
 
   console.log(token)
 
-  const{address,role,signature}=signInDetails
+  const{address}=signInDetails
   console.log(address)
 
   const addUser=()=>{
-    let myHeaders = new Headers();
+  let myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("Authorization", `Bearer ${token}`);
   

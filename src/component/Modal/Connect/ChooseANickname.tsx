@@ -1,7 +1,7 @@
-import { useRef, KeyboardEvent, useContext } from "react"
+import { useRef, KeyboardEvent} from "react"
 import { useModalContext } from "../../../context/ModalContext"
 import Animation from "./Animation"
-import { UserContext } from "../../../context/UserContext"
+
 const ChooseANickname = () => {
   const {usernameHandler, switchModalcontent} = useModalContext()
   const inputRef = useRef<HTMLInputElement>(null);

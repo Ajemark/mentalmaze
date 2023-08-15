@@ -59,6 +59,7 @@ const Connect = () => {
           setLoading(false)
           setSignInDetails((prev:signInDetails)=>({...prev,signature:res}))
           if(res){
+            console.log(signature)
             switchModalcontent('verify')
           }
         })

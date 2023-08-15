@@ -5,7 +5,7 @@ import ConnectWalletModal from "../component/Modal/Connect/ConnectWalletModalWra
 import { ConnectModals } from './Modals';
 import { useModalContext } from '../context/ModalContext';
 import useMode from '../hooks/useMode';
-import { Toaster } from 'react-hot-toast';
+import { Toaster, toast } from 'react-hot-toast';
 
 
 export const MainLayout = () => {
@@ -38,6 +38,7 @@ export const MainLayout = () => {
 
       <div className='mx-auto rounded-none flex flex-col w-full min-h-screen '>
         <Header />
+       
         <div className='flex flex-1 h-fit mx-auto w-full justify-center items-stretch'>
           <Sidebar showSideMobile={sideBarMode} switchSideMode={switchSideMode} />
           <ConnectWalletModal show={ModalMode}>
