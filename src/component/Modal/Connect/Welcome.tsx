@@ -1,9 +1,50 @@
+import { useContext, useEffect } from 'react'
 import { useModalContext } from '../../../context/ModalContext'
 import Animation from './Animation'
+import { UserContext } from '../../../context/UserContext'
+import { toast } from 'react-hot-toast'
 
 const Welcome = () => {
   const {username,  switchModal} = useModalContext()
+  const {setSignInDetails,signInDetails, setToken,token}:any = useContext(UserContext)
 
+  console.log(token)
+
+  const{address,role,signature}=signInDetails
+  console.log(address)
+
+  const addUser=()=>{
+    let myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Authorization", `Bearer ${token}`);
+  
+  let raw = JSON.stringify({
+    "address": address,
+    "username": username,
+    "role":'player'
+  });
+  
+  let requestOptions:RequestInit = {
+    method: 'POST',
+    headers: myHeaders,
+    body: raw,
+    redirect: 'follow'
+  };
+  
+  fetch(`https://mentalmaze-game.onrender.com/api/user/?address=${address}`, requestOptions)
+    .then(response => response.json())
+    .then(result => {
+      console.log(result)
+      if(result.message){
+        toast.error('Error creating User')
+      }
+    })
+    .catch(error => console.log('error', error));
+    }
+  
+    useEffect(()=>{
+      addUser()
+    },[])
 
   return (
     <Animation className='w-full h-full flex flex-col items-center justify-center'>

@@ -5,6 +5,7 @@ import ConnectWalletModal from "../component/Modal/Connect/ConnectWalletModalWra
 import { ConnectModals } from './Modals';
 import { useModalContext } from '../context/ModalContext';
 import useMode from '../hooks/useMode';
+import { Toaster } from 'react-hot-toast';
 
 
 export const MainLayout = () => {
@@ -13,6 +14,20 @@ export const MainLayout = () => {
   console.log(challenger)
 
   return (
+    <>
+     <Toaster
+      toastOptions={{
+        className: '',
+        style: {
+          marginTop:'100px',
+          border: '1px solid #0B77F0',
+          backgroundColor:'#0B77F0',
+          padding: '16px',
+          color: 'white',
+          zIndex:'10000000000000000000000000000000000000000000000000000000000000'
+        },
+      }}
+      />
     <div className={`${challenger?"bg-black":"home"} rounded-none min-h-screen h-full flex justify-center w-full items-center`}>
             <div className='fixed h-screen bottom-0 bg-overlay w-screen mix-blend-multiply backdrop-blur-[4px] bg-cover '>
               
@@ -34,5 +49,7 @@ export const MainLayout = () => {
         </div>
     </div>
     </div>
+    </>
+    
   )
 }

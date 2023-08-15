@@ -4,7 +4,8 @@ import Animation from "./Animation";
 import Web3Modal from 'web3modal'
 import {ethers} from 'ethers'
 import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../../../context/UserContext";
+import { UserContext, signInDetails } from "../../../context/UserContext";
+import Loading from "../../ui/Loading";
 
 
 
@@ -16,8 +17,8 @@ import { UserContext } from "../../../context/UserContext";
 
 const Connect = () => {
   const {switchModalcontent} =  useModalContext()
-  const {address,setAddress}:any = useContext(UserContext)
-
+  const {setSignInDetails,signInDetails,loading, setLoading}:any = useContext(UserContext)
+  
 
 
 
@@ -33,6 +34,7 @@ const Connect = () => {
 
 
   async function connectWallet(){
+    setLoading(true)
     try{
       let web3Modal = new Web3Modal({
         cacheProvider:false,
@@ -42,6 +44,7 @@ const Connect = () => {
       const web3ModalProvider = new ethers.BrowserProvider(web3ModalInstance);
       console.log(web3Provider)
       const walletAddress = await (await web3ModalProvider.getSigner()).getAddress()
+      setSignInDetails({...signInDetails,address:walletAddress})
       await fetch(`https://mentalmaze-game.onrender.com/api/authenticate/login?address=${walletAddress}`)
       .then(response =>{
        return response.json()
@@ -49,19 +52,25 @@ const Connect = () => {
       .then(async result => {
         console.log(result)
         if(result.message === 'success'){
-          const signer = web3ModalProvider.getSigner();
-        let signature = (await signer).signMessage(result.data.message);
-        console.log(signature)
+        const signer = web3ModalProvider.getSigner();
+        let signature = (await signer).signMessage(result.data.message)
+        .then((res)=>{
+          console.log(res)
+          setLoading(false)
+          setSignInDetails((prev:signInDetails)=>({...prev,signature:res}))
+          if(res){
+            switchModalcontent('verify')
+          }
+        })
+        // if(signature){
+        //   switchModalcontent('verify')
+        // }
         }
       })
       .catch(error => console.log('error', error));
-      // const signedMessage = await (await web3ModalProvider.getSigner()).signMessage()
-      // console.log(signedMessage)
-      setAddress(walletAddress)
-      // web3ModalProvider._getAddress()
+      
       if(web3ModalProvider){
         setWeb3Provider(web3ModalProvider)
-        
       }
     }
     catch(error){
@@ -70,18 +79,19 @@ const Connect = () => {
   }
 
 
-  useEffect(()=>{
-    if(address){
-      switchModalcontent('verify')
-    }
-  },[address])
+  // useEffect(()=>{
+  //   if(address){
+  //     switchModalcontent('verify')
+  //   }
+  // },[address])
+
+console.log(signInDetails)
 
 
-
-  console.log(address);
 
   return (
     <>
+    {loading && <Loading/>}
       <div>
       <h1 className='font-droid border-b-blue-80 border-b-[4px] md:border-b-[8px] pt-[20px] mt-[24px] md:pt-[16px] pb-[32px] leading-[37.78px] text-[20px] md:text-[32px] text-center w-fit md:w-full mx-auto'>
                     Connect Wallet

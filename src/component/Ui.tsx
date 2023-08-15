@@ -18,7 +18,9 @@ type ConnectTyype = {
 
 
 export const ConnectWalletbtn = ({clickHandler}:ConnectTyype) => {
-    const{address}:any=useContext(UserContext);
+    const{signInDetails}:any=useContext(UserContext);
+
+    const {address} = signInDetails
 
     let hiddenAddress;
     const hideStringInAddress = (walletAddress:string, stringToHide:string) => {
@@ -31,8 +33,8 @@ export const ConnectWalletbtn = ({clickHandler}:ConnectTyype) => {
 
     return(
         <div className='flex'>
-        <button className="hidden md:block rounded-2xl border-2 md:py-4 px-[8px]  py-[8px] shrink-0 lg:px-10 font-normal font-Archivo_Regular text-[10px] md:text-[12px] lg:text-[15px] leading-[10px] md:leading-[16.32px] header-button text-[#ffffff]" onClick={clickHandler}>
-           {address===''?'CONNECT WALLET':`Connected to : ${hiddenAddress}`}
+        <button className="hidden md:block rounded-2xl border-2 md:py-4 px-[2px] py-[8px] shrink-0 lg:px-6 font-normal font-Archivo_Regular text-[10px] md:text-[12px] lg:text-[15px] leading-[10px] md:leading-[16.32px] header-button text-[#ffffff]" onClick={clickHandler}>
+           {address===''?'CONNECT WALLET':`${hiddenAddress}`}
         </button>
        
         </div>

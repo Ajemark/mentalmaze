@@ -1,9 +1,17 @@
+import { useEffect } from "react"
 import { useModalContext } from "../../../context/ModalContext"
 import Animation from "./Animation"
 
 const Install = () => {
   const {switchModalcontent} = useModalContext()
 
+  console.log(window.ethereum)
+  useEffect(()=>{
+    if(window.ethereum){
+      switchModalcontent('connect')
+      console.log(window.ethereum)
+    }    
+  },[window.ethereum])
 
   return (
     <>
@@ -18,9 +26,12 @@ const Install = () => {
     MetaMask extension is not installed in your browser
     </p>
 
-    <button className='flex items-center justify-center font-droid text-[24px] modalButton border-blue-80 border-solid border-[2px] w-[256px] h-[80px] rounded-[1rem] mx-auto' onClick={() => switchModalcontent('installed')}>
+    <a 
+    href = 'https://metamask.io/download/'
+ 
+    className='flex items-center justify-center font-droid text-[24px] modalButton border-blue-80 border-solid border-[2px] w-[256px] h-[80px] rounded-[1rem] mx-auto'>
         Install
-    </button>
+    </a>
 
     <div className='flex flex-col gap-1 font-Archivo_Regular font-normal text-[15px] md:text-[20px] tracking-wider'>
         <p className='leading-[21.76px]  text-center'>

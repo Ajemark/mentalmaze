@@ -12,7 +12,7 @@ import useMode from '../../hooks/useMode'
 // type fixedType = boolean 
 
 const Header = () => {
-  const { switchModal, switchSideMode } = useModalContext()
+  const { switchModal, switchSideMode , username} = useModalContext()
   const {challenger} = useMode()
   // const {fixed, setFixed} = useState(false)
   const fixed = true
@@ -52,7 +52,11 @@ const Header = () => {
     profile
   </motion.div>}
   </div></NavLink>
-          <ConnectWalletbtn clickHandler={() => { switchModal() }} />
+  <div className='flex items-center justify-center'>
+    <p className='text-white mr-[10px] uppercase'>{username}</p>
+  <ConnectWalletbtn clickHandler={() => { switchModal() }} />
+  </div>
+    
         </div>
       </div>
     </div>
