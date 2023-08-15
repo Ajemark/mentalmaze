@@ -5,7 +5,7 @@ import ConnectWalletModal from "../component/Modal/Connect/ConnectWalletModalWra
 import { ConnectModals } from './Modals';
 import { useModalContext } from '../context/ModalContext';
 import useMode from '../hooks/useMode';
-import { Toaster, toast } from 'react-hot-toast';
+import { Toaster} from 'react-hot-toast';
 
 
 export const MainLayout = () => {
