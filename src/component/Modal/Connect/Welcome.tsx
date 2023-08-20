@@ -1,8 +1,6 @@
-import { useContext, useEffect } from 'react'
 import { useModalContext } from '../../../context/ModalContext'
 import Animation from './Animation'
-import { UserContext } from '../../../context/UserContext'
-import { toast } from 'react-hot-toast'
+
 
 const Welcome = () => {
   const {username,  switchModal} = useModalContext()

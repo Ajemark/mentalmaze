@@ -3,7 +3,7 @@ import Logo from "./../../assets/header/Logo.png"
 
 import { ConnectWalletbtn, HeaderInput } from '../Ui'
 import Boarder from "./../../assets/header/Boarder.png"
-import { Link, NavLink, useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useModalContext } from "../../context/ModalContext"
 import { useEffect } from "react"
 import { HiMenuAlt3 } from "react-icons/hi"
@@ -14,7 +14,7 @@ import { UserContext } from '../../context/UserContext'
 
 const Header = () => {
   const { switchModal, switchSideMode , username} = useModalContext()
-  const {signInDetails, setToken, loading,setLoading, token,userDetails,setUserDetails}:any = useContext(UserContext);
+  const {signInDetails,setLoading, token,userDetails,setUserDetails}:any = useContext(UserContext);
   const{address}=signInDetails;
   const {challenger} = useMode()
   // const{address}:any=useContext(UserContext)

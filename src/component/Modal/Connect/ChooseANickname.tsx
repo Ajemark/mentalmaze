@@ -9,11 +9,11 @@ const ChooseANickname = () => {
   const {usernameHandler, switchModalcontent,username} = useModalContext()
   const inputRef = useRef<HTMLInputElement>(null);
   // const {username,  switchModal} = useModalContext()
-  const {signInDetails,token,loading,setLoading,setToken,setUserDetails}:any = useContext(UserContext)
+  const {signInDetails,token,loading,setLoading,setUserDetails}:any = useContext(UserContext)
   
     console.log(token)
   
-    const{address,signature}=signInDetails
+    const{address}=signInDetails
     console.log(address)
 
 

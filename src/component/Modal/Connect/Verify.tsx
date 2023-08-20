@@ -7,7 +7,7 @@ import { toast } from "react-hot-toast"
 
 const Verify = () => {
   const {switchModalcontent} = useModalContext()
-  const {signInDetails, setToken, loading,setLoading, token,userDetails,setUserDetails}:any = useContext(UserContext);
+  const {signInDetails, setToken, loading,setLoading}:any = useContext(UserContext);
   const{address,signature}=signInDetails;
   // const {username,  switchModal} = useModalContext()
 
@@ -38,6 +38,7 @@ const Verify = () => {
     })
     .catch(error => {
       toast.error('An error occurred')
+      return error
     })
     }
   

@@ -6,7 +6,6 @@ import {ethers} from 'ethers'
 import { useContext, useEffect, useState } from "react";
 import { UserContext, signInDetails } from "../../../context/UserContext";
 import Loading from "../../ui/Loading";
-import { toast } from "react-hot-toast";
 
 
 
@@ -18,7 +17,7 @@ import { toast } from "react-hot-toast";
 
 const Connect = () => {
   const {switchModalcontent} =  useModalContext()
-  const {setSignInDetails,signInDetails,loading, setLoading, token}:any = useContext(UserContext)
+  const {setSignInDetails,signInDetails,loading, setLoading}:any = useContext(UserContext)
   
 
 

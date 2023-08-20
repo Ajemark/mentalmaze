@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import Title from "./../../assets/userProfile/Title.png"
 import ranking from "./../../assets/userProfile/ranking.png"
 import Stars from "./../../assets/userProfile/Stars.png"
@@ -64,14 +64,6 @@ const RANKS = () => {
 
 
 const UserProfile = () => {
-    const {signInDetails, setToken, loading,setLoading, token,userDetails,setUserDetails}:any = useContext(UserContext);
-    const{address}=signInDetails;
-
-
-
-    
-
-      console.log(userDetails)
   return (
     <div className='w-full  relative z-[999] px-[16px] md:px-[52px] mt-[96px] md:mt-[176px]'>
         <ProfileHeader />
@@ -93,7 +85,7 @@ export default UserProfile
 
 
 const ProfileHeader = () => {
-    const {signInDetails, setToken, loading,setLoading, token,userDetails,setUserDetails}:any = useContext(UserContext);
+    const {userDetails}:any = useContext(UserContext);
     // const{address}=signInDetails;
     const{role,username}=userDetails
     
@@ -127,9 +119,9 @@ const ProfileHeader = () => {
                   <p>EDIT PROFILE</p>
             </button>
 
-            {/* {editUser && <input 
+            {editUser && <input 
                 className='h-[20px] bg-white w-[300px]'
-            />} */}
+            />}
 
         </div>
     )
