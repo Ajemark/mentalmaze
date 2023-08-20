@@ -1,19 +1,24 @@
-import {useState} from 'react'
+import {useContext, useState} from 'react'
 import Logo from "./../../assets/header/Logo.png"
 
 import { ConnectWalletbtn, HeaderInput } from '../Ui'
 import Boarder from "./../../assets/header/Boarder.png"
-import { Link, NavLink } from "react-router-dom"
+import { Link, NavLink, useNavigate } from "react-router-dom"
 import { useModalContext } from "../../context/ModalContext"
 import { useEffect } from "react"
 import { HiMenuAlt3 } from "react-icons/hi"
 import {motion} from "framer-motion"
 import useMode from '../../hooks/useMode'
+import { UserContext } from '../../context/UserContext'
 // type fixedType = boolean 
 
 const Header = () => {
   const { switchModal, switchSideMode , username} = useModalContext()
+  const {signInDetails, setToken, loading,setLoading, token,userDetails,setUserDetails}:any = useContext(UserContext);
+  const{address}=signInDetails;
   const {challenger} = useMode()
+  // const{address}:any=useContext(UserContext)
+  const navigate = useNavigate()
   // const {fixed, setFixed} = useState(false)
   const fixed = true
   const [show, setShow] = useState(false)
@@ -27,6 +32,47 @@ const Header = () => {
       }
     })
   }, [])
+
+  useEffect(() => {       
+    window.ethereum.request({
+    method: "eth_accounts",
+  });
+}, []);
+  
+  const gotToProfile=()=>{
+    setLoading(true)
+    if(!address){
+      switchModal()
+      setLoading(false)
+      return
+    }
+    else{
+      navigate('/profile')
+      setLoading(false)
+    }
+  }
+
+  
+  useEffect(()=>{
+    let myHeaders = new Headers();
+    myHeaders.append("Authorization",`Bearer ${token}`);
+    console.log(address.toLowerCase())
+  
+  
+    let requestOptions:RequestInit = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+    fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/user/?address=${address.toLowerCase()}`, requestOptions)
+    .then(response => response.json())
+    .then(result => {
+        console.log(result)
+        setUserDetails(result.data)
+      })
+      .catch(error => console.log('error', error));
+    },[])
+console.log(userDetails)
 
   return (
     <div className={`${challenger?"bg-black":"headerbg"} px-[16px] md:px-[34px] z-[5000000000] fixed h-[64px]  md:h-[104px] w-full ${fixed ? "shadow-lg" : "shadow-none"}`}>
@@ -44,14 +90,18 @@ const Header = () => {
           </div>
         </div>
         <div className='flex items-center gap-8'>
-          <NavLink to={'/profile'}><div className="hidden items-center  relative md:flex justify-center" onMouseEnter={() =>  setShow(!show)} onMouseLeave={() => setShow(!show)}> <img src={Boarder} alt="" />
+          <div className="hidden items-center  relative md:flex justify-center" 
+          onClick={gotToProfile}
+          onMouseEnter={() =>  setShow(!show)} onMouseLeave={() => setShow(!show)}> 
+          <img src={Boarder} alt="" />
           {show&&  <motion.div className="absolute  text-white w-28 left-14  px-2 font-Archivo_Regular bg-hover text-center"
-  animate={{y: [-100, 0], x:[20, 0]  }}
-  transition={{type:"spring", bounce: 0.5, duration: 0.2}}
-  >
+          animate={{y: [-100, 0], x:[20, 0]  }}
+          transition={{type:"spring", bounce: 0.5, duration: 0.2}}
+          >
     profile
   </motion.div>}
-  </div></NavLink>
+  </div>
+  </div>
   <div className='flex items-center justify-center'>
     <p className='text-white mr-[10px] capitalize'>{username}</p>
   <ConnectWalletbtn clickHandler={() => { switchModal() }} />
@@ -59,7 +109,6 @@ const Header = () => {
     
         </div>
       </div>
-    </div>
   )
 }
 

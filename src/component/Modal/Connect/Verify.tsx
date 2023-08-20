@@ -3,47 +3,103 @@ import { useModalContext } from "../../../context/ModalContext"
 import { UserContext } from "../../../context/UserContext"
 import Animation from "./Animation"
 import Loading from "../../ui/Loading"
-
-
+import { toast } from "react-hot-toast"
 
 const Verify = () => {
   const {switchModalcontent} = useModalContext()
-  const {signInDetails, setToken, loading,setLoading}:any = useContext(UserContext)
+  const {signInDetails, setToken, loading,setLoading, token,userDetails,setUserDetails}:any = useContext(UserContext);
+  const{address,signature}=signInDetails;
+  // const {username,  switchModal} = useModalContext()
 
-  const{address,signature}=signInDetails
 
 
+    //check if user exists
+    const userExists=(address:string, webToken:string)=>{
+      setLoading(true)
+      let myHeaders = new Headers();
+      myHeaders.append("Authorization",`Bearer ${webToken}`);
+  
+      let requestOptions:RequestInit = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+      };
+  
+    fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/user/?address=${address.toLowerCase()}`, requestOptions)
+    .then(response => response.json())
+    .then(result =>{ 
+      setLoading(false)
+      if(result.data.id){
+        switchModalcontent('welcome')
+        return
+      }
+      console.log(result)
+      switchModalcontent('verify')
+    })
+    .catch(error => {
+      toast.error('An error occurred')
+    })
+    }
+  
+  
+    //add user after signature
+    const addUserDetails=async()=>{
+      setLoading(true)
+      let myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      
+      let raw = JSON.stringify({
+        "address": address,
+        "signature":signature,
+        "role":'player'
+      });
+      
+      let requestOptions:RequestInit = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+      };
+      
+      await fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/authenticate/verify`, requestOptions)
+        .then(response =>{
+          if (response.ok) {
+          return response.json();
+        }
+        toast.error('Something went wrong')
+      })
+        .then(result => {
+          console.log(result)
+          if(!result.data.token){
+            setLoading(false)
+            toast.error('Error creating User')
+          }
+          else{
+            setToken(result.data.token)
+            setLoading(false)
+            userExists(address,result.data.token)
+          
+          }
+        })
+        .catch(error => {
+          if (error.response) {
+            toast.error('An error occured');
+            setLoading(false)
+          } else if (error.request) {
+            toast.error('An error occured');
+            setLoading(false)
+          } else {
+            toast.error('An error occured');
+            setLoading(false)
+          }
+        });
+    }
+      
+
+
+ 
 
   
-
-  const postAddress=()=>{
-    setLoading(true)
-  let myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
-  
-  let raw = JSON.stringify({
-  "address": address,
-  "signature": signature,
-  "role": "player"
-});
-
-var requestOptions:RequestInit = {
-  method: 'POST',
-  headers: myHeaders,
-  body: raw,
-  redirect: 'follow'
-};
-
-fetch("https://mentalmaze-game.onrender.com/api/authenticate/verify", requestOptions)
-  .then(response => response.json())
-  .then(result => {
-    console.log(result)
-    setToken(result.data.token)
-    switchModalcontent('chooseNickname')
-    setLoading(false)
-  })
-  .catch(error => console.log('error', error));
-  }
 
   return (
     <>
@@ -55,8 +111,9 @@ fetch("https://mentalmaze-game.onrender.com/api/authenticate/verify", requestOpt
       </div>
     <Animation className='pt-[48px] flex flex-col h-full gap-[100px]'>
         <button 
-        onClick={postAddress}
-        className='modalButton flex gap-[24px] items-center justify-center font-droid text-[1rem] md:text-[24px]  border-blue-80 mx-auto'>
+        className='modalButton flex gap-[24px] items-center justify-center font-droid text-[1rem] md:text-[24px]  border-blue-80 mx-auto'
+        onClick={addUserDetails}
+        >
                     Verify
         </button>
     

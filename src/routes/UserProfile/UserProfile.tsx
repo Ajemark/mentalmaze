@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import Title from "./../../assets/userProfile/Title.png"
 import ranking from "./../../assets/userProfile/ranking.png"
 import Stars from "./../../assets/userProfile/Stars.png"
@@ -6,6 +6,7 @@ import edit from "./../../assets/userProfile/edit.png"
 import Ball from "./../../assets/userProfile/Ball.png"
 import StarsM from "./../../assets/userProfile/StarsMobile.svg"
 import medalMaster from "./../../assets/Leadership/medalstarMaster.png"
+import { UserContext } from '../../context/UserContext'
 // import medal from "./../../assets/Leadership/medal_star.png"
 
 const data = [
@@ -63,6 +64,14 @@ const RANKS = () => {
 
 
 const UserProfile = () => {
+    const {signInDetails, setToken, loading,setLoading, token,userDetails,setUserDetails}:any = useContext(UserContext);
+    const{address}=signInDetails;
+
+
+
+    
+
+      console.log(userDetails)
   return (
     <div className='w-full  relative z-[999] px-[16px] md:px-[52px] mt-[96px] md:mt-[176px]'>
         <ProfileHeader />
@@ -84,6 +93,13 @@ export default UserProfile
 
 
 const ProfileHeader = () => {
+    const {signInDetails, setToken, loading,setLoading, token,userDetails,setUserDetails}:any = useContext(UserContext);
+    // const{address}=signInDetails;
+    const{role,username}=userDetails
+    
+    const[editUser,setEditUser]=useState(false)
+    
+    
     return (
         <div className="profile border-4 border-blue-80 w-full overflow-hidden rounded-3xl bg-blue-[#010C18] flex justify-between flex-col md:flex-row p-[24px] md:p-5 gap-[24px] md:gap-0 relative">
             <div className='absolute h-full w-full '>
@@ -94,18 +110,26 @@ const ProfileHeader = () => {
             <div className='flex items-center  gap-[16px] md:gap-[50px] relative z-10'>
             <div className='rounded-[8px] md:rounded-2xl border-blue-90 border md:border-4'><img src={Title} alt="" className='w-[96px] h-[96px] md:w-[initial] md:h-[initial]'/></div>
             <div className='text-white flex flex-col items-center'>
-                <p className="md:text-[32px] text-white font-normal font-droid">GRACE J.</p>
+                <p className="md:text-[32px] text-white font-normal font-droid">{username}</p>
+                
                 <div className="font-Archivo_Regular text-sm font-normal flex justify-center gap-2 items-center">
             <div><img src={ranking} alt="" /></div>
-                <div className='text-wb-40 flex gap-2 items-center text-[11px] md:text-base'>Mode: <span className='text-white'>Solver</span></div>
+                <div className='text-wb-40 flex gap-2 items-center text-[11px] md:text-base'>Mode: <span className='text-white'>{role}</span></div>
                 </div>
             </div>
             </div>
 
-            <button className='flex gap-4 text-white font-Archivo_Regular border-blue-50 border-2 rounded-2xl py-[9.5px] px-[12px] md:py-4 md:px-6 h-fit mt-auto'>
+            <button 
+            className='cursor-pointer flex gap-4 text-white font-Archivo_Regular border-blue-50 border-2 rounded-2xl py-[9.5px] px-[12px] md:py-4 md:px-6 h-fit mt-auto'
+            onClick={()=>setEditUser(true)}
+            >
                   <img src={edit} />
                   <p>EDIT PROFILE</p>
             </button>
+
+            {/* {editUser && <input 
+                className='h-[20px] bg-white w-[300px]'
+            />} */}
 
         </div>
     )

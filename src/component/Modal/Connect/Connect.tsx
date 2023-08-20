@@ -6,6 +6,7 @@ import {ethers} from 'ethers'
 import { useContext, useEffect, useState } from "react";
 import { UserContext, signInDetails } from "../../../context/UserContext";
 import Loading from "../../ui/Loading";
+import { toast } from "react-hot-toast";
 
 
 
@@ -17,7 +18,7 @@ import Loading from "../../ui/Loading";
 
 const Connect = () => {
   const {switchModalcontent} =  useModalContext()
-  const {setSignInDetails,signInDetails,loading, setLoading}:any = useContext(UserContext)
+  const {setSignInDetails,signInDetails,loading, setLoading, token}:any = useContext(UserContext)
   
 
 
@@ -33,6 +34,7 @@ const Connect = () => {
   },[])
 
 
+
   async function connectWallet(){
     setLoading(true)
     try{
@@ -45,7 +47,7 @@ const Connect = () => {
       console.log(web3Provider)
       const walletAddress = await (await web3ModalProvider.getSigner()).getAddress()
       setSignInDetails({...signInDetails,address:walletAddress})
-      await fetch(`https://mentalmaze-game.onrender.com/api/authenticate/login?address=${walletAddress}`)
+      await fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/authenticate/login?address=${walletAddress}`)
       .then(response =>{
        return response.json()
       })

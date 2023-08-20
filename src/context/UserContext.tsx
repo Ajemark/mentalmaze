@@ -4,6 +4,13 @@ export type UserContextProviderProps = {
     children : React.ReactNode
 }
 
+export type userDetails={
+    id: string,
+    username: string,
+    address: string,
+    role: string
+}
+
 
 export interface signInDetails{
     address:string,
@@ -20,15 +27,12 @@ export interface UserContextType {
     setToken: React.Dispatch<React.SetStateAction<string>>
     loading:boolean
     setLoading:React.Dispatch<React.SetStateAction<boolean>>
+    userDetails:userDetails | {}
+    setUserDetails:React.Dispatch<React.SetStateAction<userDetails>>
 }
 
 
 export const UserContext = createContext<UserContextType | null>(null)
-
-
-
-
-
 
 
 export const UserContextProvider = ({children}:UserContextProviderProps)=>{
@@ -39,10 +43,11 @@ export const UserContextProvider = ({children}:UserContextProviderProps)=>{
     })
     const[token,setToken] = useState('')
     const[loading, setLoading] = useState(false)
+    const[userDetails,setUserDetails]=useState<userDetails|{}>({})
 
     console.log(signInDetails)
 
-    return <UserContext.Provider value={{setSignInDetails,signInDetails,token,setToken,loading,setLoading}}>
+    return <UserContext.Provider value={{setSignInDetails,signInDetails,token,setToken,loading,setLoading, userDetails,setUserDetails}}>
         {children}
     </UserContext.Provider>
 }
