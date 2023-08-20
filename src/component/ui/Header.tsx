@@ -32,12 +32,6 @@ const Header = () => {
       }
     })
   }, [])
-
-  useEffect(() => {       
-    window.ethereum.request({
-    method: "eth_accounts",
-  });
-}, []);
   
   const gotToProfile=()=>{
     setLoading(true)
