@@ -1,7 +1,6 @@
 import {useContext, useState} from 'react'
 import Logo from "./../../assets/header/Logo.png"
-
-import { ConnectWalletbtn, HeaderInput } from '../Ui'
+import { HeaderInput } from '../Ui'
 import Boarder from "./../../assets/header/Boarder.png"
 import { Link, useNavigate } from "react-router-dom"
 import { useModalContext } from "../../context/ModalContext"
@@ -10,11 +9,13 @@ import { HiMenuAlt3 } from "react-icons/hi"
 import {motion} from "framer-motion"
 import useMode from '../../hooks/useMode'
 import { UserContext } from '../../context/UserContext'
+import { toast } from 'react-hot-toast'
+import { Web3Button } from '@web3modal/react'
 // type fixedType = boolean 
 
 const Header = () => {
   const { switchModal, switchSideMode , username} = useModalContext()
-  const {signInDetails,setLoading, token,userDetails,setUserDetails}:any = useContext(UserContext);
+  const {signInDetails,setLoading, token,setUserDetails}:any = useContext(UserContext);
   const{address}=signInDetails;
   const {challenger} = useMode()
   // const{address}:any=useContext(UserContext)
@@ -22,6 +23,40 @@ const Header = () => {
   // const {fixed, setFixed} = useState(false)
   const fixed = true
   const [show, setShow] = useState(false)
+
+
+  const getUserDetails=()=>{
+    setLoading(true)
+    let myHeaders = new Headers();
+    myHeaders.append("Authorization",`Bearer ${token}`);
+    console.log(address.toLowerCase());
+  
+  
+    let requestOptions:RequestInit = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+    
+    fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/user/?address=${address.toLowerCase()}`, requestOptions)
+    .then(response => response.json())
+    .then(result => {
+      if(result.data.address){
+        console.log(result)
+        setUserDetails(result.data)
+        navigate('/profile')
+        setLoading(false)
+      }
+      else{
+        setLoading(false)
+        toast.error('You need to connect your wallet and sign up with metamask')
+      }
+      })
+      .catch(error => console.log('error', error));
+  }
+    
+
+
   useEffect(() => {
     window.addEventListener('scroll', () => {
       if (window.scrollY > 104) {
@@ -34,39 +69,19 @@ const Header = () => {
   }, [])
   
   const gotToProfile=()=>{
-    setLoading(true)
     if(!address){
       switchModal()
-      setLoading(false)
       return
     }
     else{
-      navigate('/profile')
-      setLoading(false)
+      getUserDetails()
     }
   }
 
-  
-  useEffect(()=>{
-    let myHeaders = new Headers();
-    myHeaders.append("Authorization",`Bearer ${token}`);
-    console.log(address.toLowerCase())
+
   
   
-    let requestOptions:RequestInit = {
-      method: 'GET',
-      headers: myHeaders,
-      redirect: 'follow'
-    };
-    fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/user/?address=${address.toLowerCase()}`, requestOptions)
-    .then(response => response.json())
-    .then(result => {
-        console.log(result)
-        setUserDetails(result.data)
-      })
-      .catch(error => console.log('error', error));
-    },[])
-console.log(userDetails)
+
 
   return (
     <div className={`${challenger?"bg-black":"headerbg"} px-[16px] md:px-[34px] z-[5000000000] fixed h-[64px]  md:h-[104px] w-full ${fixed ? "shadow-lg" : "shadow-none"}`}>
@@ -83,8 +98,8 @@ console.log(userDetails)
             <HeaderInput />
           </div>
         </div>
-        <div className='flex items-center gap-8'>
-          <div className="hidden items-center  relative md:flex justify-center" 
+        <div className='flex items-center gap-8 border'>
+          <div className="hidden items-center relative md:flex justify-center" 
           onClick={gotToProfile}
           onMouseEnter={() =>  setShow(!show)} onMouseLeave={() => setShow(!show)}> 
           <img src={Boarder} alt="" />
@@ -94,11 +109,15 @@ console.log(userDetails)
           >
     profile
   </motion.div>}
+  <Web3Button/>
   </div>
   </div>
   <div className='flex items-center justify-center'>
     <p className='text-white mr-[10px] capitalize'>{username}</p>
-  <ConnectWalletbtn clickHandler={() => { switchModal() }} />
+  {/* <ConnectWalletbtn clickHandler={() => { switchModal() }} /> */}
+  
+ 
+   
   </div>
     
         </div>

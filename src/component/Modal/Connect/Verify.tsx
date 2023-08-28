@@ -7,15 +7,15 @@ import { toast } from "react-hot-toast"
 
 const Verify = () => {
   const {switchModalcontent} = useModalContext()
-  const {signInDetails, setToken, loading,setLoading}:any = useContext(UserContext);
+  const {signInDetails,token, setToken, loading,setLoading}:any = useContext(UserContext);
   const{address,signature}=signInDetails;
   // const {username,  switchModal} = useModalContext()
 
-
+console.log(token)
 
     //check if user exists
-    const userExists=(address:string, webToken:string)=>{
-      setLoading(true)
+    const userExists=async(webToken:string)=>{
+      console.log('user 2nd')
       let myHeaders = new Headers();
       myHeaders.append("Authorization",`Bearer ${webToken}`);
   
@@ -25,20 +25,29 @@ const Verify = () => {
         redirect: 'follow'
       };
   
-    fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/user/?address=${address.toLowerCase()}`, requestOptions)
-    .then(response => response.json())
+    await fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/user/?address=${address.toLowerCase()}`, requestOptions)
+    .then(response =>{ 
+      console.log('user exists third')
+      return response.json()
+    })
     .then(result =>{ 
-      setLoading(false)
       if(result.data.id){
+        console.log(result)
+        console.log('user exists')
         switchModalcontent('welcome')
-        return
+        setLoading(false)
       }
+      if(result.data ===  null){
       console.log(result)
-      switchModalcontent('verify')
+      setLoading(false)
+      switchModalcontent('chooseNickname')
+      }
     })
     .catch(error => {
       toast.error('An error occurred')
+      setLoading(false)
       return error
+      
     })
     }
   
@@ -60,27 +69,30 @@ const Verify = () => {
         headers: myHeaders,
         body: raw,
         redirect: 'follow'
-      };
+      }
       
       await fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/authenticate/verify`, requestOptions)
-        .then(response =>{
-          if (response.ok) {
+      .then(response =>{
+          if (response.ok){
           return response.json();
         }
         toast.error('Something went wrong')
       })
-        .then(result => {
-          console.log(result)
-          if(!result.data.token){
+      .then(result => {
+          if(result.data.token){
+            setToken(result.data.token)
+            setLoading(false)
+            console.log(result)
+            return result
+          }
+          else{
             setLoading(false)
             toast.error('Error creating User')
           }
-          else{
-            setToken(result.data.token)
-            setLoading(false)
-            userExists(address,result.data.token)
-          
-          }
+        })
+        .then((result)=>{
+          console.log('user exist start')
+          return userExists(result.data.token)
         })
         .catch(error => {
           if (error.response) {

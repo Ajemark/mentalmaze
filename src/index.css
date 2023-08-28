@@ -238,3 +238,6 @@ html, body {
   backdrop-filter: blur(8px);
 }
 
+body {
+  --w3m-z-index: 15000000000000000000000000000000000000000000000;
+}

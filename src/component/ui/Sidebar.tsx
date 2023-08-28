@@ -10,7 +10,6 @@ import { useLocation, useNavigate } from "react-router-dom"
 import useQuery from "../../hooks/useQuery"
 import {AiOutlineClose} from "react-icons/ai"
 import {BsSearch} from "react-icons/bs"
-import emptywallet from "./../../assets/sidebar/emptywallet.svg"
 import useroctagon from "./../../assets/sidebar/useroctagon.svg"
 import cup from "./../../assets/sidebar/mobile/cup.svg"
 import game from "./../../assets/sidebar/mobile/game.svg"
@@ -21,8 +20,18 @@ import { useModalContext } from "../../context/ModalContext"
 import Discord from "./../../assets/sidebar/mobile/Discord.svg"
 import Telegram from "./../../assets/sidebar/mobile/Telegram (2).svg"
 import Twitter from "./../../assets/sidebar/mobile/Twitter.svg"
-import { useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import useMode from "../../hooks/useMode"
+import { Web3Button } from "@web3modal/react"
+import { useAccount } from "wagmi"
+import { UserContext} from "../../context/UserContext"
+
+
+
+
+
+
+
 
 interface CompType {
   showSideMobile: boolean,
@@ -32,6 +41,10 @@ interface CompType {
 
 
 const NavItemMobile = (src: {link: string, title: string, image:string}) => {
+  // const {address, isConnecting, isDisconnected, isConnected } = useAccount();
+  // const { data, isError, isLoading, isSuccess, signMessage } = useSignMessage({
+  //   message: '',
+  // })
   const navigate = useNavigate()
   const location = useLocation()
   const goto = (go:string) => {
@@ -55,7 +68,7 @@ const NavItemMobile = (src: {link: string, title: string, image:string}) => {
   const [show, setShow] = useState(false)
   
   return(
-  <div className={`pl-[8px]  md:pl-[15px] w-full relative items-center    cursor-pointer flex overflow-visible`} onClick={() => goto(src.link)} onMouseEnter={() =>  setShow(!show)} onMouseLeave={() => setShow(!show)}>
+  <div className={`pl-[8px]  md:pl-[15px] w-full relative items-center cursor-pointer flex overflow-visible`} onClick={() => goto(src.link)} onMouseEnter={() =>  setShow(!show)} onMouseLeave={() => setShow(!show)}>
   <span>  <img src={src.image} className=""/> </span>
   {show&&<motion.div className="absolute  text-white w-28 left-20  px-2 font-Archivo_Regular bg-hover text-center"
   animate={{y: [-100, 0], x:[20, 0]  }}
@@ -74,19 +87,67 @@ const NavItemMobile = (src: {link: string, title: string, image:string}) => {
 // search box
 // user cant create game if they add a certain amount
 const Sidebar = ({showSideMobile, switchSideMode}:CompType) => {
-  const { switchModal,  } = useModalContext()
+  const { switchModal,switchModalcontent } = useModalContext()
+  const {signInDetails,setSignInDetails}:any = useContext(UserContext)
   const {challenger} = useMode()
+  const {address } = useAccount();
 
-  const openModal = (value: string) => {
-      if(value == "Connect wallet"){
-        switchSideMode()
-        switchModal()
-      }
-  }
+  const [connectAddress,setConnectAddress] = useState<`0x${string}` | undefined>()
+
+
+  useEffect(()=>{
+    if(address){
+      setConnectAddress(address)
+    }
+  },[address])
+
+  console.log(useAccount())
+
+  // const signInMessage=async()=>{  
+  //   await fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/authenticate/login?address=${address}`)
+  //   .then(response =>{
+  //     if(response.ok){
+  //       return response.json()
+  //     }
+  //     else{
+  //       toast.error('An error occured')
+  //     }
+  //    })
+  //    .then((result)=>{
+  //     console.log(result)
+  //     if(result?.data?.message){
+  //       setMessage(result.data.message)  
+  //     }
+  //    })
+  // }
+
+  console.log(connectAddress)
+
+
+
+  useEffect(()=>{
+    if(connectAddress){
+      setSignInDetails({...setSignInDetails,address:address})
+      switchModal()
+      switchModalcontent('authenticate')
+    }
+  },[connectAddress])
+
+  console.log(signInDetails)
+
+
+  
+
+//   const mobileAuth=async()=>{
+//     if(address){
+//       setSignInDetails({...signInDetails,address:address})
+//     }
 
   
   const navigate = useNavigate()
   const {width} = useQuery()
+
+
   return (
     // sidebar for desktopview
     // it had to be seperated because it has different structure with that of the mobile
@@ -149,17 +210,23 @@ const Sidebar = ({showSideMobile, switchSideMode}:CompType) => {
             </div>
             <div className="flex flex-col gap-3 items-center px-[12px] py-[34px] border-solid border-t-blue-80 border-t-[2px]"
             >
-            {[ {image: useroctagon, title: "Create game"}, {image: emptywallet, title: "Connect wallet"} ].map((src, index) => {
-  
-            return <div className='w-full flex items-center gap-[8px]  h-[46px] hover:sidebarItem cursor-pointer px-[12px]  rounded-lg hover:border-blue-50 hover:border-solid hover:border-[1px]' key={index} onClick={() => openModal(src.title)}>
-            <img src={src.image} />
-            <p className="text-[16px] font-Archivo_Regular leading-[17.41px] font-medium">{src.title}</p>
+            <div className='w-full flex items-center gap-[8px]  h-[46px] hover:sidebarItem cursor-pointer px-[12px]  rounded-lg hover:border-blue-50 hover:border-solid hover:border-[1px]'>
+            <img src={useroctagon} />
+            <p className="text-[16px] font-Archivo_Regular leading-[17.41px] font-medium">Create Game</p>
           </div>
-          })}
+          <div 
+          onClick={()=>{
+            switchSideMode()
+          }}
+          className='w-full flex justify-start'>
+          {
+            !address && <Web3Button/>
+          }
+          </div>
             </div>
     </div>
     </>
   )
 }
 
-export default Sidebar
+export default Sidebar;

@@ -1,14 +1,14 @@
-import { createContext, useState } from "react";
+import { createContext,useState } from "react";
 
 export type UserContextProviderProps = {
     children : React.ReactNode
 }
 
 export type userDetails={
-    id: string,
     username: string,
     address: string,
     role: string
+ 
 }
 
 
@@ -29,6 +29,8 @@ export interface UserContextType {
     setLoading:React.Dispatch<React.SetStateAction<boolean>>
     userDetails:userDetails | {}
     setUserDetails:React.Dispatch<React.SetStateAction<userDetails>>
+    mobileSignInDetails: signInDetails
+    setmobileSignInDetails:React.Dispatch<React.SetStateAction<signInDetails>>
 }
 
 
@@ -43,11 +45,32 @@ export const UserContextProvider = ({children}:UserContextProviderProps)=>{
     })
     const[token,setToken] = useState('')
     const[loading, setLoading] = useState(false)
-    const[userDetails,setUserDetails]=useState<userDetails|{}>({})
+    const[userDetails,setUserDetails]=useState<userDetails>({
+        address:'',
+        username:'',
+        role:''
+    })
+    const [mobileSignInDetails,setmobileSignInDetails] = useState<signInDetails>({
+        address:'',
+        signature:'',
+        role:''
+    })
+
+
+    // if(userDetails?.address){
+    //     const {address} = userDetails
+    // }
+
+
+
+    
+    
+        // const { open, close } = useWeb3Modal()
+    console.log(userDetails)
 
     console.log(signInDetails)
 
-    return <UserContext.Provider value={{setSignInDetails,signInDetails,token,setToken,loading,setLoading, userDetails,setUserDetails}}>
+    return <UserContext.Provider value={{setSignInDetails,signInDetails,token,setToken,loading,setLoading, userDetails,setUserDetails,mobileSignInDetails,setmobileSignInDetails}}>
         {children}
     </UserContext.Provider>
 }

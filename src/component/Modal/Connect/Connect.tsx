@@ -6,25 +6,19 @@ import {ethers} from 'ethers'
 import { useContext, useEffect, useState } from "react";
 import { UserContext, signInDetails } from "../../../context/UserContext";
 import Loading from "../../ui/Loading";
+import { useAccount } from "wagmi";
+import useQuery from "../../../hooks/useQuery";
 
-
-
-// declare global {
-//   interface Window {
-//     ethereum?: any;
-//   }
-// }
+// import {Web3Modal} from '@web3modal/react'
 
 const Connect = () => {
   const {switchModalcontent} =  useModalContext()
   const {setSignInDetails,signInDetails,loading, setLoading}:any = useContext(UserContext)
-  
-
-
-
   const [web3Provider , setWeb3Provider] = useState<any>(null)
+  const {isConnected} = useAccount();
+  const {width} = useQuery()
 
-  // const[address,setAddress]=useState('')
+ 
 
   useEffect(()=>{
     if(!window.ethereum){
@@ -32,6 +26,16 @@ const Connect = () => {
     }
   },[])
 
+
+  useEffect(()=>{
+    if(isConnected){
+      if(width<768){
+        switchModalcontent('authenticate')  
+      }
+    }
+  },[])
+
+  
 
 
   async function connectWallet(){
@@ -42,7 +46,7 @@ const Connect = () => {
       })
 
       const web3ModalInstance = await web3Modal.connect()
-      const web3ModalProvider = new ethers.BrowserProvider(web3ModalInstance);
+      const web3ModalProvider = new ethers.providers.Web3Provider(web3ModalInstance);;
       console.log(web3Provider)
       const walletAddress = await (await web3ModalProvider.getSigner()).getAddress()
       setSignInDetails({...signInDetails,address:walletAddress})

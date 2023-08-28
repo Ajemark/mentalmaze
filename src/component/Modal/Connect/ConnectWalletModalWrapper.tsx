@@ -55,7 +55,6 @@ const ConnectWalletModal = ({ children, show }: LayoutProps) => {
     >
       <div className=' 
         relative
-
         text-white
         w-[90vw]
         h-[85vh]
@@ -64,10 +63,7 @@ const ConnectWalletModal = ({ children, show }: LayoutProps) => {
         flex flex-col
         max-w-[700px]
         border-blue-80 rounded-b-none md:rounded-b-[60px] rounded-[60px] border-[8px]
-        bg-blue-100
-        '
-        
-        >
+        bg-blue-100'>
         <img src={slices} alt="" className='w-[230px] md:w-[240px] md:h-[24px] absolute right-0 ' />
        <div className="mb-[30px] md:mb-0 h-full"> {children}</div>
 
@@ -75,8 +71,7 @@ const ConnectWalletModal = ({ children, show }: LayoutProps) => {
         <img src={sliceMobile} alt="" className='w-[230px] h-[24px] md:w-[240px] md:h-[24px] absolute bottom-0 left-0 block md:hidden' />
 
       </div>
-      {modal !== "example" && 
-      <img src={Close} className='absolute top-0 md:top-[initial] md:right-[62px] z-[9999999999]' onClick={Handler} />}
+      {modal !== 'connect'?'': <img src={Close} className='absolute top-0 md:top-[initial] md:right-[62px] z-[9999999999]' onClick={Handler} />}
       {
       modal == "example" &&  <button className='next rounded-[8px] p-[1px] absolute top-0 md:top-[initial] md:right-[62px] z-[9999999999] text-white text-[24px]'>
       <button className="rounded-[8px] bg-blue-100 p-[8px] font- leading-normal text-[16px] flex items-center gap-[8px] w-[131px] justify-center" onClick={() => {

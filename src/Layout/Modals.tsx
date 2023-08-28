@@ -14,11 +14,14 @@ import Hurray from '../component/Modal/Connect/game/Hurray'
 import Reveal from '../component/Modal/Connect/game/Reveal'
 import Collating from '../component/Modal/Connect/game/Collating'
 import ChallengerModal from '../component/Modal/ChallengerModal'
+import Authenticate from '../component/Modal/Connect/Authenticate'
+import EditProfile from '../component/Modal/EditProfile'
 
 
 type Modal = {
     connect: ReactNode,
     install: ReactNode,
+    authenticate:ReactNode,
     verify: ReactNode,
     chooseNickname: ReactNode,
     installed: ReactNode,
@@ -29,13 +32,15 @@ type Modal = {
     hurray: ReactNode,
     reveal: ReactNode,
     collate: ReactNode,
-    challenger: ReactNode
+    challenger: ReactNode,
+    editProfile: ReactNode
 }
 
 
 export const ConnectModals:Modal = {
     connect: <Connect />,
     install: <Install />,
+    authenticate:<Authenticate/>,
     verify: <Verify />,
     chooseNickname: <ChooseANickname />,
     installed: <Installed />,
@@ -46,5 +51,6 @@ export const ConnectModals:Modal = {
     hurray: <Hurray />,
     reveal: <Reveal />,
     collate: <Collating />,
-    challenger: <ChallengerModal />
+    challenger: <ChallengerModal />,
+    editProfile: <EditProfile/>
 }

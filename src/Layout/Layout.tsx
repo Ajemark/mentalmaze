@@ -6,6 +6,23 @@ import { ConnectModals } from './Modals';
 import { useModalContext } from '../context/ModalContext';
 import useMode from '../hooks/useMode';
 import { Toaster} from 'react-hot-toast';
+import { Web3Modal } from '@web3modal/react'
+import { EthereumClient, w3mConnectors, w3mProvider } from '@web3modal/ethereum'
+
+import { configureChains, createConfig, WagmiConfig } from 'wagmi'
+import { arbitrum, mainnet, polygon } from 'wagmi/chains'
+
+const chains = [arbitrum, mainnet, polygon]
+const projectId =  import.meta.env.VITE_REACT_APP_INFURA_API_KEY
+
+const { publicClient } = configureChains(chains, [w3mProvider({ projectId })])
+const wagmiConfig = createConfig({
+  autoConnect: true,
+  connectors: w3mConnectors({ projectId, chains }),
+  publicClient
+})
+
+const ethereumClient = new EthereumClient(wagmiConfig, chains)
 
 
 export const MainLayout = () => {
@@ -28,7 +45,14 @@ export const MainLayout = () => {
         },
       }}
       />
-    <div className={`${challenger?"bg-black":"home"} rounded-none min-h-screen h-full flex justify-center w-full items-center`}>
+       <WagmiConfig
+    config={wagmiConfig}
+    >
+     
+      <Web3Modal
+      projectId={projectId} ethereumClient={ethereumClient} 
+      /> 
+      <div className={`${challenger?"bg-black":"home"} rounded-none min-h-screen h-full flex justify-center w-full items-center`}>
             <div className='fixed h-screen bottom-0 bg-overlay w-screen mix-blend-multiply backdrop-blur-[4px] bg-cover '>
               
             </div>
@@ -50,6 +74,8 @@ export const MainLayout = () => {
         </div>
     </div>
     </div>
+  </WagmiConfig> 
+    
     </>
     
   )
