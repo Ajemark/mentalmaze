@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useContext, useRef } from 'react'
 
 
 import StepperControl from './StepperControl'
@@ -8,8 +8,10 @@ import Payments from './steps/Payments'
 import { useState } from 'react'
 
 import GameDetails from './steps/GameDetails'
+import { UserContext } from '../../../context/UserContext'
 
 export const GamedetailForm = () => {
+    const {questions}:any = useContext(UserContext)
     const contRef = useRef<HTMLDivElement>(null)
     const [currentStep, setCurrentStep] = useState(1)
     const steps:string[] = [
@@ -19,10 +21,11 @@ export const GamedetailForm = () => {
     ]
 
     const handleClick = () => {
-        console.log("Handling Click")
-        console.log("Handling the fucjkitksajs")
         setCurrentStep(currentStep + 1)
     } 
+
+    console.log(questions)
+
 
     const displayStep = (step:number) => {
         switch(step) {
@@ -34,6 +37,8 @@ export const GamedetailForm = () => {
                 return <Submit />
         }
     }
+
+    
    
 
   

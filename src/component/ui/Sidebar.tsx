@@ -25,6 +25,7 @@ import useMode from "../../hooks/useMode"
 import { Web3Button } from "@web3modal/react"
 import { useAccount } from "wagmi"
 import { UserContext} from "../../context/UserContext"
+import { toast } from "react-hot-toast"
 
 
 
@@ -57,6 +58,8 @@ const NavItemMobile = (src: {link: string, title: string, image:string}) => {
       return answer
     }
     }
+
+
     
     if(locationContainsChallenger()) {
       navigate(`/challenger${go}`)
@@ -87,10 +90,18 @@ const NavItemMobile = (src: {link: string, title: string, image:string}) => {
 // search box
 // user cant create game if they add a certain amount
 const Sidebar = ({showSideMobile, switchSideMode}:CompType) => {
-  const { switchModal,switchModalcontent } = useModalContext()
-  const {signInDetails,setSignInDetails}:any = useContext(UserContext)
+  const { switchModal,switchModalcontent} = useModalContext()
+  const {signInDetails,setSignInDetails,setLoading, token,setUserDetails}:any = useContext(UserContext)
+  // const { switchModal, switchSideMode , } = useModalContext()
+  // const {signInDetails,setLoading, token,setUserDetails}:any = useContext(UserContext);
+  // const{address}=signInDetails;
   const {challenger} = useMode()
   const {address } = useAccount();
+  // useEffect(()=>{
+  //   if(!window.ethereum){
+  //     window.location.assign('https://app.mentalmaze.io')
+  //   }
+  // },[])
 
   const [connectAddress,setConnectAddress] = useState<`0x${string}` | undefined>()
 
@@ -123,17 +134,82 @@ const Sidebar = ({showSideMobile, switchSideMode}:CompType) => {
 
   console.log(connectAddress)
 
+  const getUserDetails=()=>{
+    setLoading(true)
+    let myHeaders = new Headers();
+    myHeaders.append("Authorization",`Bearer ${token}`);
+    console.log(address?.toLowerCase());
+  
+  
+    let requestOptions:RequestInit = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+    
+    fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/user/?address=${address?.toLowerCase()}`, requestOptions)
+    .then(response => response.json())
+    .then(result => {
+      if(result.data.address){
+        console.log(result)
+        setUserDetails(result.data)
+        navigate('/profile')
+        setLoading(false)
+      }
+      else{
+        setLoading(false)
+        toast.error('You need to connect your wallet and sign up with metamask')
+      }
+      })
+      .catch(error => console.log('error', error));
+  }
+    
+
 
 
   useEffect(()=>{
-    if(connectAddress){
+    if(!window.ethereum){
+      switchModal()
+          switchModalcontent('install')
+    }
+    else if(connectAddress){
       setSignInDetails({...setSignInDetails,address:address})
       switchModal()
       switchModalcontent('authenticate')
     }
+    else if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+        window.open("https://metamask.app.link/dapp/app.mentalmaze.io")  
+    }
   },[connectAddress])
 
+  // useEffect(()=>{
+  //   if(!window.ethereum){
+  //     switchModal()
+  //     switchModalcontent('install')   
+  //   }
+  //   // first detect if window.ethereum is there
+  // if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+
+  // // open the deeplink page 
+  // window.open("https://metamask.app.link/dapp/app.mentalmaze.io")
+  
+  // } else {
+  //   switchModal()
+  //   switchModalcontent('install')
+  // }
+  // },[])
+
   console.log(signInDetails)
+
+  const gotToProfile=()=>{
+    if(!address){
+      switchModal()
+      return
+    }
+    else{
+      getUserDetails()
+    }
+  }
 
 
   
@@ -151,7 +227,7 @@ const Sidebar = ({showSideMobile, switchSideMode}:CompType) => {
   return (
     // sidebar for desktopview
     // it had to be seperated because it has different structure with that of the mobile
-    width > 768 ?<div className={` w-[104px] h-[90vh] fixed md:flex flex-col justify-between py-[46px] left-0  z-20  opacity-[0.4000000059604645] items-center  mt-[104px] hidden ${challenger?"bg-black":"bg-blue-100"}`}>
+    width > 768 ?<div className={`w-[104px] h-[90vh] fixed md:flex flex-col justify-between py-[46px] left-0  z-20  opacity-[0.4000000059604645] items-center  mt-[104px] hidden ${challenger?"bg-black":"bg-blue-100"}`}>
         <div className='flex flex-col gap-6 w-full'>
           {[{image: nav1, link: "/create-game", title: "Create Game"}, {image: nav2, link: '/leaderboard', title: "leaderboard"},{image: nav3, link: "/", title: "Games"}].map((src) => {
             return <NavItemMobile {...src}/>
@@ -210,9 +286,16 @@ const Sidebar = ({showSideMobile, switchSideMode}:CompType) => {
             </div>
             <div className="flex flex-col gap-3 items-center px-[12px] py-[34px] border-solid border-t-blue-80 border-t-[2px]"
             >
-            <div className='w-full flex items-center gap-[8px]  h-[46px] hover:sidebarItem cursor-pointer px-[12px]  rounded-lg hover:border-blue-50 hover:border-solid hover:border-[1px]'>
+            <div 
+            onClick={()=>{
+              gotToProfile()
+              switchSideMode()
+            }}
+            className='w-full flex items-center gap-[8px]  h-[46px] hover:sidebarItem cursor-pointer px-[12px]  rounded-lg hover:border-blue-50 hover:border-solid hover:border-[1px]'>
             <img src={useroctagon} />
-            <p className="text-[16px] font-Archivo_Regular leading-[17.41px] font-medium">Create Game</p>
+            <p 
+            
+            className="text-[16px] font-Archivo_Regular leading-[17.41px] font-medium">Profile</p>
           </div>
           <div 
           onClick={()=>{

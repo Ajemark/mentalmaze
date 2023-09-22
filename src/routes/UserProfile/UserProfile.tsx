@@ -90,7 +90,7 @@ export default UserProfile
 
 const ProfileHeader = () => {
     const {userDetails}:any = useContext(UserContext);
-    const { switchModal, switchModalcontent } = useModalContext()
+    const { switchModal, switchModalcontent,} = useModalContext()
     // const[editUser,setEditUser]=useState(false)
     const navigate = useNavigate()
 
@@ -122,13 +122,15 @@ const ProfileHeader = () => {
             </div>
 
             <button 
-            className='cursor-pointer flex gap-4 text-white font-Archivo_Regular border-blue-50 border-2 rounded-2xl py-[9.5px] px-[12px] md:py-4 md:px-6 h-fit mt-auto'
+            className='cursor-pointer flex gap-4 text-white font-Archivo_Regular border-blue-50 border-2 rounded-2xl py-[9.5px] px-[12px] md:py-4 md:px-6 h-fit mt-auto z-[10000000000000000]'
             onClick={()=>{
                 switchModal()
                 switchModalcontent('editProfile')
             }}
             >
-                  <img src={edit} />
+                  <img 
+                  className='cursor-pointer'
+                  src={edit} />
                   <p>EDIT PROFILE</p>
             </button>
 

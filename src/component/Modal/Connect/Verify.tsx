@@ -28,16 +28,18 @@ console.log(token)
     await fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/user/?address=${address.toLowerCase()}`, requestOptions)
     .then(response =>{ 
       console.log('user exists third')
+      console.log(response)
       return response.json()
     })
     .then(result =>{ 
-      if(result.data.id){
+      if(result.data && result.data.id){
         console.log(result)
         console.log('user exists')
         switchModalcontent('welcome')
         setLoading(false)
       }
-      if(result.data ===  null){
+      if(result.data===null){
+        console.log('user exist')
       console.log(result)
       setLoading(false)
       switchModalcontent('chooseNickname')
@@ -74,9 +76,12 @@ console.log(token)
       await fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/authenticate/verify`, requestOptions)
       .then(response =>{
           if (response.ok){
+            console.log(response)
           return response.json();
         }
-        toast.error('Something went wrong')
+        else{
+          toast.error('Something went wrong')
+        }
       })
       .then(result => {
           if(result.data.token){

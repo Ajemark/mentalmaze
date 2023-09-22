@@ -1,12 +1,29 @@
 
+import { useContext } from "react"
 import Input from "../../../../component/ui/Input"
 import { HiPlus } from "react-icons/hi"
+import { UserContext } from "../../../../context/UserContext"
 
 const Payments = ({handleClick}: {handleClick: () => void}) => {
+    const {gameToken,setGameToken, priceShare,setPriceShare,comments,setComments}:any = useContext(UserContext)
+
+    const updatePriceShare = (index:any, newValue:any) => {
+        const updatedArray = [...priceShare]; // Create a copy of the current array
+        updatedArray[index] = newValue; // Update the element at the specified index
+        setPriceShare(updatedArray); // Update the state with the new array
+      };
+
+      console.log(priceShare)
+    
     return (
         <div className='px-[16px] md:px-[48px]'>
             <div className=' text-white '>
-                <Input title='How much do you want to dedicate to  this project?' placeholder='Please enter the title of your game' />
+                <Input 
+                title='How much do you want to dedicate to  this project?' 
+                placeholder='Please enter the terms of Aurora Token'
+                setValue={setGameToken}
+                value={gameToken}
+                />
                 <p className='font-[300] text-wb-40 font-Archivo_Regular mt-[8px] leading-[17.41px] text-[14px] md:text-[16px]'> e.g 3 Aurora Token</p>
                 <div>
                     <div className='flex justify-between items-end md:items-center mt-[32px] flex-col md:flex-row'>
@@ -15,19 +32,48 @@ const Payments = ({handleClick}: {handleClick: () => void}) => {
                             <HiPlus />  Add more runner Up
                         </button>
                     </div>
-                    <div className='flex gap-[16px] text-blue-50'>
-                        <Input center title='Ist - Position' placeholder='' />
-                        <Input center title='Ist - Position' placeholder='' />
-                        <Input center title='Ist - Position' placeholder='' />
+                    <div className='flex w-full justify-between items-center gap-[16px] text-blue-50 mt-[30px]'>
+                        <label 
+                        className="flex-1"
+                        htmlFor="
+                        ">
+                            <p>1st - Position</p>
+                            <input
+                             className='bg-[inherit] outline-none border-blue-main border-[2px] p-[10px] rounded-[8px] border-solid h-[64px] text-white w-full'
+                             value={priceShare[0]}
+                             onChange={(e)=>updatePriceShare(0, e.target.value)}
+                        />
+                        </label>
+                        <label htmlFor=""
+                        className="flex-1"
+                        >
+                            <p>2nd - Position</p>
+                            <input
+                            type="text"
+                            value={priceShare[1]}
+                            onChange={(e) => updatePriceShare(1, e.target.value)}
+                             className='bg-[inherit] border-blue-main outline-none border-[2px] p-[10px] rounded-[8px] border-solid h-[64px] text-white w-full'
+
+                        />
+                        </label>
+                        <label htmlFor=""
+                        className="flex-1"
+                        >
+                            <p>3rd - Position</p>
+                            <input
+                            value={priceShare[2]}
+                            onChange={(e) => updatePriceShare(2, e.target.value)}
+                             className='bg-[inherit] border-blue-main border-[2px] outline-none p-[10px] rounded-[8px] border-solid h-[64px] text-white w-full'
+
+                        />
+                        </label>
                     </div>
-                    <div>
-                        <p className='font-Archivo_Regular text-[16px] text-white mt-[32px]'>Any comments?</p>
-                        <div className='bg-[inherit] border-blue-main border-[2px] rounded-[8px] border-solid h-[64px]  w-full px-[24px]'>
-                            <select className='w-full h-full bg-inherit text-white font-Archivo_Regular font-[300] leading-[17.41px]  outline-none border-none'>
-                                <option value="Select Prefered Creator" className='w-full '>Select Prefered Creator</option>
-                            </select>
-                        </div>
-                    </div>
+                    <Input
+                        value={comments}
+                        setValue={setComments}
+                        title='Any Comments?'
+                        placeholder='Any comments that can help the players understand the game better?'
+                    />
                 </div>
             </div>
             <div className=" flex flex-col gap-[24px] mt-[48px] w-full ">

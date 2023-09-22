@@ -13,7 +13,7 @@ import { configureChains, createConfig, WagmiConfig } from 'wagmi'
 import { arbitrum, mainnet, polygon } from 'wagmi/chains'
 
 const chains = [arbitrum, mainnet, polygon]
-const projectId =  import.meta.env.VITE_REACT_APP_INFURA_API_KEY
+const projectId =  import.meta.env.VITE_REACT_APP_WALLET_CONNECT_PROJECT_ID
 
 const { publicClient } = configureChains(chains, [w3mProvider({ projectId })])
 const wagmiConfig = createConfig({
@@ -25,10 +25,14 @@ const wagmiConfig = createConfig({
 const ethereumClient = new EthereumClient(wagmiConfig, chains)
 
 
+
+
 export const MainLayout = () => {
-  const {ModalMode, sideBarMode, switchSideMode, modal}  = useModalContext()
+  const {ModalMode, sideBarMode, switchSideMode,modal}  = useModalContext()
   const {challenger} = useMode()
   console.log(challenger)
+
+  
 
   return (
     <>

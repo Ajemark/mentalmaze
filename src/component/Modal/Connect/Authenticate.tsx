@@ -4,10 +4,10 @@ import { toast } from 'react-hot-toast'
 import { UserContext, signInDetails } from '../../../context/UserContext'
 import { useSignMessage } from 'wagmi'
 import { useModalContext } from '../../../context/ModalContext'
-import { ethers } from 'ethers'
+// import { ethers } from 'ethers'
 // import useQuery from '../../../hooks/useQuery'
 import Loading from '../../ui/Loading'
-
+import {Buffer} from 'buffer';
 
 // import {MetaMaskSDK, MetaMaskSDKOptions} from '@metamask/sdk'
 
@@ -47,13 +47,13 @@ const Authenticate = () => {
   const {address} = signInDetails
   console.log(useSignMessage())
 
-
+  
 
 
     const signInMessage=async()=>{ 
         setLoading(true)
         // const web3ModalInstance = await Web3Modal
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        // const provider = await detectEthereumProvider();
 
           await fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/authenticate/login?address=${address}`)
           .then(response =>{
@@ -65,16 +65,23 @@ const Authenticate = () => {
             }
            })
            .then(async (result)=>{
-            const signer = provider.getSigner();
-            let signature = (await signer).signMessage(result.data.message)
-            .then((result)=>{
-                console.log(result)
-         
-          setSignInDetails((prev:signInDetails)=>({...prev,signature:result}))
-            console.log(signature)
-            switchModalcontent('verify')})
-            setLoading(false)
+            const msg = `0x${Buffer.from(result.data.message,'utf8').toString('hex')}`
+            const sign = await window.ethereum.request({
+                method:'personal_sign',
+                params:[msg, address],
             })
+            console.log(sign)
+            setSignInDetails((prev:signInDetails)=>({...prev,signature:sign}))
+            setLoading(false)
+            switchModalcontent('verify')
+        })
+        // .then((result:any)=>{
+        //         console.log(result)
+         
+        //   setSignInDetails((prev:signInDetails)=>({...prev,signature:result}))
+        //     console.log(result)
+        //     switchModalcontent('verify')})
+        //     })
         }
 
         // useEffect(()=>{

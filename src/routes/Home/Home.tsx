@@ -4,20 +4,27 @@ import {RiArrowDownSLine} from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
+
 interface ItemType {
   id: number,
   text: string
 }
 
+
 const TitleBar = () => { 
   const [dropDownItem] = useState<ItemType[]>([{id:0,text:"Select  creator"},{id:1,text:"Mental Maze"},  {id:2,text:"Other Contributor"}])
   const [current, setCurrent] = useState<number>(0)
   const [showDropDown, setShowDropDown] = useState<boolean>(false)
+  
+
+
 
   
 
   const DropDownComp = ({text, current, id}:{text:string, current:boolean,id: number, }) => {
     console.log(id)
+
+
     return (
       <div className={`outline-none cursor-pointer  rounded-[16px]  flex items-center justify-between gap-6 w-full h-[66px]  px-[16px] ${!current?"hover:headerdropDown-hover-effect hover:border-blue-main hover:border-[2px]":"" }`}
       onClick={current?  () => setShowDropDown(!showDropDown):() => setCurrent(id)}

@@ -17,7 +17,7 @@ const Install = () => {
     <>
       <div>
       <h1 className='font-droid border-b-blue-80 border-b-[4px] md:border-b-[8px] pt-[20px] mt-[24px] md:pt-[16px] pb-[32px] leading-[37.78px] text-[20px] md:text-[32px] text-center w-fit md:w-full mx-auto'>
-                    Connect Wallet
+                    Install Metamask 
                 </h1>
       </div>
     <Animation className='pt-[48px] flex flex-col gap-[24px] h-full '>

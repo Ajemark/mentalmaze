@@ -11,11 +11,12 @@ import useMode from '../../hooks/useMode'
 import { UserContext } from '../../context/UserContext'
 import { toast } from 'react-hot-toast'
 import { Web3Button } from '@web3modal/react'
+import Loading from './Loading'
 // type fixedType = boolean 
 
 const Header = () => {
   const { switchModal, switchSideMode , username} = useModalContext()
-  const {signInDetails,setLoading, token,setUserDetails}:any = useContext(UserContext);
+  const {signInDetails,setLoading, token,setUserDetails,loading}:any = useContext(UserContext);
   const{address}=signInDetails;
   const {challenger} = useMode()
   // const{address}:any=useContext(UserContext)
@@ -84,26 +85,29 @@ const Header = () => {
 
 
   return (
-    <div className={`${challenger?"bg-black":"headerbg"} px-[16px] md:px-[34px] z-[5000000000] fixed h-[64px]  md:h-[104px] w-full ${fixed ? "shadow-lg" : "shadow-none"}`}>
+    <>
+    {loading && <Loading/>}
+    <div className={`${challenger?"bg-black":"headerbg"} px-[16px] md:px-[34px] fixed z-[1000] h-[64px]  md:h-[104px] w-full ${fixed ? "shadow-lg" : "shadow-none"}`}>
       <div className='flex justify-between items-center h-full w-full'>
         <div className='flex items-center gap-[16px] md:gap-8 justify-between w-full md:w-fit md:justify-center'>
           <Link to={'/'} className=" flex gap-[8px] md:gap-4 text-white font-Archivo_Regular items-center text-[1rem] md:text-[22px]">
             <img src={Logo} className=" h-5 md:h-full" />
             Mental Maze
           </Link>
-          <div className="text-white text-[36px]" onClick={switchSideMode}>
+          <div className="text-white text-[36px] absolute top-[2vh] right-[10vw]" onClick={switchSideMode}>
             <HiMenuAlt3 className="block md:hidden h-[32px] mr-[-30px]" />
           </div>
           <div className="hidden md:block">
             <HeaderInput />
           </div>
         </div>
-        <div className='flex items-center gap-8 border'>
-          <div className="hidden items-center relative md:flex justify-center" 
+        <div className='flex items-center w-[50%]'>
+          <div className="hidden items-center relative md:flex justify-center pl-[60%] min-[1230px]:pl-[80%] min-[1700px]:pl-[100%]"> 
+          <img src={Boarder} alt="" className='' 
           onClick={gotToProfile}
-          onMouseEnter={() =>  setShow(!show)} onMouseLeave={() => setShow(!show)}> 
-          <img src={Boarder} alt="" />
-          {show&&  <motion.div className="absolute  text-white w-28 left-14  px-2 font-Archivo_Regular bg-hover text-center"
+          onMouseEnter={() =>  setShow(!show)} onMouseLeave={() => setShow(!show)}
+          />
+          {show&&  <motion.div className="text-white w-28 right-[5vw] px-2 font-Archivo_Regular bg-hover text-center absolute"
           animate={{y: [-100, 0], x:[20, 0]  }}
           transition={{type:"spring", bounce: 0.5, duration: 0.2}}
           >
@@ -122,6 +126,8 @@ const Header = () => {
     
         </div>
       </div>
+    </>
+    
   )
 }
 
