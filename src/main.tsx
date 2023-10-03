@@ -9,9 +9,9 @@ import { UserContextProvider } from './context/UserContext.tsx'
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <UserContextProvider>
-    <ModalProvider >
-    <App />
-    </ModalProvider>
+      <ModalProvider >
+        <App />
+      </ModalProvider>
     </UserContextProvider>
   </React.StrictMode>,
 )
