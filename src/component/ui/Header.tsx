@@ -15,7 +15,7 @@ import Loading from './Loading'
 // type fixedType = boolean 
 
 const Header = () => {
-  const { switchModal, switchSideMode, username } = useModalContext()
+  const { switchModal, switchSideMode } = useModalContext()
   const { signInDetails, setLoading, token, setUserDetails, userDetails, loading }: any = useContext(UserContext);
   const { address } = signInDetails;
   const { challenger } = useMode()

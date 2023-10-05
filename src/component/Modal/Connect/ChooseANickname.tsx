@@ -8,7 +8,7 @@ import Loading from "../../ui/Loading"
 // import identicon from "identicon"
 
 const ChooseANickname = () => {
-  const { usernameHandler, switchModalcontent } = useModalContext()
+  const { switchModalcontent } = useModalContext()
   const { signInDetails, token, loading, setLoading, setUserDetails }: any = useContext(UserContext)
   const [username, setusername] = useState('')
 
