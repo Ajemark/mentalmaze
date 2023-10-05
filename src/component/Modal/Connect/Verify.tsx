@@ -1,4 +1,4 @@
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useModalContext } from "../../../context/ModalContext"
 import { UserContext } from "../../../context/UserContext"
 import Animation from "./Animation"
@@ -7,16 +7,15 @@ import { toast } from "react-hot-toast"
 
 const Verify = () => {
   const { switchModalcontent } = useModalContext()
-  const { signInDetails, token, setToken, loading, setLoading }: any = useContext(UserContext);
-  const { address, signature } = signInDetails;
+  const { signInDetails, setUserDetails, setToken, loading, setLoading }: any = useContext(UserContext);
+  const { address } = signInDetails;
   const [response, setresponse] = useState<any>()
-  // const {username,  switchModal} = useModalContext()
 
-  // console.log(token)
+  // switchModalcontent('chooseNickname')
+
 
   //check if user exists
   const userExists = async (webToken: string) => {
-    console.log('user 2nd')
     let myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${webToken}`);
 
@@ -28,20 +27,16 @@ const Verify = () => {
 
     await fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/user/?address=${address.toLowerCase()}`, requestOptions)
       .then(response => {
-        console.log('user exists third')
-        console.log(response)
         return response.json()
       })
       .then(result => {
         if (result.data && result.data.id) {
-          console.log(result)
-          console.log('user exists')
+          setUserDetails(result.data)
+          localStorage.setItem("userData", JSON.stringify(result.data))
           switchModalcontent('welcome')
           setLoading(false)
         }
         if (result.data === null) {
-          console.log('user exist')
-          console.log(result)
           setLoading(false)
           switchModalcontent('chooseNickname')
         }
@@ -62,7 +57,6 @@ const Verify = () => {
     myHeaders.append("Content-Type", "application/json");
 
     let raw = localStorage.getItem('userData')
-    console.log(raw)
 
     let requestOptions: RequestInit = {
       method: 'POST',
@@ -71,47 +65,40 @@ const Verify = () => {
       redirect: 'follow'
     }
 
+    console.log("first")
     fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/authenticate/verify`, requestOptions)
       .then(async response => {
+        console.log('first   333')
         if (response.ok) {
           setresponse(await response.json());
           setLoading(false)
         }
         else {
           setLoading(false)
-          toast.error('Something went wrong')
+          const res = await response.json()
+          toast.error(res.error.message)
         }
+      }).catch(error => {
+        console.log(error)
       })
-
-    // .then(result => {
-    //   if (result.data.token) {
-    //     setToken(result.data.token)
-    //     console.log(result)
-    //     return result
-    //   }
-    //   else {
-    //     setLoading(false)
-    //     toast.error('Error creating User')
-    //   }
-    // })
-    // .then((result) => {
-    //   console.log('user exist start')
-    //   // console.log(result)
-    //   // return userExists(result.data.token)
-    // })
-    // .catch(error => {
-    //   if (error.response) {
-    //     toast.error('An error occured');
-    //     setLoading(false)
-    //   } else if (error.request) {
-    //     toast.error('An error occured');
-    //     setLoading(false)
-    //   } else {
-    //     toast.error('An error occured');
-    //     setLoading(false)
-    //   }
-    // });
   }
+
+  useEffect(() => {
+    if (!response) return
+    if (response.data.token) {
+      setToken(response.data.token)
+      userExists(response.data.token)
+      return
+    }
+    if (response.error) {
+      toast.error('An error occured');
+      setLoading(false)
+    } else {
+      toast.error('An error occured');
+      setLoading(false)
+    }
+  }, [response])
+
 
   console.log(response)
 

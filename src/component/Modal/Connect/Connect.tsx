@@ -9,7 +9,7 @@ import { useAccount } from "wagmi";
 import useQuery from "../../../hooks/useQuery";
 
 const Connect = () => {
-  const { switchModalcontent } = useModalContext()
+  const { switchModalcontent, switchModal } = useModalContext()
   const { loading, setLoading }: any = useContext(UserContext)
   const { isConnected } = useAccount();
   const { width } = useQuery()
@@ -21,7 +21,12 @@ const Connect = () => {
   }, [])
 
   useEffect(() => {
+    const userData = localStorage.getItem('userData')
     if (isConnected) {
+      if (userData && JSON.parse(userData).username) {
+        switchModal()
+        return
+      }
       if (width < 768) {
         switchModalcontent('authenticate')
       }
@@ -34,7 +39,6 @@ const Connect = () => {
       let web3Modal = new Web3Modal({
         cacheProvider: false,
       })
-
       await web3Modal.connect()
     }
     catch (error) {

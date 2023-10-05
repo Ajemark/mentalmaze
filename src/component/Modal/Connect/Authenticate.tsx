@@ -5,10 +5,12 @@ import { UserContext, signInDetails } from '../../../context/UserContext'
 import { useModalContext } from '../../../context/ModalContext'
 import Loading from '../../ui/Loading'
 import { Buffer } from 'buffer';
+import { useAccount } from 'wagmi'
 
 const Authenticate = () => {
 
   const [auth, setauth] = useState<any>()
+  const { isConnected } = useAccount();
 
   if (window.ethereum) {
     handleEthereum();
@@ -24,8 +26,10 @@ const Authenticate = () => {
     if (ethereum && ethereum.isMetaMask) {
       console.log('Ethereum successfully detected!');
       //   Access the decentralized web!
+      return true
     } else {
       console.log('Please install MetaMask!');
+      return false
     }
   }
 
@@ -33,13 +37,18 @@ const Authenticate = () => {
   const { switchModalcontent } = useModalContext()
 
   const { address } = signInDetails
+  console.log(signInDetails)
 
   useEffect(() => {
     const userData = localStorage.getItem('userData')
-    if (userData) {
-      switchModalcontent('verify')
+    if (userData && isConnected) {
+      if (JSON.parse(userData).signature) {
+        switchModalcontent('verify')
+        return
+      }
     }
 
+    if (auth) return
     fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/authenticate/login?address=${address}`)
       .then(async response => {
         if (response.ok) {
@@ -54,15 +63,19 @@ const Authenticate = () => {
   const signInMessage = async () => {
     setLoading(true)
     try {
-      if (auth == undefined) {
+      if (auth == undefined && !handleEthereum()) {
+        setLoading(false)
         toast.error('Please Try Again')
         return
       }
+      console.log('first')
+      console.log(auth)
       const msg = `0x${Buffer.from(auth?.data.message, 'utf8').toString('hex')}`
       const sign = await window.ethereum.request({
         method: 'personal_sign',
         params: [msg, address],
       })
+      console.log('first')
       setSignInDetails((prev: signInDetails) => ({ ...prev, signature: sign }))
       localStorage.setItem('userData', JSON.stringify({ ...signInDetails, signature: sign, role: 'player' }))
       setLoading(false)

@@ -111,10 +111,10 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
 
 
     // const { open, close } = useWeb3Modal()
-    console.log(userDetails)
-    console.log(questions)
+    // console.log(userDetails)
+    // console.log(questions)
 
-    console.log(signInDetails)
+    // console.log(signInDetails)
 
     return <UserContext.Provider value={{ setSignInDetails, signInDetails, token, setToken, loading, setLoading, userDetails, setUserDetails, mobileSignInDetails, setmobileSignInDetails, title, setTitle, typeQuestion, setTypeQuestion, questionTitle, setQuestionTitle, duration, setDuration, questionObj, setQuestionObj, questions, setQuestions, coverImage, setCoverImage, images, setImages, gameToken, setGameToken, priceShare, setPriceShare, comments, setComments }}>
         {children}
