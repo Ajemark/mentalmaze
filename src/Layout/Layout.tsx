@@ -30,7 +30,7 @@ const ethereumClient = new EthereumClient(wagmiConfig, chains)
 export const MainLayout = () => {
   const { ModalMode, sideBarMode, switchSideMode, modal } = useModalContext()
   const { challenger } = useMode()
-  console.log(challenger)
+  // console.log(challenger)
 
   return (
     <>

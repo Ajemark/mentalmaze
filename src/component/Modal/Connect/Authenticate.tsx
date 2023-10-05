@@ -77,7 +77,7 @@ const Authenticate = () => {
       })
       console.log('first')
       setSignInDetails((prev: signInDetails) => ({ ...prev, signature: sign }))
-      localStorage.setItem('userData', JSON.stringify({ ...signInDetails, signature: sign, role: 'player' }))
+      localStorage.setItem('userData', JSON.stringify({ ...signInDetails, signature: sign }))
       setLoading(false)
       switchModalcontent('verify')
     } catch (error: any) {

@@ -65,7 +65,7 @@ const Verify = () => {
       redirect: 'follow'
     }
 
-    console.log("first")
+    console.log(raw)
     fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/authenticate/verify`, requestOptions)
       .then(async response => {
         console.log('first   333')
@@ -98,13 +98,6 @@ const Verify = () => {
       setLoading(false)
     }
   }, [response])
-
-
-  console.log(response)
-
-
-
-
 
   return (
     <>

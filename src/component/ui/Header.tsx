@@ -16,7 +16,7 @@ import Loading from './Loading'
 
 const Header = () => {
   const { switchModal, switchSideMode, username } = useModalContext()
-  const { signInDetails, setLoading, token, setUserDetails, loading }: any = useContext(UserContext);
+  const { signInDetails, setLoading, token, setUserDetails, userDetails, loading }: any = useContext(UserContext);
   const { address } = signInDetails;
   const { challenger } = useMode()
   // const{address}:any=useContext(UserContext)
@@ -56,6 +56,8 @@ const Header = () => {
       .catch(error => console.log('error', error));
   }
 
+
+  console.log(userDetails)
 
 
   useEffect(() => {
@@ -112,7 +114,7 @@ const Header = () => {
             </div>
           </div>
           <div className='flex items-center justify-center'>
-            <p className='text-white mr-[10px] capitalize'>{username}</p>
+            <p className='text-white mr-[10px] capitalize'>{userDetails?.username}</p>
             {/* <ConnectWalletbtn clickHandler={() => { switchModal() }} /> */}
 
 
