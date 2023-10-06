@@ -1,4 +1,4 @@
-import {useContext, useState} from 'react'
+import { useContext, useState } from 'react'
 import Logo from "./../../assets/header/Logo.png"
 import { HeaderInput } from '../Ui'
 import Boarder from "./../../assets/header/Boarder.png"
@@ -6,56 +6,64 @@ import { Link, useNavigate } from "react-router-dom"
 import { useModalContext } from "../../context/ModalContext"
 import { useEffect } from "react"
 import { HiMenuAlt3 } from "react-icons/hi"
-import {motion} from "framer-motion"
 import useMode from '../../hooks/useMode'
 import { UserContext } from '../../context/UserContext'
 import { toast } from 'react-hot-toast'
-import { Web3Button } from '@web3modal/react'
 import Loading from './Loading'
+import { CustomButton } from './CustomConnectButton'
+import { useAccount } from 'wagmi'
 // type fixedType = boolean 
 
 const Header = () => {
-  const { switchModal, switchSideMode , username} = useModalContext()
-  const {signInDetails,setLoading, token,setUserDetails,loading}:any = useContext(UserContext);
-  const{address}=signInDetails;
-  const {challenger} = useMode()
-  // const{address}:any=useContext(UserContext)
+  const { switchModal, switchModalcontent, switchSideMode } = useModalContext()
+  const { setLoading, token, setUserDetails, userDetails, loading }: any = useContext(UserContext);
+  const { address, isConnected } = useAccount();
+  const { challenger } = useMode()
   const navigate = useNavigate()
-  // const {fixed, setFixed} = useState(false)
   const fixed = true
   const [show, setShow] = useState(false)
 
-
-  const getUserDetails=()=>{
+  const getUserDetails = () => {
     setLoading(true)
     let myHeaders = new Headers();
-    myHeaders.append("Authorization",`Bearer ${token}`);
-    console.log(address.toLowerCase());
-  
-  
-    let requestOptions:RequestInit = {
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    let requestOptions: RequestInit = {
       method: 'GET',
       headers: myHeaders,
       redirect: 'follow'
     };
-    
-    fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/user/?address=${address.toLowerCase()}`, requestOptions)
-    .then(response => response.json())
-    .then(result => {
-      if(result.data.address){
-        console.log(result)
-        setUserDetails(result.data)
-        navigate('/profile')
-        setLoading(false)
-      }
-      else{
-        setLoading(false)
-        toast.error('You need to connect your wallet and sign up with metamask')
-      }
+
+    fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/user/?address=${address?.toLowerCase()}`, requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        if (result.data.address) {
+          console.log(result)
+          setUserDetails(result.data)
+          navigate('/profile')
+          setLoading(false)
+        }
+        else {
+          setLoading(false)
+          toast.error('You need to connect your wallet and sign up with metamask')
+        }
       })
-      .catch(error => console.log('error', error));
+      .catch(error => {
+        setLoading(false)
+        console.log('error', error)
+      }
+      );
   }
-    
+
+  useEffect(() => {
+    if (!isConnected) setUserDetails({})
+    else {
+      const d = localStorage.getItem('userData')
+      if (d) {
+        setUserDetails(JSON.parse(d))
+      } else switchModalcontent('authenticate')
+    }
+  }, [isConnected])
 
 
   useEffect(() => {
@@ -68,66 +76,65 @@ const Header = () => {
       }
     })
   }, [])
-  
-  const gotToProfile=()=>{
-    if(!address){
+
+  const gotToProfile = () => {
+    if (!address) {
       switchModal()
+      switchModalcontent('connect')
       return
     }
-    else{
+    else {
+      const userData = localStorage.getItem('userData')
+      if (userData && JSON.parse(userData).username) {
+        navigate('/profile')
+        return
+      }
       getUserDetails()
     }
   }
 
-
-  
-  
-
-
   return (
     <>
-    {loading && <Loading/>}
-    <div className={`${challenger?"bg-black":"headerbg"} px-[16px] md:px-[34px] fixed z-[1000] h-[64px]  md:h-[104px] w-full ${fixed ? "shadow-lg" : "shadow-none"}`}>
-      <div className='flex justify-between items-center h-full w-full'>
-        <div className='flex items-center gap-[16px] md:gap-8 justify-between w-full md:w-fit md:justify-center'>
-          <Link to={'/'} className=" flex gap-[8px] md:gap-4 text-white font-Archivo_Regular items-center text-[1rem] md:text-[22px]">
-            <img src={Logo} className=" h-5 md:h-full" />
-            Mental Maze
-          </Link>
-          <div className="text-white text-[36px] absolute top-[2vh] right-[10vw]" onClick={switchSideMode}>
-            <HiMenuAlt3 className="block md:hidden h-[32px] mr-[-30px]" />
+      {loading && <Loading />}
+      <div className={`${challenger ? "bg-black" : "headerbg"} px-[16px] md:px-[34px] fixed z-[1000] h-[64px]  md:h-[104px] w-full ${fixed ? "shadow-lg" : "shadow-none"}`}>
+        <div className='flex justify-between items-center h-full w-full'>
+          <div className='flex items-center gap-[16px] md:gap-8 justify-between w-full md:w-fit md:justify-center'>
+            <Link to={'/'} className=" flex gap-[8px] md:gap-4 text-white font-Archivo_Regular items-center text-[1rem] md:text-[22px]">
+              <img src={Logo} className=" h-5 md:h-full" />
+              Mental Maze
+            </Link>
+            <div className="text-white text-[36px] absolute top-[2vh] right-[10vw]" onClick={switchSideMode}>
+              <HiMenuAlt3 className="block md:hidden h-[32px] mr-[-30px]" />
+            </div>
+            <div className="hidden md:block">
+              <HeaderInput />
+            </div>
           </div>
-          <div className="hidden md:block">
-            <HeaderInput />
+          <div className='flex items-center '>
+            <div className="hidden items-center relative md:flex justify-center  ">
+              {
+                <div
+                  className='cursor-pointer'
+                  onClick={gotToProfile}
+                  onMouseEnter={() => setShow(!show)} onMouseLeave={() => setShow(!show)}>
+
+                  {isConnected && userDetails.profileImage?.length < 3 ? (
+                    <div className='text-headerbg text-xl mr-3 font-bold justify-center flex items-center bg-white rounded-full w-[38px] h-[38px]'>
+                      {userDetails.profileImage.toUpperCase()}
+                    </div>
+                  ) :
+                    <img src={userDetails.profileImage ?? Boarder} alt="" className=''
+                    />
+                  }
+                </div>
+              }
+              <CustomButton />
+            </div>
           </div>
-        </div>
-        <div className='flex items-center w-[50%]'>
-          <div className="hidden items-center relative md:flex justify-center pl-[60%] min-[1230px]:pl-[80%] min-[1700px]:pl-[100%]"> 
-          <img src={Boarder} alt="" className='' 
-          onClick={gotToProfile}
-          onMouseEnter={() =>  setShow(!show)} onMouseLeave={() => setShow(!show)}
-          />
-          {show&&  <motion.div className="text-white w-28 right-[5vw] px-2 font-Archivo_Regular bg-hover text-center absolute"
-          animate={{y: [-100, 0], x:[20, 0]  }}
-          transition={{type:"spring", bounce: 0.5, duration: 0.2}}
-          >
-    profile
-  </motion.div>}
-  <Web3Button/>
-  </div>
-  </div>
-  <div className='flex items-center justify-center'>
-    <p className='text-white mr-[10px] capitalize'>{username}</p>
-  {/* <ConnectWalletbtn clickHandler={() => { switchModal() }} /> */}
-  
- 
-   
-  </div>
-    
         </div>
       </div>
     </>
-    
+
   )
 }
 
