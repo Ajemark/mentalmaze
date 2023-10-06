@@ -1,45 +1,31 @@
 import { useModalContext } from "../../../context/ModalContext"
 import metalmask from "./../../../assets/metalmask.png"
 import Animation from "./Animation";
-import Web3Modal from 'web3modal'
-import { useContext, useEffect } from "react";
-import { UserContext } from "../../../context/UserContext";
-import Loading from "../../ui/Loading";
+import { useEffect } from "react";
 import { useAccount } from "wagmi";
-import useQuery from "../../../hooks/useQuery";
+import { useConnectModal } from "@rainbow-me/rainbowkit";
+
 
 const Connect = () => {
   const { switchModalcontent, switchModal } = useModalContext()
-  const { loading, setLoading }: any = useContext(UserContext)
   const { isConnected } = useAccount();
-  const { width } = useQuery()
 
-  useEffect(() => {
-    if (!window.ethereum) {
-      switchModalcontent('install')
-    }
-  }, [])
+  const { openConnectModal } = useConnectModal();
 
   useEffect(() => {
     const userData = localStorage.getItem('userData')
     if (isConnected) {
       if (userData && JSON.parse(userData).username) {
-        switchModal()
         return
       }
-      if (width < 768) {
-        switchModalcontent('authenticate')
-      }
+      switchModalcontent('authenticate')
     }
   }, [])
 
   async function connectWallet() {
-    setLoading(true)
     try {
-      let web3Modal = new Web3Modal({
-        cacheProvider: false,
-      })
-      await web3Modal.connect()
+      openConnectModal?.()
+      switchModal()
     }
     catch (error) {
       console.error(error);
@@ -48,7 +34,6 @@ const Connect = () => {
 
   return (
     <>
-      {loading && <Loading />}
       <div>
         <h1 className='font-droid border-b-blue-80 border-b-[4px] md:border-b-[8px] pt-[20px] mt-[24px] md:pt-[16px] pb-[32px] leading-[37.78px] text-[20px] md:text-[32px] text-center w-fit md:w-full mx-auto'>
           Connect Wallet

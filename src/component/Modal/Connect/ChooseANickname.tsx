@@ -8,9 +8,11 @@ import Loading from "../../ui/Loading"
 // import identicon from "identicon"
 
 const ChooseANickname = () => {
-  const { usernameHandler, switchModalcontent } = useModalContext()
+  const { switchModalcontent } = useModalContext()
   const { signInDetails, token, loading, setLoading, setUserDetails }: any = useContext(UserContext)
   const [username, setusername] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
+
 
   const { address } = signInDetails
 
@@ -30,8 +32,10 @@ const ChooseANickname = () => {
   const createUser = async () => {
     if (username == "") {
       toast.error('Please Enter Nickname')
+      setErrorMessage('Please Enter Nickname')
       return;
     }
+    setErrorMessage('')
     setLoading(true)
     let myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -58,17 +62,18 @@ const ChooseANickname = () => {
       .then(result => {
         setLoading(false)
         if (result?.message !== 'success') {
+          setErrorMessage(result?.message)
           toast.error('Error creating user')
           console.log(result)
         }
         else {
-          setUserDetails(result)
+          setUserDetails(result.data)
           localStorage.setItem("userData", JSON.stringify(result.data))
-          console.log(result)
           switchModalcontent('welcome')
         }
       })
-      .catch(error => console.log('error', error));
+      .catch(_ => setErrorMessage("An Error Occured, Please Try Again Later")
+      );
   }
 
 
@@ -90,6 +95,10 @@ const ChooseANickname = () => {
           <button className="flex items-center justify-center font-droid text-[16px] modalButton border-blue-80 border-solid border-[2px] w-[218px] h-[56px] rounded-[1rem] mx-auto" onClick={() => { createUser() }}>
             Submit
           </button>
+          {
+            errorMessage != '' && <p className="text-center pt-3">{errorMessage}</p>
+          }
+
         </div>
       </Animation>
     </>
