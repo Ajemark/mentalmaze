@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { CID } from 'ipfs-http-client'
 
 export type UserContextProviderProps = {
@@ -75,11 +75,8 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
     const [gameToken, setGameToken] = useState('')
     const [priceShare, setPriceShare] = useState(['', '', ''])
     const [comments, setComments] = useState('')
-    // const[,set]= useState('')
     const [images, setImages] = useState<{ cid: CID, path: string }>()
-    // const []
 
-    //payments
 
     const [signInDetails, setSignInDetails] = useState<signInDetails>({
         address: '',
@@ -100,7 +97,6 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
         signature: '',
         role: ''
     })
-
 
     // if(userDetails?.address){
     //     const {address} = userDetails

@@ -94,7 +94,7 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
   const { setSignInDetails, setLoading, token, setUserDetails }: any = useContext(UserContext)
 
   const { challenger } = useMode()
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
   const [connectAddress, setConnectAddress] = useState<`0x${string}` | undefined>()
 
   useEffect(() => {
@@ -134,14 +134,17 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
   }
 
   useEffect(() => {
+    const userData = localStorage.getItem('userData')
     if (!window.ethereum) {
       switchModal()
       switchModalcontent('install')
     }
-    else if (connectAddress) {
+    else if (isConnected) {
+      if (userData && JSON.parse(userData).username) {
+        return
+      }
       setSignInDetails({ ...setSignInDetails, address: address })
-      switchModal()
-      switchModalcontent('authenticate')
+      // switchModalcontent('authenticate')
     }
     else if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
       window.open("https://metamask.app.link/dapp/app.mentalmaze.io")

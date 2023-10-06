@@ -5,25 +5,25 @@ export type Modal = "installed" | "verify" | "connect" | "authenticate" | "choos
 
 
 type ModalContextType = {
-    modal: Modal,
-    ModalMode: boolean,
-    switchModal: () => void,
-    switchModalcontent: (value:Modal) => void,
-    sideBarMode: boolean,
-    switchSideMode: () => void,
-    username: string | null,
-    usernameHandler: (val: string) => void
+  modal: Modal,
+  ModalMode: boolean,
+  switchModal: () => void,
+  switchModalcontent: (value: Modal) => void,
+  sideBarMode: boolean,
+  switchSideMode: () => void,
+  username: string | null,
+  usernameHandler: (val: string) => void
 };
 
 const ModalContext = createContext<ModalContextType>({
   modal: "connect",
   ModalMode: false,
-  switchModalcontent: () => {},
-  switchModal: () => {},
+  switchModalcontent: () => { },
+  switchModal: () => { },
   sideBarMode: true,
-  switchSideMode: () => {},
+  switchSideMode: () => { },
   username: null,
-  usernameHandler: () => {}
+  usernameHandler: () => { }
 });
 
 
@@ -34,11 +34,11 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
   const [username, setUsername] = useState<string | null>(null)
 
   const switchModal = () => {
-    console.log("switching modal")
     setmodalMode(!modalMode);
   };
 
-  const switchModalcontent = (modal:Modal) => {
+  const switchModalcontent = (modal: Modal) => {
+    setmodalMode(true)
     setModal(modal)
   }
 
@@ -46,7 +46,7 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
     setSideBarMode(!sideBarMode)
   }
 
-  const usernameHandler = (vale:string) => {
+  const usernameHandler = (vale: string) => {
     setUsername(vale)
   }
 
@@ -54,7 +54,7 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
     <ModalContext.Provider
       value={{
         modal,
-        ModalMode:modalMode,
+        ModalMode: modalMode,
         switchModal,
         switchModalcontent,
         switchSideMode,

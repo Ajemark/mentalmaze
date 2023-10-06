@@ -6,32 +6,27 @@ import { Link, useNavigate } from "react-router-dom"
 import { useModalContext } from "../../context/ModalContext"
 import { useEffect } from "react"
 import { HiMenuAlt3 } from "react-icons/hi"
-import { motion } from "framer-motion"
 import useMode from '../../hooks/useMode'
 import { UserContext } from '../../context/UserContext'
 import { toast } from 'react-hot-toast'
-import { Web3Button } from '@web3modal/react'
 import Loading from './Loading'
+import { CustomButton } from './CustomConnectButton'
+import { useAccount } from 'wagmi'
 // type fixedType = boolean 
 
 const Header = () => {
   const { switchModal, switchSideMode } = useModalContext()
-  const { signInDetails, setLoading, token, setUserDetails, userDetails, loading }: any = useContext(UserContext);
-  const { address } = signInDetails;
+  const { setLoading, token, setUserDetails, userDetails, loading }: any = useContext(UserContext);
+  const { address, isConnected } = useAccount();
   const { challenger } = useMode()
-  // const{address}:any=useContext(UserContext)
   const navigate = useNavigate()
-  // const {fixed, setFixed} = useState(false)
   const fixed = true
   const [show, setShow] = useState(false)
-
 
   const getUserDetails = () => {
     setLoading(true)
     let myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${token}`);
-    console.log(address.toLowerCase());
-
 
     let requestOptions: RequestInit = {
       method: 'GET',
@@ -39,7 +34,7 @@ const Header = () => {
       redirect: 'follow'
     };
 
-    fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/user/?address=${address.toLowerCase()}`, requestOptions)
+    fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/user/?address=${address?.toLowerCase()}`, requestOptions)
       .then(response => response.json())
       .then(result => {
         if (result.data.address) {
@@ -53,11 +48,22 @@ const Header = () => {
           toast.error('You need to connect your wallet and sign up with metamask')
         }
       })
-      .catch(error => console.log('error', error));
+      .catch(error => {
+        setLoading(false)
+        console.log('error', error)
+      }
+      );
   }
 
-
-  console.log(userDetails)
+  useEffect(() => {
+    if (!isConnected) setUserDetails({})
+    else {
+      const d = localStorage.getItem('userData')
+      if (d) {
+        setUserDetails(JSON.parse(d))
+      }
+    }
+  }, [isConnected])
 
 
   useEffect(() => {
@@ -77,6 +83,11 @@ const Header = () => {
       return
     }
     else {
+      const userData = localStorage.getItem('userData')
+      if (userData && JSON.parse(userData).username) {
+        navigate('/profile')
+        return
+      }
       getUserDetails()
     }
   }
@@ -98,29 +109,27 @@ const Header = () => {
               <HeaderInput />
             </div>
           </div>
-          <div className='flex items-center w-[50%]'>
-            <div className="hidden items-center relative md:flex justify-center pl-[60%] min-[1230px]:pl-[80%] min-[1700px]:pl-[100%]">
-              <img src={Boarder} alt="" className=''
-                onClick={gotToProfile}
-                onMouseEnter={() => setShow(!show)} onMouseLeave={() => setShow(!show)}
-              />
-              {show && <motion.div className="text-white w-28 right-[5vw] px-2 font-Archivo_Regular bg-hover text-center absolute"
-                animate={{ y: [-100, 0], x: [20, 0] }}
-                transition={{ type: "spring", bounce: 0.5, duration: 0.2 }}
-              >
-                profile
-              </motion.div>}
-              <Web3Button />
+          <div className='flex items-center '>
+            <div className="hidden items-center relative md:flex justify-center  ">
+              {
+                <div
+                  className='cursor-pointer'
+                  onClick={gotToProfile}
+                  onMouseEnter={() => setShow(!show)} onMouseLeave={() => setShow(!show)}>
+
+                  {isConnected && userDetails.profileImage?.length < 3 ? (
+                    <div className='text-headerbg text-xl mr-3 font-bold justify-center flex items-center bg-white rounded-full w-[38px] h-[38px]'>
+                      {userDetails.profileImage.toUpperCase()}
+                    </div>
+                  ) :
+                    <img src={userDetails.profileImage ?? Boarder} alt="" className=''
+                    />
+                  }
+                </div>
+              }
+              <CustomButton />
             </div>
           </div>
-          <div className='flex items-center justify-center'>
-            <p className='text-white mr-[10px] capitalize'>{userDetails?.username}</p>
-            {/* <ConnectWalletbtn clickHandler={() => { switchModal() }} /> */}
-
-
-
-          </div>
-
         </div>
       </div>
     </>
