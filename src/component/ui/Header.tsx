@@ -113,12 +113,12 @@ const Header = () => {
           <div className='flex items-center '>
             <div className="hidden items-center relative md:flex justify-center  ">
               {
-                <div
+                isConnected && <div
                   className='cursor-pointer'
                   onClick={gotToProfile}
                   onMouseEnter={() => setShow(!show)} onMouseLeave={() => setShow(!show)}>
 
-                  {isConnected && userDetails.profileImage?.length < 3 ? (
+                  {userDetails.profileImage?.length < 3 ? (
                     <div className='text-headerbg text-xl mr-3 font-bold justify-center flex items-center bg-white rounded-full w-[38px] h-[38px]'>
                       {userDetails.profileImage.toUpperCase()}
                     </div>
