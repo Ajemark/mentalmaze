@@ -18,6 +18,8 @@ const Authenticate = () => {
 
   const { address } = signInDetails
 
+  console.log(address)
+
   useEffect(() => {
     const userData = localStorage.getItem('userData')
     if (userData && isConnected) {
@@ -27,7 +29,7 @@ const Authenticate = () => {
       }
     }
 
-    if (auth) return
+    if (auth || !address) return
     fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/authenticate/login?address=${address}`)
       .then(async response => {
         if (response.ok) {
@@ -37,7 +39,7 @@ const Authenticate = () => {
           toast.error('An error occured')
         }
       })
-  }, [])
+  }, [address])
 
   const signInMessage = async () => {
     setLoading(true)

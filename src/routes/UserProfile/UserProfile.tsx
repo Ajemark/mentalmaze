@@ -96,12 +96,13 @@ const ProfileHeader = () => {
     const navigate = useNavigate()
     const { isConnected } = useAccount();
 
+    console.log(isConnected)
 
     useEffect(() => {
-        if (!userDetails.address && !isConnected) {
+        if (!userDetails.address || !isConnected) {
             navigate('/')
         }
-    }, [])
+    }, [isConnected])
 
 
     return (

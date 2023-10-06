@@ -15,7 +15,7 @@ import { useAccount } from 'wagmi'
 // type fixedType = boolean 
 
 const Header = () => {
-  const { switchModal, switchSideMode } = useModalContext()
+  const { switchModal, switchModalcontent, switchSideMode } = useModalContext()
   const { setLoading, token, setUserDetails, userDetails, loading }: any = useContext(UserContext);
   const { address, isConnected } = useAccount();
   const { challenger } = useMode()
@@ -61,7 +61,7 @@ const Header = () => {
       const d = localStorage.getItem('userData')
       if (d) {
         setUserDetails(JSON.parse(d))
-      }
+      } else switchModalcontent('authenticate')
     }
   }, [isConnected])
 
@@ -80,6 +80,7 @@ const Header = () => {
   const gotToProfile = () => {
     if (!address) {
       switchModal()
+      switchModalcontent('connect')
       return
     }
     else {
