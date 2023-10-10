@@ -67,6 +67,7 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
     const [duration, setDuration] = useState('')
     const [questionObj, setQuestionObj] = useState<any>({
         image: '',
+        cover: '',
         options: ['', '', '', ''],
         answer: '',
         difficultyLevel: '',

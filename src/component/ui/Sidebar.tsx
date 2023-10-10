@@ -26,6 +26,7 @@ import { Web3Button } from "@web3modal/react"
 import { useAccount } from "wagmi"
 import { UserContext } from "../../context/UserContext"
 import { toast } from "react-hot-toast"
+import { CustomButton } from "./CustomConnectButton"
 
 
 
@@ -240,7 +241,7 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
               }}
               className='w-full flex justify-start'>
               {
-                !address && <Web3Button />
+                !address && <CustomButton />
               }
             </div>
           </div>
