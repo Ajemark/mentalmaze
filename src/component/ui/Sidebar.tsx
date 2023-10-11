@@ -22,25 +22,16 @@ import Telegram from "./../../assets/sidebar/mobile/Telegram (2).svg"
 import Twitter from "./../../assets/sidebar/mobile/Twitter.svg"
 import { useContext, useEffect, useState } from "react"
 import useMode from "../../hooks/useMode"
-import { Web3Button } from "@web3modal/react"
 import { useAccount } from "wagmi"
 import { UserContext } from "../../context/UserContext"
 import { toast } from "react-hot-toast"
 import { CustomButton } from "./CustomConnectButton"
 
 
-
-
-
-
-
-
 interface CompType {
   showSideMobile: boolean,
   switchSideMode: () => void;
 }
-
-
 
 const NavItemMobile = (src: { link: string, title: string, image: string }) => {
   // const {address, isConnecting, isDisconnected, isConnected } = useAccount();
