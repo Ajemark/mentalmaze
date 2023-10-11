@@ -46,8 +46,6 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
     event.preventDefault();
     setErrorMessage({ message: '', where: "image2" })
 
-    console.log(event.target[0].files)
-
     const form = event.target as HTMLFormElement;
     const files = (form[0] as HTMLInputElement).files;
 
@@ -92,6 +90,7 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
     questions: questionsArray,
     gameDuration: duration
   }
+
 
   return (
     <div className=''>
@@ -198,17 +197,17 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
 
           <div className="">
             <div className="flex  items-center justify-end mt-[32px] font-Archivo_Regular w-full ">
-              <div className={`relative   `} >
+              <div className={`relative flex  `} >
                 {numbers.map((num, i) =>
 
-                  <button key={i} className={`relative text-white rounded-[8px] w-[27px] h-[30px] text-[12px] md:text-base md:w-[48px] md:h-[40px] p-[2px] -ml-[15px] border-solid shadow-lg`}
+                  <div key={i} className={`relative text-white rounded-[8px] w-[27px] h-[30px] text-[12px] md:text-base md:w-[48px] md:h-[40px] p-[2px] -ml-[15px] border-solid shadow-lg`}
                     style={{
                       background: "linear-gradient( rgba(3, 36, 73, 1), rgba(11, 119, 240, 1))",
                     }}
                   >
                     <button className={` w-full h-full rounded-[10px] ${num == (width > 730 ? numbers.length : 4) ? "bg-blue-100" : "bg-blue-70"}`}>
                       {num}</button>
-                  </button>)}
+                  </div>)}
               </div>
               <button
                 onClick={() => {
@@ -241,11 +240,11 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
                   }
 
                   setQuestionsArray((prev: any) => [...prev, {
-                    image: questions.question,
+                    answer: questions.answer,
+                    image: questions.question.toString(),
                     title: questions.gameInstruction,
                     options: questions.options,
                     difficultyLevel: questionObj.difficultyLevel
-
                   }])
                   setNumbers((prev: any) => {
                     return [...prev, ((prev[prev.length - 1]) + 1)]

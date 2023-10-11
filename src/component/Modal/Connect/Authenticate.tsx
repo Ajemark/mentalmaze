@@ -53,7 +53,7 @@ const Authenticate = () => {
       const msg = `0x${Buffer.from(auth?.data.message, 'utf8').toString('hex')}`
       const sign = await window.ethereum.request({
         method: 'personal_sign',
-        params: [msg, address],
+        params: [msg, address.toLowerCase()],
       })
 
       setSignInDetails((prev: signInDetails) => ({ ...prev, signature: sign }))

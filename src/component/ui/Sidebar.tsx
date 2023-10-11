@@ -144,7 +144,7 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
       if (userData && JSON.parse(userData).username) {
         return
       }
-      setSignInDetails({ ...setSignInDetails, address: address })
+      setSignInDetails({ ...setSignInDetails, address: address?.toLowerCase() })
       // switchModalcontent('authenticate')
     }
     else if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {

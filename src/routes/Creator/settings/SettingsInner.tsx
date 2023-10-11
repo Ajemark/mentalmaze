@@ -27,7 +27,7 @@ export const GamedetailForm = () => {
             case 2:
                 return <Payments handleClick={handleClick} />
             case 3:
-                return <Submit handleClick={handleClick} />
+                return <Submit />
         }
     }
 

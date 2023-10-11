@@ -1,24 +1,21 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "../../../../context/UserContext";
 import Loading from "../../../../component/ui/Loading";
+import { useNavigate } from "react-router-dom";
 
-const Submit = ({ handleClick }: any) => {
+const Submit = () => {
 
-  const { token, title, questionObj, duration, questions, images, comments, gameToken, priceShare, userDetails, loading, setLoading }: any = useContext(UserContext)
+  const navigate = useNavigate()
+  const { questionObj, userDetails, loading, setLoading }: any = useContext(UserContext)
+  const [errorMessage, setErrorMessage] = useState('')
 
-
-  console.log(questionObj)
-  console.log(userDetails)
-
-  setLoading(false)
   const submitGameApplication = async () => {
-    handleClick(2)
-    return
-    //setLoading(true)
+    setLoading(true)
+    setErrorMessage('')
+
     let myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("Authorization", `Bearer ${token}`);
-
+    myHeaders.append("Authorization", `Bearer ${userDetails.token}`);
 
     let raw = JSON.stringify({
       "title": questionObj.title,
@@ -43,10 +40,11 @@ const Submit = ({ handleClick }: any) => {
       .then(response => response.json())
       .then(result => {
         setLoading(false)
-        console.log(result)
+        if (result.message == 'success') navigate('/create-game')
       })
       .catch(error => {
         console.log('error', error)
+        setErrorMessage('An Error Occured, Try Again!')
       });
   }
 
@@ -73,6 +71,7 @@ const Submit = ({ handleClick }: any) => {
           SUBMIT APPLICATION
         </button>
       </div>
+      {errorMessage != '' && <p className="text-red-500 text-center">{errorMessage}</p>}
     </div>
   )
 }
