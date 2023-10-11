@@ -9,7 +9,7 @@ const Settings = () => {
       </h1>
 
       <div className="border-blue-80 border-[4px] border-solid rounded-[24px] w-full  mx-auto pb-[72px] bg-blue-100 ">
-        <h1 className="font-droid text-[20px] md:text-[32px] text-white text-center border-blue-80 border-b-[4px] border-solid  leading-[23.61px] md:leading-[37px] py-[32px] md:pt-[24px] md:pb-[32px]">SETTING</h1>
+        <h1 className="font-droid text-[20px] md:text-[32px] text-white text-center border-blue-80 border-b-[4px] border-solid  leading-[23.61px] md:leading-[37px] py-[32px] md:pt-[24px] md:pb-[32px]">CREATE GAME</h1>
         <div>
           <GamedetailForm />
         </div>

@@ -16,31 +16,33 @@ import Collating from '../component/Modal/Connect/game/Collating'
 import ChallengerModal from '../component/Modal/ChallengerModal'
 import Authenticate from '../component/Modal/Connect/Authenticate'
 import EditProfile from '../component/Modal/EditProfile'
+import WrongNetwork from '../component/Modal/Connect/WrongNetwork'
 
 
 type Modal = {
     connect: ReactNode,
     install: ReactNode,
-    authenticate:ReactNode,
+    authenticate: ReactNode,
     verify: ReactNode,
     chooseNickname: ReactNode,
     installed: ReactNode,
     welcome: ReactNode,
     example: ReactNode,
-    congratulations: ReactNode, 
+    congratulations: ReactNode,
     getmore: ReactNode,
     hurray: ReactNode,
     reveal: ReactNode,
     collate: ReactNode,
+    wrongnetwork: ReactNode,
     challenger: ReactNode,
     editProfile: ReactNode
 }
 
 
-export const ConnectModals:Modal = {
+export const ConnectModals: Modal = {
     connect: <Connect />,
     install: <Install />,
-    authenticate:<Authenticate/>,
+    authenticate: <Authenticate />,
     verify: <Verify />,
     chooseNickname: <ChooseANickname />,
     installed: <Installed />,
@@ -52,5 +54,6 @@ export const ConnectModals:Modal = {
     reveal: <Reveal />,
     collate: <Collating />,
     challenger: <ChallengerModal />,
-    editProfile: <EditProfile/>
+    editProfile: <EditProfile />,
+    wrongnetwork: <WrongNetwork />
 }

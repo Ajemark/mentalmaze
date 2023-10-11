@@ -40,7 +40,7 @@ const Submit = () => {
       .then(response => response.json())
       .then(result => {
         setLoading(false)
-        if (result.message == 'success') navigate('/create-game')
+        if (result.message == 'success') navigate('/game-Requirement')
       })
       .catch(error => {
         console.log('error', error)

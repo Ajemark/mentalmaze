@@ -22,7 +22,7 @@ import Telegram from "./../../assets/sidebar/mobile/Telegram (2).svg"
 import Twitter from "./../../assets/sidebar/mobile/Twitter.svg"
 import { useContext, useEffect, useState } from "react"
 import useMode from "../../hooks/useMode"
-import { useAccount } from "wagmi"
+import { useAccount, useNetwork } from "wagmi"
 import { UserContext } from "../../context/UserContext"
 import { toast } from "react-hot-toast"
 import { CustomButton } from "./CustomConnectButton"
@@ -87,6 +87,7 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
   const { setSignInDetails, setLoading, token, setUserDetails }: any = useContext(UserContext)
 
   const { challenger } = useMode()
+  const { chain, chains } = useNetwork()
   const { address, isConnected } = useAccount();
 
   const getUserDetails = () => {
@@ -131,6 +132,16 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
       return
     }
     if (isConnected) {
+      let rightChain = true;
+      chains?.map((ele) => {
+        if (ele.id == chain?.id) {
+          return
+        }
+        rightChain = false
+      })
+      if (!rightChain) {
+        switchModalcontent('wrongnetwork')
+      }
       if (userData && JSON.parse(userData).username) {
         return
       }
@@ -139,8 +150,7 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
     } else {
       switchModalcontent('connect')
     }
-
-  }, [address])
+  }, [address, isConnected])
 
   const gotToProfile = () => {
     if (!address) {
