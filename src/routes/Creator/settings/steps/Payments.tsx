@@ -55,10 +55,13 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
 				setSendinTx(false)
 				handleClick(3)
 			}
-		} catch (error) {
+		} catch (error: any) {
 			setSendinTx(false)
+			if (JSON.parse(JSON.stringify(error)).info.error.data.message.includes('insufficient funds')) {
+				setErrorMessage('You Do Not Have Enough ETH To Process This Transaction!')
+				return
+			}
 			setErrorMessage('An Error Occured, Please Try Again!')
-			console.log(error)
 		}
 	}
 

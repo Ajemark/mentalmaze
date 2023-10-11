@@ -34,6 +34,7 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
     where: ''
   })
   const [isUploading, setIsUploading] = useState(false)
+  const [isUploadingQ, setIsUploadingQ] = useState(false)
   const [numbers, setNumbers] = useState([1])
   const [questions, setQuestions]: any = useState({})
   const [questionsArray, setQuestionsArray]: any = useState([])
@@ -45,6 +46,8 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
   const uploadImage = async (event: any, type: any) => {
     event.preventDefault();
     setErrorMessage({ message: '', where: "image2" })
+    setErrorMessage({ message: '', where: "image1" })
+
 
     const form = event.target as HTMLFormElement;
     const files = (form[0] as HTMLInputElement).files;
@@ -57,13 +60,16 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
       setErrorMessage({ message: 'Please Select An Image', where: "image1" })
       return
     }
+    if (type == 'question')
+      setIsUploadingQ(true)
+    if (type != 'question')
+      setIsUploading(true)
 
-    setIsUploading(true)
     const file = files[0];
     const result = await (ipfs as IPFSHTTPClient).add(file);
     if (type == 'question') {
       setQuestions((prev: any) => ({ ...prev, question: result.cid }))
-      setIsUploading(false)
+      setIsUploadingQ(false)
       form.reset();
       return
     }
@@ -113,11 +119,11 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
               <form onSubmit={e => uploadImage(e, '')}>
                 <div className='w-full bg-[inherit] border-blue-main border-[2px] rounded-[8px] border-solid h-[198px] text-white flex justify-center items-center px-[48px] md:px-0 relative'>
                   <div className='absolute w-full h-full bottom-0'>
-                    {images ?
+                    {images?.cid ?
                       <div className="absolute w-full h-full bottom-0">
                         <img
                           alt={`Game cover`}
-                          src={`https://mentalmaze-game.infura-ipfs.io/ipfs/${images && images.cid.toString()}`}
+                          src={`https://mentalmaze-game.infura-ipfs.io/ipfs/${images.cid && images.cid.toString()}`}
                           style={{ width: '100%', height: '100%', objectFit: 'contain' }}
                         />
                         {/* <p className="absolute t-5 b-0">Select New Image</p> */}
@@ -310,7 +316,7 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
                         />
                         {/* <p className="absolute t-5 b-0">Select New Image</p> */}
                       </div>
-                      : isUploading ? (
+                      : isUploadingQ ? (
                         <div className="flex items-center h-full justify-center w-full ">
                           <ReactLoading
                             type='spin' color='#0B77F0' height={60} width={37} />
@@ -416,14 +422,15 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
                 for (const index in Object.entries(data)) {
                   let object = Object.entries(data)[index]
                   if (object[1] == '' || !object[1]) {
-                    setErrorMessage({ message: 'Enter all Details', where: 'proceed' })
+                    setErrorMessage({ message: 'Enter all Details. Did You Add A Question Already?', where: 'proceed' })
                     return
                   }
                 }
+                setImages({})
                 setQuestionObj(data)
                 handleClick(2)
               } else
-                setErrorMessage({ message: 'Enter all Details', where: 'proceed' })
+                setErrorMessage({ message: 'Enter all Details. Did You Add A Question Already?', where: 'proceed' })
             }}
           >
             PROCEED
