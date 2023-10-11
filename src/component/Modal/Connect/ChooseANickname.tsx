@@ -68,7 +68,7 @@ const ChooseANickname = () => {
         }
         else {
           setUserDetails(result.data)
-          localStorage.setItem("userData", JSON.stringify(result.data))
+          localStorage.setItem("userData", JSON.stringify({ ...result.data, token }))
           switchModalcontent('welcome')
         }
       })
