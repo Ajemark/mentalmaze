@@ -28,6 +28,7 @@ import { toast } from "react-hot-toast"
 import { CustomButton } from "./CustomConnectButton"
 
 
+
 interface CompType {
   showSideMobile: boolean,
   switchSideMode: () => void;
@@ -87,13 +88,6 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
 
   const { challenger } = useMode()
   const { address, isConnected } = useAccount();
-  const [connectAddress, setConnectAddress] = useState<`0x${string}` | undefined>()
-
-  useEffect(() => {
-    if (address) {
-      setConnectAddress(address)
-    }
-  }, [address])
 
   const getUserDetails = () => {
     setLoading(true)
@@ -130,18 +124,23 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
     if (!window.ethereum) {
       switchModal()
       switchModalcontent('install')
+      return
     }
-    else if (isConnected) {
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+      window.open("https://metamask.app.link/dapp/app.mentalmaze.io")
+      return
+    }
+    if (isConnected) {
       if (userData && JSON.parse(userData).username) {
         return
       }
       setSignInDetails({ ...setSignInDetails, address: address?.toLowerCase() })
       // switchModalcontent('authenticate')
+    } else {
+      switchModalcontent('connect')
     }
-    else if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-      window.open("https://metamask.app.link/dapp/app.mentalmaze.io")
-    }
-  }, [connectAddress])
+
+  }, [address])
 
   const gotToProfile = () => {
     if (!address) {
@@ -193,6 +192,7 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
               </div>
               {[{ image: game, path: "/", title: "Games" }, { image: cup, path: '/leaderboard', title: "Leaderboard" }, { image: create, path: "/create-game", title: "Create game" }, { image: notification, path: "/", title: "Notification" }].map((src, index) => {
                 return <div className='w-full flex items-center gap-[8px] px-[12px] h-[46px] hover:sidebarItem cursor-pointer  rounded-lg' key={index} onClick={() => {
+
                   navigate(src.path)
                   switchSideMode()
                 }}>

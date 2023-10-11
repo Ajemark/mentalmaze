@@ -1,26 +1,29 @@
+import { useAccount } from 'wagmi'
 import { games } from '../Home/GamesData'
 import create from "./../../assets/create/create.svg"
 import createmobile from "./../../assets/create/createmobile.svg"
 import { useNavigate } from 'react-router-dom'
+import { useModalContext } from '../../context/ModalContext'
+import { useEffect } from 'react'
 
 
-const Game = ({title, image}: {title: string, image: string}) => {
+const Game = ({ title, image }: { title: string, image: string }) => {
   return (
     <div className='relative flex items-center justify-center'>
       <img src={image} alt="" />
       <div className='absolute bottom-[32px] md:left-[32px] p-[2px] rounded-[8px]' style={{
         background: "linear-gradient(#032449, #0B77F0)"
       }}>
-      <button className='  
+        <button className='  
       font-droid text-[12px] md:text-[24px]
       md:leading-[28.34px] text-white py-[16px]
       px-[24px] rounded-[5px] border-[2px]border-[#063C7A]' style={{
-        "background": "black",
-        "opacity": "0.8",
-        "backdropFilter": "blur(4px)"
-      }}>
-        {title}
-      </button>
+            "background": "black",
+            "opacity": "0.8",
+            "backdropFilter": "blur(4px)"
+          }}>
+          {title}
+        </button>
       </div>
     </div>
   )
@@ -28,40 +31,58 @@ const Game = ({title, image}: {title: string, image: string}) => {
 
 const Create = () => {
   const navigate = useNavigate()
+
+  const { isConnected } = useAccount();
+  const { switchModal, switchModalcontent } = useModalContext()
+
+  useEffect(() => {
+
+
+  }, [isConnected])
+
+
   return (
-    games.length > 0?
-    <div className="grid  grid-cols-1 md:grid-cols-3 gap-x-[45px] gap-y-[44px] py-[72px]  px-[16px] mt-[96px] md:mt-[176px]">
+    games.length > 0 ?
+      <div className="grid  grid-cols-1 md:grid-cols-3 gap-x-[45px] gap-y-[44px] py-[72px]  px-[16px] mt-[96px] md:mt-[176px]">
         <div className='relative bg-blue-100 flex flex-col items-center py-[41.8px] h-[232px] md:h-full'>
-      <div ><img src={createmobile} alt="" /></div>
-      <div className='absolute bottom-[32px]  p-[1px] rounded-[8px]' style={{
-        background: "linear-gradient( #032449, #0B77F0)"
-      }}>
-      <button className=' 
+          <div ><img src={createmobile} alt="" /></div>
+          <div className='absolute bottom-[32px]  p-[1px] rounded-[8px]' style={{
+            background: "linear-gradient( #032449, #0B77F0)"
+          }}>
+            <button className=' 
       font-droid text-[12px] md:text-[24px]
       md:leading-[28.34px] text-white py-[16px]
-      px-[24px] rounded-[8px] border-[2px]border-[#063C7A] bg-blue-100' 
-      style={{
-        "backdropFilter": "blur(4px)"
-      }} onClick={() => navigate('/settings')}>
-        Create Game
-      </button>
-      </div>
-    </div>
-        
+      px-[24px] rounded-[8px] border-[2px]border-[#063C7A] bg-blue-100'
+              style={{
+                "backdropFilter": "blur(4px)"
+              }} onClick={() => {
+                if (!isConnected) {
+                  switchModal()
+                  switchModalcontent('connect')
+                  return
+                }
+                navigate('/settings')
+              }
+              }>
+              Create Game
+            </button>
+          </div>
+        </div>
+
         {games.slice(0, 3).map((gam, index) => <Game key={index}  {...gam} />)}
-    </div>
-    :
-    <div className='w-full flex flex-col  items-center justify-center h-full text-white mt-[96px] md:mt-[176px]'>
+      </div>
+      :
+      <div className='w-full flex flex-col  items-center justify-center h-full text-white mt-[96px] md:mt-[176px]'>
         <div>
-        <img src={create} />
+          <img src={create} />
         </div>
         <p className='font-Archivo_Regular text-[20px] leading-[21.76px] flex flex-col gap-2 text-center mb-[48px]'>
-        You know what’s better than playing games created by <div> others? Creating your own game for others to play.</div>
+          You know what’s better than playing games created by <div> others? Creating your own game for others to play.</div>
         </p>
         <button className='font-droid text-[24px] leading-[28.34px] modalButton'>
-            CREATE GAME
+          CREATE GAME
         </button>
-    </div>
+      </div>
   )
 }
 
