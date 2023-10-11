@@ -57,6 +57,7 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
 			}
 		} catch (error) {
 			setSendinTx(false)
+			setErrorMessage('An Error Occured, Please Try Again!')
 			console.log(error)
 		}
 	}
