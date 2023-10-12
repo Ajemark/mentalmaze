@@ -181,19 +181,27 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
         <p className='mt-[50px] text-white mb-[10px]'>What level do you want to set up?</p>
         <div className='text-white flex w-full justify-between items-center gap-6'>
           <button
+            style={{
+              backgroundColor: `#${questionObj.difficultyLevel == 'Easy' ? "0855AB" : '0D0D0D'}`
+            }}
             onClick={() => setQuestionObj((prev: any) => ({ ...prev, difficultyLevel: 'Easy' }))}
-            className={`hover:bg-[#0855AB] border-2 border-blue-main rounded-xl bg-[#${questionObj.difficultyLevel == 'Easy' ? "0855AB" : '0D0D0D'}] h-[70px] px-[30px] flex-1`}>
+            className={`hover:bg-[#0855AB] border-2 border-blue-main rounded-xl h-[70px] px-[30px] flex-1`}>
             Easy
           </button>
           <button
+            style={{
+              backgroundColor: `#${questionObj.difficultyLevel == 'Normal' ? "0855AB" : '0D0D0D'}`
+            }}
             onClick={() => setQuestionObj({ ...questionObj, difficultyLevel: 'Normal' })}
-            className={`border-2 border-blue-main hover:bg-[#0855AB] rounded-xl bg-[#${questionObj.difficultyLevel == 'Normal' ? "0855AB" : '0D0D0D'}] h-[70px] px-[30px] flex-1`}
+            className={`border-2 border-blue-main hover:bg-[#0855AB] rounded-xl h-[70px] px-[30px] flex-1`}
           >
             Normal
           </button>
-          <button
+          <button style={{
+            backgroundColor: `#${questionObj.difficultyLevel == 'Difficult' ? "0855AB" : '0D0D0D'}`
+          }}
             onClick={() => setQuestionObj({ ...questionObj, difficultyLevel: 'Difficult' })}
-            className={`border-2 border-blue-main rounded-xl hover:bg-[#0855AB] bg-[#${questionObj.difficultyLevel == 'Difficult' ? "0855AB" : '0D0D0D'}] h-[70px] px-[30px] flex-1`}
+            className={`border-2 border-blue-main rounded-xl hover:bg-[#0855AB] h-[70px] px-[30px] flex-1`}
           >
             Difficult
           </button>
