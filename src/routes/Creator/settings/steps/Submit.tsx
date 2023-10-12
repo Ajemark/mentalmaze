@@ -9,6 +9,7 @@ const Submit = () => {
   const [errorMessage, setErrorMessage] = useState('')
 
   const submitGameApplication = async () => {
+    setLoading(true)
     setErrorMessage('')
 
     let myHeaders = new Headers();
