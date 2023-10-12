@@ -1,16 +1,14 @@
 import { useContext, useState } from "react";
 import { UserContext } from "../../../../context/UserContext";
 import { useNavigate } from "react-router-dom";
-import ReactLoading from 'react-loading';
 
 const Submit = () => {
 
   const navigate = useNavigate()
-  const { questionObj, userDetails, loading, setLoading }: any = useContext(UserContext)
+  const { questionObj, userDetails, setLoading }: any = useContext(UserContext)
   const [errorMessage, setErrorMessage] = useState('')
 
   const submitGameApplication = async () => {
-    setLoading(true)
     setErrorMessage('')
 
     let myHeaders = new Headers();
@@ -44,6 +42,7 @@ const Submit = () => {
       })
       .catch(error => {
         console.log('error', error)
+        setLoading(false)
         setErrorMessage('An Error Occured, Try Again!')
       });
   }
@@ -51,10 +50,6 @@ const Submit = () => {
 
   return (
     <div className='px-[16px] md:px-[48px]'>
-      {loading && <div className="flex items-center h-[40vh] justify-center w-full ">
-        <ReactLoading
-          type='spin' color='#0B77F0' height={60} width={37} />
-      </div>}
       <div className='text-[16px] md:text-[20px] font-Archivo_Regular  text-white  flex flex-col gap-6 mt-[48px] font-[200]'>
         <p className=' md:leading-[31.76px]'> Hi there!</p>
         <p className=' md:leading-[31.76px]'> I’m sure you can’t wait to have your game published. So are we, congratulations creator.</p>

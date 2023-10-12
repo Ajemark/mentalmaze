@@ -1,10 +1,10 @@
-import { useAccount } from 'wagmi'
+import { useAccount, useNetwork } from 'wagmi'
 import { games } from '../Home/GamesData'
 import create from "./../../assets/create/create.svg"
 import createmobile from "./../../assets/create/createmobile.svg"
 import { useNavigate } from 'react-router-dom'
 import { useModalContext } from '../../context/ModalContext'
-import { useEffect } from 'react'
+
 
 
 const Game = ({ title, image }: { title: string, image: string }) => {
@@ -31,15 +31,10 @@ const Game = ({ title, image }: { title: string, image: string }) => {
 
 const Create = () => {
   const navigate = useNavigate()
+  const { chain } = useNetwork()
 
   const { isConnected } = useAccount();
   const { switchModal, switchModalcontent } = useModalContext()
-
-  useEffect(() => {
-
-
-  }, [isConnected])
-
 
   return (
     games.length > 0 ?
@@ -59,6 +54,10 @@ const Create = () => {
                 if (!isConnected) {
                   switchModal()
                   switchModalcontent('connect')
+                  return
+                }
+                if (chain?.unsupported) {
+                  switchModalcontent('wrongnetwork')
                   return
                 }
                 navigate('/settings')
