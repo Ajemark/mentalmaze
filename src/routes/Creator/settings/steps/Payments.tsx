@@ -8,6 +8,7 @@ import { MM_ADDRESS, useEthersProvider, useEthersSigner } from "../../../../sdk"
 import { useAccount } from "wagmi"
 import { parseEther } from "viem"
 import ReactLoading from 'react-loading';
+import { formatEther } from "ethers"
 
 
 const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
@@ -168,25 +169,34 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
 									setErrorMessage('Amount to deposit not equal to amount to share!')
 									return
 								}
+								const get = async () => {
+									//@ts-ignore
+									const balance = await provider?.getBalance?.(address);
+									const balanceInEth = formatEther(balance);
 
+									if (gameToken > balanceInEth) {
+										setErrorMessage('You Do Not Have Enough ETH To Process This Transaction!')
+										return
+									}
 
-								const data2 = {
-									...data,
-									rewardDistribution: prices(priceShare),
-									title: questionObj.gameTitle,
-									image: questionObj.gameCover.cid.toString(),
-									gameQuestion: questionObj.questions,
-									durationInHours: Math.abs(questionObj.gameDuration),
-									managerContract: MM_ADDRESS,
-									playersCount: 0,
-									totalQuestion: questionObj.questions.length,
-									paymentStatus: true,
-									approve: false,
-									creator: address,
+									const data2 = {
+										...data,
+										rewardDistribution: prices(priceShare),
+										title: questionObj.gameTitle,
+										image: questionObj.gameCover.cid.toString(),
+										gameQuestion: questionObj.questions,
+										durationInHours: Math.abs(questionObj.gameDuration),
+										managerContract: MM_ADDRESS,
+										playersCount: 0,
+										totalQuestion: questionObj.questions.length,
+										paymentStatus: true,
+										approve: false,
+										creator: address,
+									}
+									sendTx(data2)
 								}
-								// console.log(data2)
-								// return
-								sendTx(data2)
+
+								get()
 							}}>
 								Proceed To make Deposit
 							</button>

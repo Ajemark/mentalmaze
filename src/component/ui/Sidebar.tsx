@@ -87,7 +87,7 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
   const { setSignInDetails, setLoading, token, setUserDetails }: any = useContext(UserContext)
 
   const { challenger } = useMode()
-  const { chain, chains } = useNetwork()
+  const { chain } = useNetwork()
   const { address, isConnected } = useAccount();
 
   const getUserDetails = () => {
@@ -132,14 +132,7 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
       return
     }
     if (isConnected) {
-      let rightChain = true;
-      chains?.map((ele) => {
-        if (ele.id == chain?.id) {
-          return
-        }
-        rightChain = false
-      })
-      if (!rightChain) {
+      if (chain?.unsupported) {
         switchModalcontent('wrongnetwork')
       }
       if (userData && JSON.parse(userData).username) {
