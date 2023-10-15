@@ -151,6 +151,11 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
       return
     }
     else {
+      const userData = localStorage.getItem('userData')
+      if (userData && JSON.parse(userData).username) {
+        navigate('/profile')
+        return
+      }
       getUserDetails()
     }
   }

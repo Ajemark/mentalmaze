@@ -37,6 +37,8 @@ export interface UserContextType {
     setTypeQuestion: React.Dispatch<React.SetStateAction<boolean>>
     duration: string
     setDuration: React.Dispatch<React.SetStateAction<string>>
+    setPendingGames: React.Dispatch<React.SetStateAction<any>>
+    setLiveGames: React.Dispatch<React.SetStateAction<any>>
     questionObj: {}
     setQuestionObj: any
     questions: any
@@ -44,6 +46,8 @@ export interface UserContextType {
     coverImage: any
     setCoverImage: any
     images: any
+    pendingGames: any
+    liveGames: any
     setImages: any
     gameToken: any
     priceShare: any
@@ -76,6 +80,8 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
     const [gameToken, setGameToken] = useState('')
     const [priceShare, setPriceShare] = useState(['', '', ''])
     const [comments, setComments] = useState('')
+    const [pendingGames, setPendingGames] = useState([])
+    const [liveGames, setLiveGames] = useState([])
     const [images, setImages] = useState<{ cid: CID, path: string }>()
 
 
@@ -113,7 +119,7 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
 
     // console.log(signInDetails)
 
-    return <UserContext.Provider value={{ setSignInDetails, signInDetails, token, setToken, loading, setLoading, userDetails, setUserDetails, mobileSignInDetails, setmobileSignInDetails, title, setTitle, typeQuestion, setTypeQuestion, questionTitle, setQuestionTitle, duration, setDuration, questionObj, setQuestionObj, questions, setQuestions, coverImage, setCoverImage, images, setImages, gameToken, setGameToken, priceShare, setPriceShare, comments, setComments }}>
+    return <UserContext.Provider value={{ setSignInDetails, signInDetails, token, setToken, loading, setLoading, userDetails, setUserDetails, mobileSignInDetails, setmobileSignInDetails, title, setTitle, typeQuestion, setTypeQuestion, questionTitle, setQuestionTitle, duration, setDuration, questionObj, setQuestionObj, questions, setQuestions, coverImage, setCoverImage, images, setImages, gameToken, setGameToken, priceShare, setPriceShare, comments, setComments, pendingGames, setPendingGames, liveGames, setLiveGames }}>
         {children}
     </UserContext.Provider>
 }
