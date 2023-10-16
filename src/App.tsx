@@ -28,7 +28,7 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <MainLayout/>,
+      element: <MainLayout />,
       children: [
         {
           path: "/",
@@ -58,12 +58,12 @@ function App() {
           path: "/game",
           element: <Game />
         },
+        // {
+        //   path: "/challenger",
+        //   element: <ChallengerHome />
+        // },
         {
           path: "/challenger",
-          element: <ChallengerHome />
-        },
-        {
-          path: "/challenger/uploadedgames",
           element: <ChallengerGames />
         },
         {
@@ -74,7 +74,7 @@ function App() {
           path: "/challenger/dashboard",
           element: <Dashboard />
         }
-        
+
       ],
     },
     // {
@@ -102,8 +102,8 @@ function App() {
   ]);
 
   return (
-          <RouterProvider router={router} />
-          
+    <RouterProvider router={router} />
+
   )
 }
 
