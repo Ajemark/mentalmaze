@@ -120,6 +120,7 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
       .catch(error => console.log('error', error));
   }
 
+  console.log(address)
   useEffect(() => {
     const userData = localStorage.getItem('userData')
     if (!window.ethereum) {
@@ -136,6 +137,11 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
         switchModalcontent('wrongnetwork')
       }
       if (userData && JSON.parse(userData).username) {
+        if (JSON.parse(userData).address != address?.toLowerCase()) {
+          localStorage.removeItem('userData')
+          switchModalcontent('authenticate')
+          return
+        }
         return
       }
       setSignInDetails({ ...setSignInDetails, address: address?.toLowerCase() })
