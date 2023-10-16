@@ -1,8 +1,9 @@
-import { games } from "./GamesData";
+// import { games } from "./GamesData";
 import { VscUnlock } from "react-icons/vsc"
 import { RiArrowDownSLine } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../../context/UserContext";
 
 
 interface ItemType {
@@ -63,18 +64,18 @@ const TitleBar = () => {
   );
 }
 
-const Game = ({ image }: { image: string }) => {
+const Game = ({ image, id }: { image: string, id: number }) => {
   const navigate = useNavigate()
   return (
     <div className="relative flex justify-center items-center w-full border-blue-100 border-[4px] border-solid" >
-      <img src={image} className="w-full" />
+      <img src={image.includes('http') ? image : "https://mentalmaze-game.infura-ipfs.io/ipfs/" + image} className="w-full" />
       <div className="absolute p-[2px rounded-[8px] p-[2px]" style={{
         "background": "linear-gradient(90deg, #032449, #0B77F0)"
       }} >
         <button className=" w-[143px] text-white py-[16px] rounded-[8px] font-droid tracking-[0.2px] left-0" style={{
           "background": "linear-gradient(130deg, #032449 0%, #0B77F0 100%)",
           "backdropFilter": "blur(4px)"
-        }} onClick={() => navigate('/game')}>
+        }} onClick={() => navigate('/game?id=' + id)}>
           PLAY NOW
         </button>
       </div>
@@ -85,6 +86,37 @@ const Game = ({ image }: { image: string }) => {
 
 const Home = () => {
 
+  const { userDetails, liveGames, setLiveGames }: any = useContext(UserContext)
+
+  const getAllGames = () => {
+
+    let myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${userDetails.token}`);
+
+    let requestOptions: RequestInit = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+    // =${ address?.toLowerCase()
+    fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/game/fetch?pageNumber=1&pageSize=3&filter=All`, requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        if (result.data) {
+          setLiveGames(result.data)
+        }
+        else {
+          console.log(result)
+        }
+      })
+      .catch(error => console.log('error', error));
+  }
+  useEffect(() => {
+    if (!userDetails.token) return
+    getAllGames()
+  }, [userDetails])
+
+  console.log(liveGames)
 
   return (
     <div className=" w-full h-fit mt-[96px] md:mt-[176px]">
@@ -96,7 +128,7 @@ const Home = () => {
             <div className="text-[18px] md:text-[24px]"><VscUnlock color={"white"} /></div>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-[15px] gap-y-[15px] md:gap-x-[45px] md:gap-y-[44px] py-12 w-full px-0" >
-            {games.map((gam, index) => <Game {...gam} key={index} />
+            {liveGames?.map((gam: any, index: number) => <Game {...gam} key={index} />
             )}
           </div>
         </div>

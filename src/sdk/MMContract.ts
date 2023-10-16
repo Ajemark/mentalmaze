@@ -28,7 +28,33 @@ export class MMContract {
 		tx = await tx.wait()
 		return decode.decode(['address'], tx.logs[0].data)
 	}
+	async approveGame(gameAddress: string) {
+		let tx = await this.contract.approveGames(gameAddress)
+		tx = await tx.wait()
+		return tx
+	}
+	async rejectGame(gameAddress: string) {
+		let tx = await this.contract.rejectGames(gameAddress)
+		tx = await tx.wait()
+		return tx
+	}
 
+	async getJudgesCount() {
+		const tx = await this.contractWithProvider.judgesCount()
+		return tx.toString();
+	}
+	async getMinVote() {
+		const tx = await this.contractWithProvider.minimumVoteAllowedInPercentage()
+		return tx.toString();
+	}
+	async getVotesForGames() {
+		const tx = await this.contractWithProvider.votesForGames()
+		return tx.toString();
+	}
+	async getGameVotes(address: String) {
+		const tx = await this.contractWithProvider.gamePendingApprovalVoteCount(address)
+		return tx.toString();
+	}
 	async getJudges(id: number) {
 		const tx = await this.contractWithProvider.judges(id)
 		return tx;

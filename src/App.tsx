@@ -14,7 +14,7 @@ import Create from './routes/Creator/Create'
 import GameRequirement from './routes/Creator/GameRequirement'
 import Settings from './routes/Creator/settings'
 import Game from './routes/Game/Game'
-import ChallengerHome from './ChallengerLayout/Pages/ChallengerHome'
+// import ChallengerHome from './ChallengerLayout/Pages/ChallengerHome'
 import ChallengerGames from './ChallengerLayout/Pages/ChallengerGames'
 import ChallengerGame from './ChallengerLayout/Pages/ChallengerGame'
 import Dashboard from './ChallengerLayout/Pages/Dashboard/Dashboard'
@@ -28,7 +28,7 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <MainLayout/>,
+      element: <MainLayout />,
       children: [
         {
           path: "/",
@@ -58,10 +58,10 @@ function App() {
           path: "/game",
           element: <Game />
         },
-        {
-          path: "/challenger",
-          element: <ChallengerHome />
-        },
+        // {
+        //   path: "/challenger",
+        //   element: <ChallengerHome />
+        // },
         {
           path: "/challenger/uploadedgames",
           element: <ChallengerGames />
@@ -71,10 +71,10 @@ function App() {
           element: <ChallengerGame />
         },
         {
-          path: "/challenger/dashboard",
+          path: "/challenger",
           element: <Dashboard />
         }
-        
+
       ],
     },
     // {
@@ -102,8 +102,8 @@ function App() {
   ]);
 
   return (
-          <RouterProvider router={router} />
-          
+    <RouterProvider router={router} />
+
   )
 }
 

@@ -2,6 +2,7 @@
 import nav1 from "./../../assets/sidebar/nav1.svg"
 import nav2 from "./../../assets/sidebar/nav2.svg"
 import nav3 from "./../../assets/sidebar/nav3.svg"
+import nav4 from "./../../assets/sidebar/nav4.svg"
 import discord from "./../../assets/sidebar/discord.svg"
 import telegram from "./../../assets/sidebar/telegram.svg"
 import twitter from "./../../assets/sidebar/twitter.svg"
@@ -52,8 +53,6 @@ const NavItemMobile = (src: { link: string, title: string, image: string }) => {
       }
     }
 
-
-
     if (locationContainsChallenger()) {
       navigate(`/challenger${go}`)
     }
@@ -63,8 +62,9 @@ const NavItemMobile = (src: { link: string, title: string, image: string }) => {
   }
   const [show, setShow] = useState(false)
 
+
   return (
-    <div className={`pl-[8px]  md:pl-[15px] w-full relative items-center cursor-pointer flex overflow-visible`} onClick={() => goto(src.link)} onMouseEnter={() => setShow(!show)} onMouseLeave={() => setShow(!show)}>
+    <div className={` w-full relative items-center justify-center cursor-pointer flex overflow-visible`} onClick={() => goto(src.link)} onMouseEnter={() => setShow(!show)} onMouseLeave={() => setShow(!show)}>
       <span>  <img src={src.image} className="" /> </span>
       {show && <motion.div className="absolute  text-white w-28 left-20  px-2 font-Archivo_Regular bg-hover text-center"
         animate={{ y: [-100, 0], x: [20, 0] }}
@@ -84,7 +84,7 @@ const NavItemMobile = (src: { link: string, title: string, image: string }) => {
 // user cant create game if they add a certain amount
 const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
   const { switchModal, switchModalcontent } = useModalContext()
-  const { setSignInDetails, setLoading, token, setUserDetails }: any = useContext(UserContext)
+  const { setSignInDetails, setLoading, token, setUserDetails, userDetails }: any = useContext(UserContext)
 
   const { challenger } = useMode()
   const { chain } = useNetwork()
@@ -151,6 +151,11 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
       return
     }
     else {
+      const userData = localStorage.getItem('userData')
+      if (userData && JSON.parse(userData).username) {
+        navigate('/profile')
+        return
+      }
       getUserDetails()
     }
   }
@@ -158,10 +163,15 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
   const navigate = useNavigate()
   const { width } = useQuery()
 
+  console.log(userDetails)
+
   return (
     width > 768 ? <div className={`w-[104px] h-[90vh] fixed md:flex flex-col justify-between py-[46px] left-0  z-20  opacity-[0.4000000059604645] items-center  mt-[104px] hidden ${challenger ? "bg-black" : "bg-blue-100"}`}>
       <div className='flex flex-col gap-6 w-full'>
-        {[{ image: nav1, link: "/create-game", title: "Create Game" }, { image: nav2, link: '/leaderboard', title: "leaderboard" }, { image: nav3, link: "/", title: "Games" }].map((src, i) => {
+        {[{ image: nav1, link: "/create-game", title: "Create Game" }, { image: nav4, link: '/challenger', title: "Challenger" }, { image: nav2, link: '/leaderboard', title: "leaderboard" }, { image: nav3, link: "/", title: "Games" }].map((src, i) => {
+          if (src.title == "Challenger" && userDetails?.role && userDetails?.role?.toLowerCase() != 'judge') {
+            return
+          }
           return <NavItemMobile key={i} {...src} />
         })}
       </div>
