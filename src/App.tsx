@@ -63,7 +63,7 @@ function App() {
         //   element: <ChallengerHome />
         // },
         {
-          path: "/challenger",
+          path: "/challenger/uploadedgames",
           element: <ChallengerGames />
         },
         {
@@ -71,7 +71,7 @@ function App() {
           element: <ChallengerGame />
         },
         {
-          path: "/challenger/dashboard",
+          path: "/challenger",
           element: <Dashboard />
         }
 

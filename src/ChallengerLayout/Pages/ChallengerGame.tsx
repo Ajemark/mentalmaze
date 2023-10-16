@@ -9,7 +9,7 @@ const ChallengerGame = () => {
 
   const navigate = useNavigate()
 
-  const [curGame, setCurGame]: any = useState({})
+  const [curGame, setCurGame]: any = useState()
   const [curQuestion, setCurQuestion]: any = useState(0)
   const { userDetails }: any = useContext(UserContext)
   const [loading, setLoading] = useState(false)
@@ -44,6 +44,7 @@ const ChallengerGame = () => {
         if (result.data) {
           const id = location.search.split('id=')[1]
           setCurGame(result.data.filter((game: any) => game.id == id)[0])
+          if (!curGame) navigate("/challenger")
           setLoading(false)
         }
         else {
@@ -83,7 +84,7 @@ const ChallengerGame = () => {
       .then(result => {
         if (result) {
           setLoading(false)
-          navigate("/challenger/uploadedgames")
+          navigate("/challenger")
           console.log(result)
         }
         else {
@@ -210,7 +211,7 @@ const ChallengerGame = () => {
                 </div>
               </div>
               {
-                Object.keys(curGame).length > 1 && (
+                curGame && Object.keys(curGame).length > 1 && (
 
                   <div className="w-full px-[16px] md:px-[52px] ">
                     <h1 className='font-droid text-white text-[16px] md:text-[32px] text-left w-full mt-[40px]'>
