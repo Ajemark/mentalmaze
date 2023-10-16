@@ -35,7 +35,7 @@ interface CompType {
   switchSideMode: () => void;
 }
 
-const NavItemMobile = (src: { link: string, title: string, image: string }, skip: any) => {
+const NavItemMobile = (src: { link: string, title: string, image: string }) => {
   // const {address, isConnecting, isDisconnected, isConnected } = useAccount();
   // const { data, isError, isLoading, isSuccess, signMessage } = useSignMessage({
   //   message: '',
