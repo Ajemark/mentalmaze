@@ -43,8 +43,9 @@ const ChallengerGame = () => {
       .then(result => {
         if (result.data) {
           const id = location.search.split('id=')[1]
-          setCurGame(result.data.filter((game: any) => game.id == id)[0])
-          if (!curGame) navigate("/challenger")
+          const data = result.data.filter((game: any) => game.id == id)[0]
+          setCurGame(data)
+          if (!data) navigate("/challenger")
           setLoading(false)
         }
         else {
