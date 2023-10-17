@@ -28,8 +28,9 @@ const { chains, publicClient } = configureChains(
 );
 
 const MMSDK = new MetaMaskSDK();
-
-MMSDK.getProvider();
+MMSDK.init().then(() => {
+  MMSDK.getProvider();
+})
 
 const projectId = import.meta.env.VITE_REACT_APP_WALLET_CONNECT_PROJECT_ID
 
