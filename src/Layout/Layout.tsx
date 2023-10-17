@@ -10,6 +10,9 @@ import { Toaster } from 'react-hot-toast';
 import { configureChains, createConfig, sepolia, WagmiConfig } from 'wagmi'
 import { auroraTestnet } from 'wagmi/chains'
 
+import { MetaMaskSDK } from '@metamask/sdk';
+
+
 import '@rainbow-me/rainbowkit/styles.css';
 
 import {
@@ -24,6 +27,9 @@ const { chains, publicClient } = configureChains(
   [publicProvider()]
 );
 
+const MMSDK = new MetaMaskSDK();
+
+MMSDK.getProvider();
 
 const projectId = import.meta.env.VITE_REACT_APP_WALLET_CONNECT_PROJECT_ID
 

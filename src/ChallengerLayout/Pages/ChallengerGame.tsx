@@ -221,7 +221,6 @@ const ChallengerGame = () => {
                     <div className="mt-[32px] md:mt-[72px] flex flex-col items-center gap-[32px]">
 
                       <img src={curGame?.question[curQuestion].image.includes('http') ? curGame?.question[curQuestion].image : "https://mentalmaze-game.infura-ipfs.io/ipfs/" + curGame?.question[curQuestion].image} />
-
                     </div>
                     <div className='flex w-full mt-10 justify-center gap-[16px]'>
                       {curGame?.question[curQuestion].options.map((option: any, index: any) => {
