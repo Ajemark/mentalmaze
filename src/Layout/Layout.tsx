@@ -10,6 +10,7 @@ import { Toaster } from 'react-hot-toast';
 import { configureChains, createConfig, sepolia, WagmiConfig } from 'wagmi'
 import { auroraTestnet } from 'wagmi/chains'
 
+
 import '@rainbow-me/rainbowkit/styles.css';
 
 import {
@@ -23,7 +24,6 @@ const { chains, publicClient } = configureChains(
   [sepolia, auroraTestnet],
   [publicProvider()]
 );
-
 
 const projectId = import.meta.env.VITE_REACT_APP_WALLET_CONNECT_PROJECT_ID
 
