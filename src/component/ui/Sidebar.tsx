@@ -123,11 +123,11 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
   console.log(address)
   useEffect(() => {
     const userData = localStorage.getItem('userData')
-    if (!window.ethereum) {
-      switchModal()
-      switchModalcontent('install')
-      return
-    }
+    // if (!window.ethereum) {
+    //   switchModal()
+    //   switchModalcontent('install')
+    //   return
+    // }
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
       window.open("https://metamask.app.link/dapp/app.mentalmaze.io")
       return
