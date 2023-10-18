@@ -164,11 +164,13 @@ const ChallengerGame = () => {
         const minVotes = await mmContract.getMinVote()
         const totalVotesForGame = await mmContract.getVotesForGames()
 
-        if (((totalApprovedGameVotes / totalJudges) * 100) >= minVotes) {
+        if (totalVotesForGame == totalJudges && (((totalApprovedGameVotes / totalJudges) * 100) >= minVotes)) {
           approveGameOnDB()
           return
-        } else if (totalVotesForGame >= totalJudges) {
+        }
+        if (totalVotesForGame == totalJudges && (((totalApprovedGameVotes / totalJudges) * 100) < minVotes)) {
           rejectGameOnDB()
+          return
         }
         setLoading(false)
       }
