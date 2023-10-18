@@ -28,10 +28,6 @@ const Authenticate = () => {
       }
     }
 
-    alert(isConnected);
-    alert(address);
-    alert(auth?.data.message);
-
     if (auth || !address) return
     fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/authenticate/login?address=${address}`)
       .then(async response => {
@@ -59,8 +55,6 @@ const Authenticate = () => {
   const signInMessage = async () => {
     setTryAgain('No')
     setLoading(true)
-    alert(address);
-    alert(auth?.data.message);
     try {
       if (auth == undefined || !address) {
         setLoading(false)
