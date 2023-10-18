@@ -122,15 +122,7 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
 
   useEffect(() => {
     const userData = localStorage.getItem('userData')
-    // if (!window.ethereum) {
-    //   switchModal()
-    //   switchModalcontent('install')
-    //   return
-    // }
-    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-      window.open("https://metamask.app.link/dapp/app.mentalmaze.io")
-      return
-    }
+
     if (isConnected) {
       if (chain?.unsupported) {
         switchModalcontent('wrongnetwork')
@@ -144,7 +136,7 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
         return
       }
       setSignInDetails({ ...setSignInDetails, address: address?.toLowerCase() })
-      // switchModalcontent('authenticate')
+
     } else {
       switchModalcontent('connect')
     }

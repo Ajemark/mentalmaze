@@ -43,7 +43,6 @@ const Authenticate = () => {
   useEffect(() => {
     (async () => {
       if (signMessageData) {
-
         setSignInDetails((prev: signInDetails) => ({ ...prev, signature: signMessageData }))
         localStorage.setItem('userData', JSON.stringify({ ...signInDetails, signature: signMessageData }))
         setLoading(false)
@@ -53,6 +52,7 @@ const Authenticate = () => {
   }, [signMessageData, variables?.message])
 
   const signInMessage = async () => {
+    setErrorMessage('')
     setTryAgain('No')
     setLoading(true)
     try {
