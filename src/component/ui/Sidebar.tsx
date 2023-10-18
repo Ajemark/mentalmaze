@@ -127,10 +127,10 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
     //   switchModalcontent('install')
     //   return
     // }
-    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-      window.open("https://metamask.app.link/dapp/app.mentalmaze.io")
-      return
-    }
+    // if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+    //   window.open("https://metamask.app.link/dapp/app.mentalmaze.io")
+    //   return
+    // }
     if (isConnected) {
       if (chain?.unsupported) {
         switchModalcontent('wrongnetwork')

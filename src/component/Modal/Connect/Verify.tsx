@@ -65,6 +65,7 @@ const Verify = () => {
       redirect: 'follow'
     }
 
+    alert(raw)
     fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/authenticate/verify`, requestOptions)
       .then(async response => {
         if (response.ok) {
