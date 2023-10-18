@@ -53,6 +53,8 @@ const Authenticate = () => {
 
   const signInMessage = async () => {
     setLoading(true)
+    alert(address);
+    alert(auth?.data.message);
     try {
       if (auth == undefined || !address) {
         setLoading(false)
