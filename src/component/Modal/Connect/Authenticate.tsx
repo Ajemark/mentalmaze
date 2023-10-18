@@ -27,6 +27,9 @@ const Authenticate = () => {
       }
     }
 
+    alert(address);
+    alert(auth?.data.message);
+
     if (auth || !address) return
     fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/authenticate/login?address=${address}`)
       .then(async response => {
