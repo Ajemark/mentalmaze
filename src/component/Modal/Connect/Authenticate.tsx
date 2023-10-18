@@ -9,14 +9,14 @@ import { useAccount, useSignMessage } from 'wagmi'
 const Authenticate = () => {
 
   const [auth, setauth] = useState<any>()
-  const { isConnected } = useAccount();
+  const { isConnected, address } = useAccount();
   const [errorMessage, setErrorMessage] = useState('')
   const { data: signMessageData, signMessage, variables } = useSignMessage()
 
   const { signInDetails, setSignInDetails, setLoading, loading }: any = useContext(UserContext)
   const { switchModalcontent } = useModalContext()
 
-  const { address } = signInDetails
+  // const { address } = signInDetails
 
   useEffect(() => {
     const userData = localStorage.getItem('userData')
