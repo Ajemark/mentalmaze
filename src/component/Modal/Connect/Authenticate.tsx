@@ -27,6 +27,7 @@ const Authenticate = () => {
       }
     }
 
+    alert(isConnected);
     alert(address);
     alert(auth?.data.message);
 
