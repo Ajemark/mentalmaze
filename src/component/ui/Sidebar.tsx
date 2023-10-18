@@ -120,7 +120,6 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
       .catch(error => console.log('error', error));
   }
 
-  console.log(address)
   useEffect(() => {
     const userData = localStorage.getItem('userData')
     // if (!window.ethereum) {
@@ -168,8 +167,6 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
 
   const navigate = useNavigate()
   const { width } = useQuery()
-
-  console.log(userDetails)
 
   return (
     width > 768 ? <div className={`w-[104px] h-[90vh] fixed md:flex flex-col justify-between py-[46px] left-0  z-20  opacity-[0.4000000059604645] items-center  mt-[104px] hidden ${challenger ? "bg-black" : "bg-blue-100"}`}>

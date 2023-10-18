@@ -260,6 +260,7 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
                     options: questions.options,
                     difficultyLevel: questionObj.difficultyLevel
                   }])
+                  setQuestions({})
                   setNumbers((prev: any) => {
                     return [...prev, ((prev[prev.length - 1]) + 1)]
                   })
@@ -281,7 +282,7 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
               <input
                 type="text"
                 className="mt-[10px] bg-[inherit] border-blue-main border-[2px] w-full p-[10px] rounded-[8px] border-solid h-[56px] md:h-[64px] text-white outline-none"
-                value={questionObj?.gameInstruction}
+                value={questions.gameInstruction ?? ''}
                 onChange={(e) => setQuestions((prev: any) => ({ ...prev, gameInstruction: e.target.value }))}
                 placeholder='Please enter the Instruction of your game' />
             </label>
@@ -305,7 +306,7 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
 
             {typeQuestion && <input
               className="mt-[10px] bg-[inherit] border-blue-main border-[2px] w-full p-[10px] rounded-[8px] border-solid h-[56px] md:h-[64px] text-white outline-none"
-              value={questionObj.question}
+              value={questions.question ?? ''}
               onChange={(e) => setQuestions((prev: any) => ({ ...prev, question: e.target.value }))}
               title="Type Question"
               placeholder="Type your question"
@@ -397,6 +398,7 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
             <input
               className="mt-[10px] bg-[inherit] border-blue-main border-[2px] w-full p-[10px] rounded-[8px] border-solid h-[56px] md:h-[64px] text-white outline-none"
               onChange={(e) => setQuestions((prev: any) => ({ ...prev, answer: e.target.value }))}
+              value={questions.answer ?? ''}
               placeholder='Please enter the answer to this question' />
             <Instruction />
           </div>
