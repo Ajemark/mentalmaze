@@ -5,21 +5,20 @@ import { UserContext, signInDetails } from '../../../context/UserContext'
 import { useModalContext } from '../../../context/ModalContext'
 import Loading from '../../ui/Loading'
 import { Buffer } from 'buffer';
-import { useAccount } from 'wagmi'
+import { useAccount, useSignMessage } from 'wagmi'
+import { recoverMessageAddress } from 'viem'
 
 const Authenticate = () => {
 
   const [auth, setauth] = useState<any>()
   const { isConnected } = useAccount();
   const [errorMessage, setErrorMessage] = useState('')
-
+  const { data: signMessageData, error, isLoading, signMessage, variables } = useSignMessage()
 
   const { signInDetails, setSignInDetails, setLoading, loading }: any = useContext(UserContext)
   const { switchModalcontent } = useModalContext()
 
   const { address } = signInDetails
-
-  console.log(address)
 
   useEffect(() => {
     const userData = localStorage.getItem('userData')
@@ -42,6 +41,18 @@ const Authenticate = () => {
       })
   }, [address])
 
+  useEffect(() => {
+    (async () => {
+      if (signMessageData) {
+
+        setSignInDetails((prev: signInDetails) => ({ ...prev, signature: signMessageData }))
+        localStorage.setItem('userData', JSON.stringify({ ...signInDetails, signature: signMessageData }))
+        setLoading(false)
+        switchModalcontent('verify')
+      }
+    })()
+  }, [signMessageData, variables?.message])
+
   const signInMessage = async () => {
     setLoading(true)
     try {
@@ -51,16 +62,11 @@ const Authenticate = () => {
         return
       }
 
-      const msg = `0x${Buffer.from(auth?.data.message, 'utf8').toString('hex')}`
-      const sign = await window.ethereum.request({
-        method: 'personal_sign',
-        params: [msg, address.toLowerCase()],
-      })
+      const msg = auth?.data.message
 
-      setSignInDetails((prev: signInDetails) => ({ ...prev, signature: sign }))
-      localStorage.setItem('userData', JSON.stringify({ ...signInDetails, signature: sign }))
+      signMessage({ message: msg })
+      setauth(undefined)
       setLoading(false)
-      switchModalcontent('verify')
     } catch (error: any) {
       setLoading(false)
       toast.error(error.message)

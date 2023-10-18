@@ -36,8 +36,6 @@ const ChallengerGame = () => {
       redirect: 'follow'
     };
 
-    console.log('gggg')
-
     fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/game/get-all-pending-games?pageNumber=1&pageSize=20`, requestOptions)
       .then(response => response.json())
       .then(result => {
@@ -59,8 +57,6 @@ const ChallengerGame = () => {
       });
   }
 
-  // console.log(userDetails)
-
   const approveGameOnDB = () => {
 
     let myHeaders = new Headers();
@@ -71,7 +67,7 @@ const ChallengerGame = () => {
       "gamesId": curGame.id,
       "judgeAccountId": userDetails.id
     })
-    console.log(raw)
+
     let requestOptions: RequestInit = {
       method: 'PUT',
       body: raw,
@@ -109,7 +105,6 @@ const ChallengerGame = () => {
       "gamesId": curGame.id,
       "judgeAccountId": userDetails.id
     })
-    console.log(raw)
     let requestOptions: RequestInit = {
       method: 'PUT',
       body: raw,
@@ -149,6 +144,11 @@ const ChallengerGame = () => {
   }
 
   const sendTx = async (type: String) => {
+    const totalJudges = await mmContract.getJudgesCount()
+    const totalApprovedGameVotes = await mmContract.getGameVotes(curGame.address)
+    const minVotes = await mmContract.getMinVote()
+    const totalVotesForGame = await mmContract.getVotesForGames(curGame.address)
+
     try {
       let tx;
       if (type == 'reject') {
@@ -158,11 +158,6 @@ const ChallengerGame = () => {
 
       if (tx) {
         console.log(JSON.parse(JSON.stringify(tx)))
-
-        const totalJudges = await mmContract.getJudgesCount()
-        const totalApprovedGameVotes = await mmContract.getGameVotes(curGame.address)
-        const minVotes = await mmContract.getMinVote()
-        const totalVotesForGame = await mmContract.getVotesForGames()
 
         if (totalVotesForGame == totalJudges && (((totalApprovedGameVotes / totalJudges) * 100) >= minVotes)) {
           approveGameOnDB()
@@ -182,10 +177,11 @@ const ChallengerGame = () => {
   }
 
   useEffect(() => {
+    if (!userDetails.token) return
     setLoading(true)
-    if (!userDetails.role) return
     getPendingGame()
   }, [userDetails])
+
 
   return (
     <div>
