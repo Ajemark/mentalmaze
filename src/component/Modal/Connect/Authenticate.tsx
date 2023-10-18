@@ -9,6 +9,7 @@ import { useAccount, useSignMessage } from 'wagmi'
 const Authenticate = () => {
 
   const [auth, setauth] = useState<any>()
+  const [tryAgain, setTryAgain] = useState<any>()
   const { isConnected, address } = useAccount();
   const [errorMessage, setErrorMessage] = useState('')
   const { data: signMessageData, signMessage, variables } = useSignMessage()
@@ -41,7 +42,7 @@ const Authenticate = () => {
           toast.error('An error occured')
         }
       })
-  }, [address])
+  }, [address, tryAgain])
 
   useEffect(() => {
     (async () => {
@@ -56,6 +57,7 @@ const Authenticate = () => {
   }, [signMessageData, variables?.message])
 
   const signInMessage = async () => {
+    setTryAgain('No')
     setLoading(true)
     alert(address);
     alert(auth?.data.message);
@@ -63,6 +65,7 @@ const Authenticate = () => {
       if (auth == undefined || !address) {
         setLoading(false)
         setErrorMessage('Please Try Again')
+        setTryAgain('Yes')
         return
       }
 
