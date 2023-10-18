@@ -4,16 +4,14 @@ import { toast } from 'react-hot-toast'
 import { UserContext, signInDetails } from '../../../context/UserContext'
 import { useModalContext } from '../../../context/ModalContext'
 import Loading from '../../ui/Loading'
-import { Buffer } from 'buffer';
 import { useAccount, useSignMessage } from 'wagmi'
-import { recoverMessageAddress } from 'viem'
 
 const Authenticate = () => {
 
   const [auth, setauth] = useState<any>()
   const { isConnected } = useAccount();
   const [errorMessage, setErrorMessage] = useState('')
-  const { data: signMessageData, error, isLoading, signMessage, variables } = useSignMessage()
+  const { data: signMessageData, signMessage, variables } = useSignMessage()
 
   const { signInDetails, setSignInDetails, setLoading, loading }: any = useContext(UserContext)
   const { switchModalcontent } = useModalContext()
