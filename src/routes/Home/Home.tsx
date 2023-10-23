@@ -150,21 +150,27 @@ const Home = () => {
             <div className="text-[18px] md:text-[24px]"><VscUnlock color={"white"} /></div>
           </div>
           {
-            userDetails.token && loading ? <div className="w-full h-[40vh] text-white flex-col flex items-center justify-center">
-              <ReactLoading type='spin' color='#0B77F0' height={60} width={37} />
-              Loading Games ...
-            </div>
-              : <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-[15px] gap-y-[15px] md:gap-x-[45px] md:gap-y-[44px] py-12 w-full px-0" >
+            userDetails.token && (
+              <div>
                 {
+                  loading ? <div className="w-full h-[40vh] text-white flex-col flex items-center justify-center">
+                    <ReactLoading type='spin' color='#0B77F0' height={60} width={37} />
+                    Loading Games ...
+                  </div>
+                    : <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-[15px] gap-y-[15px] md:gap-x-[45px] md:gap-y-[44px] py-12 w-full px-0" >
+                      {
 
-                  liveGames?.map((gam: any, index: number) => <Game {...gam} key={index} />
-                  )
+                        liveGames?.map((gam: any, index: number) => <Game {...gam} key={index} />
+                        )
+                      }
+                    </div>
                 }
               </div>
+            )
           }
 
           {!isConnected || !userDetails.token && (
-            <div className="w-full h-[20vh] text-white flex-col flex items-center justify-center">
+            <div className="w-full h-[40vh] text-white flex-col flex items-center justify-center">
               <p className="text-white font-driod text-[30px]">Kindly Sign To View Live Games! Reload This Page</p>
             </div>
           )}
