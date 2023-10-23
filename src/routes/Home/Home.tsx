@@ -92,7 +92,7 @@ const Home = () => {
 
   const { userDetails, liveGames, setLiveGames }: any = useContext(UserContext)
   const [loading, setLoading] = useState(false)
-  const [message, setMessage] = useState('Loading Games!')
+  // const [message, setMessage] = useState('Loading Games!')
 
 
   const getAllGames = () => {
@@ -120,7 +120,7 @@ const Home = () => {
       })
       .catch(error => {
         console.log('error', error)
-        setMessage('An Error Occured!, Please Try Again')
+        // setMessage('An Error Occured!, Please Try Again')
         setLoading(false)
       });
   }
