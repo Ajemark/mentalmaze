@@ -236,6 +236,7 @@ const Game = () => {
                               }))
 
                               setCurQuestion((prev: number) => prev + 1)
+                              setSelected('')
                             }}
                           >
                             PROCEED
