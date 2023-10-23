@@ -11,7 +11,7 @@ const Collating = () => {
   const { width } = useQuery()
 
 
-  const { switchModalcontent, switchModal } = useModalContext()
+  const { switchModalcontent } = useModalContext()
   const [data, setData]: any = useState()
   const [result, setResult]: any = useState()
   const { userDetails }: any = useContext(UserContext)
