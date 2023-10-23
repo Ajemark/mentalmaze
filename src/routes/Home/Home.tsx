@@ -169,7 +169,7 @@ const Home = () => {
             )
           }
 
-          {!isConnected || !userDetails.token && (
+          {!userDetails || !userDetails.token && (
             <div className="w-full h-[40vh] text-white flex-col flex items-center justify-center">
               <p className="text-white font-driod text-[30px]">Kindly Sign To View Live Games! Reload This Page</p>
             </div>
