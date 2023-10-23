@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserContext";
 import ReactLoading from 'react-loading';
+import { useAccount } from "wagmi";
 
 
 interface ItemType {
@@ -92,6 +93,7 @@ const Home = () => {
 
   const { userDetails, liveGames, setLiveGames }: any = useContext(UserContext)
   const [loading, setLoading] = useState(false)
+  const { isConnected, address } = useAccount()
   // const [message, setMessage] = useState('Loading Games!')
 
 
@@ -128,13 +130,15 @@ const Home = () => {
   useEffect(() => {
     setLoading(true)
     if (!userDetails.token) {
+      setLiveGames()
       setLoading(false)
       return
     }
     getAllGames()
-  }, [userDetails])
+  }, [userDetails, address, isConnected])
 
   console.log(liveGames)
+  console.log(userDetails)
 
   return (
     <div className=" w-full h-fit mt-[96px] md:mt-[176px]">
@@ -155,10 +159,15 @@ const Home = () => {
 
                   liveGames?.map((gam: any, index: number) => <Game {...gam} key={index} />
                   )
-
                 }
               </div>
           }
+
+          {!isConnected || !userDetails.token && (
+            <div className="w-full h-[20vh] text-white flex-col flex items-center justify-center">
+              <p className="text-white font-driod text-[30px]">Kindly Sign To View Live Games! Reload This Page</p>
+            </div>
+          )}
 
         </div>
       </div>

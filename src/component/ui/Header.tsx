@@ -56,15 +56,22 @@ const Header = () => {
   }
 
   useEffect(() => {
+    console.log(isConnected)
     if (!isConnected) setUserDetails({})
     else {
-      const d = localStorage.getItem('userData')
-      if (d) {
+      const d: any = localStorage.getItem('userData')
+      console.log(d)
+      if (d && d.token) {
         setUserDetails(JSON.parse(d))
-      } else switchModalcontent('authenticate')
+      } else {
+        localStorage.removeItem('userData')
+        setUserDetails({})
+        switchModalcontent('authenticate')
+      }
     }
-  }, [isConnected])
+  }, [isConnected, address])
 
+  console.log(userDetails)
 
   useEffect(() => {
     window.addEventListener('scroll', () => {

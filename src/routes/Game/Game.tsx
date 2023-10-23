@@ -68,12 +68,12 @@ const Game = () => {
     fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/player/getPlayerDetails?gameId=${data.gameId}&playersAddress=${userDetails.address}`, requestOptions)
       .then(response => response.json())
       .then(result => {
+        console.log(result)
         if (result.gamePlayerDetails.length > 0) {
-
+          getSingleGame()
           setPlayerData(result.gamePlayerDetails[0])
           setLoading(false)
-        }
-        else {
+        } else {
           createPlayer()
         }
       })
@@ -105,6 +105,7 @@ const Game = () => {
     fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/player/createGamePlayer`, requestOptions)
       .then(response => response.json())
       .then(result => {
+        console.log(result, '                109')
         if (result.gamePlayerDetails.length > 0) {
           setPlayerData(result.gamePlayerDetails)
           setLoading(false)
@@ -128,7 +129,7 @@ const Game = () => {
       return
     }
     getPlayerDetails()
-    getSingleGame()
+
   }, [userDetails])
 
 
