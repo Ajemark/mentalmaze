@@ -4,6 +4,8 @@ import { RiArrowDownSLine } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserContext";
+import ReactLoading from 'react-loading';
+import { useAccount } from "wagmi";
 
 
 interface ItemType {
@@ -64,8 +66,11 @@ const TitleBar = () => {
   );
 }
 
-const Game = ({ image, id }: { image: string, id: number }) => {
+const Game = ({ image, id, accountId }: { image: string, id: number, accountId: any }) => {
   const navigate = useNavigate()
+
+  const data = window.btoa(JSON.stringify({ gameId: id, accountId })
+  )
   return (
     <div className="relative flex justify-center items-center w-full border-blue-100 border-[4px] border-solid" >
       <img src={image.includes('http') ? image : "https://mentalmaze-game.infura-ipfs.io/ipfs/" + image} className="w-full" />
@@ -75,7 +80,7 @@ const Game = ({ image, id }: { image: string, id: number }) => {
         <button className=" w-[143px] text-white py-[16px] rounded-[8px] font-droid tracking-[0.2px] left-0" style={{
           "background": "linear-gradient(130deg, #032449 0%, #0B77F0 100%)",
           "backdropFilter": "blur(4px)"
-        }} onClick={() => navigate('/game?id=' + id)}>
+        }} onClick={() => navigate('/game?data=' + data)}>
           PLAY NOW
         </button>
       </div>
@@ -87,6 +92,10 @@ const Game = ({ image, id }: { image: string, id: number }) => {
 const Home = () => {
 
   const { userDetails, liveGames, setLiveGames }: any = useContext(UserContext)
+  const [loading, setLoading] = useState(false)
+  const { isConnected, address } = useAccount()
+  // const [message, setMessage] = useState('Loading Games!')
+
 
   const getAllGames = () => {
 
@@ -104,19 +113,32 @@ const Home = () => {
       .then(result => {
         if (result.data) {
           setLiveGames(result.data)
+          setLoading(false)
         }
         else {
           console.log(result)
+          setLoading(false)
         }
       })
-      .catch(error => console.log('error', error));
+      .catch(error => {
+        console.log('error', error)
+        // setMessage('An Error Occured!, Please Try Again')
+        setLoading(false)
+      });
   }
+
   useEffect(() => {
-    if (!userDetails.token) return
+    setLoading(true)
+    if (!userDetails.token) {
+      setLiveGames()
+      setLoading(false)
+      return
+    }
     getAllGames()
-  }, [userDetails])
+  }, [userDetails, address, isConnected])
 
   console.log(liveGames)
+  console.log(userDetails)
 
   return (
     <div className=" w-full h-fit mt-[96px] md:mt-[176px]">
@@ -127,10 +149,32 @@ const Home = () => {
             <p className="flex gap-[8px] items-center justify-center font-Archivo_Regular font-normal leading-[21.76px]">Level: <span className=" font-droid text-white">Easy</span></p>
             <div className="text-[18px] md:text-[24px]"><VscUnlock color={"white"} /></div>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-[15px] gap-y-[15px] md:gap-x-[45px] md:gap-y-[44px] py-12 w-full px-0" >
-            {liveGames?.map((gam: any, index: number) => <Game {...gam} key={index} />
-            )}
-          </div>
+          {
+            userDetails.token && (
+              <div>
+                {
+                  loading ? <div className="w-full h-[40vh] text-white flex-col flex items-center justify-center">
+                    <ReactLoading type='spin' color='#0B77F0' height={60} width={37} />
+                    Loading Games ...
+                  </div>
+                    : <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-[15px] gap-y-[15px] md:gap-x-[45px] md:gap-y-[44px] py-12 w-full px-0" >
+                      {
+
+                        liveGames?.map((gam: any, index: number) => <Game {...gam} key={index} />
+                        )
+                      }
+                    </div>
+                }
+              </div>
+            )
+          }
+
+          {!userDetails || !userDetails.token && (
+            <div className="w-full h-[40vh] text-white flex-col flex items-center justify-center">
+              <p className="text-white font-driod text-[30px]">Kindly Sign To View Live Games! Reload This Page</p>
+            </div>
+          )}
+
         </div>
       </div>
     </div>

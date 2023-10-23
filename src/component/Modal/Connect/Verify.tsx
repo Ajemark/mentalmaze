@@ -31,7 +31,7 @@ const Verify = () => {
       })
       .then(result => {
         if (result.data && result.data.id) {
-          setUserDetails(result.data)
+          setUserDetails({ ...result.data, token: webToken })
           localStorage.setItem("userData", JSON.stringify({ ...result.data, token: webToken }))
           switchModalcontent('welcome')
           setLoading(false)

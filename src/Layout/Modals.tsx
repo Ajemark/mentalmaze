@@ -17,6 +17,7 @@ import ChallengerModal from '../component/Modal/ChallengerModal'
 import Authenticate from '../component/Modal/Connect/Authenticate'
 import EditProfile from '../component/Modal/EditProfile'
 import WrongNetwork from '../component/Modal/Connect/WrongNetwork'
+import NiceTry from '../component/Modal/Connect/game/nicetry'
 
 
 type Modal = {
@@ -36,6 +37,7 @@ type Modal = {
     wrongnetwork: ReactNode,
     challenger: ReactNode,
     editProfile: ReactNode
+    nicetry: ReactNode
 }
 
 
@@ -55,5 +57,6 @@ export const ConnectModals: Modal = {
     collate: <Collating />,
     challenger: <ChallengerModal />,
     editProfile: <EditProfile />,
-    wrongnetwork: <WrongNetwork />
+    wrongnetwork: <WrongNetwork />,
+    nicetry: <NiceTry />
 }
