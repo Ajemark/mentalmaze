@@ -150,7 +150,7 @@ const Home = () => {
             <div className="text-[18px] md:text-[24px]"><VscUnlock color={"white"} /></div>
           </div>
           {
-            loading ? <div className="w-full h-[40vh] text-white flex-col flex items-center justify-center">
+            userDetails.token && loading ? <div className="w-full h-[40vh] text-white flex-col flex items-center justify-center">
               <ReactLoading type='spin' color='#0B77F0' height={60} width={37} />
               Loading Games ...
             </div>

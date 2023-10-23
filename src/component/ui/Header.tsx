@@ -61,7 +61,7 @@ const Header = () => {
     else {
       const d: any = localStorage.getItem('userData')
       console.log(d)
-      if (d && d.token) {
+      if (d && JSON.parse(d).token && JSON.parse(d).address == address) {
         setUserDetails(JSON.parse(d))
       } else {
         localStorage.removeItem('userData')
