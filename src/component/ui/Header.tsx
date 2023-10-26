@@ -56,12 +56,15 @@ const Header = () => {
   }
 
   useEffect(() => {
+    const ddd: any = localStorage.getItem('userData')
+    console.log(ddd)
+    console.log(JSON.parse(ddd).token)
     console.log(isConnected)
-    if (!isConnected) setUserDetails({})
+    if (!isConnected) switchModalcontent('connect')
     else {
       const d: any = localStorage.getItem('userData')
       console.log(d)
-      if (d && JSON.parse(d).token && JSON.parse(d).address == address) {
+      if (d && JSON.parse(d).token && JSON.parse(d).address == address?.toLowerCase()) {
         setUserDetails(JSON.parse(d))
       } else {
         localStorage.removeItem('userData')
