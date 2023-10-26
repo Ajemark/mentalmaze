@@ -101,7 +101,7 @@ const LeaderShipBoard = () => {
 	return (
 
 		<div>
-			<div className='w-full h-fit mt-[96px] md:mt-[176px]'>
+			<div className='w-full h-fit mt-[96px] mb-16 md:mt-[176px]'>
 
 				<div className="relative z-[999]  px-[16px] md:px-14  text-white">
 					<div className="flex justify-between md:items-center mb-[64px] flex-col md:flex-row gap-[16px] md:gap-0 relative h-[99px] md:h-[initial]">

@@ -36,7 +36,7 @@ const Verify = () => {
           switchModalcontent('welcome')
           setLoading(false)
         }
-        if (result.data === null) {
+        if (result.data == null) {
           setLoading(false)
           switchModalcontent('chooseNickname')
         }
