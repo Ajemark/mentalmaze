@@ -66,22 +66,32 @@ const TitleBar = () => {
   );
 }
 
-const Game = ({ image, id, accountId }: { image: string, id: number, accountId: any }) => {
+const Game = ({ image, id, accountId, players }: any) => {
   const navigate = useNavigate()
+  const { address } = useAccount()
 
-  const data = window.btoa(JSON.stringify({ gameId: id, accountId })
-  )
+  let played = false;
+  for (const count in players) {
+    played = players[count]?.playersAddress?.toLowerCase() == address?.toLowerCase()
+    if (played) break
+  }
+
+  const data = window.btoa(JSON.stringify({ gameId: id, accountId }))
+
+
+  console.log(played)
+
   return (
     <div className="relative flex justify-center items-center w-full border-blue-100 border-[4px] border-solid" >
       <img src={image.includes('http') ? image : "https://mentalmaze-game.infura-ipfs.io/ipfs/" + image} className="w-full" />
       <div className="absolute p-[2px rounded-[8px] p-[2px]" style={{
         "background": "linear-gradient(90deg, #032449, #0B77F0)"
       }} >
-        <button className=" w-[143px] text-white py-[16px] rounded-[8px] font-droid tracking-[0.2px] left-0" style={{
+        <button disabled={played} className=" w-[143px] text-white py-[16px] rounded-[8px] font-droid tracking-[0.2px] left-0" style={{
           "background": "linear-gradient(130deg, #032449 0%, #0B77F0 100%)",
           "backdropFilter": "blur(4px)"
         }} onClick={() => navigate('/game?data=' + data)}>
-          PLAY NOW
+          {played ? 'Played' : 'PLAY NOW'}
         </button>
       </div>
     </div>
@@ -129,7 +139,7 @@ const Home = () => {
 
   useEffect(() => {
     setLoading(true)
-    if (!userDetails.token) {
+    if (userDetails && !userDetails.token) {
       setLiveGames()
       setLoading(false)
       return
