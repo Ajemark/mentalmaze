@@ -58,7 +58,7 @@ const Dashboard = () => {
 
     useEffect(() => {
         setLoading(true)
-        if (!userDetails.token) {
+        if (userDetails && !userDetails?.token) {
             setData()
             setLoading(false)
             return

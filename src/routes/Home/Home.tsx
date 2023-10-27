@@ -139,7 +139,7 @@ const Home = () => {
 
   useEffect(() => {
     setLoading(true)
-    if (!userDetails?.token) {
+    if (userDetails && !userDetails.token) {
       setLiveGames()
       setLoading(false)
       return
