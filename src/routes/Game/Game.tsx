@@ -107,6 +107,7 @@ const Game = () => {
       .then(result => {
         console.log(result, '                109')
         if (result.gamePlayerDetails.length > 0) {
+          getSingleGame()
           setPlayerData(result.gamePlayerDetails)
           setLoading(false)
         }
@@ -129,7 +130,6 @@ const Game = () => {
       return
     }
     getPlayerDetails()
-
   }, [userDetails])
 
 

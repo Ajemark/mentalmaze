@@ -214,8 +214,8 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
               })}
             </div>
             <div className='flex flex-col gap-3 px-[12px] mt-[60px]'>
-              {[{ image: Discord, title: "Discord", link: "https://discord.gg/8STEwMEu" }, { image: Telegram, title: "Telegram", link: "https://t.me/official_mentalmaze" }, { image: Twitter, title: "Twitter", link: "https://twitter.com/mazemental?s=11&t=meAljIy1rKjh6LjNVYwIFQ" }].map((src) => {
-                return <div className='w-full flex items-center gap-[8px] px-[12px]  h-[46px] hover:sidebarItem cursor-pointer  rounded-lg hover:border-blue-50 hover:border-solid hover:border-[1px]'>
+              {[{ image: Discord, title: "Discord", link: "https://discord.gg/8STEwMEu" }, { image: Telegram, title: "Telegram", link: "https://t.me/official_mentalmaze" }, { image: Twitter, title: "Twitter", link: "https://twitter.com/mazemental?s=11&t=meAljIy1rKjh6LjNVYwIFQ" }].map((src, i) => {
+                return <div key={i} className='w-full flex items-center gap-[8px] px-[12px]  h-[46px] hover:sidebarItem cursor-pointer  rounded-lg hover:border-blue-50 hover:border-solid hover:border-[1px]'>
                   <img src={src.image} className="" />
                   <p className="text-[16px] font-Archivo_Regular leading-[17.41px] font-medium">
                     {src.title}

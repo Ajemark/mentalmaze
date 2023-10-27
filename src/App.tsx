@@ -17,7 +17,7 @@ import Game from './routes/Game/Game'
 // import ChallengerHome from './ChallengerLayout/Pages/ChallengerHome'
 import ChallengerGames from './ChallengerLayout/Pages/ChallengerGames'
 import ChallengerGame from './ChallengerLayout/Pages/ChallengerGame'
-import Dashboard from './ChallengerLayout/Pages/Dashboard/Dashboard'
+import Dashboard from './ChallengerLayout/Pages/Dashboard'
 
 
 
