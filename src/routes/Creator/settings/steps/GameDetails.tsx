@@ -184,7 +184,11 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
             style={{
               backgroundColor: `#${questionObj.difficultyLevel == 'Easy' ? "0855AB" : '0D0D0D'}`
             }}
-            onClick={() => setQuestionObj((prev: any) => ({ ...prev, difficultyLevel: 'Easy' }))}
+            onClick={() => {
+              setQuestions({})
+              setQuestionObj((prev: any) => ({ ...prev, difficultyLevel: 'Easy' })
+              )
+            }}
             className={`hover:bg-[#0855AB] border-2 border-blue-main rounded-xl h-[70px] px-[30px] flex-1`}>
             Easy
           </button>
@@ -192,7 +196,10 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
             style={{
               backgroundColor: `#${questionObj.difficultyLevel == 'Normal' ? "0855AB" : '0D0D0D'}`
             }}
-            onClick={() => setQuestionObj({ ...questionObj, difficultyLevel: 'Normal' })}
+            onClick={() => {
+              setQuestions({})
+              setQuestionObj({ ...questionObj, difficultyLevel: 'Normal' })
+            }}
             className={`border-2 border-blue-main hover:bg-[#0855AB] rounded-xl h-[70px] px-[30px] flex-1`}
           >
             Normal
@@ -200,7 +207,10 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
           <button style={{
             backgroundColor: `#${questionObj.difficultyLevel == 'Difficult' ? "0855AB" : '0D0D0D'}`
           }}
-            onClick={() => setQuestionObj({ ...questionObj, difficultyLevel: 'Difficult' })}
+            onClick={() => {
+              setQuestions({})
+              setQuestionObj({ ...questionObj, difficultyLevel: 'Difficult' })
+            }}
             className={`border-2 border-blue-main rounded-xl hover:bg-[#0855AB] h-[70px] px-[30px] flex-1`}
           >
             Difficult
@@ -288,7 +298,6 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
             </label>
             <Instruction />
           </div>
-
 
           <div className='w-full mt-[32px]'>
             <div className="flex justify-between text-white font-Archivo_Regular mb-2">
@@ -427,6 +436,7 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
           <button className="w-full bg-blue-50 text-white text-[15px] font-Archivo_Regular rounded-[16px] border-[2px] border-blue-main py-[16px]"
             onClick={() => {
               //handleClick(2)
+              console.log(data)
               setErrorMessage({ message: '', where: 'proceed' })
               if (Object.entries(data).length == 5) {
                 for (const index in Object.entries(data)) {

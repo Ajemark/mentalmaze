@@ -79,8 +79,6 @@ const Game = ({ image, id, accountId, players }: any) => {
   const data = window.btoa(JSON.stringify({ gameId: id, accountId }))
 
 
-  console.log(played)
-
   return (
     <div className="relative flex justify-center items-center w-full border-blue-100 border-[4px] border-solid" >
       <img src={image.includes('http') ? image : "https://mentalmaze-game.infura-ipfs.io/ipfs/" + image} className="w-full" />
