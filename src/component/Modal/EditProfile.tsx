@@ -196,7 +196,6 @@ const EditProfile = () => {
           Edit Profile
         </h1>
       </div>
-
       {!ipfs ?
         <p>Not connected to IPFS, which is needed for image Upload</p> :
         (
@@ -260,7 +259,6 @@ const EditProfile = () => {
       }
       <Animation className='pt-[18px] flex flex-col h-full gap-[100px] px-[29.5px] md:px-0'>
         <input type="text" onChange={(e) => setUsername(e.target.value)} onKeyDown={onSubmit} placeholder='ENTER YOUR USERNAME' className='font-[400] mb-[-50px] text-[15px] md:text-[20px] font-droid leading-[23.61px] py-[14px] px-[40px] text-[#8C8C8C] rounded-[16px] md:rounded-t-[16px] w-full bg-blue-90 md:w-[416px] mx-auto text-center' />
-
         <div className='flex flex-col gap-1 font-Archivo_Regular font-normal'>
           <button
             className="flex items-center justify-center font-droid text-[16px] modalButton border-blue-80 border-solid border-[2px] w-[218px] h-[56px] rounded-[1rem] mx-auto"
