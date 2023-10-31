@@ -9,8 +9,6 @@ import { FiUploadCloud } from "react-icons/fi";
 import ReactLoading from 'react-loading';
 
 
-
-
 const projectId = import.meta.env.VITE_REACT_APP_INFURA_IPFS_KEY
 const projectSecretKey = import.meta.env.VITE_REACT_APP_INFURA_IPFS_SECRET_KEY
 
@@ -27,8 +25,6 @@ try {
   console.error("IPFS error ", error);
   ipfs = undefined;
 }
-
-
 
 
 const EditProfile = () => {
