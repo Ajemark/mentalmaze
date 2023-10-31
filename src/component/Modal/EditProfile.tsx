@@ -1,4 +1,4 @@
-import { useRef, KeyboardEvent, useContext, useState } from "react"
+import { KeyboardEvent, useContext, useState } from "react"
 import { useModalContext } from "../../context/ModalContext";
 import Animation from "./Connect/Animation";
 import { UserContext } from "../../context/UserContext";
