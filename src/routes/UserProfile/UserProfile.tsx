@@ -113,7 +113,18 @@ const ProfileHeader = () => {
             </div>
             <div className='flex items-center  gap-[16px] md:gap-[50px] relative z-10'>
                 <div className='rounded-[8px] md:rounded-2xl border-blue-90 border md:border-4'>
-                    <img src={userDetails.profileImage.includes('http') ? userDetails.profileImage : "https://mentalmaze-game.infura-ipfs.io/ipfs/" + userDetails.profileImage} alt="" className='w-[96px] h-[96px] md:w-[150px] md:h-[150px]' />
+                    <div className='text-headerbg text-xl font-bold justify-center flex items-center bg-white rounded-[8px] w-[96px] h-[96px] md:w-[150px] md:h-[150px] overflow-hidden'>
+                        {userDetails.profileImage?.length < 3 ? (
+                            <p>
+                                {userDetails.profileImage.toUpperCase()}
+                            </p>
+                        ) :
+                            <img src={userDetails.profileImage && userDetails.profileImage.includes('http') ? userDetails.profileImage : "https://mentalmaze-game.infura-ipfs.io/ipfs/" + userDetails.profileImage} alt="" className='w-full h-full'
+                            />
+                        }
+                    </div>
+
+
                 </div>
                 <div className='text-white flex flex-col items-center'>
                     <p className="md:text-[32px] text-white font-normal font-droid">{userDetails?.username}</p>
