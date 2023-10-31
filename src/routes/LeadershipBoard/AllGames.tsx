@@ -61,7 +61,7 @@ export const AllGames = ({ data }: any) => {
 
 
 const Leaders = (data: any) => {
-  // console.log(data)
+
   return (
     <div className='flex justify-between font-droid text-[15px] md:text-[32px] font-normal px-[16px]  md:px-[48px] mt-[32px] grad-dar rounded-[16px] border-blue-50 border-solid border-[2px] py-[16px] md:py-[24px]'>
       <div className='col-span-2 flex items-center gap-[16px] md:gap-[48px] '>
@@ -78,7 +78,7 @@ const Leaders = (data: any) => {
       <div className="flex md:gap-[64px] items-center">
         <div className=' text-right text-[13px] md:text-[24px] font-medium leading-[26.11px] font-Archivo_Regular flex-1 hidden md:block'>{data?.point} MP</div>
         <div>
-          {data?.unlockLevel.toLowerCase() == "diffcult" ? <img src={medal} className="h-[24px] w-[24px] md:w-[initial] md:h-[initial]" /> : data.unlockLevel.toLowerCase() == 'medium' ? <img src={medalMaster} className="h-[24px] w-[24px] md:w-[initial] md:h-[initial]" /> :
+          {data?.unlockLevel == "diffcult" ? <img src={medal} className="h-[24px] w-[24px] md:w-[initial] md:h-[initial]" /> : data.unlockLevel == 'medium' ? <img src={medalMaster} className="h-[24px] w-[24px] md:w-[initial] md:h-[initial]" /> :
             <img src={third} className="h-[24px] w-[24px] md:w-[initial] md:h-[initial]" />}
         </div>
       </div>

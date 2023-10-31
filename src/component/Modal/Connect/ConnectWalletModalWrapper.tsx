@@ -77,7 +77,7 @@ const ConnectWalletModal = ({ children, show }: LayoutProps) => {
           <img src={sliceMobile} alt="" className='w-[230px] h-[24px] md:w-[240px] md:h-[24px] absolute bottom-0 left-0 block md:hidden' />
 
         </div>
-        {<img src={Close} className='absolute top-0 md:top-[initial] md:right-[62px] z-[9999999999]' onClick={Handler} />
+        {<img src={Close} className='absolute top-0 lg:top-[initial] lg:right-[62px] z-[9999999999]' onClick={Handler} />
         }
         {
           modal == "example" && <button className='next rounded-[8px] p-[1px] absolute top-0 md:top-[initial] md:right-[62px] z-[9999999999] text-white text-[24px]'>

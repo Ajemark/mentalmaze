@@ -1,7 +1,6 @@
 import { useContext, useState } from 'react'
 import Logo from "./../../assets/header/Logo.png"
 import { HeaderInput } from '../Ui'
-import Boarder from "./../../assets/header/Boarder.png"
 import { Link, useNavigate } from "react-router-dom"
 import { useModalContext } from "../../context/ModalContext"
 import { useEffect } from "react"
@@ -70,7 +69,7 @@ const Header = () => {
     }
   }, [isConnected, address])
 
-  console.log(userDetails)
+  // console.log(userDetails)
 
   useEffect(() => {
     window.addEventListener('scroll', () => {
@@ -124,14 +123,16 @@ const Header = () => {
                   onClick={gotToProfile}
                   onMouseEnter={() => setShow(!show)} onMouseLeave={() => setShow(!show)}>
 
-                  {userDetails.profileImage?.length < 3 ? (
-                    <div className='text-headerbg text-xl mr-3 font-bold justify-center flex items-center bg-white rounded-full w-[38px] h-[38px]'>
-                      {userDetails.profileImage.toUpperCase()}
-                    </div>
-                  ) :
-                    <img src={userDetails.profileImage ?? Boarder} alt="" className=''
-                    />
-                  }
+                  <div className='text-headerbg text-xl mr-3 font-bold justify-center flex items-center bg-white rounded-full w-[38px] h-[38px] overflow-hidden'>
+                    {userDetails.profileImage?.length < 3 ? (
+                      <p>
+                        {userDetails.profileImage.toUpperCase()}
+                      </p>
+                    ) :
+                      <img src={userDetails.profileImage && userDetails.profileImage.includes('http') ? userDetails.profileImage : "https://mentalmaze-game.infura-ipfs.io/ipfs/" + userDetails.profileImage} alt="" className='w-full h-full'
+                      />
+                    }
+                  </div>
                 </div>
               }
               <CustomButton />

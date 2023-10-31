@@ -60,7 +60,7 @@ const Create = () => {
                   switchModalcontent('wrongnetwork')
                   return
                 }
-                navigate('/settings')
+                switchModalcontent('gametype')
               }
               }>
               Create Game
