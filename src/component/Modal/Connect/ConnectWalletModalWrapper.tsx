@@ -8,10 +8,7 @@ import { useModalContext } from "../../../context/ModalContext"
 import useQuery from "../../../hooks/useQuery"
 import { useNavigate } from "react-router-dom"
 
-
-
 type LayoutProps = { children?: ReactNode, show: boolean }
-
 
 const ConnectWalletModal = ({ children, show }: LayoutProps) => {
 
@@ -57,7 +54,6 @@ const ConnectWalletModal = ({ children, show }: LayoutProps) => {
           transform: HandlerAnimation(),
           transition: "all 0.5s"
         }}
-
       >
         <div className=' 
         relative
@@ -71,8 +67,7 @@ const ConnectWalletModal = ({ children, show }: LayoutProps) => {
         border-blue-80 rounded-b-none md:rounded-b-[60px] rounded-[60px] border-[8px]
         bg-blue-100'>
           <img src={slices} alt="" className='w-[230px] md:w-[240px] md:h-[24px] absolute right-0 ' />
-          <div className="mb-[30px] md:mb-0 h-full"> {children}</div>
-
+          <div className="mb-[30px] md:mb-0 h-full">{children}</div>
           <img src={slices} alt="" className='w-[230px] h-[24px] md:w-[240px] md:h-[24px] absolute bottom-0 left-0 hidden md:block' />
           <img src={sliceMobile} alt="" className='w-[230px] h-[24px] md:w-[240px] md:h-[24px] absolute bottom-0 left-0 block md:hidden' />
 

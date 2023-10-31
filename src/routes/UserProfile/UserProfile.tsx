@@ -109,7 +109,6 @@ const ProfileHeader = () => {
             <div className='absolute h-full w-full '>
                 <img src={Stars} className='w-full h-full blur-sm hidden md:block' />
                 <img src={StarsM} className='w-full h-full blur-sm block md:hidden' />
-
             </div>
             <div className='flex items-center  gap-[16px] md:gap-[50px] relative z-10'>
                 <div className='rounded-[8px] md:rounded-2xl border-blue-90 border md:border-4'>
@@ -123,8 +122,6 @@ const ProfileHeader = () => {
                             />
                         }
                     </div>
-
-
                 </div>
                 <div className='text-white flex flex-col items-center'>
                     <p className="md:text-[32px] text-white font-normal font-droid">{userDetails?.username}</p>
