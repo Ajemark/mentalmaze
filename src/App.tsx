@@ -18,6 +18,7 @@ import Game from './routes/Game/Game'
 import ChallengerGames from './ChallengerLayout/Pages/ChallengerGames'
 import ChallengerGame from './ChallengerLayout/Pages/ChallengerGame'
 import Dashboard from './ChallengerLayout/Pages/Dashboard'
+import SearchScreen from './routes/Search/Search'
 
 
 
@@ -57,6 +58,10 @@ function App() {
         {
           path: "/game",
           element: <Game />
+        },
+        {
+          path: "/search",
+          element: <SearchScreen />
         },
         // {
         //   path: "/challenger",
