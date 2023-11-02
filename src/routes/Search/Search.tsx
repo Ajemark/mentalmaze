@@ -32,7 +32,7 @@ const SearchScreen = () => {
 
 export default SearchScreen
 
-const Game = ({ image, id, accountId, players, title, approve }: any) => {
+const Game = ({ image, id, players, title, approve }: any) => {
     const navigate = useNavigate()
     const { address } = useAccount()
 
@@ -42,7 +42,7 @@ const Game = ({ image, id, accountId, players, title, approve }: any) => {
         if (played) break
     }
 
-    const data = window.btoa(JSON.stringify({ gameId: id, accountId }))
+    // const data = window.btoa(JSON.stringify({ gameId: id, accountId }))
 
 
     return (

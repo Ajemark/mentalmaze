@@ -34,7 +34,7 @@ const Create = () => {
   const { userDetails }: any = useContext(UserContext)
   const { switchModal, switchModalcontent } = useModalContext()
 
-  const [loading, setLoading] = useState(false)
+  // const [loading, setLoading] = useState(false)
   const [games, setGames]: any = useState()
   const { isConnected, address } = useAccount()
 
@@ -54,25 +54,25 @@ const Create = () => {
       .then(result => {
         if (result.data) {
           setGames(result.data)
-          setLoading(false)
+          // setLoading(false)
         }
         else {
           console.log(result)
-          setLoading(false)
+          // setLoading(false)
         }
       })
       .catch(error => {
         console.log('error', error)
         // setMessage('An Error Occured!, Please Try Again')
-        setLoading(false)
+        // setLoading(false)
       });
   }
 
   useEffect(() => {
-    setLoading(true)
+    // setLoading(true)
     if (userDetails && !userDetails.token) {
       setGames()
-      setLoading(false)
+      // setLoading(false)
       return
     }
     getAllGames()
