@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react"
+import { useContext } from "react"
 import Search from "./../assets/header/Search.png"
 import { UserContext } from "../context/UserContext"
 import { useNavigate } from "react-router-dom"
