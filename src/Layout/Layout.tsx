@@ -18,9 +18,6 @@ import {
   RainbowKitProvider,
 } from '@rainbow-me/rainbowkit';
 import { publicProvider } from 'wagmi/providers/public';
-import { useContext } from 'react';
-import { UserContext } from '../context/UserContext';
-import SearchScreen from '../routes/Search/Search';
 
 
 const { chains, publicClient } = configureChains(
@@ -48,11 +45,8 @@ const wagmiConfig = createConfig({
 
 export const MainLayout = () => {
   const { ModalMode, sideBarMode, switchSideMode, modal } = useModalContext()
-  const { searchedGames }: any = useContext(UserContext);
   const { challenger } = useMode()
-  // console.log(challenger)
 
-  console.log(searchedGames)
   return (
     <>
       <Toaster
@@ -80,19 +74,13 @@ export const MainLayout = () => {
 
             <div className='mx-auto rounded-none flex flex-col w-full min-h-screen '>
               <Header />
-
               <div className='flex flex-1 h-fit mx-auto w-full justify-center items-stretch'>
                 <Sidebar showSideMobile={sideBarMode} switchSideMode={switchSideMode} />
                 <ConnectWalletModal show={ModalMode}>
                   {ConnectModals[modal]}
                 </ConnectWalletModal>
                 <div className='  w-full  md:ml-[104px]'>
-                  {
-                    searchedGames != undefined ? (
-                      <SearchScreen />
-                    ) : <Outlet />
-                  }
-
+                  <Outlet />
                 </div>
               </div>
             </div>

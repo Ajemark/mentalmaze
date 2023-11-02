@@ -14,10 +14,10 @@ const SearchScreen = () => {
         <div className=" w-[100%] h-full pt-[102px] px-[16px] md:px-[34px]">
             <div className="flex sticky md:items-center text-white mt-10 ">
                 <h2 className="font-normal text-[20px]  uppercase mr-3  md:text-5xl">
-                    {searchText}
+                    {searchText == '' ? 'Enter Search Term' : searchText}
                 </h2>
                 <p className="border-blue-50 h-[20px] w-[22px] md:h-[initial] md:w-[initial] text-center md:py-2 md:px-4 rounded-lg leading-[21.76px] text-[10px] md:text-xl border-2 ">
-                    {searchedGames.length}
+                    {searchedGames?.length ?? 0}
                 </p>
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-[15px] gap-y-[15px] md:gap-x-[45px] md:gap-y-[44px] py-12 w-full px-0" >
@@ -49,7 +49,7 @@ const Game = ({ image, id, players, title, approve }: any) => {
         <div className="w-full relative rounded-[12px] overflow-hidden">
             <img src={image.includes('http') ? image : "https://mentalmaze-game.infura-ipfs.io/ipfs/" + image} className='w-full bg-center' alt="" />
             <div className='absolute bottom-0 bg-black backdrop-blur-[2.2068965435028076px] h-[68px] w-full opacity-80 flex justify-between px-[17.65px] items-center'>
-                <p className='font-droid truncate text-[20px]  leading-[23.61px]'>{title}</p>
+                <p className='font-droid truncate text-[20px] text-white leading-[23.61px]'>{title}</p>
                 <button disabled={played}
                     onClick={() => {
                         if (!approve)

@@ -1,19 +1,18 @@
-import { useContext, useState } from "react"
+import { useContext, useEffect } from "react"
 import Search from "./../assets/header/Search.png"
 import { UserContext } from "../context/UserContext"
+import { useNavigate } from "react-router-dom"
 
 export const HeaderInput = () => {
+    const navigate = useNavigate()
 
-    const { userDetails, setSearchText, searchText, setSearchedGames }: any = useContext(UserContext)
-    const [search, setsearch] = useState('')
+    const { userDetails, setSearchText, searchText, searchedGames, setSearchedGames }: any = useContext(UserContext)
 
     const searchGames = () => {
         if (!userDetails || !userDetails.token) {
             alert('Kindly Sign in to search for games')
             return
         }
-
-        setSearchText(search)
 
         let myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${userDetails.token}`);
@@ -29,7 +28,6 @@ export const HeaderInput = () => {
             .then(result => {
                 if (result.data) {
                     setSearchedGames(result.data)
-
                 }
                 else {
                     console.log(result)
@@ -40,11 +38,23 @@ export const HeaderInput = () => {
             });
     }
 
+    useEffect(() => {
+        if (searchedGames != undefined && !location.href.includes('search')) {
+            navigate('/search')
+        }
+    }, [searchGames])
+
+
+
     return (
         <>
             <div className="border-blue-50 rounded-2xl   border-2 flex items-center justify-center gap-6 px-5 font-normal text-sm  font-Archivo_Regular w-full">
                 <img src={Search} />
-                <input onKeyDown={(e) => { if (e.code === 'Enter') searchGames() }} type="text" onChange={(e) => setsearch(e.target.value)} placeholder="Search Games Or Collections..." className="bg-[inherit] py-4  outline-none border-0 text-white -ml-2" />
+                <input onKeyDown={(e) => {
+                    if (e.code === 'Enter') {
+                        searchGames()
+                    }
+                }} type="text" onChange={(e) => setSearchText(e.target.value)} placeholder="Search Games Or Collections..." className="bg-[inherit] py-4  outline-none border-0 text-white -ml-2" />
             </div>
         </>
     )
