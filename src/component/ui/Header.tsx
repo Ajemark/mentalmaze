@@ -69,8 +69,6 @@ const Header = () => {
     }
   }, [isConnected, address])
 
-  // console.log(userDetails)
-
   useEffect(() => {
     window.addEventListener('scroll', () => {
       if (window.scrollY > 104) {

@@ -154,9 +154,9 @@ const Games = ({ data, handler, totalJudges, loading }: any) => {
         }} className='p-[4px] mt-[32px]'>
             <div className='bg-black'>
 
-                <table className="w-full">
+                <table className="w- max-w-[100vw]">
                     <thead>
-                        <tr className="font-droid text-[20px] md:text-[36px] leading-[36px] text-blue-80">
+                        <tr className="font-droid t w-[30%] text-[20px] md:text-[36px] leading-[36px] text-blue-80">
                             <th>
                                 <div style={{
                                     background: "linear-gradient(90deg, #032449, #0B77F0)"
@@ -165,7 +165,7 @@ const Games = ({ data, handler, totalJudges, loading }: any) => {
                                     <p className='bg-black py-[32px] md:px-[24px] text-center md:text-left'>   Game</p>
                                 </div>
                             </th>
-                            <th>
+                            <th className="w-[40vw]">
                                 <div style={{
                                     background: "linear-gradient(90deg, #032449, #0B77F0)"
                                 }} className='pb-[4px] '
@@ -226,17 +226,15 @@ const Games = ({ data, handler, totalJudges, loading }: any) => {
 
 const Game = ({ image, title, approve, rejectCount, approveCount, rejectionMessage, totalJudges }: any) => {
 
-
-
     return (
         <>
-            <td>
-                <div className='flex p-2 gap-[8px] md:gap-6 items-center '>
-                    <div className="rounded-full overflow-hidden border w-[50px] h-[50px] ">
+            <td className="flex p-2">
+                <div className="rounded-full overflow-hidden border mr-2 w-[50px] h-[50px] ">
 
-                        <img src={image.includes('http') ? image : "https://mentalmaze-game.infura-ipfs.io/ipfs/" + image} className='object-fill ' alt="" />
-                    </div>
-                    <p className='font-droid text-[16px] md:text-[24px] leading-[20px]'>
+                    <img src={image.includes('http') ? image : "https://mentalmaze-game.infura-ipfs.io/ipfs/" + image} className='object-fill ' alt="" />
+                </div>
+                <div className='flex max-w-[30vw] p-2 gap-[8px] md:gap-6 items-center '>
+                    <p className='font-droid text-[16px] truncate md:text-[24px] leading-[20px]'>
                         {title}
                     </p>
                 </div>
