@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react"
+import { useContext } from "react"
 import Search from "./../assets/header/Search.png"
 import { UserContext } from "../context/UserContext"
 import { useNavigate } from "react-router-dom"
@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom"
 export const HeaderInput = () => {
     const navigate = useNavigate()
 
-    const { userDetails, setSearchText, searchText, searchedGames, setSearchedGames }: any = useContext(UserContext)
+    const { userDetails, setSearchText, searchText }: any = useContext(UserContext)
 
     const searchGames = () => {
         if (!userDetails || !userDetails.token) {
@@ -27,7 +27,9 @@ export const HeaderInput = () => {
             .then(response => response.json())
             .then(result => {
                 if (result.data) {
-                    setSearchedGames(result.data)
+                    const data = window.btoa(JSON.stringify({ data: result.data, text: searchText }))
+                    if (location.href.includes('search')) location.href = '/search?d=' + data
+                    navigate('/search?d=' + data)
                 }
                 else {
                     console.log(result)
@@ -37,13 +39,6 @@ export const HeaderInput = () => {
                 console.log('error', error)
             });
     }
-
-    useEffect(() => {
-        if (searchedGames != undefined && !location.href.includes('search')) {
-            navigate('/search')
-        }
-    }, [searchGames])
-
 
 
     return (
