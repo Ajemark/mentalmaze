@@ -1,14 +1,19 @@
-import { useContext } from "react";
-import { UserContext } from "../../context/UserContext";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAccount } from "wagmi";
 
 
 const SearchScreen = () => {
-    const { searchedGames, searchText }: any = useContext(UserContext);
 
-    console.log(searchedGames)
-    console.log(searchText)
+    const [searchedGames, setSearchedGames]: any = useState()
+    const [searchText, setSearchText] = useState()
+
+    useEffect(() => {
+        const { data, text } = JSON.parse(window.atob(location.search.split('?d=')[1]))
+        console.log(data)
+        setSearchedGames(data)
+        setSearchText(text)
+    }, [])
 
     return (
         <div className=" w-[100%] h-full pt-[102px] px-[16px] md:px-[34px]">
