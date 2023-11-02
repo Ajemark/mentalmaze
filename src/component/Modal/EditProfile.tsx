@@ -105,7 +105,6 @@ const EditProfile = () => {
       .catch(error => console.log('error', error));
   }
 
-
   const editUserImg = async () => {
 
     // setLoading(true)
@@ -156,7 +155,6 @@ const EditProfile = () => {
       .catch(error => console.log('error', error));
   }
 
-
   const uploadImage = async (event: any) => {
 
     event.preventDefault();
@@ -191,20 +189,18 @@ const EditProfile = () => {
   console.log(image?.toString())
 
   return (
-
     <>
       {loading && <Loading />}
       <div>
-        <h1 className='font-droid border-b-blue-80 border-b-[4px] md:border-b-[8px] pt-[20px] mt-[24px] md:pt-[16px] pb-[32px] leading-[37.78px] text-[20px] md:text-[32px] text-center w-fit md:w-full mx-auto'>
+        <h1 className='font-droid border-b-blue-80 border-b-[4px] md:border-b-[8px] pt-[20px] mt-[24px] md:pt-[16px] pb-[16px] leading-[37.78px] text-[20px] md:text-[32px] text-center w-fit md:w-full mx-auto'>
           Edit Profile
         </h1>
       </div>
-
       {!ipfs ?
         <p>Not connected to IPFS, which is needed for image Upload</p> :
         (
-          <form className="flex mt-10 items-center flex-col" onSubmit={e => uploadImage(e)}>
-            <div className='w-[50%] bg-[inherit] border-blue-main border-[2px] rounded-[8px] border-solid h-[198px] text-white flex justify-center items-center px-[48px] md:px-0 relative'>
+          <form className="flex mt-5 items-center flex-col" onSubmit={e => uploadImage(e)}>
+            <div className='w-[50%] bg-[inherit] border-blue-main border-[2px] rounded-[8px] border-solid h-[168px] text-white flex justify-center items-center px-[48px] md:px-0 relative'>
               <div className='absolute w-full h-full bottom-0'>
                 {image ?
                   <div className="absolute w-full h-full bottom-0">
@@ -261,17 +257,11 @@ const EditProfile = () => {
           </form>
         )
       }
-      {/* <img src={Close} className='absolute top-0 md:top-[initial] md:right-[62px] z-[9999999999]' onClick={Handler} /> */}
-      <Animation className='pt-[28px] flex flex-col h-full gap-[100px] px-[29.5px] md:px-0'>
-        <input type="text" onChange={(e) => setUsername(e.target.value)} onKeyDown={onSubmit} placeholder='ENTER YOUR USERNAME' className='font-[400] mb-[-20px] text-[15px] md:text-[20px] font-droid leading-[23.61px] py-[24px] px-[40px] text-[#8C8C8C] rounded-[16px] md:rounded-t-[16px] w-full bg-blue-90 md:w-[416px] mx-auto text-center' />
-
+      <Animation className='pt-[18px] flex flex-col h-full gap-[100px] px-[29.5px] md:px-0'>
+        <input type="text" onChange={(e) => setUsername(e.target.value)} onKeyDown={onSubmit} placeholder='ENTER YOUR USERNAME' className='font-[400] mb-[-50px] text-[15px] md:text-[20px] font-droid leading-[23.61px] py-[14px] px-[40px] text-[#8C8C8C] rounded-[16px] md:rounded-t-[16px] w-full bg-blue-90 md:w-[416px] mx-auto text-center' />
         <div className='flex flex-col gap-1 font-Archivo_Regular font-normal'>
-          {/* <p className='flex justify-center leading-[21.76px] gap-2 md:text-[15px] text-center'>
-        edit username.
-        </p> */}
           <button
             className="flex items-center justify-center font-droid text-[16px] modalButton border-blue-80 border-solid border-[2px] w-[218px] h-[56px] rounded-[1rem] mx-auto"
-
             onClick={() => editUser()}>
             Submit
           </button>

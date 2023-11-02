@@ -39,6 +39,10 @@ export interface UserContextType {
     setDuration: React.Dispatch<React.SetStateAction<string>>
     setPendingGames: React.Dispatch<React.SetStateAction<any>>
     setLiveGames: React.Dispatch<React.SetStateAction<any>>
+    setSearchedGames: React.Dispatch<React.SetStateAction<any>>
+    searchedGames: any
+    searchText: any
+    setSearchText: React.Dispatch<React.SetStateAction<any>>
     questionObj: {}
     setQuestionObj: any
     questions: any
@@ -82,6 +86,8 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
     const [comments, setComments] = useState('')
     const [pendingGames, setPendingGames] = useState([])
     const [liveGames, setLiveGames] = useState([])
+    const [searchedGames, setSearchedGames]: any = useState()
+    const [searchText, setSearchText] = useState('')
     const [images, setImages] = useState<{ cid: CID, path: string }>()
 
 
@@ -119,7 +125,11 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
 
     // console.log(signInDetails)
 
-    return <UserContext.Provider value={{ setSignInDetails, signInDetails, token, setToken, loading, setLoading, userDetails, setUserDetails, mobileSignInDetails, setmobileSignInDetails, title, setTitle, typeQuestion, setTypeQuestion, questionTitle, setQuestionTitle, duration, setDuration, questionObj, setQuestionObj, questions, setQuestions, coverImage, setCoverImage, images, setImages, gameToken, setGameToken, priceShare, setPriceShare, comments, setComments, pendingGames, setPendingGames, liveGames, setLiveGames }}>
+    return <UserContext.Provider value={{
+        setSignInDetails, signInDetails, token, setToken, loading, setLoading, userDetails, setUserDetails, mobileSignInDetails, setmobileSignInDetails, title, setTitle, typeQuestion, setTypeQuestion, questionTitle, setQuestionTitle, duration, setDuration, questionObj, setQuestionObj, questions, setQuestions, coverImage, setCoverImage, images, setImages, gameToken, setGameToken, priceShare, setPriceShare, comments, setComments, pendingGames, setPendingGames, liveGames, setLiveGames,
+        searchedGames, setSearchedGames,
+        searchText, setSearchText,
+    }}>
         {children}
     </UserContext.Provider>
 }
