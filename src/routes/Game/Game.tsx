@@ -90,18 +90,20 @@ const Game = () => {
     myHeaders.append("Content-Type", "application/json");
 
     const data = JSON.parse(window.atob(location.search.split('?data=')[1]))
-
+    const raw = JSON.stringify({
+      "accountId": data.accountId,
+      "playersAddress": userDetails.address,
+      "gameId": data.gameId
+    })
     let requestOptions: RequestInit = {
       method: 'POST',
-      body: JSON.stringify({
-        "accountId": data.accountId,
-        "playersAddress": userDetails.address,
-        "gameId": data.gameId
-      }),
+      body: raw,
       headers: myHeaders,
       redirect: 'follow'
     };
 
+
+    console.log(raw)
     fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/player/createGamePlayer`, requestOptions)
       .then(response => response.json())
       .then(result => {

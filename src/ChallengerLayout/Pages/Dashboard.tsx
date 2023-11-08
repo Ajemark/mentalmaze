@@ -91,6 +91,8 @@ const Dashboard = () => {
         })()
     }, [])
 
+
+    console.log(data?.judgesData[0])
     return (
         <div className="mt-[96px]  md:mt-[104px] md:border-t-solid border-t-2 border-l-2 border-1 border-blue-50 px-[20px] relative ">
             <div className='relative text-white '>
@@ -111,7 +113,7 @@ const Dashboard = () => {
                             <div className='font-Inter_Regular w-full bg-black  py-[24px] px-[24px] ' style={{ "boxShadow": "0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.10)" }}>
                                 <p className='text-blue-80 text-[14px] '>Total solved cases</p>
                                 <p className='text-[36px] text-blue-main'>
-                                    2,420
+                                    {data?.judgesData[0].totalSolved}
                                 </p>
                             </div>
                         </div>
@@ -121,7 +123,7 @@ const Dashboard = () => {
                             <div className='font-Inter_Regular w-full bg-black  py-[24px] px-[24px] ' style={{ "boxShadow": "0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.10)" }}>
                                 <p className='text-blue-80 text-[14px] '>Disapproved</p>
                                 <p className='text-[36px] text-blue-main'>
-                                    2,420
+                                    {data?.judgesData[0].totalDisapproved}
                                 </p>
                             </div>
                         </div>
@@ -131,7 +133,7 @@ const Dashboard = () => {
                             <div className='font-Inter_Regular w-full bg-black  py-[24px] px-[24px] ' style={{ "boxShadow": "0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.10)" }}>
                                 <p className='text-blue-80 text-[14px] '>Total Approved</p>
                                 <p className='text-[36px] text-blue-main'>
-                                    2,420
+                                    {data?.judgesData[0].totalApproved}
                                 </p>
                             </div>
                         </div>
@@ -149,7 +151,8 @@ export default Dashboard
 
 const Games = ({ data, handler, totalJudges, loading }: any) => {
     // console.log(handler)
-    console.log(data)
+    console.log(data?.gamesCreated.fetchRes)
+
     return (
         <div style={{
             background: "linear-gradient(90deg, #032449, #0B77F0)"
@@ -198,7 +201,7 @@ const Games = ({ data, handler, totalJudges, loading }: any) => {
                                     </div>
                                 </td>
                             </tr>
-                        ) : data && data?.gamesCreated?.map((item: any, i: number) => (
+                        ) : data && data?.gamesCreated.fetchRes?.map((item: any, i: number) => (
                             <tr key={i}>
                                 <Game  {...item} totalJudges={totalJudges} />
                             </tr>

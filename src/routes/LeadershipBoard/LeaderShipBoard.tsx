@@ -43,7 +43,7 @@ const LeaderShipBoard = () => {
 			.then(response => response.json())
 			.then(result => {
 				if (result.data) {
-					setLeaderBoards(result.data)
+					setLeaderBoards(result.data.fetchRes)
 					setLoading(false)
 				}
 				else {
@@ -69,7 +69,7 @@ const LeaderShipBoard = () => {
 		console.log(loading)
 	}, [userDetails, address, isConnected])
 
-	// console.log(leaderBoards)
+	console.log(leaderBoards)
 	// console.log(userDetails)
 
 
