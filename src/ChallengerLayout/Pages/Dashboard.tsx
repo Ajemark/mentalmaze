@@ -7,7 +7,6 @@ import { MM_ADDRESS, useEthersProvider, useEthersSigner } from "../../sdk"
 import { MMContract } from "../../sdk/MMContract"
 import { Pagination } from "../../component/ui/Pagination"
 import ReactLoading from 'react-loading';
-import { games } from "../../routes/Home/GamesData"
 
 
 
