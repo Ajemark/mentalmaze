@@ -6,6 +6,7 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserContext";
 import ReactLoading from 'react-loading';
 import { useAccount } from "wagmi";
+import { Pagination } from "../../component/ui/Pagination";
 
 
 interface ItemType {
@@ -102,7 +103,7 @@ const Home = () => {
   const { userDetails, liveGames, setLiveGames }: any = useContext(UserContext)
   const [loading, setLoading] = useState(false)
   const { isConnected, address } = useAccount()
-  // const [message, setMessage] = useState('Loading Games!')
+  const [pgNum, setPgNum]: any = useState(1)
 
 
   const getAllGames = () => {
@@ -116,7 +117,7 @@ const Home = () => {
       redirect: 'follow'
     };
     // =${ address?.toLowerCase()
-    fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/game/fetch?pageNumber=1&pageSize=3&filter=All`, requestOptions)
+    fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/game/fetch?pageNumber=${pgNum}&pageSize=10&filter=All`, requestOptions)
       .then(response => response.json())
       .then(result => {
         if (result.data) {
@@ -144,7 +145,26 @@ const Home = () => {
       return
     }
     getAllGames()
-  }, [userDetails, address, isConnected])
+  }, [userDetails, address, isConnected, pgNum])
+
+
+
+  const handlePagination = (info: any) => {
+    console.log(pgNum)
+    console.log(info)
+    if (info == 'next' || info == 'prev') {
+      if (info == 'next') {
+        setPgNum(pgNum + 1)
+        return
+      } else {
+        if (pgNum == 1) return
+        setPgNum(pgNum - 1)
+        return
+      }
+    }
+    setPgNum(Number(info))
+  }
+
 
   console.log(liveGames)
   console.log(userDetails)
@@ -169,7 +189,7 @@ const Home = () => {
                     : <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-[15px] gap-y-[15px] md:gap-x-[45px] md:gap-y-[44px] py-12 w-full px-0" >
                       {
 
-                        liveGames?.length > 0 && liveGames?.map((gam: any, index: number) => <Game {...gam} key={index} />
+                        liveGames?.fetchDataResponse?.length > 0 && liveGames?.fetchDataResponse?.map((gam: any, index: number) => <Game {...gam} key={index} />
                         )
                       }
                     </div>
@@ -184,6 +204,9 @@ const Home = () => {
             </div>
           )}
 
+        </div>
+        <div className='  py-[32px] px-[24px] h-[96px] w-full flex justify-end'>
+          <Pagination num={2} handler={handlePagination} />
         </div>
       </div>
     </div>

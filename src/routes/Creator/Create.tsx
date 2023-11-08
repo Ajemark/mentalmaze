@@ -85,7 +85,7 @@ const Create = () => {
     loading ? (
       <Loading />
     ) :
-      games?.length > 0 ?
+      games?.fetchRes?.length > 0 ?
         <div className="grid  grid-cols-1 md:grid-cols-3 gap-x-[45px] gap-y-[44px] py-[72px]  px-[16px] mt-[96px] md:mt-[176px]">
           <div className='relative bg-blue-100 flex flex-col items-center py-[41.8px] h-[232px] md:h-full'>
             <div ><img src={createmobile} alt="" /></div>
@@ -112,7 +112,7 @@ const Create = () => {
             </div>
           </div>
 
-          {games.slice(0, 3).map((gam: any, index: number) => <Game key={index}  {...gam} />)}
+          {games?.fetchRes.slice(0, 3).map((gam: any, index: number) => <Game key={index}  {...gam} />)}
         </div>
         :
         <div className='relative h-full items-center justify-center flex w-full '>
