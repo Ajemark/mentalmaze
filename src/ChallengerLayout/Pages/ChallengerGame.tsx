@@ -149,6 +149,7 @@ const ChallengerGame = () => {
     const minVotes = await mmContract.getMinVote()
     const totalVotesForGame = await mmContract.getVotesForGames(curGame.address)
 
+    console.log({ totalApprovedGameVotes, totalJudges, totalVotesForGame, minVotes })
     try {
       let tx;
       if (type == 'reject') {
@@ -171,7 +172,9 @@ const ChallengerGame = () => {
       }
     } catch (error: any) {
       setLoading(false)
-      setErrorMessage(JSON.parse(JSON.stringify(error)).reason)
+      let msg = JSON.parse(JSON.stringify(error)).reason
+      if (msg.includes('you are only allowed to vote ones')) msg = 'You Are Only Allowed To Vote Once!'
+      setErrorMessage(msg)
       console.log(error)
     }
   }
@@ -248,7 +251,7 @@ const ChallengerGame = () => {
                         DISAPPROVED GAME
                       </button>
                     </div>
-                    {errorMessage != '' && <p className="text-red-500 text-center">{errorMessage}</p>}
+                    {errorMessage != '' && <p className="text-red-500 font-bold text-[16px] text-center">{errorMessage}</p>}
                   </div>
                 )
               }

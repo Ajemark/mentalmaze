@@ -120,6 +120,7 @@ const Home = () => {
       .then(response => response.json())
       .then(result => {
         if (result.data) {
+          console.log(result.data)
           setLiveGames(result.data)
           setLoading(false)
         }
@@ -168,7 +169,7 @@ const Home = () => {
                     : <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-[15px] gap-y-[15px] md:gap-x-[45px] md:gap-y-[44px] py-12 w-full px-0" >
                       {
 
-                        liveGames?.map((gam: any, index: number) => <Game {...gam} key={index} />
+                        liveGames?.length > 0 && liveGames?.map((gam: any, index: number) => <Game {...gam} key={index} />
                         )
                       }
                     </div>

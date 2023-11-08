@@ -38,7 +38,7 @@ const Submit = () => {
       redirect: 'follow'
     };
 
-    await fetch("https://mentalmaze-game.onrender.com/api/game/create", requestOptions)
+    await fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/game/create`, requestOptions)
       .then(response => response.json())
       .then(result => {
         setLoading(false)

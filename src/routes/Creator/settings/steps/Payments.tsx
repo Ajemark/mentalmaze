@@ -18,6 +18,7 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
 	const signer = useEthersSigner();
 	const provider = useEthersProvider();
 
+
 	const updatePriceShare = (index: any, newValue: any) => {
 		const updatedArray = [...priceShare]; // Create a copy of the current array
 		updatedArray[index] = newValue; // Update the element at the specified index
@@ -174,10 +175,12 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
 									const balance = await provider?.getBalance?.(address);
 									const balanceInEth = formatEther(balance);
 
+
 									if (gameToken > balanceInEth) {
 										setErrorMessage('You Do Not Have Enough ETH To Process This Transaction!')
 										return
 									}
+
 
 									const data2 = {
 										...data,
@@ -193,6 +196,10 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
 										approve: false,
 										creator: address,
 									}
+
+									console.log(data2)
+
+									// return
 									sendTx(data2)
 								}
 

@@ -31,14 +31,17 @@ const Authenticate = () => {
     if (auth || !address) return
     fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/authenticate/login?address=${address}`)
       .then(async response => {
+        // console.log(await response.json())
         if (response.ok) {
           setauth(await response.json())
         }
         else {
           toast.error('An error occured')
         }
+      }).catch((e) => {
+        console.log(e)
       })
-  }, [address, tryAgain])
+  }, [address, tryAgain, auth])
 
   useEffect(() => {
     (async () => {
