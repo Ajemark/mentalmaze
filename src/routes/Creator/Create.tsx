@@ -79,6 +79,7 @@ const Create = () => {
     getAllGames()
   }, [userDetails, address, isConnected])
 
+  console.log(games)
 
   return (
     loading ? (

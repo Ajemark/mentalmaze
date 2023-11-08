@@ -41,6 +41,7 @@ const Dashboard = () => {
             .then(response => response.json())
             .then(result => {
                 if (result.data) {
+
                     setData(result.data)
                     setLoading(false)
                 }
@@ -148,6 +149,7 @@ export default Dashboard
 
 const Games = ({ data, handler, totalJudges, loading }: any) => {
     // console.log(handler)
+    console.log(data)
     return (
         <div style={{
             background: "linear-gradient(90deg, #032449, #0B77F0)"
@@ -196,7 +198,7 @@ const Games = ({ data, handler, totalJudges, loading }: any) => {
                                     </div>
                                 </td>
                             </tr>
-                        ) : data && data.gamesCreated?.map((item: any, i: number) => (
+                        ) : data && data?.gamesCreated?.map((item: any, i: number) => (
                             <tr key={i}>
                                 <Game  {...item} totalJudges={totalJudges} />
                             </tr>
