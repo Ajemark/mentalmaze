@@ -7,6 +7,7 @@ import { useContext, useEffect, useState } from "react"
 import { UserContext } from "../../context/UserContext"
 import Loading from "../../component/ui/Loading"
 import { useModalContext } from "../../context/ModalContext"
+import Timer from "./Timer"
 
 
 const Game = () => {
@@ -135,7 +136,74 @@ const Game = () => {
   }, [userDetails])
 
 
-  console.log(game)
+  const handleAnswers = (clicked = false) => {
+    setErrorMessage('')
+    if (!selected && clicked) {
+      setErrorMessage('Please Select An Option')
+      return
+    }
+
+    if (curQuestion + 1 >= game?.question.length) {
+
+      const d = {
+        questionId: game?.question[curQuestion].id,
+        questionAnswer: selected ?? 'null'
+      }
+      const data = [...answers]
+      data.push(d)
+
+      setAnswers(data)
+
+      const dataToSubmit = {
+        "gameId": game.id,
+        "playerAddress": userDetails.address,
+        "level": game?.question[curQuestion].difficultyLevel,
+        "playerId": playerData.id,
+        "arrayofQuestion_answer": data
+      }
+
+      localStorage.setItem('GameInfo', JSON.stringify({
+        dataToSubmit, game: {
+          id: game.id,
+          title: game.title
+        }
+      }))
+
+      switchModal()
+      switchModalcontent('hurray')
+      return
+    }
+
+    const d = {
+      questionId: game?.question[curQuestion].id,
+      questionAnswer: selected
+    }
+    const data = [...answers]
+    data.push(d)
+
+    setAnswers(data)
+    console.log(game)
+    console.log(playerData)
+
+    const dataToSubmit = {
+      "gameId": game.id,
+      "playerAddress": userDetails.address,
+      "level": game?.question[curQuestion].difficultyLevel,
+      "playerId": playerData.id,
+      "arrayofQuestion_answer": data
+    }
+
+    localStorage.setItem('GameInfo', JSON.stringify({
+      dataToSubmit, game: {
+        id: game.id,
+        title: game.title
+      }
+    }))
+
+    setCurQuestion((prev: number) => prev + 1)
+    setSelected('')
+  }
+
   // console.log(answers)
   return (
     < div >
@@ -145,7 +213,7 @@ const Game = () => {
 
             <div className='bg-black md:pl-[52px] mb-[40px] rounded-t-[24px] md:rounded-r-[24px] flex flex-col md:flex-row'>
               <div className='border-[4px] border-blue-80 border-solid rounded-[24px] flex-1 '>
-                <GameHeader />
+                <GameHeader handleAnswers={handleAnswers} />
                 <div className='flex flex-col items-center gap-[36px] py-[67px]'>
                   {
                     game && Object.keys(game).length > 1 && (
@@ -170,76 +238,7 @@ const Game = () => {
 
                         <div className='mt-[48px] w-full flex'>
                           <button className="w-full mx-auto bg-blue-50 text-white text-[15px] font-Archivo_Regular rounded-[16px] border-[2px]  w-[60%]  border-blue-main py-[16px]"
-                            onClick={() => {
-                              setErrorMessage('')
-                              if (!selected) {
-                                setErrorMessage('Please Select An Option')
-                                return
-                              }
-
-
-                              if (curQuestion + 1 >= game?.question.length) {
-
-                                const d = {
-                                  questionId: game?.question[curQuestion].id,
-                                  questionAnswer: selected
-                                }
-                                const data = [...answers]
-                                data.push(d)
-
-                                setAnswers(data)
-                                console.log(game)
-                                console.log(playerData)
-
-                                const dataToSubmit = {
-                                  "gameId": game.id,
-                                  "playerAddress": userDetails.address,
-                                  "level": game?.question[curQuestion].difficultyLevel,
-                                  "playerId": playerData.id,
-                                  "arrayofQuestion_answer": data
-                                }
-
-                                localStorage.setItem('GameInfo', JSON.stringify({
-                                  dataToSubmit, game: {
-                                    id: game.id,
-                                    title: game.title
-                                  }
-                                }))
-
-                                switchModal()
-                                switchModalcontent('hurray')
-                                return
-                              }
-
-                              const d = {
-                                questionId: game?.question[curQuestion].id,
-                                questionAnswer: selected
-                              }
-                              const data = [...answers]
-                              data.push(d)
-
-                              setAnswers(data)
-                              console.log(game)
-                              console.log(playerData)
-
-                              const dataToSubmit = {
-                                "gameId": game.id,
-                                "playerAddress": userDetails.address,
-                                "level": game?.question[curQuestion].difficultyLevel,
-                                "playerId": playerData.id,
-                                "arrayofQuestion_answer": data
-                              }
-
-                              localStorage.setItem('GameInfo', JSON.stringify({
-                                dataToSubmit, game: {
-                                  id: game.id,
-                                  title: game.title
-                                }
-                              }))
-
-                              setCurQuestion((prev: number) => prev + 1)
-                              setSelected('')
-                            }}
+                            onClick={() => handleAnswers(true)}
                           >
                             PROCEED
                           </button>
@@ -334,7 +333,8 @@ const Sidebar = ({ game, curQuestion }: any) => {
   )
 }
 
-const GameHeader = () => {
+const GameHeader = ({ handleAnswers }: any) => {
+
   return (
     <div className='flex justify-between py-[18px] bg-wb-100 rounded-t-[24px]  md:rounded-tl-[24px] px-[18px]'>
       <div className='flex gap-[32px] w-full md:w-fit justify-between'>
@@ -342,7 +342,7 @@ const GameHeader = () => {
           <AiOutlineClockCircle color="#0B77F0" fontSize={24} />
           <div className='next rounded-[16px] p-[1px] text-white'>
             <div className='rounded-[16px] bg-blue-100 p-[8px] font-droid leading-normal text-[16px] flex items-center gap-[8px] w-fit justify-center'>
-              00:59
+              <Timer handleAnswers={handleAnswers} targetDate={new Date(Date.now() + 1 * 60000)} />
             </div>
           </div>
         </div>

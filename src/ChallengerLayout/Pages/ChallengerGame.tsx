@@ -41,7 +41,8 @@ const ChallengerGame = () => {
       .then(result => {
         if (result.data) {
           const id = location.search.split('id=')[1]
-          const data = result.data.filter((game: any) => game.id == id)[0]
+          console.log(result.data)
+          const data = result.data.response.filter((game: any) => game.id == id)[0]
           setCurGame(data)
           if (!data) navigate("/challenger")
           setLoading(false)
@@ -196,7 +197,7 @@ const ChallengerGame = () => {
                 <div className={`relative flex  `} >
                   {curGame?.question?.map((_: any, i: number) =>
 
-                    <div>
+                    <div key={i}>
                       <div key={i} className={`relative text-white rounded-[8px] w-[27px] h-[30px] text-[12px] md:text-base md:w-[48px] md:h-[40px]   border-solid shadow-lg`}
                         style={{
                           background: "linear-gradient( rgba(3, 36, 73, 1), rgba(11, 119, 240, 1))",
