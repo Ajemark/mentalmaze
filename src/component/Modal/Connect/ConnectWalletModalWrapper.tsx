@@ -46,6 +46,7 @@ const ConnectWalletModal = ({ children, show }: LayoutProps) => {
     switchModal()
   }
 
+  console.log(modal)
   return (
     <>
       {show && <Overlay />}
