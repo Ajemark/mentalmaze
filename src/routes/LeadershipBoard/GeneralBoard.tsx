@@ -57,7 +57,6 @@ export const GeneralBoard = (data: any) => {
 	}, [data])
 
 
-	console.log(data)
 	return (
 		<div className='relative text-white'>
 			<div className='w-full h-fit '>
@@ -69,6 +68,7 @@ export const GeneralBoard = (data: any) => {
 
 					{
 						users && users?.map((d: any, i: any) => {
+							console.log(users)
 							return (
 								<div key={i} className='flex font-droid text-[32px] font-normal px-[48px] mt-[32px] grad-dar rounded-[16px] border-blue-50 border-solid border-[2px] py-[28px]'>
 
@@ -77,16 +77,16 @@ export const GeneralBoard = (data: any) => {
 
 
 											<div className='text-headerbg text-xl font-bold justify-center flex items-center mr-8 bg-blue-main w-[48px] h-[48px] md:w-[72px] md:h-[72px] rounded-[8px]  overflow-hidden'>
-												{d.playerInfo.profileImage?.length < 3 ? (
+												{d.playerInfo?.profileImage?.length < 3 ? (
 													<p>
-														{d.playerInfo.profileImage.toUpperCase()}
+														{d.playerInfo?.profileImage.toUpperCase()}
 													</p>
 												) :
-													<img src={d.playerInfo.profileImage.includes('http') ? d.playerInfo.profileImage : "https://mentalmaze-game.infura-ipfs.io/ipfs/" + d.playerInfo.profileImage} alt="" className='w-full h-full'
+													<img src={d.playerInfo?.profileImage.includes('http') ? d.playerInfo?.profileImage : "https://mentalmaze-game.infura-ipfs.io/ipfs/" + d.playerInfo?.profileImage} alt="" className='w-full h-full'
 													/>
 												}
 											</div>
-											<p>{d.playerInfo.username}</p>
+											<p>{d.playerInfo?.username}</p>
 										</div>
 
 										<div className=' text-right text-[13px] md:text-[24px] font-medium leading-[26.11px] font-Archivo_Regular flex-1 block '>{d.total_points} MP
