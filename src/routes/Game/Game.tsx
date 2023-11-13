@@ -71,12 +71,12 @@ const Game = () => {
     // socket.emit("force_end_timer", { playersAddress: userDetails.address });
     socket.emit("start_timer", { playersAddress: userDetails.address });
     socket.on("updateTimer", (_timeRemaining) => {
-      setTimeRemaing((prev: any) => _timeRemaining);
+      setTimeRemaing(() => _timeRemaining);
       console.log("yeah");
     });
 
     socket.on("updateTimer", (_timeRemaining) => {
-      setTimeRemaing((prev: any) => _timeRemaining);
+      setTimeRemaing(() => _timeRemaining);
       console.log("yeah");
     });
 

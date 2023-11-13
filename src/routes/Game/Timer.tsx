@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const Timer = ({ targetDate, handleAnswers, _timeLeft }: any) => {
+const Timer = ({ _timeLeft }: any) => {
   const calculateTimeLeft = () => {
     const difference = +new Date(_timeLeft);
     let timeLeft = {};
