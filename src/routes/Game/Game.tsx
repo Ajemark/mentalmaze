@@ -80,9 +80,7 @@ const Game = () => {
       console.log("yeah");
     });
 
-    socket.on("timerEnd", () => {
-      alert("");
-    });
+    socket.on("timerEnd", () => {});
   }, []);
 
   const getPlayerDetails = () => {
