@@ -1,8 +1,8 @@
 // import React from 'react'
 import nav1 from "./../../assets/sidebar/nav1.svg";
-import nav2 from "./../../assets/sidebar/nav2.svg";
+// import nav2 from "./../../assets/sidebar/nav2.svg";
 import nav3 from "./../../assets/sidebar/nav3.svg";
-import nav4 from "./../../assets/sidebar/nav4.svg";
+// import nav4 from "./../../assets/sidebar/nav4.svg";
 import discord from "./../../assets/sidebar/discord.svg";
 import telegram from "./../../assets/sidebar/telegram.svg";
 import twitter from "./../../assets/sidebar/twitter.svg";
