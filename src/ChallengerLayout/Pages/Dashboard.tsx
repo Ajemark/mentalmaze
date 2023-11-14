@@ -26,6 +26,8 @@ const Dashboard = () => {
     const mmContract = new MMContract(MM_ADDRESS, signer, provider)
 
 
+
+
     const getAllGames = () => {
 
         let myHeaders = new Headers();
@@ -83,16 +85,21 @@ const Dashboard = () => {
         setPgNum(Number(info))
     }
 
+    const getJudges = async () => {
+        return await mmContract.getJudgesCount()
+    }
+
+    const judgesCount = getJudges()
 
     useEffect(() => {
         (async () => {
-            const totalJudges = await mmContract.getJudgesCount()
-            setTotalJudges(totalJudges)
+            setTotalJudges(await judgesCount)
         })()
-    }, [])
+    }, [judgesCount])
 
 
-    console.log(data?.judgesData[0])
+    // console.log(data)
+
     return (
         <div className="mt-[96px]  md:mt-[104px] md:border-t-solid border-t-2 border-l-2 border-1 border-blue-50 px-[20px] relative ">
             <div className='relative text-white '>
@@ -151,7 +158,7 @@ export default Dashboard
 
 const Games = ({ data, handler, totalJudges, loading }: any) => {
     // console.log(handler)
-    console.log(data?.gamesCreated.fetchRes)
+    // console.log(data?.gamesCreated.fetchRes)
 
     return (
         <div style={{

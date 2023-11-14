@@ -86,7 +86,7 @@ const Game = ({ image, id, accountId, players }: any) => {
       <div className="absolute p-[2px rounded-[8px] p-[2px]" style={{
         "background": "linear-gradient(90deg, #032449, #0B77F0)"
       }} >
-        <button disabled={played} className=" w-[143px] text-white py-[16px] rounded-[8px] font-droid tracking-[0.2px] left-0" style={{
+        <button disabled={false} className=" w-[143px] text-white py-[16px] rounded-[8px] font-droid tracking-[0.2px] left-0" style={{
           "background": "linear-gradient(130deg, #032449 0%, #0B77F0 100%)",
           "backdropFilter": "blur(4px)"
         }} onClick={() => navigate('/game?data=' + data)}>

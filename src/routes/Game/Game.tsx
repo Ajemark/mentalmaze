@@ -18,6 +18,9 @@ const Game = () => {
   const [errorMessage, setErrorMessage] = useState('')
   const [answers, setAnswers]: any = useState([])
   const [playerData, setPlayerData]: any = useState()
+  const [localData, setLocalData]: any = useState()
+  const [again, setagain] = useState(0)
+  const [creating, setcreating] = useState(false)
 
   const { switchModalcontent, switchModal } = useModalContext()
 
@@ -65,16 +68,22 @@ const Game = () => {
     };
 
     const data = JSON.parse(window.atob(location.search.split('?data=')[1]))
+    if (!data) {
+      setagain(prev => prev + 1)
+      return
+    }
 
     fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/player/getPlayerDetails?gameId=${data.gameId}&playersAddress=${userDetails.address}`, requestOptions)
       .then(response => response.json())
       .then(result => {
         console.log(result)
-        if (result.gamePlayerDetails.length > 0) {
-          getSingleGame()
+
+        if (result.gamePlayerDetails?.length > 0 || result.gamePlayerDetails.id) {
           setPlayerData(result.gamePlayerDetails[0])
+          getSingleGame()
           setLoading(false)
         } else {
+          if (creating) return
           createPlayer()
         }
       })
@@ -105,13 +114,15 @@ const Game = () => {
 
 
     console.log(raw)
+    setcreating(true)
     fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/player/createGamePlayer`, requestOptions)
       .then(response => response.json())
       .then(result => {
         console.log(result, '                109')
-        if (result.gamePlayerDetails.length > 0) {
+        console.log(result.gamePlayerData?.length)
+        if (result.gamePlayerData?.length > 0 || result.gamePlayerData.id) {
           getSingleGame()
-          setPlayerData(result.gamePlayerDetails)
+          setPlayerData(result.gamePlayerData)
           setLoading(false)
         }
         else {
@@ -128,12 +139,18 @@ const Game = () => {
 
   useEffect(() => {
     setLoading(true)
-    if (!userDetails.token) {
+    if (!userDetails?.token) {
       setLoading(false)
       return
     }
     getPlayerDetails()
-  }, [userDetails])
+  }, [userDetails, again])
+
+
+  useEffect(() => {
+    const localData = localStorage.getItem(`GameInfo${game?.id}`)
+    if (localData) setLocalData(localData)
+  }, [game])
 
 
   const handleAnswers = (clicked = false) => {
@@ -162,7 +179,7 @@ const Game = () => {
         "arrayofQuestion_answer": data
       }
 
-      localStorage.setItem('GameInfo', JSON.stringify({
+      localStorage.setItem(`GameInfo${game.id}`, JSON.stringify({
         dataToSubmit, game: {
           id: game.id,
           title: game.title
@@ -204,7 +221,8 @@ const Game = () => {
     setSelected('')
   }
 
-  // console.log(answers)
+  console.log(localData)
+
   return (
     < div >
       {
@@ -335,6 +353,9 @@ const Sidebar = ({ game, curQuestion }: any) => {
 
 const GameHeader = ({ handleAnswers }: any) => {
 
+  const { ModalMode } = useModalContext()
+
+  console.log(ModalMode)
   return (
     <div className='flex justify-between py-[18px] bg-wb-100 rounded-t-[24px]  md:rounded-tl-[24px] px-[18px]'>
       <div className='flex gap-[32px] w-full md:w-fit justify-between'>
@@ -342,7 +363,9 @@ const GameHeader = ({ handleAnswers }: any) => {
           <AiOutlineClockCircle color="#0B77F0" fontSize={24} />
           <div className='next rounded-[16px] p-[1px] text-white'>
             <div className='rounded-[16px] bg-blue-100 p-[8px] font-droid leading-normal text-[16px] flex items-center gap-[8px] w-fit justify-center'>
-              <Timer handleAnswers={handleAnswers} targetDate={new Date(Date.now() + 1 * 60000)} />
+              {ModalMode ? "00:00" : (
+                <Timer handleAnswers={handleAnswers} targetDate={new Date(Date.now() + 1 * 60000)} />
+              )}
             </div>
           </div>
         </div>
@@ -399,7 +422,7 @@ const GameHeader = ({ handleAnswers }: any) => {
 }
 
 
-const Rating = ({ game }: any) => {
+const Rating: any = ({ game }: any) => {
   const d = new Date(game?.createdAt);
 
   return (

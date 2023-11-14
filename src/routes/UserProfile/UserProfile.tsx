@@ -9,6 +9,7 @@ import { UserContext } from '../../context/UserContext'
 import { useNavigate } from 'react-router-dom'
 import { useModalContext } from '../../context/ModalContext'
 import { useAccount } from 'wagmi'
+import { Pagination } from '../../component/ui/Pagination'
 // import medal from "./../../assets/Leadership/medal_star.png"
 
 
@@ -55,12 +56,77 @@ const RANK = ({ name, status }: { name: string, status: string | number }) => {
 }
 
 
-const RANKS = () => {
+const RANKS = ({ userDetails }: any) => {
+
+    const [loading, setLoading] = useState(false)
+    const [pgNum, setPgNum]: any = useState(1)
+    const [rank, setRank]: any = useState()
+
+    const getRank = () => {
+
+        let myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${userDetails.token}`);
+
+        let requestOptions: RequestInit = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow'
+        };
+
+        fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/rank?pageNumber=${pgNum}&pageSize=5&userAddress=${userDetails.address}`, requestOptions)
+            .then(response => response.json())
+            .then(result => {
+                if (result.data) {
+                    setRank(result.data)
+                    setLoading(false)
+                }
+                else {
+                    console.log(result)
+                    setLoading(false)
+                }
+            })
+            .catch(error => {
+                setLoading(false)
+                console.log('error', error)
+            });
+    }
+
+    useEffect(() => {
+        setLoading(true)
+        if (!userDetails?.token) {
+            setLoading(false)
+            return
+        }
+        getRank()
+    }, [userDetails])
+
+
+    const handlePagination = (info: any) => {
+        console.log(pgNum)
+        console.log(info)
+        if (info == 'next' || info == 'prev') {
+            if (info == 'next') {
+                setPgNum(pgNum + 1)
+                return
+            } else {
+                if (pgNum == 1) return
+                setPgNum(pgNum - 1)
+                return
+            }
+        }
+        setPgNum(Number(info))
+    }
+
+    console.log(rank)
+
     return (
         <div className='flex-1 border-blue-80 py-4 border-4 rounded-3xl userProfileStat mt-[34px]'>
             <h2 className=" font-droidbold text-[32px] text-white py-4 text-center border-b-blue-80 border-b-4">RANK HISTORY</h2>
             <div className='md:px-[40px] px-[20px]'>
                 {data.map((item) => <RANK {...item} />)}
+            </div>
+            <div className='  py-[32px] px-[24px] h-[96px] w-full flex justify-end'>
+                <Pagination num={2} handler={handlePagination} />
             </div>
         </div>
     )
@@ -68,16 +134,21 @@ const RANKS = () => {
 
 
 const UserProfile = () => {
+    const { userDetails }: any = useContext(UserContext);
+    const [creatorMode, setCreatorMode] = useState(false)
+
+
     return (
         <div className='w-full  relative z-[999] px-[16px] md:px-[52px] mt-[96px] md:mt-[176px]'>
-            <ProfileHeader />
-            <Mode />
+            <ProfileHeader userDetails={userDetails} />
+            <Mode creatorMode={creatorMode} setCreatorMode={setCreatorMode} />
             <div className="flex mt-12 gap-[34px] flex-col md:flex-row w-full">
-                <Stat />
+                <Stat stat={userDetails.stat} />
                 <div className='w-full'>
                     <Level />
-                    <RANKS />
+                    <RANKS creatorMode={creatorMode} userDetails={userDetails} />
                 </div>
+
             </div>
         </div>
     )
@@ -88,14 +159,14 @@ export default UserProfile
 
 
 
-const ProfileHeader = () => {
-    const { userDetails }: any = useContext(UserContext);
+const ProfileHeader = ({ userDetails }: any) => {
+
     const { switchModal, switchModalcontent, } = useModalContext()
     // const[editUser,setEditUser]=useState(false)
     const navigate = useNavigate()
     const { isConnected } = useAccount();
 
-    console.log(isConnected)
+    console.log(userDetails)
 
     useEffect(() => {
         if (!userDetails.address || !isConnected) {
@@ -152,12 +223,12 @@ const ProfileHeader = () => {
     )
 }
 
-const Mode = () => {
-    const [creatorMode, setCreatorMode] = useState(false)
+const Mode = ({ creatorMode, setCreatorMode }: any) => {
+
 
     return (
         <div className='flex w-full h-[70px] md:h-24 border-blue-80 border-4 rounded-3xl items-center px-6 creatorsModebuttonbg text-white py-[10px] justify-between mt-12 relative z-[999] home'>
-            <p className="font-Archivo_Regular md:text-[40px] leading-[17.41px] md:leading-normal font-normal ">CREATOR’S MODE</p>
+            <p className="font-Archivo_Regular md:text-[40px] leading-[17.41px] md:leading-normal font-normal ">{creatorMode ? 'CREATOR’S' : 'PLAYER’S'} MODE</p>
             <button className='h-full w-[64px] md:w-[128px] border-blue-80 rounded-[80px] p-2 border-2 creatorsModebutton' onClick={() => {
                 setCreatorMode(!creatorMode)
             }}
@@ -177,7 +248,8 @@ const Mode = () => {
         </div>)
 }
 
-const Stat = () => {
+const Stat = ({ stat }: any) => {
+    console.log(stat)
     return (
         <div className='border-4 rounded-3xl py-4 flex flex-col gap-8 border-blue-80 userProfileStat h-fit'>
             <h2 className='px-[75px] font-400 font-droidbold

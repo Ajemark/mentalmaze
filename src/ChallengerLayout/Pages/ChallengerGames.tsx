@@ -20,7 +20,7 @@ const ChallengerGames = () => {
       redirect: 'follow'
     };
 
-    fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/game/get-all-pending-games?pageNumber=${pgNum}&pageSize=5`, requestOptions)
+    fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/game/get-all-pending-games?pageNumber=${pgNum}&pageSize=10`, requestOptions)
       .then(response => response.json())
       .then(result => {
         if (result.data) {

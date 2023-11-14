@@ -67,7 +67,7 @@ const Header = () => {
         switchModalcontent('authenticate')
       }
     }
-  }, [isConnected, address])
+  }, [isConnected, address, location.href])
 
   useEffect(() => {
     window.addEventListener('scroll', () => {

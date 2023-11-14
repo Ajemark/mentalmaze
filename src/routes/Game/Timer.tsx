@@ -23,7 +23,6 @@ const Timer = ({ targetDate, handleAnswers }: any) => {
         return () => clearTimeout(timer);
     }, [timeLeft]);
 
-    console.log(timeLeft)
 
     return (
         <h3 style={{ color: `${timeLeft?.seconds > 15 ? 'white' : 'red'}` }} className='text-2xl lg:text-3xl 2xl:text-5xl font-medium uppercase text-white'>

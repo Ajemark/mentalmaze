@@ -140,7 +140,7 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
     } else {
       switchModalcontent('connect')
     }
-  }, [address, isConnected])
+  }, [address, isConnected, location.href])
 
   const gotToProfile = () => {
     if (!address) {

@@ -80,6 +80,7 @@ const Create = () => {
   }, [userDetails, address, isConnected])
 
   console.log(games)
+  console.log(userDetails)
 
   return (
     loading ? (

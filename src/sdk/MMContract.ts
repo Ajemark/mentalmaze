@@ -43,14 +43,17 @@ export class MMContract {
 		const tx = await this.contractWithProvider.judgesCount()
 		return tx.toString();
 	}
+
 	async getMinVote() {
 		const tx = await this.contractWithProvider.minimumVoteAllowedInPercentage()
 		return tx.toString();
 	}
+
 	async getVotesForGames(address: String) {
 		const tx = await this.contractWithProvider.votesForGames(address)
 		return tx.toString();
 	}
+
 	async getGameVotes(address: String) {
 		const tx = await this.contractWithProvider.gamePendingApprovalVoteCount(address)
 		return tx.toString();

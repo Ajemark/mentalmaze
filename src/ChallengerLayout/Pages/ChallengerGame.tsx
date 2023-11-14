@@ -69,6 +69,8 @@ const ChallengerGame = () => {
       "judgeAccountId": userDetails.id
     })
 
+    console.log(raw)
+
     let requestOptions: RequestInit = {
       method: 'PUT',
       body: raw,
@@ -82,8 +84,8 @@ const ChallengerGame = () => {
       .then(result => {
         if (result) {
           setLoading(false)
-          navigate("/challenger")
           console.log(result)
+          navigate("/challenger")
         }
         else {
           console.log(result)
@@ -145,12 +147,7 @@ const ChallengerGame = () => {
   }
 
   const sendTx = async (type: String) => {
-    const totalJudges = await mmContract.getJudgesCount()
-    const totalApprovedGameVotes = await mmContract.getGameVotes(curGame.address)
-    const minVotes = await mmContract.getMinVote()
-    const totalVotesForGame = await mmContract.getVotesForGames(curGame.address)
 
-    console.log({ totalApprovedGameVotes, totalJudges, totalVotesForGame, minVotes })
     try {
       let tx;
       if (type == 'reject') {
@@ -161,11 +158,18 @@ const ChallengerGame = () => {
       if (tx) {
         console.log(JSON.parse(JSON.stringify(tx)))
 
-        if (totalVotesForGame == totalJudges && (((totalApprovedGameVotes / totalJudges) * 100) >= minVotes)) {
+        const totalJudges = Number(await mmContract.getJudgesCount())
+        const totalApprovedGameVotes = Number(await mmContract.getGameVotes(curGame.address))
+        const minVotes = Number(await mmContract.getMinVote())
+        const totalVotesForGame = Number(await mmContract.getVotesForGames(curGame.address))
+
+        console.log({ totalApprovedGameVotes, totalJudges, totalVotesForGame, minVotes })
+
+        if ((((totalApprovedGameVotes / totalJudges) * 100) >= (minVotes))) {
           approveGameOnDB()
           return
         }
-        if (totalVotesForGame == totalJudges && (((totalApprovedGameVotes / totalJudges) * 100) < minVotes)) {
+        if (totalVotesForGame == totalJudges && (((totalApprovedGameVotes / totalJudges) * 100) < (minVotes))) {
           rejectGameOnDB()
           return
         }
@@ -186,6 +190,7 @@ const ChallengerGame = () => {
     getPendingGame()
   }, [userDetails])
 
+  // console.log(curGame)
 
   return (
     <div>
