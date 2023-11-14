@@ -1,5 +1,4 @@
 import { createContext, useState } from "react";
-import { CID } from 'ipfs-http-client'
 
 export type UserContextProviderProps = {
     children: React.ReactNode
