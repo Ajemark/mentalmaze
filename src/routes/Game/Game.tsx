@@ -263,18 +263,17 @@ const Game = () => {
               <div className="flex flex-col items-center gap-[36px] py-[67px]">
                 {game && Object.keys(game).length > 1 && (
                   <div className="w-full px-[16px] md:px-[52px] ">
-                    <h1 className="font-droid text-white text-[16px] md:text-[32px] text-left w-full  ">
+                    <h1 className="font-droid text-center text-white text-[16px] md:text-[32px] text-left w-full  ">
                       {game?.question[curQuestion].title}
                     </h1>
                     <div className="mt-[32px] flex flex-col items-center ">
-                      <img
-                        src={
-                          game?.question[curQuestion].image.includes("http")
-                            ? game?.question[curQuestion].image
-                            : "https://mentalmaze-game.infura-ipfs.io/ipfs/" +
-                            game?.question[curQuestion].image
-                        }
-                      />
+                      {
+                        game?.question[curQuestion].image.includes("http") ? <img
+                          src={game?.question[curQuestion].image}
+                        /> :
+                          <p className='font-droid text-center text-white text-center text-[16px] md:text-[22px] text-left w-full mt-[40px]'>{game?.question[curQuestion].image}</p>
+                      }
+
                     </div>
                     <div className="flex w-full mt-10 justify-center gap-[16px]">
                       {game?.question[curQuestion].options.map(

@@ -222,12 +222,16 @@ const ChallengerGame = () => {
                 curGame && Object.keys(curGame).length > 1 && (
 
                   <div className="w-full px-[16px] md:px-[52px] ">
-                    <h1 className='font-droid text-white text-[16px] md:text-[32px] text-left w-full mt-[40px]'>
+                    <h1 className='font-droid text-white text-center text-[16px] md:text-[32px] text-left w-full mt-[40px]'>
                       {curGame?.question[curQuestion].title}
                     </h1>
                     <div className="mt-[32px] md:mt-[72px] flex flex-col items-center gap-[32px]">
+                      {
+                        curGame?.question[curQuestion].image.includes('http') ?
+                          <img src={curGame?.question[curQuestion].image} /> :
+                          <p className='font-droid text-white text-center text-[16px] md:text-[22px] text-left w-full mt-[40px]'>{curGame?.question[curQuestion].image}</p>
+                      }
 
-                      <img src={curGame?.question[curQuestion].image.includes('http') ? curGame?.question[curQuestion].image : "https://mentalmaze-game.infura-ipfs.io/ipfs/" + curGame?.question[curQuestion].image} />
                     </div>
                     <div className='flex w-full mt-10 justify-center gap-[16px]'>
                       {curGame?.question[curQuestion].options.map((option: any, index: any) => {
