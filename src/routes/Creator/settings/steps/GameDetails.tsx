@@ -1,5 +1,5 @@
 import { Instruction } from "../../../../component/Ui";
-import Input from "../../../../component/ui/Input";
+import Input, { InputTextBox } from "../../../../component/ui/Input";
 import { FiUploadCloud } from "react-icons/fi";
 import ReactLoading from 'react-loading';
 import useQuery from "../../../../hooks/useQuery";
@@ -68,18 +68,13 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
     const file = files[0];
     const result = await (ipfs as IPFSHTTPClient).add(file);
     if (type == 'question') {
-      setQuestions((prev: any) => ({ ...prev, question: result.cid }))
+      setQuestions((prev: any) => ({ ...prev, question: 'https://mentalmaze-game.infura-ipfs.io/ipfs/' + result.cid.toString() }))
       setIsUploadingQ(false)
       form.reset();
       return
     }
-    setImages(
-      {
-        cid: result.cid,
-        path: result.path,
-      },
-      setIsUploading(false)
-    );
+    setImages('https://mentalmaze-game.infura-ipfs.io/ipfs/' + result.cid.toString());
+    setIsUploading(false)
     form.reset();
   };
 
@@ -119,11 +114,11 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
               <form onSubmit={e => uploadImage(e, '')}>
                 <div className='w-full bg-[inherit] border-blue-main border-[2px] rounded-[8px] border-solid h-[198px] text-white flex justify-center items-center px-[48px] md:px-0 relative'>
                   <div className='absolute w-full h-full bottom-0'>
-                    {images?.cid ?
+                    {images ?
                       <div className="absolute w-full h-full bottom-0">
                         <img
                           alt={`Game cover`}
-                          src={`https://mentalmaze-game.infura-ipfs.io/ipfs/${images.cid && images.cid.toString()}`}
+                          src={images}
                           style={{ width: '100%', height: '100%', objectFit: 'contain' }}
                         />
                         {/* <p className="absolute t-5 b-0">Select New Image</p> */}
@@ -329,7 +324,7 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
                       <div className="absolute w-full h-full bottom-0">
                         <img
                           alt={`Game cover`}
-                          src={`https://mentalmaze-game.infura-ipfs.io/ipfs/${questions.question && questions.question.toString()}`}
+                          src={questions.question}
                           style={{ width: '100%', height: '100%', objectFit: 'contain' }}
                         />
                         {/* <p className="absolute t-5 b-0">Select New Image</p> */}
@@ -420,7 +415,6 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
           </div>
         </div>
 
-
         <div className='text-white '>
           <Input
             type="number"
@@ -432,11 +426,21 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
           <Instruction />
         </div>
 
+        <div className='text-white '>
+          <InputTextBox
+            title='Briefly Describe Your Game'
+            placeholder='Game Description '
+            value={duration}
+            setValue={setDuration}
+          />
+          <Instruction />
+        </div>
+
         <div className='mt-[48px]'>
           <button className="w-full bg-blue-50 text-white text-[15px] font-Archivo_Regular rounded-[16px] border-[2px] border-blue-main py-[16px]"
             onClick={() => {
-
               setErrorMessage({ message: '', where: 'proceed' })
+              console.log(data)
               if (Object.entries(data).length == 5) {
                 for (const index in Object.entries(data)) {
                   let object = Object.entries(data)[index]

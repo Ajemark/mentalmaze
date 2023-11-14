@@ -88,7 +88,7 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
     const [liveGames, setLiveGames] = useState([])
     const [searchedGames, setSearchedGames]: any = useState()
     const [searchText, setSearchText] = useState('')
-    const [images, setImages] = useState<{ cid: CID, path: string }>()
+    const [images, setImages] = useState('')
 
 
     const [signInDetails, setSignInDetails] = useState<signInDetails>({

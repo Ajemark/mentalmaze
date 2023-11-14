@@ -76,7 +76,6 @@ const Game = () => {
     fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/player/getPlayerDetails?gameId=${data.gameId}&playersAddress=${userDetails.address}`, requestOptions)
       .then(response => response.json())
       .then(result => {
-        console.log(result)
 
         if (result.gamePlayerDetails?.length > 0 || result.gamePlayerDetails.id) {
           setPlayerData(result.gamePlayerDetails[0])
@@ -91,7 +90,6 @@ const Game = () => {
         setLoading(false)
         console.log('error', error)
       });
-
   }
 
   const createPlayer = () => {
@@ -111,8 +109,6 @@ const Game = () => {
       headers: myHeaders,
       redirect: 'follow'
     };
-
-
 
     setcreating(true)
     fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/player/createGamePlayer`, requestOptions)
