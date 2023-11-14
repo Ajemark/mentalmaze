@@ -100,6 +100,7 @@ const RANKS = ({ userDetails }: any) => {
         getRank()
     }, [userDetails])
 
+    console.log(loading)
 
     const handlePagination = (info: any) => {
         console.log(pgNum)
