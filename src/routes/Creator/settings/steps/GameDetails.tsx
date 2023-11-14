@@ -435,8 +435,7 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
         <div className='mt-[48px]'>
           <button className="w-full bg-blue-50 text-white text-[15px] font-Archivo_Regular rounded-[16px] border-[2px] border-blue-main py-[16px]"
             onClick={() => {
-              //handleClick(2)
-              console.log(data)
+
               setErrorMessage({ message: '', where: 'proceed' })
               if (Object.entries(data).length == 5) {
                 for (const index in Object.entries(data)) {

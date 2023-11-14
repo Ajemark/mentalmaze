@@ -113,7 +113,7 @@ const Game = () => {
     };
 
 
-    console.log(raw)
+
     setcreating(true)
     fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/player/createGamePlayer`, requestOptions)
       .then(response => response.json())
@@ -355,7 +355,6 @@ const GameHeader = ({ handleAnswers }: any) => {
 
   const { ModalMode } = useModalContext()
 
-  console.log(ModalMode)
   return (
     <div className='flex justify-between py-[18px] bg-wb-100 rounded-t-[24px]  md:rounded-tl-[24px] px-[18px]'>
       <div className='flex gap-[32px] w-full md:w-fit justify-between'>
