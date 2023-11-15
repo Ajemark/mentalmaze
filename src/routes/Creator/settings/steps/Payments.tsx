@@ -186,7 +186,7 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
 										...data,
 										rewardDistribution: prices(priceShare),
 										title: questionObj.gameTitle,
-										image: questionObj.gameCover.cid.toString(),
+										image: questionObj.gameCover,
 										gameQuestion: questionObj.questions,
 										durationInHours: Math.abs(questionObj.gameDuration),
 										managerContract: MM_ADDRESS,

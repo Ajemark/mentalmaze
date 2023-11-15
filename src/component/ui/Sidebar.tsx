@@ -270,9 +270,9 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
             </div>
             {[
               { image: game, path: "/", title: "Games" },
-              { image: cup, path: "/leaderboard", title: "Leaderboard" },
+              // { image: cup, path: "/leaderboard", title: "Leaderboard" },
               { image: create, path: "/create-game", title: "Create game" },
-              { image: notification, path: "/", title: "Notification" },
+              // { image: notification, path: "/", title: "Notification" },
             ].map((src, index) => {
               return (
                 <div

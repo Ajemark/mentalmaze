@@ -9,10 +9,7 @@ import { useModalContext } from "../../context/ModalContext";
 import Timer from "./Timer";
 import { io as webSocketClient } from "socket.io-client";
 
-const isProduction = process.env.NODE_ENV === "production";
-const webSocketUrl = isProduction
-  ? `${import.meta.env.VITE_REACT_APP_BASE_URL}`
-  : "http://localhost:4000/";
+const webSocketUrl = import.meta.env.VITE_REACT_APP_BASE_URL
 const socket = webSocketClient(webSocketUrl);
 
 const Game = () => {
@@ -81,7 +78,9 @@ const Game = () => {
       console.log("yeah");
     });
 
-    socket.on("timerEnd", () => { });
+    socket.on("timerEnd", () => {
+
+    });
   }, []);
 
   const getPlayerDetails = () => {
@@ -103,12 +102,14 @@ const Game = () => {
     fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/player/getPlayerDetails?gameId=${data.gameId}&playersAddress=${userDetails.address}`, requestOptions)
       .then(response => response.json())
       .then(result => {
-
+        console.log(result)
         if (result.gamePlayerDetails?.length > 0 || result.gamePlayerDetails.id) {
           setPlayerData(result.gamePlayerDetails[0])
+
           getSingleGame()
           setLoading(false)
         } else {
+
           if (creating) return
           createPlayer()
         }
@@ -405,9 +406,8 @@ const Sidebar = ({ game, curQuestion }: any) => {
 };
 
 
-const GameHeader = ({ handleAnswers, timeRemaing }: any) => {
-  const { ModalMode } = useModalContext()
-  console.log(timeRemaing)
+const GameHeader = ({ timeRemaing }: any) => {
+
   return (
     <div className="flex justify-between py-[18px] bg-wb-100 rounded-t-[24px]  md:rounded-tl-[24px] px-[18px]">
       <div className="flex gap-[32px] w-full md:w-fit justify-between">
@@ -415,9 +415,9 @@ const GameHeader = ({ handleAnswers, timeRemaing }: any) => {
           <AiOutlineClockCircle color="#0B77F0" fontSize={24} />
           <div className='next rounded-[16px] p-[1px] text-white'>
             <div className='rounded-[16px] bg-blue-100 p-[8px] font-droid leading-normal text-[16px] flex items-center gap-[8px] w-fit justify-center'>
-              {ModalMode ? "00:00" : (
-                <Timer handleAnswers={handleAnswers} targetDate={new Date(Date.now() + 1 * 60000)} />
-              )}
+              <p>
+                {(timeRemaing / 1000) ?? 0}
+              </p>
             </div>
           </div>
         </div>
@@ -483,17 +483,16 @@ const GameHeader = ({ handleAnswers, timeRemaing }: any) => {
 
 const Rating: any = ({ game }: any) => {
   const d = new Date(game?.createdAt);
-
+  const endDate = new Date(game?.endAt);
+  console.log(endDate)
+  console.log(game)
   return (
     <div className="py-[24px] w-full md:w-[266px] border-blue-80 border-solid border-[4px] rounded-[24px]">
       <p className="h-[86px] w-full border-b-[4px] border-b-blue-80 mb-[32px]"></p>
 
       <div className="">
         <div className="font-semibold text-[20px] font-Archivo_Regular text-center px-[37px] flex flex-col gap-[16px] ">
-          <p className="">
-            <p className="text-wb-40  leading-[21.76px]">Rating</p>
-            <p className="text-white  leading-[21.76px]">4</p>
-          </p>
+
           <p>
             <p className="text-wb-40  leading-[21.76px]">Developed by</p>
             <p className="text-white  leading-[21.76px] font-[900]">
@@ -504,6 +503,12 @@ const Rating: any = ({ game }: any) => {
             <p className="text-wb-40  leading-[21.76px]">Released:</p>
             <p className="text-white  leading-[21.76px] font-[900]">
               {d.toDateString()}
+            </p>
+          </p>
+          <p>
+            <p className="text-wb-40  leading-[21.76px]">Ends At:</p>
+            <p className="text-white  leading-[21.76px] font-[900]">
+              {/* {endDate.toDateString()} */}
             </p>
           </p>
         </div>
