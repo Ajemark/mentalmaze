@@ -6,7 +6,6 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserContext";
 import Loading from "../../component/ui/Loading";
 import { useModalContext } from "../../context/ModalContext";
-import Timer from "./Timer";
 import { io as webSocketClient } from "socket.io-client";
 
 const webSocketUrl = import.meta.env.VITE_REACT_APP_BASE_URL
