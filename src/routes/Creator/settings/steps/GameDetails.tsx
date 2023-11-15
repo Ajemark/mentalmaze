@@ -37,6 +37,7 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
   const [isUploadingQ, setIsUploadingQ] = useState(false)
   const [numbers, setNumbers] = useState([1])
   const [questions, setQuestions]: any = useState({})
+  const [description, setDescription]: any = useState('')
   const [questionsArray, setQuestionsArray]: any = useState([])
 
 
@@ -430,8 +431,8 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
           <InputTextBox
             title='Briefly Describe Your Game'
             placeholder='Game Description '
-            value={duration}
-            setValue={setDuration}
+            value={description}
+            setValue={setDescription}
           />
           <Instruction />
         </div>
