@@ -34,8 +34,8 @@ const TitleBar = () => {
     return (
       <div
         className={`outline-none cursor-pointer  rounded-[16px]  flex items-center justify-between gap-6 w-full h-[66px]  px-[16px] ${!current
-            ? "hover:headerdropDown-hover-effect hover:border-blue-main hover:border-[2px]"
-            : ""
+          ? "hover:headerdropDown-hover-effect hover:border-blue-main hover:border-[2px]"
+          : ""
           }`}
         onClick={
           current ? () => setShowDropDown(!showDropDown) : () => setCurrent(id)
@@ -191,6 +191,8 @@ const Home = () => {
   console.log(liveGames);
   console.log(userDetails);
 
+  let testing = true;
+
   return (
     <div className=" w-full h-fit mt-[96px] md:mt-[176px]">
       <div className="relative z-[999]  px-[15px] md:px-14">
@@ -217,12 +219,21 @@ const Home = () => {
                   Loading Games ...
                 </div>
               ) : (
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-[15px] gap-y-[15px] md:gap-x-[45px] md:gap-y-[44px] py-12 w-full px-0">
-                  {liveGames?.fetchDataResponse?.length > 0 &&
-                    liveGames?.fetchDataResponse?.map(
-                      (gam: any, index: number) => <Game {...gam} key={index} />
-                    )}
-                </div>
+
+                testing ? (
+                  <div className="w-full h-[40vh] text-white flex-col flex items-center justify-center">
+                    <p className="text-white text-center font-driod text-[30px]">Live Games to be shown here!</p>
+                  </div>
+                ) : (
+                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-[15px] gap-y-[15px] md:gap-x-[45px] md:gap-y-[44px] py-12 w-full px-0">
+                    {liveGames?.fetchDataResponse?.length > 0 &&
+                      liveGames?.fetchDataResponse?.map(
+                        (gam: any, index: number) => <Game {...gam} key={index} />
+                      )}
+                  </div>
+
+                )
+
               )}
             </div>
           )}
