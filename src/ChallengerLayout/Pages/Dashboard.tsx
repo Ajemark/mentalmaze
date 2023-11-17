@@ -219,12 +219,13 @@ const Games = ({ data, handler, totalJudges, loading }: any) => {
 
 const Game = ({ image, address, title, approve, rejectCount, approveCount, rejectionMessage }: any) => {
 
-    const [votingStat, setVotingStat] = useState(0)
+    // const [votingStat, setVotingStat] = useState(0)
     const signer = useEthersSigner();
     const provider = useEthersProvider();
     const mmContract = new MMContract(MM_ADDRESS, signer, provider)
 
     // console.log(address)
+
 
     const getJudges = async () => {
 
