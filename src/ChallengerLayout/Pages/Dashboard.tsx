@@ -20,14 +20,6 @@ const Dashboard = () => {
     const [pgNum, setPgNum]: any = useState(1)
     const { isConnected, address } = useAccount()
 
-    const [totalJudges, setTotalJudges] = useState(0)
-    const signer = useEthersSigner();
-    const provider = useEthersProvider();
-    const mmContract = new MMContract(MM_ADDRESS, signer, provider)
-
-
-
-
     const getAllGames = () => {
 
         let myHeaders = new Headers();
@@ -85,19 +77,6 @@ const Dashboard = () => {
         setPgNum(Number(info))
     }
 
-    const getJudges = async () => {
-        return await mmContract.getJudgesCount()
-    }
-
-    const judgesCount = getJudges()
-
-    useEffect(() => {
-        (async () => {
-            setTotalJudges(await judgesCount)
-        })()
-    }, [judgesCount])
-
-
     // console.log(data)
 
     return (
@@ -145,7 +124,7 @@ const Dashboard = () => {
                             </div>
                         </div>
                     </div>
-                    <Games data={data} loading={loading} totalJudges={totalJudges} handler={handlePagination} />
+                    <Games data={data} loading={loading} handler={handlePagination} />
                 </div>
             </div>
         </div>
@@ -159,6 +138,8 @@ export default Dashboard
 const Games = ({ data, handler, totalJudges, loading }: any) => {
     // console.log(handler)
     // console.log(data?.gamesCreated.fetchRes)
+
+    // console.log(data)
 
     return (
         <div style={{
@@ -236,7 +217,38 @@ const Games = ({ data, handler, totalJudges, loading }: any) => {
 
 
 
-const Game = ({ image, title, approve, rejectCount, approveCount, rejectionMessage, totalJudges }: any) => {
+const Game = ({ image, address, title, approve, rejectCount, approveCount, rejectionMessage }: any) => {
+
+    const [votingStat, setVotingStat] = useState(0)
+    const signer = useEthersSigner();
+    const provider = useEthersProvider();
+    const mmContract = new MMContract(MM_ADDRESS, signer, provider)
+
+    // console.log(address)
+
+    const getJudges = async () => {
+
+        const totalJudges = Number(await mmContract.getJudgesCount())
+        const totalApprovedGameVotes = Number(await mmContract.getGameVotes(address))
+        const minVotes = Number(await mmContract.getMinVote())
+        const totalVotesForGame = Number(await mmContract.getVotesForGames(address))
+
+        return ({
+            totalJudges,
+            totalApprovedGameVotes,
+            totalVotesForGame,
+            minVotes
+        })
+
+    }
+
+    const stats = getJudges()
+
+    useEffect(() => {
+        (async () => {
+            // setVotingStat(await stats)
+        })()
+    }, [stats])
 
     return (
         <>
@@ -261,13 +273,13 @@ const Game = ({ image, title, approve, rejectCount, approveCount, rejectionMessa
                     </p>
                 </div>
                 <div className='bg-disppaprove h-[8px] w-full rounded-[20px]'>
-                    <div style={
+                    {/* <div style={
                         {
                             width: `${totalJudges > 0 ? approveCount < 1 ? 50 : (approveCount / totalJudges * 100) : 0}%`
                         }
                     } className={`bg-blue-main h-[8px]  rounded-[20px]`}>
 
-                    </div>
+                    </div> */}
                 </div>
             </td>
             <td>
