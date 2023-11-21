@@ -1,7 +1,7 @@
 import { AiOutlineClockCircle } from "react-icons/ai";
-import { IoDiamondSharp } from "react-icons/io5";
-import messagequestion from "./../../assets/play/messagequestion.svg";
-import moduleMobile from "./../../assets/play/moduleMobile.svg";
+// import { IoDiamondSharp } from "react-icons/io5";
+// import messagequestion from "./../../assets/play/messagequestion.svg";
+// import moduleMobile from "./../../assets/play/moduleMobile.svg";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserContext";
 import Loading from "../../component/ui/Loading";
