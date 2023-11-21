@@ -25,7 +25,7 @@ const Game = () => {
   const [timeRemaing, setTimeRemaing] = useState<any>();
 
   const { switchModalcontent, switchModal } = useModalContext();
-  console.log("_timeRemaining---", timeRemaing);
+  // console.log("_timeRemaining---", timeRemaing);
 
   const { userDetails }: any = useContext(UserContext);
 
@@ -170,8 +170,11 @@ const Game = () => {
 
 
   useEffect(() => {
-    const localData = localStorage.getItem(`GameInfo${game?.id}`)
-    if (localData) setLocalData(localData)
+    const localData: any = localStorage.getItem(`GameInfo-${game?.id}`)
+    if (localData) {
+      setLocalData(JSON.parse(localData))
+      setCurQuestion(JSON.parse(localData).dataToSubmit.arrayofQuestion_answer.length)
+    }
   }, [game])
 
 
@@ -200,13 +203,16 @@ const Game = () => {
         arrayofQuestion_answer: data,
       };
 
-      localStorage.setItem(`GameInfo${game.id}`, JSON.stringify({
+      localStorage.setItem(`GameInfo-${game.id}`, JSON.stringify({
         dataToSubmit, game: {
           id: game.id,
           title: game.title
         }
       }))
+      localStorage.setItem("gameId", game.id)
 
+
+      socket.emit("force_end_timer", { playersAddress: userDetails.address });
       switchModal();
       switchModalcontent("hurray");
       return;
@@ -231,16 +237,12 @@ const Game = () => {
       arrayofQuestion_answer: data,
     };
 
-    localStorage.setItem(
-      "GameInfo",
-      JSON.stringify({
-        dataToSubmit,
-        game: {
-          id: game.id,
-          title: game.title,
-        },
-      })
-    );
+    localStorage.setItem(`GameInfo-${game.id}`, JSON.stringify({
+      dataToSubmit, game: {
+        id: game.id,
+        title: game.title
+      }
+    }))
 
     setCurQuestion((prev: number) => prev + 1);
     setSelected("");
@@ -310,7 +312,7 @@ const Game = () => {
                   </div>
                 )}
 
-                <div>
+                {/* <div>
                   <div className="flex items-center md:hidden">
                     <div className="flex flex-col items-center gap-[8px] text-white font-droid text-[15px] md:text-[32px]">
                       <div
@@ -372,7 +374,7 @@ const Game = () => {
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
             <Sidebar game={game} curQuestion={curQuestion + 1} />
@@ -420,7 +422,7 @@ const GameHeader = ({ timeRemaing }: any) => {
             </div>
           </div>
         </div>
-        <div className="flex items-center gap-[8px]">
+        {/* <div className="flex items-center gap-[8px]">
           <IoDiamondSharp color="#0B77F0" fontSize={24} />
           <div className="next rounded-[16px] p-[1px] text-white">
             <div
@@ -434,10 +436,10 @@ const GameHeader = ({ timeRemaing }: any) => {
               1000
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
 
-      <div className="hidden md:flex gap-[32px]">
+      {/* <div className="hidden md:flex gap-[32px]">
         <div className="flex items-center gap-[8px] text-white font-droid text-[32px]">
           <div
             style={{
@@ -475,7 +477,7 @@ const GameHeader = ({ timeRemaing }: any) => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div >
   );
 };

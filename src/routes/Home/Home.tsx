@@ -92,14 +92,15 @@ const TitleBar = () => {
   );
 };
 
-const Game = ({ image, id, accountId, players }: any) => {
+const Game = ({ image, id, accountId, finishers }: any) => {
   const navigate = useNavigate();
   const { address } = useAccount();
 
   let played = false;
-  for (const count in players) {
+  for (const count in finishers) {
+    console.log(finishers[count]?.toLowerCase() == address?.toLowerCase())
     played =
-      players[count]?.finishers?.toLowerCase() == address?.toLowerCase();
+      finishers[count]?.toLowerCase() == address?.toLowerCase();
     if (played) break;
   }
 
@@ -191,7 +192,7 @@ const Home = () => {
   console.log(liveGames);
   console.log(userDetails);
 
-  let testing = false;
+  let testing = true;
 
   return (
     <div className=" w-full h-fit mt-[96px] md:mt-[176px]">

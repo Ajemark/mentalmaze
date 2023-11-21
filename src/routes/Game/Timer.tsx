@@ -1,39 +1,37 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { io as webSocketClient } from "socket.io-client";
+import { UserContext } from "../../context/UserContext";
 
-const Timer = ({ _timeLeft }: any) => {
-  const calculateTimeLeft = () => {
-    const difference = +new Date(_timeLeft);
-    let timeLeft = {};
-    if (difference > 0) {
-      timeLeft = {
-        minutes: Math.floor((difference / 1000 / 60) % 60),
-        seconds: Math.floor((difference / 1000) % 60) ?? "00",
-      };
-      return timeLeft;
-    }
-  };
+const webSocketUrl = import.meta.env.VITE_REACT_APP_BASE_URL
+const socket = webSocketClient(webSocketUrl);
 
-  const [timeLeft, setTimeLeft]: any = useState();
+
+const Timer = ({ timeRemaing, setTimeRemaing }: any) => {
+
+  const { userDetails }: any = useContext(UserContext);
+
 
   useEffect(() => {
-    // if (!timeLeft) handleAnswers();
-    const timer = setTimeout(() => {
-      setTimeLeft(calculateTimeLeft());
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, [timeLeft]);
+    // use to end game when player decide to force close game
+    // socket.emit("force_end_timer", { playersAddress: userDetails.address });
+    socket.emit("start_timer", { playersAddress: userDetails.address });
+    socket.on("updateTimer", (_timeRemaining) => {
+      setTimeRemaing(() => _timeRemaining);
+      console.log("yeah");
+    });
 
+    socket.on("updateTimer", (_timeRemaining) => {
+      setTimeRemaing(() => _timeRemaining);
+      console.log("yeah");
+    });
+
+    socket.on("timerEnd", () => {
+
+    });
+  }, []);
 
   return (
-    <h3
-      style={{ color: `${timeLeft?.seconds > 15 ? "white" : "red"}` }}
-      className="text-2xl lg:text-3xl 2xl:text-5xl font-medium uppercase text-white"
-    >
-      {"00"}:
-      {timeLeft?.seconds > 9
-        ? timeLeft?.seconds
-        : "0" + (timeLeft?.seconds ?? 0)}
-    </h3>
+    <div></div>
   );
 };
 

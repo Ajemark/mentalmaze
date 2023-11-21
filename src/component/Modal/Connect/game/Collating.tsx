@@ -17,7 +17,9 @@ const Collating = () => {
   const { userDetails }: any = useContext(UserContext)
 
   useEffect(() => {
-    const data = JSON.parse(localStorage.getItem('GameInfo') ?? '')
+
+    const id = localStorage.getItem('gameId')
+    const data = JSON.parse(localStorage.getItem('GameInfo-' + id) ?? '')
     if (data.game) setData(data)
   }, [])
 
@@ -40,6 +42,7 @@ const Collating = () => {
     fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/player/submitGame`, requestOptions)
       .then(response => response.json())
       .then(result => {
+        console.log(result)
         if (result.message == 'success' && result.gamePlayedResult) {
           setResult(result.gamePlayedResult)
           localStorage.setItem("GameInfo", JSON.stringify({
@@ -68,6 +71,7 @@ const Collating = () => {
   }, [result, data])
 
   console.log(data)
+
 
   return (
     <div className="py-[64px]">
