@@ -189,10 +189,7 @@ const Home = () => {
     setPgNum(Number(info));
   };
 
-  console.log(liveGames);
-  console.log(userDetails);
-
-  let testing = false;
+  let testing = true;
 
   return (
     <div className=" w-full h-fit mt-[96px] md:mt-[176px]">

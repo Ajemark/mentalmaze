@@ -92,7 +92,8 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
     gameCover: images,
     difficultyLevel: questionObj.difficultyLevel,
     questions: questionsArray,
-    gameDuration: duration
+    gameDuration: duration,
+    description
   }
 
 
@@ -483,7 +484,7 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
             onClick={() => {
               setErrorMessage({ message: '', where: 'proceed' })
               console.log(data)
-              if (Object.entries(data).length == 5) {
+              if (Object.entries(data).length == 6) {
                 for (const index in Object.entries(data)) {
                   let object = Object.entries(data)[index]
                   if (object[1] == '' || !object[1]) {
