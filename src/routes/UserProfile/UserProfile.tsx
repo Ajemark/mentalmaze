@@ -10,32 +10,8 @@ import { useNavigate } from 'react-router-dom'
 import { useModalContext } from '../../context/ModalContext'
 import { useAccount } from 'wagmi'
 import { Pagination } from '../../component/ui/Pagination'
-// import medal from "./../../assets/Leadership/medal_star.png"
 
 
-
-const data = [
-    {
-        name: "Math Puzzle",
-        status: "Pending"
-    },
-    {
-        name: "Math Puzzle",
-        status: "View Result"
-    },
-    {
-        name: "Math Puzzle",
-        status: 25
-    },
-    {
-        name: "Math Puzzle",
-        status: 25
-    },
-    {
-        name: "Math Puzzle",
-        status: 25
-    }
-]
 
 const RANK = ({ position, completed, gameId, accountId, userDetails }: any) => {
 
