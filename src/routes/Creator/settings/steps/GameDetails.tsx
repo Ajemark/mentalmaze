@@ -2,7 +2,6 @@ import { Instruction } from "../../../../component/Ui";
 import Input, { InputTextBox } from "../../../../component/ui/Input";
 import { FiUploadCloud } from "react-icons/fi";
 import ReactLoading from 'react-loading';
-import useQuery from "../../../../hooks/useQuery";
 import { useContext, useState } from "react";
 import { create, IPFSHTTPClient } from 'ipfs-http-client'
 import { UserContext } from "../../../../context/UserContext";
@@ -37,12 +36,13 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
   const [isUploadingQ, setIsUploadingQ] = useState(false)
   const [numbers, setNumbers] = useState([1])
   const [questions, setQuestions]: any = useState({})
+  const [curquestion, setCurQuestion]: any = useState({})
+  const [curIndex, setCurIndex]: any = useState()
   const [description, setDescription]: any = useState('')
   const [questionsArray, setQuestionsArray]: any = useState([])
 
 
   const { title, setTitle, typeQuestion, setTypeQuestion, questionObj, setQuestionObj, duration, setDuration, images, setImages }: any = useContext(UserContext)
-  const { width } = useQuery()
 
   const uploadImage = async (event: any, type: any) => {
     event.preventDefault();
@@ -70,6 +70,7 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
     const result = await (ipfs as IPFSHTTPClient).add(file);
     if (type == 'question') {
       setQuestions((prev: any) => ({ ...prev, question: 'https://mentalmaze-game.infura-ipfs.io/ipfs/' + result.cid.toString() }))
+      setCurQuestion((prev: any) => ({ ...prev, image: 'https://mentalmaze-game.infura-ipfs.io/ipfs/' + result.cid.toString() }))
       setIsUploadingQ(false)
       form.reset();
       return
@@ -80,9 +81,10 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
   };
 
   const handleOptionsChange = (index: number, newValue: string) => {
-    const updatedOptions = questions.options ? [...questions.options] : ['', '', '', ''];
+    const updatedOptions = curquestion.options ? [...curquestion.options] : ['', '', '', ''];
     updatedOptions[index] = newValue;
     setQuestions({ ...questions, options: updatedOptions });
+    setCurQuestion((prev: any) => ({ ...prev, options: updatedOptions }));
   };
 
   const data = {
@@ -93,6 +95,11 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
     gameDuration: duration
   }
 
+
+  console.log(questionsArray)
+  console.log(curquestion)
+
+  console.log(curIndex)
 
   return (
     <div className=''>
@@ -178,22 +185,23 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
         <div className='text-white flex w-full justify-between items-center gap-6'>
           <button
             style={{
-              backgroundColor: `#${questionObj.difficultyLevel == 'Easy' ? "0855AB" : '0D0D0D'}`
+              backgroundColor: `#${curquestion?.difficultyLevel == 'Easy' ? "0855AB" : '0D0D0D'}`
             }}
             onClick={() => {
               setQuestions({})
-              setQuestionObj((prev: any) => ({ ...prev, difficultyLevel: 'Easy' })
-              )
+              setCurQuestion((prev: any) => ({ ...prev, difficultyLevel: 'Easy' }))
+              setQuestionObj((prev: any) => ({ ...prev, difficultyLevel: 'Easy' }))
             }}
             className={`hover:bg-[#0855AB] border-2 border-blue-main rounded-xl h-[70px] px-[30px] flex-1`}>
             Easy
           </button>
           <button
             style={{
-              backgroundColor: `#${questionObj.difficultyLevel == 'Normal' ? "0855AB" : '0D0D0D'}`
+              backgroundColor: `#${curquestion?.difficultyLevel == 'Normal' ? "0855AB" : '0D0D0D'}`
             }}
             onClick={() => {
               setQuestions({})
+              setCurQuestion((prev: any) => ({ ...prev, difficultyLevel: 'Normal' }))
               setQuestionObj({ ...questionObj, difficultyLevel: 'Normal' })
             }}
             className={`border-2 border-blue-main hover:bg-[#0855AB] rounded-xl h-[70px] px-[30px] flex-1`}
@@ -201,10 +209,11 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
             Normal
           </button>
           <button style={{
-            backgroundColor: `#${questionObj.difficultyLevel == 'Difficult' ? "0855AB" : '0D0D0D'}`
+            backgroundColor: `#${curquestion?.difficultyLevel == 'Difficult' ? "0855AB" : '0D0D0D'}`
           }}
             onClick={() => {
               setQuestions({})
+              setCurQuestion((prev: any) => ({ ...prev, difficultyLevel: 'Difficult' }))
               setQuestionObj({ ...questionObj, difficultyLevel: 'Difficult' })
             }}
             className={`border-2 border-blue-main rounded-xl hover:bg-[#0855AB] h-[70px] px-[30px] flex-1`}
@@ -217,22 +226,41 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
 
           <div className="">
             <div className="flex  items-center justify-end mt-[32px] font-Archivo_Regular w-full ">
+
               <div className={`relative flex  `} >
                 {numbers.map((num, i) =>
-
                   <div key={i} className={`relative text-white rounded-[8px] w-[27px] h-[30px] text-[12px] md:text-base md:w-[48px] md:h-[40px] p-[2px] -ml-[15px] border-solid shadow-lg`}
                     style={{
                       background: "linear-gradient( rgba(3, 36, 73, 1), rgba(11, 119, 240, 1))",
                     }}
                   >
-                    <button className={` w-full h-full rounded-[10px] ${num == (width > 730 ? numbers.length : 4) ? "bg-blue-100" : "bg-blue-70"}`}>
+                    <button
+                      onClick={() => {
+                        setCurIndex(num - 1)
+                        setCurQuestion(questionsArray[num - 1])
+                      }} className={` w-full h-full rounded-[10px] ${num == ((curIndex + 1) || numbers.length) ? "bg-blue-100" : "bg-blue-70"}`}>
                       {num}</button>
                   </div>)}
               </div>
+
+
               <button
                 onClick={() => {
                   setErrorMessage({ message: '', where: 'add' })
                   let updateQuestion = true;
+
+
+                  if (curIndex != undefined) {
+                    console.log('first')
+                    console.log(curIndex)
+                    const update = questionsArray
+                    update[curIndex] = curquestion
+                    setQuestionsArray(update)
+                    setCurIndex()
+                    setCurQuestion({})
+                    return
+                  }
+
                   if (Object.entries(questions).length != 4) {
                     setErrorMessage({ message: 'Please Enter All Question Details', where: 'add' })
                     return
@@ -255,9 +283,9 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
 
                   if (!updateQuestion) {
                     setErrorMessage({ message: 'Please Enter All Question Details', where: 'add' })
-
                     return
                   }
+
 
                   setQuestionsArray((prev: any) => [...prev, {
                     answer: questions.answer,
@@ -266,7 +294,9 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
                     options: questions.options,
                     difficultyLevel: questionObj.difficultyLevel
                   }])
+
                   setQuestions({})
+                  setCurQuestion({})
                   setNumbers((prev: any) => {
                     return [...prev, ((prev[prev.length - 1]) + 1)]
                   })
@@ -278,9 +308,11 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
               >
                 +  Add question
               </button>
+
             </div>
             {errorMessage.message != '' && errorMessage.where == 'add' && <p className="text-red-500 mt-2 text-right">{errorMessage.message}</p>}
           </div>
+
 
           <div className='text-white'>
             <label htmlFor="">
@@ -288,8 +320,11 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
               <input
                 type="text"
                 className="mt-[10px] bg-[inherit] border-blue-main border-[2px] w-full p-[10px] rounded-[8px] border-solid h-[56px] md:h-[64px] text-white outline-none"
-                value={questions.gameInstruction ?? ''}
-                onChange={(e) => setQuestions((prev: any) => ({ ...prev, gameInstruction: e.target.value }))}
+                value={curquestion?.title ?? ''}
+                onChange={(e) => {
+                  setQuestions((prev: any) => ({ ...prev, gameInstruction: e.target.value }))
+                  setCurQuestion((prev: any) => ({ ...prev, title: e.target.value }))
+                }}
                 placeholder='Please enter the Instruction of your game' />
             </label>
             <Instruction />
@@ -311,8 +346,11 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
 
             {typeQuestion && <input
               className="mt-[10px] bg-[inherit] border-blue-main border-[2px] w-full p-[10px] rounded-[8px] border-solid h-[56px] md:h-[64px] text-white outline-none"
-              value={questions.question ?? ''}
-              onChange={(e) => setQuestions((prev: any) => ({ ...prev, question: e.target.value }))}
+              value={curquestion?.image ?? ''}
+              onChange={(e) => {
+                setQuestions((prev: any) => ({ ...prev, question: e.target.value }))
+                setCurQuestion((prev: any) => ({ ...prev, image: e.target.value }))
+              }}
               title="Type Question"
               placeholder="Type your question"
             />}
@@ -325,7 +363,7 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
                       <div className="absolute w-full h-full bottom-0">
                         <img
                           alt={`Game cover`}
-                          src={questions.question}
+                          src={curquestion?.image}
                           style={{ width: '100%', height: '100%', objectFit: 'contain' }}
                         />
                         {/* <p className="absolute t-5 b-0">Select New Image</p> */}
@@ -387,7 +425,7 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
                     <input
                       key={index}
                       type="text"
-                      value={questionObj?.questions ? questionObj?.questions[numbers[numbers.length - 1]]?.options[index] : questions.options && questions.options[index] || ''}
+                      value={curquestion?.options ? curquestion?.options[index] : ''}
                       placeholder={`option ${index + 1}`}
                       className={`border-none outline-none bg-inherit px-[24px] w-full h-full placeholder:font-[300] placeholder:font-Archivo_Regular text-center`}
                       onChange={(e) => handleOptionsChange(index, e.target.value)}
@@ -402,8 +440,11 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
             <p className='font-Archivo_Regular'>Answer to the game</p>
             <input
               className="mt-[10px] bg-[inherit] border-blue-main border-[2px] w-full p-[10px] rounded-[8px] border-solid h-[56px] md:h-[64px] text-white outline-none"
-              onChange={(e) => setQuestions((prev: any) => ({ ...prev, answer: e.target.value }))}
-              value={questions.answer ?? ''}
+              onChange={(e) => {
+                setQuestions((prev: any) => ({ ...prev, answer: e.target.value }))
+                setCurQuestion((prev: any) => ({ ...prev, answer: e.target.value }))
+              }}
+              value={curquestion?.answer ?? ''}
               placeholder='Please enter the answer to this question' />
             <Instruction />
           </div>

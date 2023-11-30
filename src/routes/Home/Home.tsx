@@ -192,7 +192,7 @@ const Home = () => {
   console.log(liveGames);
   console.log(userDetails);
 
-  let testing = true;
+  let testing = false;
 
   return (
     <div className=" w-full h-fit mt-[96px] md:mt-[176px]">
