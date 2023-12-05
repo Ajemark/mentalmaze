@@ -113,7 +113,7 @@ const Create = () => {
             </div>
           </div>
 
-          {games?.fetchRes.slice(0, 3).map((gam: any, index: number) => <Game key={index}  {...gam} />)}
+          {games?.fetchRes.map((gam: any, index: number) => <Game key={index}  {...gam} />)}
         </div>
         :
         <div className='relative h-full items-center justify-center flex w-full '>
