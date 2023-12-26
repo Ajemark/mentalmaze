@@ -21,7 +21,7 @@ const Game = () => {
   const [playerData, setPlayerData]: any = useState()
   const [localData, setLocalData]: any = useState()
   const [again, setagain] = useState(0)
-  const [timer, settimer] = useState(0)
+  const [timer, setTimer] = useState(0)
   const [creating, setcreating] = useState(false)
 
   const { switchModalcontent, switchModal } = useModalContext();
@@ -158,13 +158,16 @@ const Game = () => {
     let played = false;
 
     for (const count in game.finishers) {
-      console.log(game.finishers[count]?.toLowerCase() == address?.toLowerCase())
       played =
         game.finishers[count]?.toLowerCase() == address?.toLowerCase();
       if (played) break;
     }
 
+    setTimer(1000 * 60)
+
+
     if (played) navigate('/')
+    return;
 
     const localData: any = localStorage.getItem(`GameInfo`)
     if (localData) {

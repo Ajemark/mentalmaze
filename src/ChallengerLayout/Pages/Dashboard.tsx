@@ -217,7 +217,7 @@ const Games = ({ data, handler, totalJudges, loading }: any) => {
 
 
 
-const Game = ({ image, address, title, approve, rejectCount, approveCount, rejectionMessage }: any) => {
+const Game = ({ image, address, title, approve, rejectionMessage }: any) => {
 
     const [votingStat, setVotingStat]: any = useState()
     const signer = useEthersSigner();
