@@ -4,21 +4,20 @@ import { toast } from 'react-hot-toast'
 import { UserContext, signInDetails } from '../../../context/UserContext'
 import { useModalContext } from '../../../context/ModalContext'
 import Loading from '../../ui/Loading'
-import { Buffer } from 'buffer';
-import { useAccount } from 'wagmi'
+import { useAccount, useSignMessage } from 'wagmi'
 
 const Authenticate = () => {
 
   const [auth, setauth] = useState<any>()
-  const { isConnected } = useAccount();
-
+  const [tryAgain, setTryAgain] = useState<any>()
+  const { isConnected, address } = useAccount();
+  const [errorMessage, setErrorMessage] = useState('')
+  const { data: signMessageData, signMessage, variables } = useSignMessage()
 
   const { signInDetails, setSignInDetails, setLoading, loading }: any = useContext(UserContext)
   const { switchModalcontent } = useModalContext()
 
-  const { address } = signInDetails
-
-  console.log(address)
+  // const { address } = signInDetails
 
   useEffect(() => {
     const userData = localStorage.getItem('userData')
@@ -32,34 +31,46 @@ const Authenticate = () => {
     if (auth || !address) return
     fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/authenticate/login?address=${address}`)
       .then(async response => {
+        // console.log(await response.json())
         if (response.ok) {
           setauth(await response.json())
         }
         else {
           toast.error('An error occured')
         }
+      }).catch((e) => {
+        console.log(e)
       })
-  }, [address])
+  }, [address, tryAgain, auth])
+
+  useEffect(() => {
+    (async () => {
+      if (signMessageData) {
+        setSignInDetails((prev: signInDetails) => ({ ...prev, signature: signMessageData }))
+        localStorage.setItem('userData', JSON.stringify({ ...signInDetails, signature: signMessageData }))
+        setLoading(false)
+        switchModalcontent('verify')
+      }
+    })()
+  }, [signMessageData, variables?.message])
 
   const signInMessage = async () => {
+    setErrorMessage('')
+    setTryAgain('No')
     setLoading(true)
     try {
-      if (auth == undefined) {
+      if (auth == undefined || !address) {
         setLoading(false)
-        toast.error('Please Try Again')
+        setErrorMessage('Please Try Again')
+        setTryAgain('Yes')
         return
       }
-      console.log(auth)
-      const msg = `0x${Buffer.from(auth?.data.message, 'utf8').toString('hex')}`
-      const sign = await window.ethereum.request({
-        method: 'personal_sign',
-        params: [msg, address],
-      })
 
-      setSignInDetails((prev: signInDetails) => ({ ...prev, signature: sign }))
-      localStorage.setItem('userData', JSON.stringify({ ...signInDetails, signature: sign }))
+      const msg = auth?.data.message
+
+      signMessage({ message: msg })
+      setauth(undefined)
       setLoading(false)
-      switchModalcontent('verify')
     } catch (error: any) {
       setLoading(false)
       toast.error(error.message)
@@ -73,6 +84,7 @@ const Authenticate = () => {
         <h1 className='font-droid border-b-blue-80 border-b-[4px] md:border-b-[8px] pt-[20px] mt-[24px] md:pt-[16px] pb-[32px] leading-[37.78px] text-[20px] md:text-[32px] text-center w-fit md:w-full mx-auto'>
           Sign In
         </h1>
+        {errorMessage != '' && <p className="text-red-500 text-center">{errorMessage}</p>}
       </div>
       <Animation className='pt-[48px] flex flex-col h-full gap-[100px]'>
         <button

@@ -1,7 +1,6 @@
 import { useContext, useState } from 'react'
 import Logo from "./../../assets/header/Logo.png"
 import { HeaderInput } from '../Ui'
-import Boarder from "./../../assets/header/Boarder.png"
 import { Link, useNavigate } from "react-router-dom"
 import { useModalContext } from "../../context/ModalContext"
 import { useEffect } from "react"
@@ -56,15 +55,19 @@ const Header = () => {
   }
 
   useEffect(() => {
-    if (!isConnected) setUserDetails({})
+    if (!userDetails) switchModalcontent('authenticate')
+    if (!isConnected) switchModalcontent('connect')
     else {
-      const d = localStorage.getItem('userData')
-      if (d) {
+      const d: any = localStorage.getItem('userData')
+      if (d && JSON.parse(d).token && JSON.parse(d).address == address?.toLowerCase()) {
         setUserDetails(JSON.parse(d))
-      } else switchModalcontent('authenticate')
+      } else {
+        localStorage.removeItem('userData')
+        setUserDetails({})
+        switchModalcontent('authenticate')
+      }
     }
-  }, [isConnected])
-
+  }, [isConnected, address, location.href])
 
   useEffect(() => {
     window.addEventListener('scroll', () => {
@@ -113,19 +116,21 @@ const Header = () => {
           <div className='flex items-center '>
             <div className="hidden items-center relative md:flex justify-center  ">
               {
-                <div
+                isConnected && <div
                   className='cursor-pointer'
                   onClick={gotToProfile}
                   onMouseEnter={() => setShow(!show)} onMouseLeave={() => setShow(!show)}>
 
-                  {isConnected && userDetails.profileImage?.length < 3 ? (
-                    <div className='text-headerbg text-xl mr-3 font-bold justify-center flex items-center bg-white rounded-full w-[38px] h-[38px]'>
-                      {userDetails.profileImage.toUpperCase()}
-                    </div>
-                  ) :
-                    <img src={userDetails.profileImage ?? Boarder} alt="" className=''
-                    />
-                  }
+                  <div className='text-headerbg text-xl mr-3 font-bold justify-center flex items-center bg-white rounded-full w-[38px] h-[38px] overflow-hidden'>
+                    {userDetails.profileImage?.length < 3 ? (
+                      <p>
+                        {userDetails.profileImage.toUpperCase()}
+                      </p>
+                    ) :
+                      <img src={userDetails.profileImage && userDetails.profileImage.includes('http') ? userDetails.profileImage : "https://mentalmaze-game.infura-ipfs.io/ipfs/" + userDetails.profileImage} alt="" className='w-full h-full'
+                      />
+                    }
+                  </div>
                 </div>
               }
               <CustomButton />

@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from 'react'
-import Title from "./../../assets/userProfile/Title.png"
 import ranking from "./../../assets/userProfile/ranking.png"
 import Stars from "./../../assets/userProfile/Stars.png"
 import edit from "./../../assets/userProfile/edit.png"
@@ -10,58 +9,142 @@ import { UserContext } from '../../context/UserContext'
 import { useNavigate } from 'react-router-dom'
 import { useModalContext } from '../../context/ModalContext'
 import { useAccount } from 'wagmi'
-// import medal from "./../../assets/Leadership/medal_star.png"
+import { Pagination } from '../../component/ui/Pagination'
 
 
 
-const data = [
-    {
-        name: "Math Puzzle",
-        status: "Pending"
-    },
-    {
-        name: "Math Puzzle",
-        status: "View Result"
-    },
-    {
-        name: "Math Puzzle",
-        status: 25
-    },
-    {
-        name: "Math Puzzle",
-        status: 25
-    },
-    {
-        name: "Math Puzzle",
-        status: 25
-    }
-]
+const RANK = ({ position, completed, gameId, accountId, userDetails }: any) => {
 
-const RANK = ({ name, status }: { name: string, status: string | number }) => {
+    const [game, setGame]: any = useState()
+
+    const getSingleGame = () => {
+        let myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${userDetails.token}`);
+
+        let requestOptions: RequestInit = {
+            method: "GET",
+            headers: myHeaders,
+            redirect: "follow",
+        };
+
+        fetch(
+            `${import.meta.env.VITE_REACT_APP_BASE_URL
+            }/api/game/fetch-single?gameid=${gameId}&accountId=${accountId
+            }`,
+            requestOptions
+        )
+            .then((response) => response.json())
+            .then((result) => {
+                if (result.data) {
+                    setGame(result.data);
+                    // setLoading(false);
+                } else {
+                    console.log(result);
+                    // setLoading(false);
+                }
+            })
+            .catch((error) => {
+                // setLoading(false);
+                console.log("error", error);
+            });
+    };
+
+    useEffect(() => {
+        getSingleGame()
+    }, [])
+
+    console.log(game)
+
     return (
-        <div className='flex justify-between font-droid text-[15px] md:text-[32px] font-normal px-[16px]  md:px-[48px] mt-[32px] grad-dar rounded-[16px] border-blue-50 border-solid border-[2px] py-[16px] md:py-[24px]'>
+        <div className='flex justify-between font-droid text-[15px] lg:text-[32px] font-normal px-[16px]  lg:px-[48px] mt-[32px] grad-dar rounded-[16px] border-blue-50 border-solid border-[2px] py-[16px] md:py-[24px]'>
             <div className='col-span-2 flex items-center gap-[16px] md:gap-[48px] '>
-                <div className=' bg-blue-main w-[48px] h-[48px] md:w-[72px] md:h-[72px] rounded-[8px] '>
-
-                </div>
-                <div className='flex flex-col items-start text-white'> <p>{name}</p>
+                {/* <div className=' bg-blue-main w-[48px] h-[48px] md:w-[72px] md:h-[72px] rounded-[8px] '>
+                </div> */}
+                <img src={game?.image} alt="game image" />
+                <div className='flex flex-col items-start text-white'> <p>{game?.title}</p>
                 </div>
             </div>
             <div className='text-white flex items-center'>
-                {status == "Pending" ? "Pending" : status == "View Result" ? "View Result" : status == 25 ?
-                    <div className='flex text-white text-[24px] leading-[26.11px] items-center gap-3'><img src={medalMaster} />{status.toString()}</div> : null}
+                {!completed ? "Pending" : position <= 4 ? "View Result" :
+                    <div className='flex text-white text-[15px] lg:text-[32px] leading-[26.11px] items-center gap-3'><img src={medalMaster} />{position.toString()}</div>}
             </div>
         </div>
     )
 }
 
 
-const RANKS = () => {
+const RANKS = ({ userDetails }: any) => {
+
+    const [loading, setLoading] = useState(false)
+    const [pgNum, setPgNum]: any = useState(1)
+    const [rank, setRank]: any = useState()
+
+    const getRank = () => {
+
+        let myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${userDetails.token}`);
+
+        let requestOptions: RequestInit = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow'
+        };
+
+        fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/rank?pageNumber=${pgNum}&pageSize=5&userAddress=${userDetails.address}`, requestOptions)
+            .then(response => response.json())
+            .then(result => {
+                if (result.data) {
+                    setRank(result.data)
+                    setLoading(false)
+                }
+                else {
+                    console.log(result)
+                    setLoading(false)
+                }
+            })
+            .catch(error => {
+                setLoading(false)
+                console.log('error', error)
+            });
+    }
+
+    useEffect(() => {
+        setLoading(true)
+        if (!userDetails?.token) {
+            setLoading(false)
+            return
+        }
+        getRank()
+    }, [userDetails])
+
+    console.log(loading)
+
+    const handlePagination = (info: any) => {
+        console.log(pgNum)
+        console.log(info)
+        if (info == 'next' || info == 'prev') {
+            if (info == 'next') {
+                setPgNum(pgNum + 1)
+                return
+            } else {
+                if (pgNum == 1) return
+                setPgNum(pgNum - 1)
+                return
+            }
+        }
+        setPgNum(Number(info))
+    }
+
+    console.log(rank)
+
     return (
         <div className='flex-1 border-blue-80 py-4 border-4 rounded-3xl userProfileStat mt-[34px]'>
             <h2 className=" font-droidbold text-[32px] text-white py-4 text-center border-b-blue-80 border-b-4">RANK HISTORY</h2>
             <div className='md:px-[40px] px-[20px]'>
-                {data.map((item) => <RANK {...item} />)}
+                {rank?.map((item: any) => <RANK userDetails={userDetails} {...item} />)}
+            </div>
+            <div className='  py-[32px] px-[24px] h-[96px] w-full flex justify-end'>
+                <Pagination num={2} handler={handlePagination} />
             </div>
         </div>
     )
@@ -69,16 +152,21 @@ const RANKS = () => {
 
 
 const UserProfile = () => {
+    const { userDetails }: any = useContext(UserContext);
+    const [creatorMode, setCreatorMode] = useState(false)
+
+
     return (
         <div className='w-full  relative z-[999] px-[16px] md:px-[52px] mt-[96px] md:mt-[176px]'>
-            <ProfileHeader />
-            <Mode />
+            <ProfileHeader userDetails={userDetails} />
+            <Mode creatorMode={creatorMode} setCreatorMode={setCreatorMode} />
             <div className="flex mt-12 gap-[34px] flex-col md:flex-row w-full">
-                <Stat />
+                <Stat stat={userDetails.stat} />
                 <div className='w-full'>
                     <Level />
-                    <RANKS />
+                    <RANKS creatorMode={creatorMode} userDetails={userDetails} />
                 </div>
+
             </div>
         </div>
     )
@@ -89,14 +177,14 @@ export default UserProfile
 
 
 
-const ProfileHeader = () => {
-    const { userDetails }: any = useContext(UserContext);
+const ProfileHeader = ({ userDetails }: any) => {
+
     const { switchModal, switchModalcontent, } = useModalContext()
     // const[editUser,setEditUser]=useState(false)
     const navigate = useNavigate()
     const { isConnected } = useAccount();
 
-    console.log(isConnected)
+    console.log(userDetails)
 
     useEffect(() => {
         if (!userDetails.address || !isConnected) {
@@ -110,10 +198,20 @@ const ProfileHeader = () => {
             <div className='absolute h-full w-full '>
                 <img src={Stars} className='w-full h-full blur-sm hidden md:block' />
                 <img src={StarsM} className='w-full h-full blur-sm block md:hidden' />
-
             </div>
             <div className='flex items-center  gap-[16px] md:gap-[50px] relative z-10'>
-                <div className='rounded-[8px] md:rounded-2xl border-blue-90 border md:border-4'><img src={Title} alt="" className='w-[96px] h-[96px] md:w-[initial] md:h-[initial]' /></div>
+                <div className='rounded-[8px] md:rounded-2xl border-blue-90 border md:border-4'>
+                    <div className='text-headerbg text-xl font-bold justify-center flex items-center bg-white rounded-[8px] w-[96px] h-[96px] md:w-[150px] md:h-[150px] overflow-hidden'>
+                        {userDetails.profileImage?.length < 3 ? (
+                            <p>
+                                {userDetails.profileImage.toUpperCase()}
+                            </p>
+                        ) :
+                            <img src={userDetails.profileImage && userDetails.profileImage.includes('http') ? userDetails.profileImage : "https://mentalmaze-game.infura-ipfs.io/ipfs/" + userDetails.profileImage} alt="" className='w-full h-full'
+                            />
+                        }
+                    </div>
+                </div>
                 <div className='text-white flex flex-col items-center'>
                     <p className="md:text-[32px] text-white font-normal font-droid">{userDetails?.username}</p>
 
@@ -143,12 +241,12 @@ const ProfileHeader = () => {
     )
 }
 
-const Mode = () => {
-    const [creatorMode, setCreatorMode] = useState(false)
+const Mode = ({ creatorMode, setCreatorMode }: any) => {
+
 
     return (
         <div className='flex w-full h-[70px] md:h-24 border-blue-80 border-4 rounded-3xl items-center px-6 creatorsModebuttonbg text-white py-[10px] justify-between mt-12 relative z-[999] home'>
-            <p className="font-Archivo_Regular md:text-[40px] leading-[17.41px] md:leading-normal font-normal ">CREATOR’S MODE</p>
+            <p className="font-Archivo_Regular md:text-[40px] leading-[17.41px] md:leading-normal font-normal ">{creatorMode ? 'CREATOR’S' : 'PLAYER’S'} MODE</p>
             <button className='h-full w-[64px] md:w-[128px] border-blue-80 rounded-[80px] p-2 border-2 creatorsModebutton' onClick={() => {
                 setCreatorMode(!creatorMode)
             }}
@@ -168,21 +266,22 @@ const Mode = () => {
         </div>)
 }
 
-const Stat = () => {
+const Stat = ({ stat }: any) => {
+    console.log(stat)
     return (
-        <div className='border-4 rounded-3xl py-4 flex flex-col gap-8 border-blue-80 userProfileStat h-fit'>
-            <h2 className='px-[75px] font-400 font-droidbold
-            text-[2rem] text-white py-4 text-center border-b-blue-80 border-b-4'>
+        <div className='border-4 rounded-3xl  py-4 flex flex-col gap-8 border-blue-80 userProfileStat h-fit'>
+            <h2 className=' font-400 font-droidbold
+             text-white py-4 px-[20px] text-[25px] text-center border-b-blue-80 border-b-4'>
                 STATS
             </h2>
-            <div className='flex flex-col gap-8'>
-                <p className='flex flex-col items-center px-[63px] py-4'>
-                    <h2 className='font-400 font-Archivo-Bold text-[2rem] text-white'>4</h2>
-                    <p className='font-semibold font-Archivo_Regular text-[20px] text-wb-40'>Games played</p>
+            <div className='flex flex-col px-[30px] gap-8'>
+                <p className='flex flex-col items-center text-center  py-4'>
+                    <h2 className='font-400 font-Archivo-Bold text-[30px] text-white'>4</h2>
+                    <p className='font-semibold font-Archivo_Regular text-wb-40'>Games played</p>
                 </p>
-                <p className='flex flex-col items-center px-[63px] py-4'>
-                    <h2 className='font-400 font-Archivo-Bold text-[2rem] text-white'>4</h2>
-                    <p className='font-semibold font-Archivo_Regular text-[20px] text-wb-40'>Mission Completed</p>
+                <p className='flex flex-col items-center text-center py-4'>
+                    <h2 className='font-400 font-Archivo-Bold text-[30px] text-white'>4</h2>
+                    <p className='font-semibold font-Archivo_Regular text-wb-40'>Mission Completed</p>
                 </p>
             </div>
         </div>

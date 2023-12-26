@@ -31,12 +31,12 @@ const Verify = () => {
       })
       .then(result => {
         if (result.data && result.data.id) {
-          setUserDetails(result.data)
-          localStorage.setItem("userData", JSON.stringify(result.data))
+          setUserDetails({ ...result.data, token: webToken })
+          localStorage.setItem("userData", JSON.stringify({ ...result.data, token: webToken }))
           switchModalcontent('welcome')
           setLoading(false)
         }
-        if (result.data === null) {
+        if (result.data == null) {
           setLoading(false)
           switchModalcontent('chooseNickname')
         }
@@ -65,10 +65,8 @@ const Verify = () => {
       redirect: 'follow'
     }
 
-    console.log(raw)
     fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/authenticate/verify`, requestOptions)
       .then(async response => {
-        console.log('first   333')
         if (response.ok) {
           setresponse(await response.json());
           setLoading(false)

@@ -1,5 +1,4 @@
 import { createContext, useState } from "react";
-import { CID } from 'ipfs-http-client'
 
 export type UserContextProviderProps = {
     children: React.ReactNode
@@ -37,6 +36,12 @@ export interface UserContextType {
     setTypeQuestion: React.Dispatch<React.SetStateAction<boolean>>
     duration: string
     setDuration: React.Dispatch<React.SetStateAction<string>>
+    setPendingGames: React.Dispatch<React.SetStateAction<any>>
+    setLiveGames: React.Dispatch<React.SetStateAction<any>>
+    setSearchedGames: React.Dispatch<React.SetStateAction<any>>
+    searchedGames: any
+    searchText: any
+    setSearchText: React.Dispatch<React.SetStateAction<any>>
     questionObj: {}
     setQuestionObj: any
     questions: any
@@ -44,6 +49,8 @@ export interface UserContextType {
     coverImage: any
     setCoverImage: any
     images: any
+    pendingGames: any
+    liveGames: any
     setImages: any
     gameToken: any
     priceShare: any
@@ -67,6 +74,7 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
     const [duration, setDuration] = useState('')
     const [questionObj, setQuestionObj] = useState<any>({
         image: '',
+        cover: '',
         options: ['', '', '', ''],
         answer: '',
         difficultyLevel: '',
@@ -75,7 +83,11 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
     const [gameToken, setGameToken] = useState('')
     const [priceShare, setPriceShare] = useState(['', '', ''])
     const [comments, setComments] = useState('')
-    const [images, setImages] = useState<{ cid: CID, path: string }>()
+    const [pendingGames, setPendingGames] = useState([])
+    const [liveGames, setLiveGames] = useState([])
+    const [searchedGames, setSearchedGames]: any = useState()
+    const [searchText, setSearchText] = useState('')
+    const [images, setImages] = useState('')
 
 
     const [signInDetails, setSignInDetails] = useState<signInDetails>({
@@ -112,7 +124,11 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
 
     // console.log(signInDetails)
 
-    return <UserContext.Provider value={{ setSignInDetails, signInDetails, token, setToken, loading, setLoading, userDetails, setUserDetails, mobileSignInDetails, setmobileSignInDetails, title, setTitle, typeQuestion, setTypeQuestion, questionTitle, setQuestionTitle, duration, setDuration, questionObj, setQuestionObj, questions, setQuestions, coverImage, setCoverImage, images, setImages, gameToken, setGameToken, priceShare, setPriceShare, comments, setComments }}>
+    return <UserContext.Provider value={{
+        setSignInDetails, signInDetails, token, setToken, loading, setLoading, userDetails, setUserDetails, mobileSignInDetails, setmobileSignInDetails, title, setTitle, typeQuestion, setTypeQuestion, questionTitle, setQuestionTitle, duration, setDuration, questionObj, setQuestionObj, questions, setQuestions, coverImage, setCoverImage, images, setImages, gameToken, setGameToken, priceShare, setPriceShare, comments, setComments, pendingGames, setPendingGames, liveGames, setLiveGames,
+        searchedGames, setSearchedGames,
+        searchText, setSearchText,
+    }}>
         {children}
     </UserContext.Provider>
 }
