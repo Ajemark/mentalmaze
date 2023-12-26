@@ -219,7 +219,7 @@ const Games = ({ data, handler, totalJudges, loading }: any) => {
 
 const Game = ({ image, address, title, approve, rejectCount, approveCount, rejectionMessage }: any) => {
 
-    // const [votingStat, setVotingStat] = useState(0)
+    const [votingStat, setVotingStat]: any = useState()
     const signer = useEthersSigner();
     const provider = useEthersProvider();
     const mmContract = new MMContract(MM_ADDRESS, signer, provider)
@@ -246,9 +246,10 @@ const Game = ({ image, address, title, approve, rejectCount, approveCount, rejec
     const stats = getJudges()
 
     useEffect(() => {
-        (async () => {
-            // setVotingStat(await stats)
-        })()
+        if (!votingStat)
+            (async () => {
+                setVotingStat(await stats)
+            })()
     }, [stats])
 
     return (
@@ -267,20 +268,20 @@ const Game = ({ image, address, title, approve, rejectCount, approveCount, rejec
             <td>
                 <div className='flex justify-between '>
                     <p className='text-blue-main'>
-                        {approveCount}
+                        {votingStat?.totalApprovedGameVotes ?? 0}
                     </p>
                     <p className=' text-disppaprove'>
-                        {rejectCount}
+                        {(votingStat?.totalVotesForGame - votingStat?.totalApprovedGameVotes) ?? 0}
                     </p>
                 </div>
                 <div className='bg-disppaprove h-[8px] w-full rounded-[20px]'>
-                    {/* <div style={
+                    <div style={
                         {
-                            width: `${totalJudges > 0 ? approveCount < 1 ? 50 : (approveCount / totalJudges * 100) : 0}%`
+                            width: `${votingStat?.totalVotesForGame > 0 ? (votingStat?.totalApprovedGameVotes / votingStat?.totalVotesForGame) * 100 : 50}%`
                         }
                     } className={`bg-blue-main h-[8px]  rounded-[20px]`}>
 
-                    </div> */}
+                    </div>
                 </div>
             </td>
             <td>

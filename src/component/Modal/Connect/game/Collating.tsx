@@ -18,8 +18,7 @@ const Collating = () => {
 
   useEffect(() => {
 
-    const id = localStorage.getItem('gameId')
-    const data = JSON.parse(localStorage.getItem('GameInfo-' + id) ?? '')
+    const data = JSON.parse(localStorage.getItem('GameInfo') ?? '')
     if (data.game) setData(data)
   }, [])
 

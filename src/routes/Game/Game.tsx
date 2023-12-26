@@ -6,10 +6,10 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserContext";
 import Loading from "../../component/ui/Loading";
 import { useModalContext } from "../../context/ModalContext";
-import { io as webSocketClient } from "socket.io-client";
+import { useAccount } from "wagmi";
+import { useNavigate } from "react-router-dom";
 
-const webSocketUrl = import.meta.env.VITE_REACT_APP_BASE_URL
-const socket = webSocketClient(webSocketUrl);
+
 
 const Game = () => {
   const [loading, setLoading] = useState(false)
@@ -21,12 +21,13 @@ const Game = () => {
   const [playerData, setPlayerData]: any = useState()
   const [localData, setLocalData]: any = useState()
   const [again, setagain] = useState(0)
+  const [timer, settimer] = useState(0)
   const [creating, setcreating] = useState(false)
-  const [timeRemaing, setTimeRemaing] = useState<any>();
 
   const { switchModalcontent, switchModal } = useModalContext();
-  // console.log("_timeRemaining---", timeRemaing);
 
+  const { address } = useAccount();
+  const navigate = useNavigate();
   const { userDetails }: any = useContext(UserContext);
 
   const getSingleGame = () => {
@@ -63,24 +64,6 @@ const Game = () => {
       });
   };
 
-  useEffect(() => {
-    // use to end game when player decide to force close game
-    // socket.emit("force_end_timer", { playersAddress: userDetails.address });
-    socket.emit("start_timer", { playersAddress: userDetails.address });
-    socket.on("updateTimer", (_timeRemaining) => {
-      setTimeRemaing(() => _timeRemaining);
-      console.log("yeah");
-    });
-
-    socket.on("updateTimer", (_timeRemaining) => {
-      setTimeRemaing(() => _timeRemaining);
-      console.log("yeah");
-    });
-
-    socket.on("timerEnd", () => {
-
-    });
-  }, []);
 
   const getPlayerDetails = () => {
     let myHeaders = new Headers();
@@ -170,7 +153,20 @@ const Game = () => {
 
 
   useEffect(() => {
-    const localData: any = localStorage.getItem(`GameInfo-${game?.id}`)
+
+    if (!game) return;
+    let played = false;
+
+    for (const count in game.finishers) {
+      console.log(game.finishers[count]?.toLowerCase() == address?.toLowerCase())
+      played =
+        game.finishers[count]?.toLowerCase() == address?.toLowerCase();
+      if (played) break;
+    }
+
+    if (played) navigate('/')
+
+    const localData: any = localStorage.getItem(`GameInfo`)
     if (localData) {
       setLocalData(JSON.parse(localData))
       setCurQuestion(JSON.parse(localData).dataToSubmit.arrayofQuestion_answer.length)
@@ -203,16 +199,14 @@ const Game = () => {
         arrayofQuestion_answer: data,
       };
 
-      localStorage.setItem(`GameInfo-${game.id}`, JSON.stringify({
+      localStorage.setItem(`GameInfo`, JSON.stringify({
         dataToSubmit, game: {
           id: game.id,
           title: game.title
         }
       }))
-      localStorage.setItem("gameId", game.id)
 
 
-      socket.emit("force_end_timer", { playersAddress: userDetails.address });
       switchModal();
       switchModalcontent("hurray");
       return;
@@ -237,7 +231,7 @@ const Game = () => {
       arrayofQuestion_answer: data,
     };
 
-    localStorage.setItem(`GameInfo-${game.id}`, JSON.stringify({
+    localStorage.setItem(`GameInfo`, JSON.stringify({
       dataToSubmit, game: {
         id: game.id,
         title: game.title
@@ -260,7 +254,7 @@ const Game = () => {
             <div className="border-[4px] border-blue-80 border-solid rounded-[24px] flex-1 ">
               <GameHeader
                 handleAnswers={handleAnswers}
-                timeRemaing={timeRemaing}
+                timer={timer}
               />
               <div className="flex flex-col items-center gap-[36px] py-[67px]">
                 {game && Object.keys(game).length > 1 && (
@@ -407,7 +401,7 @@ const Sidebar = ({ game, curQuestion }: any) => {
 };
 
 
-const GameHeader = ({ timeRemaing }: any) => {
+const GameHeader = ({ timer }: any) => {
 
   return (
     <div className="flex justify-between py-[18px] bg-wb-100 rounded-t-[24px]  md:rounded-tl-[24px] px-[18px]">
@@ -417,7 +411,7 @@ const GameHeader = ({ timeRemaing }: any) => {
           <div className='next rounded-[16px] p-[1px] text-white'>
             <div className='rounded-[16px] bg-blue-100 p-[8px] font-droid leading-normal text-[16px] flex items-center gap-[8px] w-fit justify-center'>
               <p>
-                {(timeRemaing / 1000) ?? 0}
+                {(timer / 1000) ?? 0}
               </p>
             </div>
           </div>
