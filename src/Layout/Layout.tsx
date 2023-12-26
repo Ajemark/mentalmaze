@@ -8,15 +8,51 @@ import useMode from "../hooks/useMode";
 import { Toaster } from "react-hot-toast";
 
 import { configureChains, createConfig, sepolia, WagmiConfig } from "wagmi";
-import { auroraTestnet } from "wagmi/chains";
 
 import "@rainbow-me/rainbowkit/styles.css";
 
 import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { publicProvider } from "wagmi/providers/public";
 
+
+// const auroraChain = {
+//   id: 1313161554,
+//   name: "Aurora Mainnet",
+//   network: "Aurora Mainnet",
+//   nativeCurrency: {
+//     decimals: 18,
+//     name: "Ether",
+//     symbol: "ETH",
+//   },
+//   rpcUrls: {
+//     default: { http: ["https://mainnet.aurora.dev"] },
+//     public: { http: ["https://mainnet.aurora.dev"] },
+//   },
+//   blockExplorers: {
+//     default: { name: "Aurora Explorer", url: "https://explorer.aurora.dev" },
+//   }
+// }
+
+const auroraChain = {
+  id: 1313161555,
+  name: "Aurora Testnet",
+  network: "Aurora Testnet",
+  nativeCurrency: {
+    decimals: 18,
+    name: "Ether",
+    symbol: "ETH",
+  },
+  rpcUrls: {
+    default: { http: ["https://testnet.aurora.dev"] },
+    public: { http: ["https://testnet.aurora.dev"] },
+  },
+  blockExplorers: {
+    default: { name: "Aurora Explorer", url: "https://explorer.aurora.dev" },
+  }
+}
+
 const { chains, publicClient } = configureChains(
-  [sepolia, auroraTestnet],
+  [auroraChain, sepolia],
   [publicProvider()]
 );
 
@@ -57,9 +93,8 @@ export const MainLayout = () => {
       <WagmiConfig config={wagmiConfig}>
         <RainbowKitProvider chains={chains}>
           <div
-            className={`${
-              challenger ? "bg-black" : "home"
-            } rounded-none min-h-screen h-full flex justify-center w-full items-center`}
+            className={`${challenger ? "bg-black" : "home"
+              } rounded-none min-h-screen h-full flex justify-center w-full items-center`}
           >
             <div className="fixed h-screen bottom-0 bg-overlay w-screen mix-blend-multiply backdrop-blur-[4px] bg-cover "></div>
             <div className="mx-auto fixed w-screen h-screen  left-0 top-0 bg-bg-sky bg-cover bg-center right-0 after  bg-fixed"></div>
