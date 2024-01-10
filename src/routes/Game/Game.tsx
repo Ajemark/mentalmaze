@@ -16,7 +16,7 @@ const Game = () => {
   const [loading, setLoading] = useState(false)
   const [game, setGame]: any = useState()
   const [curQuestion, setCurQuestion]: any = useState(0)
-  const [selected, setSelected]: any = useState("easy level")
+  const [selected, setSelected]: any = useState()
   const [errorMessage, setErrorMessage] = useState('')
   const [answers, setAnswers]: any = useState([])
   const [playerData, setPlayerData]: any = useState()
@@ -58,7 +58,7 @@ const Game = () => {
         if (result.data) {
           setGame(result.data);
         } else {
-          console.log(result);
+          // console.log(result);
           setLoading(false);
         }
       })
@@ -87,7 +87,6 @@ const Game = () => {
     fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/player/getPlayerDetails?gameId=${data.gameId}&playersAddress=${userDetails.address}`, requestOptions)
       .then(response => response.json())
       .then(result => {
-        console.log(result)
         if (result.gamePlayerDetails?.length > 0 || result.gamePlayerDetails.id) {
           setPlayerData(result.gamePlayerDetails[0])
           getSingleGame()
@@ -125,15 +124,15 @@ const Game = () => {
     fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/player/createGamePlayer`, requestOptions)
       .then(response => response.json())
       .then(result => {
-        console.log(result, '                109')
-        console.log(result.gamePlayerData?.length)
+        // console.log(result, '                109')
+        // console.log(result.gamePlayerData?.length)
         if (result.gamePlayerData?.length > 0 || result.gamePlayerData.id) {
           getSingleGame()
           setPlayerData(result.gamePlayerData)
           // setLoading(false)
         }
         else {
-          console.log(result)
+          // console.log(result)
           setLoading(false)
         }
       })
@@ -177,21 +176,20 @@ const Game = () => {
 
   useEffect(() => {
     if (!questions) return;
-    console.log(questions)
+    // console.log(questions)
     getQuestionTime(questions[curQuestion].id)
   }, [curQuestion, questions])
 
 
   const handleAnswers = (clicked = false) => {
 
-    console.log('submitting')
+
     if (submitting) return;
     setErrorMessage("");
     if (!selected && clicked) {
       setErrorMessage("Please Select An Option");
       return;
     }
-
 
     // let localData = localStorage.getItem(`GameInfo`)
     // localData = (JSON.parse(localData ?? '{"testing":"iiii"}'))
@@ -226,7 +224,7 @@ const Game = () => {
       }))
 
       setSubmitting(true)
-      updateTimer(questions[curQuestion].id, 0)
+      // updateTimer(questions[curQuestion].id, 0)
       switchModal();
       switchModalcontent("hurray");
       return;
@@ -256,7 +254,7 @@ const Game = () => {
       }
     }))
 
-    updateTimer(questions[curQuestion].id, 0)
+    // updateTimer(questions[curQuestion].id, 0)
     setCurQuestion(curQuestion + 1);
     setSelected();
   };
@@ -304,7 +302,7 @@ const Game = () => {
 
   const getQuestionTime = (qId: number) => {
     setLoading(true)
-    console.log(qId)
+    // console.log(qId)
 
     let myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${userDetails.token}`);
@@ -324,11 +322,11 @@ const Game = () => {
       .then((response) => response.json())
       .then((result) => {
         if (result.data) {
-          console.log(result)
+          // console.log(result)
           setTimeRemaining(result.data.timeRemaining)
           setLoading(false);
         } else {
-          console.log(result);
+          // console.log(result);
           setLoading(false);
         }
       })
@@ -340,10 +338,11 @@ const Game = () => {
 
 
 
-  console.log(curQuestion)
-  console.log(playerData)
-  // console.log(game.question)
+  // console.log(curQuestion)
+  // console.log(playerData)
+  // console.log(questions)
 
+  // console.log(!game && loading && !timeRemaining)
   return (
     <div>
       {!game || loading ? (
@@ -484,7 +483,7 @@ const Game = () => {
 };
 
 const Sidebar = ({ questions, curQuestion }: any) => {
-  console.log(questions)
+  // console.log(questions)
   return (
     <div className="mt-[32px] md:mt-0 grid grid-cols-3 gap-y-[8px] gap-x-[8px]  md:flex flex-col gap-[8px] bg-wb-100 px-[16px] md:px-[32px] py-[20px] rounded-r-[24px] h-full  rounded-[16px]">
       {questions &&
@@ -581,8 +580,8 @@ const GameHeader = ({ timer, handleAnswers }: any) => {
 const Rating: any = ({ game }: any) => {
   const d = new Date(game?.createdAt);
   const endDate = new Date(game?.endAt);
-  console.log(endDate)
-  console.log(game)
+  // console.log(endDate)
+  // console.log(game)
   return (
     <div className="py-[24px] w-full md:w-[266px] border-blue-80 border-solid border-[4px] rounded-[24px]">
       <p className="h-[86px] w-full border-b-[4px] border-b-blue-80 mb-[32px]"></p>
