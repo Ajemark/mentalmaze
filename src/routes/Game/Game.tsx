@@ -8,6 +8,7 @@ import Loading from "../../component/ui/Loading";
 import { useModalContext } from "../../context/ModalContext";
 import { useAccount } from "wagmi";
 import { useNavigate } from "react-router-dom";
+import Timer from "./Timer";
 
 
 
@@ -15,14 +16,18 @@ const Game = () => {
   const [loading, setLoading] = useState(false)
   const [game, setGame]: any = useState()
   const [curQuestion, setCurQuestion]: any = useState(0)
-  const [selected, setSelected]: any = useState()
+  const [selected, setSelected]: any = useState("easy level")
   const [errorMessage, setErrorMessage] = useState('')
   const [answers, setAnswers]: any = useState([])
   const [playerData, setPlayerData]: any = useState()
-  const [localData, setLocalData]: any = useState()
   const [again, setagain] = useState(0)
-  const [timer, setTimer] = useState(0)
+  const [timeRemaining, setTimeRemaining] = useState()
   const [creating, setcreating] = useState(false)
+
+
+  const [submitting, setSubmitting] = useState(false)
+  const [questions, setQuestions]: any = useState()
+
 
   const { switchModalcontent, switchModal } = useModalContext();
 
@@ -52,7 +57,6 @@ const Game = () => {
       .then((result) => {
         if (result.data) {
           setGame(result.data);
-          setLoading(false);
         } else {
           console.log(result);
           setLoading(false);
@@ -63,7 +67,6 @@ const Game = () => {
         console.log("error", error);
       });
   };
-
 
   const getPlayerDetails = () => {
     let myHeaders = new Headers();
@@ -87,9 +90,7 @@ const Game = () => {
         console.log(result)
         if (result.gamePlayerDetails?.length > 0 || result.gamePlayerDetails.id) {
           setPlayerData(result.gamePlayerDetails[0])
-
           getSingleGame()
-          setLoading(false)
         } else {
 
           if (creating) return
@@ -129,7 +130,7 @@ const Game = () => {
         if (result.gamePlayerData?.length > 0 || result.gamePlayerData.id) {
           getSingleGame()
           setPlayerData(result.gamePlayerData)
-          setLoading(false)
+          // setLoading(false)
         }
         else {
           console.log(result)
@@ -151,42 +152,57 @@ const Game = () => {
     getPlayerDetails()
   }, [userDetails, again])
 
-
   useEffect(() => {
-
     if (!game) return;
     let played = false;
-
     for (const count in game.finishers) {
       played =
         game.finishers[count]?.toLowerCase() == address?.toLowerCase();
       if (played) break;
     }
-
-    setTimer(1000 * 60)
-
-
     if (played) navigate('/')
-    return;
 
-    const localData: any = localStorage.getItem(`GameInfo`)
-    if (localData) {
-      setLocalData(JSON.parse(localData))
-      setCurQuestion(JSON.parse(localData).dataToSubmit.arrayofQuestion_answer.length)
-    }
   }, [game])
 
 
+  useEffect(() => {
+    if (!game) return;
+    if (!playerData) return;
+
+    const levelQuestions = game.question.filter((g: any) => g.difficultyLevel.toLowerCase() == playerData.unlockLevel.toLowerCase())
+    setQuestions(levelQuestions)
+
+  }, [game, playerData])
+
+
+  useEffect(() => {
+    if (!questions) return;
+    console.log(questions)
+    getQuestionTime(questions[curQuestion].id)
+  }, [curQuestion, questions])
+
+
   const handleAnswers = (clicked = false) => {
+
+    console.log('submitting')
+    if (submitting) return;
     setErrorMessage("");
     if (!selected && clicked) {
       setErrorMessage("Please Select An Option");
       return;
     }
 
-    if (curQuestion + 1 >= game?.question.length) {
+
+    // let localData = localStorage.getItem(`GameInfo`)
+    // localData = (JSON.parse(localData ?? '{"testing":"iiii"}'))
+
+    // console.log(localData?.dataToSubmit)
+
+
+
+    if (curQuestion + 1 >= questions.length) {
       const d = {
-        questionId: game?.question[curQuestion].id,
+        questionId: questions[curQuestion].id,
         questionAnswer: selected ?? "null",
       };
       const data = [...answers];
@@ -197,7 +213,7 @@ const Game = () => {
       const dataToSubmit = {
         gameId: game.id,
         playerAddress: userDetails.address,
-        level: game?.question[curQuestion].difficultyLevel,
+        level: questions[curQuestion].difficultyLevel,
         playerId: playerData.id,
         arrayofQuestion_answer: data,
       };
@@ -209,27 +225,26 @@ const Game = () => {
         }
       }))
 
-
+      setSubmitting(true)
+      updateTimer(questions[curQuestion].id, 0)
       switchModal();
       switchModalcontent("hurray");
       return;
     }
 
     const d = {
-      questionId: game?.question[curQuestion].id,
-      questionAnswer: selected,
+      questionId: questions[curQuestion].id,
+      questionAnswer: selected ?? "null",
     };
     const data = [...answers];
     data.push(d);
 
     setAnswers(data);
-    console.log(game);
-    console.log(playerData);
 
     const dataToSubmit = {
       gameId: game.id,
       playerAddress: userDetails.address,
-      level: game?.question[curQuestion].difficultyLevel,
+      level: questions[curQuestion].difficultyLevel,
       playerId: playerData.id,
       arrayofQuestion_answer: data,
     };
@@ -241,15 +256,97 @@ const Game = () => {
       }
     }))
 
-    setCurQuestion((prev: number) => prev + 1);
-    setSelected("");
+    updateTimer(questions[curQuestion].id, 0)
+    setCurQuestion(curQuestion + 1);
+    setSelected();
   };
 
-  console.log(localData)
+  const updateTimer = (qId: number, tRm: number) => {
+
+    let myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", `Bearer ${userDetails.token}`);
+
+    const raw = JSON.stringify({
+      "gameId": game.id,
+      "questionId": qId,
+      "timeRemaining": tRm,
+      "accountId": game.accountId
+    })
+
+    console.log(raw)
+
+    let requestOptions: RequestInit = {
+      method: 'PUT',
+      body: raw,
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+
+
+    fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/time/update-time`, requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        if (result) {
+          console.log(result)
+
+        }
+        else {
+          console.log(result)
+          setLoading(false)
+        }
+      })
+      .catch(error => {
+        setLoading(false)
+        console.log('error', error)
+      });
+  }
+
+  const getQuestionTime = (qId: number) => {
+    setLoading(true)
+    console.log(qId)
+
+    let myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${userDetails.token}`);
+
+    let requestOptions: RequestInit = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    fetch(
+      `${import.meta.env.VITE_REACT_APP_BASE_URL
+      }/api/time/fetch-time?gameId=${game.id}&accountId=${game.accountId
+      }&questionId=${qId}`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        if (result.data) {
+          console.log(result)
+          setTimeRemaining(result.data.timeRemaining)
+          setLoading(false);
+        } else {
+          console.log(result);
+          setLoading(false);
+        }
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log("error", error);
+      });
+  };
+
+
+
+  console.log(curQuestion)
+  console.log(playerData)
+  // console.log(game.question)
 
   return (
     <div>
-      {loading ? (
+      {!game || loading ? (
         <Loading />
       ) : (
         <div className="relative  md:mr-[52px] h-fit rounded-[24px] mt-[96px] md:mt-[130px] px-[20px] ">
@@ -257,25 +354,25 @@ const Game = () => {
             <div className="border-[4px] border-blue-80 border-solid rounded-[24px] flex-1 ">
               <GameHeader
                 handleAnswers={handleAnswers}
-                timer={timer}
+                timer={timeRemaining}
               />
               <div className="flex flex-col items-center gap-[36px] py-[67px]">
                 {game && Object.keys(game).length > 1 && (
                   <div className="w-full px-[16px] md:px-[52px] ">
                     <h1 className="font-droid text-center text-white text-[16px] md:text-[32px] text-left w-full  ">
-                      {game?.question[curQuestion].title}
+                      {questions[curQuestion].title}
                     </h1>
                     <div className="mt-[32px] flex flex-col items-center ">
                       {
-                        game?.question[curQuestion].image.includes("http") ? <img
-                          src={game?.question[curQuestion].image}
+                        questions[curQuestion].image.includes("http") ? <img
+                          src={questions[curQuestion].image}
                         /> :
-                          <p className='font-droid text-center text-white text-center text-[16px] md:text-[22px] text-left w-full mt-[40px]'>{game?.question[curQuestion].image}</p>
+                          <p className='font-droid text-center text-white text-center text-[16px] md:text-[22px] text-left w-full mt-[40px]'>{questions[curQuestion].image}</p>
                       }
 
                     </div>
                     <div className="flex w-full mt-10 justify-center gap-[16px]">
-                      {game?.question[curQuestion].options.map(
+                      {questions[curQuestion].options.map(
                         (option: any, index: any) => {
                           return (
                             <div
@@ -374,7 +471,7 @@ const Game = () => {
                 </div> */}
               </div>
             </div>
-            <Sidebar game={game} curQuestion={curQuestion + 1} />
+            <Sidebar questions={questions} curQuestion={curQuestion + 1} />
           </div>
           <div className="flex gap-[38px] flex-col md:flex-row md:pl-[52px]">
             <Rating game={game} />
@@ -386,11 +483,12 @@ const Game = () => {
   );
 };
 
-const Sidebar = ({ game, curQuestion }: any) => {
+const Sidebar = ({ questions, curQuestion }: any) => {
+  console.log(questions)
   return (
     <div className="mt-[32px] md:mt-0 grid grid-cols-3 gap-y-[8px] gap-x-[8px]  md:flex flex-col gap-[8px] bg-wb-100 px-[16px] md:px-[32px] py-[20px] rounded-r-[24px] h-full  rounded-[16px]">
-      {game &&
-        game?.question.map((_: any, i: number) => (
+      {questions &&
+        questions.map((_: any, i: number) => (
           <div
             key={i}
             className={` ${i + 1 == curQuestion ? "bg-blue-50" : "bg-wb-90"
@@ -404,7 +502,7 @@ const Sidebar = ({ game, curQuestion }: any) => {
 };
 
 
-const GameHeader = ({ timer }: any) => {
+const GameHeader = ({ timer, handleAnswers }: any) => {
 
   return (
     <div className="flex justify-between py-[18px] bg-wb-100 rounded-t-[24px]  md:rounded-tl-[24px] px-[18px]">
@@ -412,10 +510,11 @@ const GameHeader = ({ timer }: any) => {
         <div className="flex items-center gap-[8px]">
           <AiOutlineClockCircle color="#0B77F0" fontSize={24} />
           <div className='next rounded-[16px] p-[1px] text-white'>
-            <div className='rounded-[16px] bg-blue-100 p-[8px] font-droid leading-normal text-[16px] flex items-center gap-[8px] w-fit justify-center'>
-              <p>
-                {(timer / 1000) ?? 0}
-              </p>
+            <div className='rounded-[16px] bg-blue-100 p-[8px] font-droid leading-normal text-[20px] flex items-center gap-[8px] w-fit justify-center'>
+              {
+
+                <Timer targetDate={timer} handleAnswers={handleAnswers} />
+              }
             </div>
           </div>
         </div>
