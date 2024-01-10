@@ -44,6 +44,7 @@ const Congratulations = () => {
           <button className="rounded-[16px] font-droid w-[218px] h-[56px] md:w-[251px] md:h-[80px] text-[16px] md:text-[24px] settingsFormbutton" onClick={() => {
             if (data?.updateRes.completed) {
               navigate('/')
+              switchModal()
               return
             }
             location.reload()
