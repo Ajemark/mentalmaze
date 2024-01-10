@@ -3,9 +3,11 @@ import Animation from '../Animation'
 // import clipboardText from "./../../../../assets/modal/clipboardText.svg"
 import { useModalContext } from '../../../../context/ModalContext'
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 const NiceTry = () => {
-  const { switchModalcontent } = useModalContext()
+  const navigate = useNavigate();
+  const { switchModal } = useModalContext()
   const [data, setData]: any = useState()
 
 
@@ -15,7 +17,6 @@ const NiceTry = () => {
     if (data) setData(data)
   }, [])
 
-  console.log(data)
 
   return (
     <div className='flex flex-col h-full '>
@@ -28,8 +29,13 @@ const NiceTry = () => {
           <p className="font-Archivo_thin text-[24px] font-[400] ">Play more modules in the easy level and score more than 50% percent to unlock the next level.</p>
         </div>
         <div>
-          <button className="rounded-[16px] font-droid w-[218px] h-[56px] md:w-[251px] md:h-[80px] text-[16px] md:text-[24px] settingsFormbutton" onClick={() => switchModalcontent('getmore')}>
-            VIEW Modules
+          <button className="rounded-[16px] font-droid w-[218px] h-[56px] md:w-[251px] md:h-[80px] text-[16px] md:text-[24px] settingsFormbutton" onClick={() => {
+            navigate('/')
+            switchModal()
+          }
+            //switchModalcontent('getmore')
+          }>
+            Close
           </button>
         </div>
       </Animation>
