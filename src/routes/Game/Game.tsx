@@ -259,46 +259,46 @@ const Game = () => {
     setSelected();
   };
 
-  const updateTimer = (qId: number, tRm: number) => {
+  // const updateTimer = (qId: number, tRm: number) => {
 
-    let myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("Authorization", `Bearer ${userDetails.token}`);
+  //   let myHeaders = new Headers();
+  //   myHeaders.append("Content-Type", "application/json");
+  //   myHeaders.append("Authorization", `Bearer ${userDetails.token}`);
 
-    const raw = JSON.stringify({
-      "gameId": game.id,
-      "questionId": qId,
-      "timeRemaining": tRm,
-      "accountId": game.accountId
-    })
+  //   const raw = JSON.stringify({
+  //     "gameId": game.id,
+  //     "questionId": qId,
+  //     "timeRemaining": tRm,
+  //     "accountId": game.accountId
+  //   })
 
-    console.log(raw)
+  //   console.log(raw)
 
-    let requestOptions: RequestInit = {
-      method: 'PUT',
-      body: raw,
-      headers: myHeaders,
-      redirect: 'follow'
-    };
+  //   let requestOptions: RequestInit = {
+  //     method: 'PUT',
+  //     body: raw,
+  //     headers: myHeaders,
+  //     redirect: 'follow'
+  //   };
 
 
-    fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/time/update-time`, requestOptions)
-      .then(response => response.json())
-      .then(result => {
-        if (result) {
-          console.log(result)
+  //   fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/time/update-time`, requestOptions)
+  //     .then(response => response.json())
+  //     .then(result => {
+  //       if (result) {
+  //         console.log(result)
 
-        }
-        else {
-          console.log(result)
-          setLoading(false)
-        }
-      })
-      .catch(error => {
-        setLoading(false)
-        console.log('error', error)
-      });
-  }
+  //       }
+  //       else {
+  //         console.log(result)
+  //         setLoading(false)
+  //       }
+  //     })
+  //     .catch(error => {
+  //       setLoading(false)
+  //       console.log('error', error)
+  //     });
+  // }
 
   const getQuestionTime = (qId: number) => {
     setLoading(true)
@@ -579,7 +579,7 @@ const GameHeader = ({ timer, handleAnswers }: any) => {
 
 const Rating: any = ({ game }: any) => {
   const d = new Date(game?.createdAt);
-  const endDate = new Date(game?.endAt);
+  // const endDate = new Date(game?.endAt);
   // console.log(endDate)
   // console.log(game)
   return (
