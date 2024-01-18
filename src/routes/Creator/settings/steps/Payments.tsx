@@ -181,7 +181,6 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
 										return
 									}
 
-
 									const data2 = {
 										...data,
 										rewardDistribution: prices(priceShare),
