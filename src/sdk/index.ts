@@ -34,5 +34,5 @@ export function useEthersProvider({ chainId }: { chainId?: number } = {}) {
     );
 }
 
-export const MM_ADDRESS = '0x9d0353D2CfF0e3FBeF60d292d58D6b44d9fd8c8a'
+export const MM_ADDRESS = '0xd8420f7941B95297aA7e34B9f6E85D93dC43A8E0'
 
