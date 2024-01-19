@@ -70,89 +70,6 @@ export class MMContract {
 
 const MMAbi = [
 	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_newJudgesAddres",
-				"type": "address"
-			}
-		],
-		"name": "addJudges",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "gameAddress",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "mentalmazePointEarned",
-				"type": "uint256"
-			}
-		],
-		"name": "addMentalMazePoint",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "gamesToVoteFor",
-				"type": "address"
-			}
-		],
-		"name": "approveGames",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "bool",
-				"name": "approved",
-				"type": "bool"
-			},
-			{
-				"internalType": "uint256",
-				"name": "amountDeposited",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "durationInHours",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256[]",
-				"name": "rewardDistribution",
-				"type": "uint256[]"
-			},
-			{
-				"internalType": "uint256",
-				"name": "pass",
-				"type": "uint256"
-			}
-		],
-		"name": "createGame",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
 		"inputs": [],
 		"name": "InvalidInitialization",
 		"type": "error"
@@ -192,33 +109,49 @@ const MMAbi = [
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "gameAddress",
+				"name": "",
 				"type": "address"
 			}
 		],
-		"name": "gatePass",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "initialize",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
+		"name": "Games",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "approved",
+				"type": "bool"
+			},
 			{
 				"internalType": "address",
-				"name": "gamesToVoteFor",
+				"name": "creator",
 				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amountDeposited",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "durationInHours",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "managerContract",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "points",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "gatePass",
+				"type": "uint256"
 			}
 		],
-		"name": "rejectGames",
-		"outputs": [],
-		"stateMutability": "nonpayable",
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -229,20 +162,7 @@ const MMAbi = [
 				"type": "address"
 			}
 		],
-		"name": "removeJudges",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
-			}
-		],
-		"name": "withdraw",
+		"name": "addJudges",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -256,11 +176,11 @@ const MMAbi = [
 			},
 			{
 				"internalType": "uint256",
-				"name": "mentalmazePoint",
+				"name": "mentalmazePointEarned",
 				"type": "uint256"
 			}
 		],
-		"name": "withdrawMentalMazePoint",
+		"name": "addMentalMazePoint",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -276,6 +196,19 @@ const MMAbi = [
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "gamesToVoteFor",
+				"type": "address"
+			}
+		],
+		"name": "approveGames",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -308,6 +241,45 @@ const MMAbi = [
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bool",
+				"name": "approved",
+				"type": "bool"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amountDeposited",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "durationInHours",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "rewardDistribution",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256",
+				"name": "pass",
+				"type": "uint256"
+			}
+		],
+		"name": "createGame",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "payable",
 		"type": "function"
 	},
 	{
@@ -365,49 +337,20 @@ const MMAbi = [
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "",
+				"name": "gameAddress",
 				"type": "address"
 			}
 		],
-		"name": "Games",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "approved",
-				"type": "bool"
-			},
-			{
-				"internalType": "address",
-				"name": "creator",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "amountDeposited",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "durationInHours",
-				"type": "uint256"
-			},
-			{
-				"internalType": "address",
-				"name": "managerContract",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "points",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "gatePass",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
+		"name": "gatePass",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "initialize",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -587,6 +530,19 @@ const MMAbi = [
 	{
 		"inputs": [
 			{
+				"internalType": "address",
+				"name": "gamesToVoteFor",
+				"type": "address"
+			}
+		],
+		"name": "rejectGames",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
@@ -620,6 +576,19 @@ const MMAbi = [
 		"inputs": [
 			{
 				"internalType": "address",
+				"name": "_newJudgesAddres",
+				"type": "address"
+			}
+		],
+		"name": "removeJudges",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
 				"name": "",
 				"type": "address"
 			}
@@ -633,6 +602,37 @@ const MMAbi = [
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "withdraw",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "gameAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "mentalmazePoint",
+				"type": "uint256"
+			}
+		],
+		"name": "withdrawMentalMazePoint",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	}
 ]
