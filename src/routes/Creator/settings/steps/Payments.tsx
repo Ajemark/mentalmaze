@@ -28,6 +28,7 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
 	const [errorMessage, setErrorMessage] = useState('')
 	const [sendinTx, setSendinTx] = useState(false)
 	const { questionObj }: any = useContext(UserContext)
+	const [pass, setpass] = useState('0')
 
 	const prices = (priceShare: any) => {
 		let nprice: any = []
@@ -59,6 +60,7 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
 			}
 		} catch (error: any) {
 			setSendinTx(false)
+			console.log(error)
 			if (JSON.parse(JSON.stringify(error)).info.error.data.message.includes('insufficient funds')) {
 				setErrorMessage('You Do Not Have Enough ETH To Process This Transaction!')
 				return
@@ -77,14 +79,35 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
 
 					<div>
 						<div className=' text-white '>
-							<Input
-								title='How much do you want to dedicate to  this project?'
-								placeholder='Please enter the terms of Aurora Token'
-								setValue={setGameToken}
-								value={gameToken}
-								type='number'
-							/>
-							<p className='font-[300] text-wb-40 font-Archivo_Regular mt-[8px] leading-[17.41px] text-[14px] md:text-[16px]'> e.g 3 Aurora Token</p>
+
+							<div>
+								<div>
+									<Input
+										title='How much do you want to dedicate to  this project?'
+										placeholder='Please enter the terms of Aurora Token'
+										setValue={setGameToken}
+										value={gameToken}
+										type='number'
+									/>
+									<p className='font-[300] text-wb-40 font-Archivo_Regular mt-[8px] leading-[17.41px] text-[14px] md:text-[16px]'> e.g 3 Aurora Token</p>
+
+								</div>
+
+								<div>
+
+									<Input
+										title='Set Gate Pass'
+										placeholder='Please enter the terms of Aurora Token'
+										setValue={setpass}
+										value={pass}
+										type='number'
+									/>
+									<p className='font-[300] text-wb-40 font-Archivo_Regular mt-[8px] leading-[17.41px] text-[14px] md:text-[16px]'> e.g 3 Aurora Token</p>
+								</div>
+
+							</div>
+
+
 							<div>
 								<div className='flex justify-between items-end md:items-center mt-[32px] flex-col md:flex-row'>
 									<p className='font-Archivo_Regular leading-[17.41px] text-white font-normal order-2 md:order-1'>How do you want the price shared amongst the runner-up?</p>
@@ -194,9 +217,10 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
 										paymentStatus: true,
 										approve: false,
 										creator: address,
+										pass
 									}
 
-									console.log(data2)
+									// console.log(data2)
 
 									// return
 									sendTx(data2)
