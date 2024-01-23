@@ -2,7 +2,7 @@
 import nav1 from "./../../assets/sidebar/nav1.svg";
 // import nav2 from "./../../assets/sidebar/nav2.svg";
 import nav3 from "./../../assets/sidebar/nav3.svg";
-// import nav4 from "./../../assets/sidebar/nav4.svg";
+import nav4 from "./../../assets/sidebar/nav4.svg";
 import discord from "./../../assets/sidebar/discord.svg";
 import telegram from "./../../assets/sidebar/telegram.svg";
 import twitter from "./../../assets/sidebar/twitter.svg";
@@ -188,7 +188,7 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
       <div className="flex flex-col gap-6 w-full">
         {[
           { image: nav1, link: "/create-game", title: "Create Game" },
-          // { image: nav4, link: "/challenger", title: "Challenger" },
+          { image: nav4, link: "/challenger", title: "Challenger" },
           // { image: nav2, link: "/leaderboard", title: "leaderboard" },
           { image: nav3, link: "/", title: "Games" },
         ].map((src, i) => {
