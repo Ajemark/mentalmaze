@@ -98,41 +98,41 @@ const ChallengerGame = () => {
       });
   }
 
-  const rejectGameOnDB = () => {
+  // const rejectGameOnDB = () => {
 
-    let myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("Authorization", `Bearer ${userDetails.token}`);
+  //   let myHeaders = new Headers();
+  //   myHeaders.append("Content-Type", "application/json");
+  //   myHeaders.append("Authorization", `Bearer ${userDetails.token}`);
 
-    const raw = JSON.stringify({
-      "gamesId": curGame.id,
-      "judgeAccountId": userDetails.id
-    })
-    let requestOptions: RequestInit = {
-      method: 'PUT',
-      body: raw,
-      headers: myHeaders,
-      redirect: 'follow'
-    };
+  //   const raw = JSON.stringify({
+  //     "gamesId": curGame.id,
+  //     "judgeAccountId": userDetails.id
+  //   })
+  //   let requestOptions: RequestInit = {
+  //     method: 'PUT',
+  //     body: raw,
+  //     headers: myHeaders,
+  //     redirect: 'follow'
+  //   };
 
-    fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/game/reject-pending-games`, requestOptions)
-      .then(response => response.json())
-      .then(result => {
-        if (result) {
-          setLoading(false)
-          navigate("/challenger/uploadedgames")
-          console.log(result)
-        }
-        else {
-          console.log(result)
-          setLoading(false)
-        }
-      })
-      .catch(error => {
-        setLoading(false)
-        console.log('error', error)
-      });
-  }
+  //   fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/game/reject-pending-games`, requestOptions)
+  //     .then(response => response.json())
+  //     .then(result => {
+  //       if (result) {
+  //         setLoading(false)
+  //         navigate("/challenger/uploadedgames")
+  //         console.log(result)
+  //       }
+  //       else {
+  //         console.log(result)
+  //         setLoading(false)
+  //       }
+  //     })
+  //     .catch(error => {
+  //       setLoading(false)
+  //       console.log('error', error)
+  //     });
+  // }
 
   const approveGame = async () => {
     setLoading(true)
@@ -146,6 +146,8 @@ const ChallengerGame = () => {
     sendTx('reject')
   }
 
+
+
   const sendTx = async (type: String) => {
 
     try {
@@ -158,19 +160,11 @@ const ChallengerGame = () => {
       if (tx) {
         console.log(JSON.parse(JSON.stringify(tx)))
 
-        const totalJudges = Number(await mmContract.getJudgesCount())
-        const totalApprovedGameVotes = Number(await mmContract.getGameVotes(curGame.address))
-        const minVotes = Number(await mmContract.getMinVote())
-        const totalVotesForGame = Number(await mmContract.getVotesForGames(curGame.address))
 
-        console.log({ totalApprovedGameVotes, totalJudges, totalVotesForGame, minVotes })
+        const gameData = (await mmContract.Games(curGame.address))
 
-        if ((((totalApprovedGameVotes / totalJudges) * 100) >= (minVotes))) {
+        if (gameData[0]) {
           approveGameOnDB()
-          return
-        }
-        if (totalVotesForGame == totalJudges && (((totalApprovedGameVotes / totalJudges) * 100) < (minVotes))) {
-          rejectGameOnDB()
           return
         }
         setLoading(false)
