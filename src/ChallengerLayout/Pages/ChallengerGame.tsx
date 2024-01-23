@@ -146,6 +146,8 @@ const ChallengerGame = () => {
     sendTx('reject')
   }
 
+
+
   const sendTx = async (type: String) => {
 
     try {
@@ -158,19 +160,11 @@ const ChallengerGame = () => {
       if (tx) {
         console.log(JSON.parse(JSON.stringify(tx)))
 
-        const totalJudges = Number(await mmContract.getJudgesCount())
-        const totalApprovedGameVotes = Number(await mmContract.getGameVotes(curGame.address))
-        const minVotes = Number(await mmContract.getMinVote())
-        const totalVotesForGame = Number(await mmContract.getVotesForGames(curGame.address))
 
-        console.log({ totalApprovedGameVotes, totalJudges, totalVotesForGame, minVotes })
+        const gameData = (await mmContract.Games(curGame.address))
 
-        if ((((totalApprovedGameVotes / totalJudges) * 100) >= (minVotes))) {
+        if (gameData[0]) {
           approveGameOnDB()
-          return
-        }
-        if (totalVotesForGame == totalJudges && (((totalApprovedGameVotes / totalJudges) * 100) < (minVotes))) {
-          rejectGameOnDB()
           return
         }
         setLoading(false)

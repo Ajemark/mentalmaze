@@ -99,7 +99,7 @@ const Dashboard = () => {
                             <div className='font-Inter_Regular w-full bg-black  py-[24px] px-[24px] ' style={{ "boxShadow": "0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.10)" }}>
                                 <p className='text-blue-80 text-[14px] '>Total solved cases</p>
                                 <p className='text-[36px] text-blue-main'>
-                                    {data?.judgesData[0].totalSolved}
+                                    {data?.judgesData[0]?.totalSolved}
                                 </p>
                             </div>
                         </div>
@@ -109,7 +109,7 @@ const Dashboard = () => {
                             <div className='font-Inter_Regular w-full bg-black  py-[24px] px-[24px] ' style={{ "boxShadow": "0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.10)" }}>
                                 <p className='text-blue-80 text-[14px] '>Disapproved</p>
                                 <p className='text-[36px] text-blue-main'>
-                                    {data?.judgesData[0].totalDisapproved}
+                                    {data?.judgesData[0]?.totalDisapproved}
                                 </p>
                             </div>
                         </div>
@@ -119,7 +119,7 @@ const Dashboard = () => {
                             <div className='font-Inter_Regular w-full bg-black  py-[24px] px-[24px] ' style={{ "boxShadow": "0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.10)" }}>
                                 <p className='text-blue-80 text-[14px] '>Total Approved</p>
                                 <p className='text-[36px] text-blue-main'>
-                                    {data?.judgesData[0].totalApproved}
+                                    {data?.judgesData[0]?.totalApproved}
                                 </p>
                             </div>
                         </div>
