@@ -9,12 +9,16 @@ import { useModalContext } from "../../context/ModalContext";
 import { useAccount } from "wagmi";
 import { useNavigate } from "react-router-dom";
 import Timer from "./Timer";
+import { MM_ADDRESS, useEthersProvider, useEthersSigner } from "../../sdk";
+import { MMContract } from "../../sdk/MMContract";
 
 
 
 const Game = () => {
   const [loading, setLoading] = useState(false)
+  const [gatePass, setGatePass] = useState(false)
   const [game, setGame]: any = useState()
+  const [scGame, setScGame]: any = useState()
   const [curQuestion, setCurQuestion]: any = useState(0)
   const [selected, setSelected]: any = useState()
   const [errorMessage, setErrorMessage] = useState('')
@@ -24,10 +28,8 @@ const Game = () => {
   const [timeRemaining, setTimeRemaining] = useState()
   const [creating, setcreating] = useState(false)
 
-
   const [submitting, setSubmitting] = useState(false)
   const [questions, setQuestions]: any = useState()
-
 
   const { switchModalcontent, switchModal } = useModalContext();
 
@@ -143,7 +145,6 @@ const Game = () => {
   };
 
   useEffect(() => {
-    setLoading(true)
     if (!userDetails?.token) {
       setLoading(false)
       return
@@ -151,8 +152,39 @@ const Game = () => {
     getPlayerDetails()
   }, [userDetails, again])
 
+
+  const signer = useEthersSigner();
+  const provider = useEthersProvider();
+  const mmContract = new MMContract(MM_ADDRESS, signer, provider)
+
+  const fetchSCGame = async () => {
+    const tx = await mmContract.Games(game.address)
+    setScGame(tx);
+  }
+
+  const payForPass = async () => {
+
+    setGatePass(true)
+    return
+
+    try {
+      const tx = await mmContract.gatePass(game.address)
+      if (tx) {
+        console.log(tx)
+      }
+    } catch (error: any) {
+      console.log(error)
+      if (JSON.parse(JSON.stringify(error)).info.error.data.message.includes('insufficient funds')) {
+        setErrorMessage('You Do Not Have Enough ETH To Process This Transaction!')
+        return
+      }
+      setErrorMessage('An Error Occured, Please Try Again!')
+    }
+  }
+
   useEffect(() => {
     if (!game) return;
+    fetchSCGame()
     let played = false;
     for (const count in game.finishers) {
       played =
@@ -162,6 +194,11 @@ const Game = () => {
     if (played) navigate('/')
 
   }, [game])
+
+
+
+
+
 
 
   useEffect(() => {
@@ -338,74 +375,98 @@ const Game = () => {
 
 
 
-  // console.log(curQuestion)
-  // console.log(playerData)
+
+
+
+  console.log(curQuestion)
+  console.log(playerData)
   // console.log(questions)
 
-  // console.log(!game && loading && !timeRemaining)
+  console.log(game, loading, timeRemaining, scGame)
+
   return (
     <div>
-      {!game || loading ? (
-        <Loading />
-      ) : (
+      {!gatePass ? (
         <div className="relative  md:mr-[52px] h-fit rounded-[24px] mt-[96px] md:mt-[130px] px-[20px] ">
-          <div className="bg-black md:pl-[52px] mb-[40px] rounded-t-[24px] md:rounded-r-[24px] flex flex-col md:flex-row">
-            <div className="border-[4px] border-blue-80 border-solid rounded-[24px] flex-1 ">
-              <GameHeader
-                handleAnswers={handleAnswers}
-                timer={timeRemaining}
-              />
-              <div className="flex flex-col items-center gap-[36px] py-[67px]">
-                {game && Object.keys(game).length > 1 && (
-                  <div className="w-full px-[16px] md:px-[52px] ">
-                    <h1 className="font-droid text-center text-white text-[16px] md:text-[32px] text-left w-full  ">
-                      {questions[curQuestion].title}
-                    </h1>
-                    <div className="mt-[32px] flex flex-col items-center ">
-                      {
-                        questions[curQuestion].image.includes("http") ? <img
-                          src={questions[curQuestion].image}
-                        /> :
-                          <p className='font-droid text-center text-white text-center text-[16px] md:text-[22px] text-left w-full mt-[40px]'>{questions[curQuestion].image}</p>
-                      }
 
-                    </div>
-                    <div className="flex w-full mt-10 justify-center gap-[16px]">
-                      {questions[curQuestion].options.map(
-                        (option: any, index: any) => {
-                          return (
-                            <div
-                              key={index}
-                              onClick={() => setSelected(option)}
-                              className={`${selected == option
-                                ? "bg-blue-70"
-                                : "bg-[inherit]"
-                                } items-center flex justify-center border-blue-main border-[3px] cursor-pointer rounded-[8px] border-solid h-[60px] w-[60px] text-white`}
-                            >
-                              {option.toUpperCase()}
-                            </div>
-                          );
+          <div className="w-full h-[78vh] flex justify-center items-center">
+            <div className="w-[350px] p-[24px] rounded-[8px] flex justify-center items-center flex-col h-[240px] bg-gradient-to-r from-[#032449] to-[#0B77F0]">
+
+              <div className="w-[300px] text-white h-[130px] rounded-[8px] bg-[rgba(0,0,0,0.52)]">
+                <p className="p-2">Gate Pass : {scGame && scGame[5].toString()}</p>
+                <p className="p-2">Total Reward  : {scGame && scGame[2].toString()}</p>
+                <p className="p-2">Game Duration  : {game && game.durationInHours} hours</p>
+              </div>
+              <button onClick={() => {
+                payForPass();
+              }}
+                className="text-white mt-5 font-droid bg-[rgba(1,12,24,1)]  rounded-[8px] border border-[rgba(132,188,249,1)] p-2 px-5 ">Play Now</button>
+            </div>
+          </div>
+        </div>
+
+      ) : (
+
+        !game || loading ? <Loading /> : (
+
+          <div className="relative  md:mr-[52px] h-fit rounded-[24px] mt-[96px] md:mt-[130px] px-[20px] ">
+            <div className="bg-black md:pl-[52px] mb-[40px] rounded-t-[24px] md:rounded-r-[24px] flex flex-col md:flex-row">
+              <div className="border-[4px] border-blue-80 border-solid rounded-[24px] flex-1 ">
+                <GameHeader
+                  handleAnswers={handleAnswers}
+                  timer={timeRemaining}
+                />
+                <div className="flex flex-col items-center gap-[36px] py-[67px]">
+                  {game && Object.keys(game).length > 1 && (
+                    <div className="w-full px-[16px] md:px-[52px] ">
+                      <h1 className="font-droid text-center text-white text-[16px] md:text-[32px] text-left w-full  ">
+                        {questions[curQuestion].title}
+                      </h1>
+                      <div className="mt-[32px] flex flex-col items-center ">
+                        {
+                          questions[curQuestion].image.includes("http") ? <img
+                            src={questions[curQuestion].image}
+                          /> :
+                            <p className='font-droid text-center text-white text-center text-[16px] md:text-[22px] text-left w-full mt-[40px]'>{questions[curQuestion].image}</p>
                         }
+
+                      </div>
+                      <div className="flex w-full mt-10 justify-center gap-[16px]">
+                        {questions[curQuestion].options.map(
+                          (option: any, index: any) => {
+                            return (
+                              <div
+                                key={index}
+                                onClick={() => setSelected(option)}
+                                className={`${selected == option
+                                  ? "bg-blue-70"
+                                  : "bg-[inherit]"
+                                  } items-center flex justify-center border-blue-main border-[3px] cursor-pointer rounded-[8px] border-solid h-[60px] w-[60px] text-white`}
+                              >
+                                {option.toUpperCase()}
+                              </div>
+                            );
+                          }
+                        )}
+                      </div>
+
+                      <div className="mt-[48px] w-full flex">
+                        <button
+                          className="w-full mx-auto bg-blue-50 text-white text-[15px] font-Archivo_Regular rounded-[16px] border-[2px]  w-[60%]  border-blue-main py-[16px]"
+                          onClick={() => handleAnswers(true)}
+                        >
+                          PROCEED
+                        </button>
+                      </div>
+                      {errorMessage != "" && (
+                        <p className="text-red-500 mt-2 text-center">
+                          {errorMessage}
+                        </p>
                       )}
                     </div>
+                  )}
 
-                    <div className="mt-[48px] w-full flex">
-                      <button
-                        className="w-full mx-auto bg-blue-50 text-white text-[15px] font-Archivo_Regular rounded-[16px] border-[2px]  w-[60%]  border-blue-main py-[16px]"
-                        onClick={() => handleAnswers(true)}
-                      >
-                        PROCEED
-                      </button>
-                    </div>
-                    {errorMessage != "" && (
-                      <p className="text-red-500 mt-2 text-center">
-                        {errorMessage}
-                      </p>
-                    )}
-                  </div>
-                )}
-
-                {/* <div>
+                  {/* <div>
                   <div className="flex items-center md:hidden">
                     <div className="flex flex-col items-center gap-[8px] text-white font-droid text-[15px] md:text-[32px]">
                       <div
@@ -468,15 +529,18 @@ const Game = () => {
                     </div>
                   </div>
                 </div> */}
+                </div>
               </div>
+              <Sidebar questions={questions} curQuestion={curQuestion + 1} />
             </div>
-            <Sidebar questions={questions} curQuestion={curQuestion + 1} />
+            <div className="flex gap-[38px] flex-col md:flex-row md:pl-[52px]">
+              <Rating game={game} />
+              <About game={game} />
+            </div>
           </div>
-          <div className="flex gap-[38px] flex-col md:flex-row md:pl-[52px]">
-            <Rating game={game} />
-            <About game={game} />
-          </div>
-        </div>
+        )
+
+
       )}
     </div>
   );

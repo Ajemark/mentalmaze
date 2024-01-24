@@ -149,13 +149,7 @@ const ChallengerGame = () => {
 
 
   const sendTx = async (type: String) => {
-
-    const gameData = (await mmContract.Games(curGame.address))
-
-    if (gameData[0]) {
-      approveGameOnDB()
-      return
-    }
+    // approveGameOnDB()
 
     try {
       let tx;

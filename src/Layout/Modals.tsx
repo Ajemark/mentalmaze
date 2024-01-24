@@ -19,6 +19,7 @@ import EditProfile from '../component/Modal/EditProfile'
 import WrongNetwork from '../component/Modal/Connect/WrongNetwork'
 import NiceTry from '../component/Modal/Connect/game/nicetry'
 import GameType from '../component/Modal/Create/GameType'
+import GatePass from '../component/Modal/Connect/game/GatePass'
 
 
 type Modal = {
@@ -40,6 +41,7 @@ type Modal = {
     editProfile: ReactNode
     nicetry: ReactNode
     gametype: ReactNode
+    gatepass: ReactNode
 }
 
 
@@ -61,5 +63,6 @@ export const ConnectModals: Modal = {
     editProfile: <EditProfile />,
     wrongnetwork: <WrongNetwork />,
     nicetry: <NiceTry />,
-    gametype: <GameType />
+    gametype: <GameType />,
+    gatepass: <GatePass />
 }

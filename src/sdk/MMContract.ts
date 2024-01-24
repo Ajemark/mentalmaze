@@ -43,7 +43,7 @@ export class MMContract {
 	}
 
 	async getJudgesCount() {
-		const tx = await this.contract.judgesCount()
+		const tx = await this.contract.getJudgesCount()
 		return tx.toString();
 	}
 
@@ -59,6 +59,11 @@ export class MMContract {
 
 	async getVotesForGames(address: String) {
 		const tx = await this.contract.votesForGames(address)
+		return tx.toString();
+	}
+
+	async gatePass(address: String) {
+		const tx = await this.contract.gatePass(address)
 		return tx.toString();
 	}
 
@@ -353,6 +358,19 @@ const MMAbi = [
 	},
 	{
 		"inputs": [],
+		"name": "getJudgesCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
 		"name": "initialize",
 		"outputs": [],
 		"stateMutability": "nonpayable",
@@ -581,7 +599,7 @@ const MMAbi = [
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "_newJudgesAddres",
+				"name": "_judgeAddress",
 				"type": "address"
 			}
 		],

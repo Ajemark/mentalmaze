@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { createContext, ReactNode, useContext, useState } from "react";
 
-export type Modal = "installed" | "verify" | "connect" | "authenticate" | "chooseNickname" | "install" | "installed" | "welcome" | "example" | "congratulations" | "getmore" | "hurray" | "reveal" | "collate" | "editProfile" | "wrongnetwork" | 'nicetry' | 'gametype'
+export type Modal = "installed" | "verify" | "connect" | "authenticate" | "chooseNickname" | "install" | "installed" | "welcome" | "example" | "congratulations" | "getmore" | "hurray" | "reveal" | "collate" | "editProfile" | "wrongnetwork" | 'nicetry' | 'gametype' | 'gatepass'
 
 
 type ModalContextType = {
