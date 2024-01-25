@@ -62,9 +62,14 @@ export class MMContract {
 		return tx.toString();
 	}
 
-	async gatePass(address: String) {
-		const tx = await this.contract.gatePass(address)
+	async gatePass(address: String, value: any) {
+		const tx = await this.contract.gatePass(address, { value })
 		return tx.toString();
+	}
+
+	async playerGames(userAddress: String, address: String) {
+		const tx = await this.contract.playerGames(userAddress, address)
+		return tx;
 	}
 
 	async getGameVotes(address: String) {

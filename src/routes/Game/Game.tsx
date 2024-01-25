@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import Timer from "./Timer";
 import { MM_ADDRESS, useEthersProvider, useEthersSigner } from "../../sdk";
 import { MMContract } from "../../sdk/MMContract";
+import { formatEther } from "viem";
 
 
 
@@ -160,17 +161,27 @@ const Game = () => {
   const fetchSCGame = async () => {
     const tx = await mmContract.Games(game.address)
     setScGame(tx);
+
+  }
+  const fetchPlayerGame = async () => {
+    const tx = await mmContract.playerGames(address as String, game.address)
+    setGatePass(tx[0])
+    setLoading(false)
   }
 
-  const payForPass = async () => {
+  const payForPass = async (gatePassFee: any) => {
 
-    setGatePass(true)
-    return
+    if (scGame[1].toLowerCase() == address?.toLowerCase()) {
+      setErrorMessage('Owners can`t play thier game!')
+      return
+    }
+    // setGatePass(true)
 
     try {
-      const tx = await mmContract.gatePass(game.address)
+      const tx = await mmContract.gatePass(game.address, gatePassFee)
       if (tx) {
         console.log(tx)
+        fetchPlayerGame()
       }
     } catch (error: any) {
       console.log(error)
@@ -183,8 +194,10 @@ const Game = () => {
   }
 
   useEffect(() => {
+    setLoading(true)
     if (!game) return;
     fetchSCGame()
+    fetchPlayerGame()
     let played = false;
     for (const count in game.finishers) {
       played =
@@ -261,7 +274,7 @@ const Game = () => {
       }))
 
       setSubmitting(true)
-      // updateTimer(questions[curQuestion].id, 0)
+      updateTimer(questions[curQuestion].id, 1)
       switchModal();
       switchModalcontent("hurray");
       return;
@@ -291,54 +304,54 @@ const Game = () => {
       }
     }))
 
-    // updateTimer(questions[curQuestion].id, 0)
+    updateTimer(questions[curQuestion].id, 1)
     setCurQuestion(curQuestion + 1);
     setSelected();
   };
 
-  // const updateTimer = (qId: number, tRm: number) => {
+  const updateTimer = (qId: number, tRm: number) => {
 
-  //   let myHeaders = new Headers();
-  //   myHeaders.append("Content-Type", "application/json");
-  //   myHeaders.append("Authorization", `Bearer ${userDetails.token}`);
+    let myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", `Bearer ${userDetails.token}`);
 
-  //   const raw = JSON.stringify({
-  //     "gameId": game.id,
-  //     "questionId": qId,
-  //     "timeRemaining": tRm,
-  //     "accountId": game.accountId
-  //   })
+    const raw = JSON.stringify({
+      "gameId": game.id,
+      "questionId": qId,
+      "timeRemaining": tRm,
+      "accountId": game.accountId
+    })
 
-  //   console.log(raw)
+    console.log(raw)
 
-  //   let requestOptions: RequestInit = {
-  //     method: 'PUT',
-  //     body: raw,
-  //     headers: myHeaders,
-  //     redirect: 'follow'
-  //   };
+    let requestOptions: RequestInit = {
+      method: 'PUT',
+      body: raw,
+      headers: myHeaders,
+      redirect: 'follow'
+    };
 
 
-  //   fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/time/update-time`, requestOptions)
-  //     .then(response => response.json())
-  //     .then(result => {
-  //       if (result) {
-  //         console.log(result)
+    fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/time/update-time`, requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        if (result) {
+          console.log(result)
 
-  //       }
-  //       else {
-  //         console.log(result)
-  //         setLoading(false)
-  //       }
-  //     })
-  //     .catch(error => {
-  //       setLoading(false)
-  //       console.log('error', error)
-  //     });
-  // }
+        }
+        else {
+          console.log(result)
+          setLoading(false)
+        }
+      })
+      .catch(error => {
+        setLoading(false)
+        console.log('error', error)
+      });
+  }
 
   const getQuestionTime = (qId: number) => {
-    setLoading(true)
+    // setLoading(true)
     // console.log(qId)
 
     let myHeaders = new Headers();
@@ -361,7 +374,7 @@ const Game = () => {
         if (result.data) {
           // console.log(result)
           setTimeRemaining(result.data.timeRemaining)
-          setLoading(false);
+          // setLoading(false);
         } else {
           // console.log(result);
           setLoading(false);
@@ -378,95 +391,97 @@ const Game = () => {
 
 
 
-  console.log(curQuestion)
-  console.log(playerData)
-  // console.log(questions)
+  // console.log(curQuestion)
+  // console.log(playerData)
+  // // console.log(questions)
 
   console.log(game, loading, timeRemaining, scGame)
 
   return (
     <div>
-      {!gatePass ? (
-        <div className="relative  md:mr-[52px] h-fit rounded-[24px] mt-[96px] md:mt-[130px] px-[20px] ">
+      {(!game || loading || !timeRemaining ? <Loading /> :
 
-          <div className="w-full h-[78vh] flex justify-center items-center">
-            <div className="w-[350px] p-[24px] rounded-[8px] flex justify-center items-center flex-col h-[240px] bg-gradient-to-r from-[#032449] to-[#0B77F0]">
-
-              <div className="w-[300px] text-white h-[130px] rounded-[8px] bg-[rgba(0,0,0,0.52)]">
-                <p className="p-2">Gate Pass : {scGame && scGame[5].toString()}</p>
-                <p className="p-2">Total Reward  : {scGame && scGame[2].toString()}</p>
-                <p className="p-2">Game Duration  : {game && game.durationInHours} hours</p>
-              </div>
-              <button onClick={() => {
-                payForPass();
-              }}
-                className="text-white mt-5 font-droid bg-[rgba(1,12,24,1)]  rounded-[8px] border border-[rgba(132,188,249,1)] p-2 px-5 ">Play Now</button>
-            </div>
-          </div>
-        </div>
-
-      ) : (
-
-        !game || loading ? <Loading /> : (
+        !gatePass ?
 
           <div className="relative  md:mr-[52px] h-fit rounded-[24px] mt-[96px] md:mt-[130px] px-[20px] ">
-            <div className="bg-black md:pl-[52px] mb-[40px] rounded-t-[24px] md:rounded-r-[24px] flex flex-col md:flex-row">
-              <div className="border-[4px] border-blue-80 border-solid rounded-[24px] flex-1 ">
-                <GameHeader
-                  handleAnswers={handleAnswers}
-                  timer={timeRemaining}
-                />
-                <div className="flex flex-col items-center gap-[36px] py-[67px]">
-                  {game && Object.keys(game).length > 1 && (
-                    <div className="w-full px-[16px] md:px-[52px] ">
-                      <h1 className="font-droid text-center text-white text-[16px] md:text-[32px] text-left w-full  ">
-                        {questions[curQuestion].title}
-                      </h1>
-                      <div className="mt-[32px] flex flex-col items-center ">
-                        {
-                          questions[curQuestion].image.includes("http") ? <img
-                            src={questions[curQuestion].image}
-                          /> :
-                            <p className='font-droid text-center text-white text-center text-[16px] md:text-[22px] text-left w-full mt-[40px]'>{questions[curQuestion].image}</p>
-                        }
 
-                      </div>
-                      <div className="flex w-full mt-10 justify-center gap-[16px]">
-                        {questions[curQuestion].options.map(
-                          (option: any, index: any) => {
-                            return (
-                              <div
-                                key={index}
-                                onClick={() => setSelected(option)}
-                                className={`${selected == option
-                                  ? "bg-blue-70"
-                                  : "bg-[inherit]"
-                                  } items-center flex justify-center border-blue-main border-[3px] cursor-pointer rounded-[8px] border-solid h-[60px] w-[60px] text-white`}
-                              >
-                                {option.toUpperCase()}
-                              </div>
-                            );
+            <div className="w-full h-[78vh] flex justify-center items-center">
+              <div className="w-[350px] p-[24px] rounded-[8px] flex justify-center items-center flex-col h-[240px] bg-gradient-to-r from-[#032449] to-[#0B77F0]">
+
+                <div className="w-[300px] text-white h-[130px] rounded-[8px] bg-[rgba(0,0,0,0.52)]">
+                  <p className="p-2">Gate Pass : {scGame && (formatEther(scGame[6].toString()))}</p>
+                  <p className="p-2">Total Reward  : {scGame && formatEther(scGame[2].toString())}</p>
+                  <p className="p-2">Game Duration  : {game && game.durationInHours} hours</p>
+                </div>
+                <button onClick={() => {
+                  payForPass(scGame[6]);
+                }}
+                  className="text-white mt-5 font-droid bg-[rgba(1,12,24,1)]  rounded-[8px] border border-[rgba(132,188,249,1)] p-2 px-5 ">Play Now</button>
+                {errorMessage != '' && <p className="text-white text-center">{errorMessage}</p>}
+              </div>
+            </div>
+          </div>
+
+          : (
+
+            <div className="relative  md:mr-[52px] h-fit rounded-[24px] mt-[96px] md:mt-[130px] px-[20px] ">
+              <div className="bg-black md:pl-[52px] mb-[40px] rounded-t-[24px] md:rounded-r-[24px] flex flex-col md:flex-row">
+                <div className="border-[4px] border-blue-80 border-solid rounded-[24px] flex-1 ">
+                  <GameHeader
+                    handleAnswers={handleAnswers}
+                    timer={timeRemaining}
+                  />
+                  <div className="flex flex-col items-center gap-[36px] py-[67px]">
+                    {game && Object.keys(game).length > 1 && (
+                      <div className="w-full px-[16px] md:px-[52px] ">
+                        <h1 className="font-droid text-center text-white text-[16px] md:text-[32px] text-left w-full  ">
+                          {questions[curQuestion].title}
+                        </h1>
+                        <div className="mt-[32px] flex flex-col items-center ">
+                          {
+                            questions[curQuestion].image.includes("http") ? <img
+                              src={questions[curQuestion].image}
+                            /> :
+                              <p className='font-droid text-center text-white text-center text-[16px] md:text-[22px] text-left w-full mt-[40px]'>{questions[curQuestion].image}</p>
                           }
+
+                        </div>
+                        <div className="flex w-full mt-10 justify-center gap-[16px]">
+                          {questions[curQuestion].options.map(
+                            (option: any, index: any) => {
+                              return (
+                                <div
+                                  key={index}
+                                  onClick={() => setSelected(option)}
+                                  className={`${selected == option
+                                    ? "bg-blue-70"
+                                    : "bg-[inherit]"
+                                    } items-center flex justify-center border-blue-main border-[3px] cursor-pointer rounded-[8px] border-solid h-[60px] w-[60px] text-white`}
+                                >
+                                  {option.toUpperCase()}
+                                </div>
+                              );
+                            }
+                          )}
+                        </div>
+
+                        <div className="mt-[48px] w-full flex">
+                          <button
+                            className="w-full mx-auto bg-blue-50 text-white text-[15px] font-Archivo_Regular rounded-[16px] border-[2px]  w-[60%]  border-blue-main py-[16px]"
+                            onClick={() => handleAnswers(true)}
+                          >
+                            PROCEED
+                          </button>
+                        </div>
+                        {errorMessage != "" && (
+                          <p className="text-red-500 mt-2 text-center">
+                            {errorMessage}
+                          </p>
                         )}
                       </div>
+                    )}
 
-                      <div className="mt-[48px] w-full flex">
-                        <button
-                          className="w-full mx-auto bg-blue-50 text-white text-[15px] font-Archivo_Regular rounded-[16px] border-[2px]  w-[60%]  border-blue-main py-[16px]"
-                          onClick={() => handleAnswers(true)}
-                        >
-                          PROCEED
-                        </button>
-                      </div>
-                      {errorMessage != "" && (
-                        <p className="text-red-500 mt-2 text-center">
-                          {errorMessage}
-                        </p>
-                      )}
-                    </div>
-                  )}
-
-                  {/* <div>
+                    {/* <div>
                   <div className="flex items-center md:hidden">
                     <div className="flex flex-col items-center gap-[8px] text-white font-droid text-[15px] md:text-[32px]">
                       <div
@@ -529,16 +544,16 @@ const Game = () => {
                     </div>
                   </div>
                 </div> */}
+                  </div>
                 </div>
+                <Sidebar questions={questions} curQuestion={curQuestion + 1} />
               </div>
-              <Sidebar questions={questions} curQuestion={curQuestion + 1} />
+              <div className="flex gap-[38px] flex-col md:flex-row md:pl-[52px]">
+                <Rating game={game} />
+                <About game={game} />
+              </div>
             </div>
-            <div className="flex gap-[38px] flex-col md:flex-row md:pl-[52px]">
-              <Rating game={game} />
-              <About game={game} />
-            </div>
-          </div>
-        )
+          )
 
 
       )}

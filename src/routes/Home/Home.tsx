@@ -92,7 +92,7 @@ const TitleBar = () => {
   );
 };
 
-const Game = ({ image, id, accountId, finishers }: any) => {
+const Game = ({ image, id, accountId, gameAddress, finishers }: any) => {
   const navigate = useNavigate();
   const { address } = useAccount();
 
@@ -104,7 +104,7 @@ const Game = ({ image, id, accountId, finishers }: any) => {
     if (played) break;
   }
 
-  const data = window.btoa(JSON.stringify({ gameId: id, accountId }));
+  const data = window.btoa(JSON.stringify({ gameId: id, accountId, gameAddress }));
 
   return (
     <div className="relative flex justify-center items-center w-full border-blue-100 border-[4px] border-solid" >
@@ -227,7 +227,7 @@ const Home = () => {
                   <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-[15px] gap-y-[15px] md:gap-x-[45px] md:gap-y-[44px] py-12 w-full px-0">
                     {liveGames?.fetchDataResponse?.length > 0 &&
                       liveGames?.fetchDataResponse?.map(
-                        (gam: any, index: number) => <Game {...gam} key={index} />
+                        (gam: any, index: number) => <Game {...gam} gameAddress={gam.address} key={index} />
                       )}
                   </div>
 
