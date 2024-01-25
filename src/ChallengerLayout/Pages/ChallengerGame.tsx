@@ -150,6 +150,12 @@ const ChallengerGame = () => {
 
   const sendTx = async (type: String) => {
     // approveGameOnDB()
+    const gameData = (await mmContract.Games(curGame.address))
+
+    if (gameData[0]) {
+      approveGameOnDB()
+      return
+    }
 
     try {
       let tx;
