@@ -25,7 +25,7 @@ const Game = () => {
   const [errorMessage, setErrorMessage] = useState('')
   const [answers, setAnswers]: any = useState([])
   const [playerData, setPlayerData]: any = useState()
-  const [again, setagain] = useState(0)
+  // const [again, setagain] = useState(0)
   const [timeRemaining, setTimeRemaining]: any = useState()
   const [creating, setcreating] = useState(false)
 
@@ -84,10 +84,6 @@ const Game = () => {
     };
 
     const data = JSON.parse(window.atob(location.search.split('?data=')[1]))
-    if (!data) {
-      setagain(prev => prev + 1)
-      return
-    }
 
     fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/player/getPlayerDetails?gameId=${data.gameId}&playersAddress=${userDetails.address}`, requestOptions)
       .then(response => response.json())
@@ -223,7 +219,7 @@ const Game = () => {
         game.finishers[count]?.toLowerCase() == address?.toLowerCase();
       if (played) break;
     }
-    // if (played) navigate('/')
+    if (played) navigate('/')
 
   }, [game])
 
