@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react';
 
 const Timer = ({ targetDate, handleAnswers }: any) => {
 
-    const [timeLeft, setTimeLeft]: any = useState(targetDate / 1000);
-
+    const [timeLeft, setTimeLeft]: any = useState(Number(targetDate) / 1000);
     useEffect(() => {
         const timer = setTimeout(() => {
             setTimeLeft((prev: number) => prev - 1);

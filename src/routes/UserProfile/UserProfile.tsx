@@ -13,7 +13,7 @@ import { Pagination } from '../../component/ui/Pagination'
 
 
 
-const RANK = ({ position, completed, gameId, accountId, userDetails }: any) => {
+const RANK = ({ position, processedWinners, gameId, accountId, userDetails }: any) => {
 
     const [game, setGame]: any = useState()
 
@@ -53,19 +53,19 @@ const RANK = ({ position, completed, gameId, accountId, userDetails }: any) => {
         getSingleGame()
     }, [])
 
-    console.log(game)
+    // console.log(game)
 
     return (
         <div className='flex justify-between font-droid text-[15px] lg:text-[32px] font-normal px-[16px]  lg:px-[48px] mt-[32px] grad-dar rounded-[16px] border-blue-50 border-solid border-[2px] py-[16px] md:py-[24px]'>
-            <div className='col-span-2 flex items-center gap-[16px] md:gap-[48px] '>
+            <div className='col-span-2 flex items-center gap-[16px]   '>
                 {/* <div className=' bg-blue-main w-[48px] h-[48px] md:w-[72px] md:h-[72px] rounded-[8px] '>
                 </div> */}
-                <img src={game?.image} alt="game image" />
+                <img className='w-[48px] h-[48px] md:w-[72px] md:h-[72px] rounded-[8px]' src={game?.image} alt="game image" />
                 <div className='flex flex-col items-start text-white'> <p>{game?.title}</p>
                 </div>
             </div>
             <div className='text-white flex items-center'>
-                {!completed ? "Pending" : position <= 4 ? "View Result" :
+                {!processedWinners ? "Pending" : position >= 4 ? "View Result" :
                     <div className='flex text-white text-[15px] lg:text-[32px] leading-[26.11px] items-center gap-3'><img src={medalMaster} />{position.toString()}</div>}
             </div>
         </div>

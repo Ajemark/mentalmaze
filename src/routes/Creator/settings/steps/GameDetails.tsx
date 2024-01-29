@@ -198,16 +198,16 @@ const GameDetails = ({ handleClick }: { handleClick: (int: number) => void }) =>
           </button>
           <button
             style={{
-              backgroundColor: `#${curquestion?.difficultyLevel == 'Normal' ? "0855AB" : '0D0D0D'}`
+              backgroundColor: `#${curquestion?.difficultyLevel == 'Medium' ? "0855AB" : '0D0D0D'}`
             }}
             onClick={() => {
               setQuestions({})
-              setCurQuestion((prev: any) => ({ ...prev, difficultyLevel: 'Normal' }))
-              setQuestionObj({ ...questionObj, difficultyLevel: 'Normal' })
+              setCurQuestion((prev: any) => ({ ...prev, difficultyLevel: 'Medium' }))
+              setQuestionObj({ ...questionObj, difficultyLevel: 'Medium' })
             }}
             className={`border-2 border-blue-main hover:bg-[#0855AB] rounded-xl h-[70px] px-[30px] flex-1`}
           >
-            Normal
+            Medium
           </button>
           <button style={{
             backgroundColor: `#${curquestion?.difficultyLevel == 'Difficult' ? "0855AB" : '0D0D0D'}`
