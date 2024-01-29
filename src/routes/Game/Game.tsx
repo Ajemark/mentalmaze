@@ -26,17 +26,19 @@ const Game = () => {
   const [answers, setAnswers]: any = useState([])
   const [playerData, setPlayerData]: any = useState()
   const [again, setagain] = useState(0)
-  const [timeRemaining, setTimeRemaining] = useState()
+  const [timeRemaining, setTimeRemaining]: any = useState()
   const [creating, setcreating] = useState(false)
 
   const [submitting, setSubmitting] = useState(false)
   const [questions, setQuestions]: any = useState()
+  const [gameAddress, setGameAddress]: any = useState()
 
   const { switchModalcontent, switchModal } = useModalContext();
 
   const { address } = useAccount();
   const navigate = useNavigate();
   const { userDetails }: any = useContext(UserContext);
+
 
   const getSingleGame = () => {
     let myHeaders = new Headers();
@@ -90,6 +92,7 @@ const Game = () => {
     fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/player/getPlayerDetails?gameId=${data.gameId}&playersAddress=${userDetails.address}`, requestOptions)
       .then(response => response.json())
       .then(result => {
+        console.log(result)
         if (result.gamePlayerDetails?.length > 0 || result.gamePlayerDetails.id) {
           setPlayerData(result.gamePlayerDetails[0])
           getSingleGame()
@@ -145,42 +148,55 @@ const Game = () => {
       });
   };
 
-  useEffect(() => {
-    if (!userDetails?.token) {
-      setLoading(false)
-      return
-    }
-    getPlayerDetails()
-  }, [userDetails, again])
-
-
   const signer = useEthersSigner();
   const provider = useEthersProvider();
   const mmContract = new MMContract(MM_ADDRESS, signer, provider)
 
-  const fetchSCGame = async () => {
-    const tx = await mmContract.Games(game.address)
-    setScGame(tx);
 
+  const fetchSCGame = async () => {
+    const tx = await mmContract.Games(gameAddress)
+    return (tx);
   }
+
+  const _scGames = fetchSCGame()
+
+  useEffect(() => {
+    if (!scGame)
+      (async () => {
+        setScGame(await _scGames)
+        fetchPlayerGame()
+      })()
+  }, [_scGames])
+
+
   const fetchPlayerGame = async () => {
-    const tx = await mmContract.playerGames(address as String, game.address)
-    setGatePass(tx[0])
-    setLoading(false)
+    const tx = await mmContract.playerGames(address as String, gameAddress)
+    if (tx[0]) {
+      getPlayerDetails()
+    } else {
+      setLoading(false)
+    }
   }
+
 
   const payForPass = async (gatePassFee: any) => {
+
+    const tx = await mmContract.playerGames(address as String, gameAddress)
+    if (tx[0]) {
+      getPlayerDetails()
+    }
 
     if (scGame[1].toLowerCase() == address?.toLowerCase()) {
       setErrorMessage('Owners can`t play thier game!')
       return
     }
-    // setGatePass(true)
 
     try {
-      const tx = await mmContract.gatePass(game.address, gatePassFee)
+      setLoading(true)
+      const tx = await mmContract.gatePass(gameAddress, gatePassFee)
       if (tx) {
         console.log(tx)
+        setErrorMessage('Gate Pass Payed for, click `PLAY NOW` to play game')
         fetchPlayerGame()
       }
     } catch (error: any) {
@@ -195,21 +211,21 @@ const Game = () => {
 
   useEffect(() => {
     setLoading(true)
+    if (!gameAddress) {
+      const data = JSON.parse(window.atob(location.search.split("?data=")[1]));
+      setGameAddress(data.gameAddress)
+    }
+
     if (!game) return;
-    fetchSCGame()
-    fetchPlayerGame()
     let played = false;
     for (const count in game.finishers) {
       played =
         game.finishers[count]?.toLowerCase() == address?.toLowerCase();
       if (played) break;
     }
-    if (played) navigate('/')
+    // if (played) navigate('/')
 
   }, [game])
-
-
-
 
 
 
@@ -220,13 +236,11 @@ const Game = () => {
 
     const levelQuestions = game.question.filter((g: any) => g.difficultyLevel.toLowerCase() == playerData.unlockLevel.toLowerCase())
     setQuestions(levelQuestions)
-
   }, [game, playerData])
 
 
   useEffect(() => {
     if (!questions) return;
-    // console.log(questions)
     getQuestionTime(questions[curQuestion].id)
   }, [curQuestion, questions])
 
@@ -241,13 +255,6 @@ const Game = () => {
       return;
     }
 
-    // let localData = localStorage.getItem(`GameInfo`)
-    // localData = (JSON.parse(localData ?? '{"testing":"iiii"}'))
-
-    // console.log(localData?.dataToSubmit)
-
-
-
     if (curQuestion + 1 >= questions.length) {
       const d = {
         questionId: questions[curQuestion].id,
@@ -261,17 +268,19 @@ const Game = () => {
       const dataToSubmit = {
         gameId: game.id,
         playerAddress: userDetails.address,
-        level: questions[curQuestion].difficultyLevel,
+        level: questions[curQuestion].difficultyLevel.toUpperCase(),
         playerId: playerData.id,
         arrayofQuestion_answer: data,
       };
 
+      console.log(dataToSubmit)
       localStorage.setItem(`GameInfo`, JSON.stringify({
         dataToSubmit, game: {
           id: game.id,
           title: game.title
         }
       }))
+
 
       setSubmitting(true)
       updateTimer(questions[curQuestion].id, 1)
@@ -372,9 +381,10 @@ const Game = () => {
       .then((response) => response.json())
       .then((result) => {
         if (result.data) {
-          // console.log(result)
-          setTimeRemaining(result.data.timeRemaining)
-          // setLoading(false);
+          setTimeRemaining(Number(result.data.timeRemaining))
+
+          setGatePass(true)
+          setLoading(false)
         } else {
           // console.log(result);
           setLoading(false);
@@ -391,15 +401,15 @@ const Game = () => {
 
 
 
-  // console.log(curQuestion)
+  // // console.log(curQuestion)
   // console.log(playerData)
-  // // console.log(questions)
+  // // // console.log(questions)
 
-  console.log(game, loading, timeRemaining, scGame)
+  // console.log(game, loading, timeRemaining, scGame)
 
   return (
     <div>
-      {(!game || loading || !timeRemaining ? <Loading /> :
+      {(loading || !scGame ? <Loading /> :
 
         !gatePass ?
 
@@ -411,7 +421,7 @@ const Game = () => {
                 <div className="w-[300px] text-white h-[130px] rounded-[8px] bg-[rgba(0,0,0,0.52)]">
                   <p className="p-2">Gate Pass : {scGame && (formatEther(scGame[6].toString()))}</p>
                   <p className="p-2">Total Reward  : {scGame && formatEther(scGame[2].toString())}</p>
-                  <p className="p-2">Game Duration  : {game && game.durationInHours} hours</p>
+                  <p className="p-2">Game Duration  : {scGame && scGame[3].toString()} hours</p>
                 </div>
                 <button onClick={() => {
                   payForPass(scGame[6]);
@@ -668,24 +678,24 @@ const Rating: any = ({ game }: any) => {
       <div className="">
         <div className="font-semibold text-[20px] font-Archivo_Regular text-center px-[37px] flex flex-col gap-[16px] ">
 
-          <p>
+          <div>
             <p className="text-wb-40  leading-[21.76px]">Developed by</p>
             <p className="text-white  leading-[21.76px] font-[900]">
               Mental Maze
             </p>
-          </p>
-          <p>
+          </div>
+          <div>
             <p className="text-wb-40  leading-[21.76px]">Released:</p>
             <p className="text-white  leading-[21.76px] font-[900]">
               {d.toDateString()}
             </p>
-          </p>
-          <p>
+          </div>
+          <div>
             <p className="text-wb-40  leading-[21.76px]">Ends At:</p>
             <p className="text-white  leading-[21.76px] font-[900]">
               {/* {endDate.toDateString()} */}
             </p>
-          </p>
+          </div>
         </div>
       </div>
       <div className="w-full flex justify-center">

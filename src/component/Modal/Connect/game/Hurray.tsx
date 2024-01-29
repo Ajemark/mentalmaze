@@ -7,6 +7,7 @@ const Hurray = () => {
   const [data, setData]: any = useState()
 
   const onSubmitHandler = () => {
+
     switchModalcontent('collate')
   }
 
@@ -26,12 +27,22 @@ const Hurray = () => {
       </button>
       <div className='flex flex-col gap-1 font-Archivo_Regular font-normal text-[15px] md:text-[20px] mt-[126px]'>
         <p className='flex justify-center leading-[21.76px]  text-center tracking-wider'>
-          <p className='flex gap-[8px]'>Scoring More Than <p className='text-blue-50'>50%</p>
-          </p>, Unlocks</p>
+          <p className='flex gap-[8px]'>
+            Scoring More Than
+            <p className='text-blue-50'>
+              50%
+            </p>
+
+          </p>, Unlocks
+        </p>
         <p className='flex justify-center leading-[21.76px]  text-center gap-[8px]'>
-          <p className='text-blue-50'>{data?.game.title}</p> in the next level
+
+          <p className='text-blue-50'>{data?.game.title}
+          </p>
+          in the next level
           your wallet?
         </p>
+
       </div>
     </div>
   )

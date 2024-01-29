@@ -21,7 +21,7 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
 
 	const updatePriceShare = (index: any, newValue: any) => {
 		const updatedArray = [...priceShare]; // Create a copy of the current array
-		updatedArray[index] = newValue; // Update the element at the specified index
+		updatedArray[index] = Number(newValue); // Update the element at the specified index
 		setPriceShare(updatedArray); // Update the state with the new array
 	};
 
@@ -33,7 +33,7 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
 	const prices = (priceShare: any) => {
 		let nprice: any = []
 		priceShare.length > 1 && priceShare.map((price: any) => {
-			nprice.push(parseEther(price))
+			nprice.push(parseEther(price.toString()))
 		})
 		return nprice
 	}
@@ -48,7 +48,9 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
 		return (totalShare == gameToken)
 	}
 
+
 	const sendTx = async (data: any) => {
+
 		setSendinTx(true)
 		const mmContract = new MMContract(MM_ADDRESS, signer, provider)
 		try {
@@ -209,6 +211,7 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
 										rewardDistribution: prices(priceShare),
 										title: questionObj.gameTitle,
 										image: questionObj.gameCover,
+										description: questionObj.description,
 										gameQuestion: questionObj.questions,
 										durationInHours: Math.abs(questionObj.gameDuration),
 										managerContract: MM_ADDRESS,

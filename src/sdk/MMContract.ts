@@ -24,10 +24,11 @@ export class MMContract {
 
 	async createGame(data: any, value: BigInt) {
 		let decode = new AbiCoder()
-		let approved = false;
 		const { amountDeposited, rewardDistribution, durationInHours, pass } = data
 
-		let tx = await this.contract.createGame(approved, amountDeposited, durationInHours, rewardDistribution, parseEther(pass), { value })
+		console.log(rewardDistribution)
+
+		let tx = await this.contract.createGame(amountDeposited, durationInHours, rewardDistribution, parseEther(pass), { value })
 		tx = await tx.wait()
 		return decode.decode(['address'], tx.logs[0].data)
 	}
@@ -190,12 +191,17 @@ const MMAbi = [
 				"type": "address"
 			},
 			{
+				"internalType": "address",
+				"name": "playerAddress",
+				"type": "address"
+			},
+			{
 				"internalType": "uint256",
-				"name": "mentalmazePointEarned",
+				"name": "position",
 				"type": "uint256"
 			}
 		],
-		"name": "addMentalMazePoint",
+		"name": "addReward",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -261,10 +267,18 @@ const MMAbi = [
 	{
 		"inputs": [
 			{
-				"internalType": "bool",
-				"name": "approved",
-				"type": "bool"
-			},
+				"internalType": "address",
+				"name": "gameAddress",
+				"type": "address"
+			}
+		],
+		"name": "claimReward",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
 			{
 				"internalType": "uint256",
 				"name": "amountDeposited",
@@ -294,6 +308,13 @@ const MMAbi = [
 				"type": "address"
 			}
 		],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "deposit",
+		"outputs": [],
 		"stateMutability": "payable",
 		"type": "function"
 	},
@@ -369,6 +390,25 @@ const MMAbi = [
 				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "gameAddress",
+				"type": "address"
+			}
+		],
+		"name": "getRewardDistribution",
+		"outputs": [
+			{
+				"internalType": "uint256[]",
+				"name": "",
+				"type": "uint256[]"
 			}
 		],
 		"stateMutability": "view",
@@ -646,21 +686,7 @@ const MMAbi = [
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "gameAddress",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "mentalmazePoint",
-				"type": "uint256"
-			}
-		],
-		"name": "withdrawMentalMazePoint",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
+		"stateMutability": "payable",
+		"type": "receive"
 	}
 ]

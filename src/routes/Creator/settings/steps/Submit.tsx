@@ -19,6 +19,7 @@ const Submit = () => {
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", `Bearer ${userDetails.token}`);
 
+    console.log(questionObj)
     let raw = JSON.stringify({
       "title": questionObj.title,
       "image": questionObj.image,
@@ -28,7 +29,8 @@ const Submit = () => {
       "accountId": userDetails.id,
       "amountDeposited": questionObj.amountDeposited,
       "rewardDistribution": questionObj.rewardDistribution,
-      "address": questionObj.address
+      "address": questionObj.address,
+      "description": questionObj.description
     });
 
     let requestOptions: RequestInit = {
@@ -38,10 +40,12 @@ const Submit = () => {
       redirect: 'follow'
     };
 
+
     await fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/game/create`, requestOptions)
       .then(response => response.json())
       .then(result => {
         setLoading(false)
+        console.log(result)
         if (result.message == 'success') navigate('/game-Requirement')
       })
       .catch(error => {
@@ -67,7 +71,7 @@ const Submit = () => {
 
               <p className=' md:leading-[31.76px]'> To be sure, your game meets all of our requirements, we will have the judges go through the game. Once they have verified the authenticity of your game guess what? It will be live.</p>
 
-              <p className=' md:leading-[31.76px]'> And if otherwise, you have nothing to worry about, your deposit of 3 Aurora Token, will be refunded to your wallet.</p>
+              <p className=' md:leading-[31.76px]'> And if otherwise, you have nothing to worry about, your deposit  will be refunded to your wallet.</p>
 
               <p className=' md:leading-[31.76px]'> If you need further assistance, do not hesitate to reach us on discord. Our response team, will be happy to answer any question you might have.</p>
 
