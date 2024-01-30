@@ -1,13 +1,13 @@
 import award from "./../../assets/modal/award.svg"
 import Animation from "./Connect/Animation"
-import { useModalContext } from "../../context/ModalContext"
+// import { useModalContext } from "../../context/ModalContext"
 
 import { MM_ADDRESS, useEthersProvider, useEthersSigner } from '../../sdk'
 import { MMContract } from '../../sdk/MMContract'
 import { useState } from "react"
 
 const Claim = () => {
-  const { switchModal } = useModalContext()
+  // const { switchModal } = useModalContext()
 
 
 
