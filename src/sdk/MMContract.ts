@@ -63,8 +63,14 @@ export class MMContract {
 		return tx.toString();
 	}
 
+	async claimReward(address: String) {
+		const tx = await this.contract.claimReward(address, { value: 0 })
+		await tx.wait()
+		return tx.toString();
+	}
 	async gatePass(address: String, value: any) {
 		const tx = await this.contract.gatePass(address, { value })
+		await tx.wait()
 		return tx.toString();
 	}
 
@@ -77,6 +83,7 @@ export class MMContract {
 		const tx = await this.contract.gamePendingApprovalVoteCount(address)
 		return tx.toString();
 	}
+
 	async getJudges(id: number) {
 		const tx = await this.contract.judges(id)
 		return tx;
