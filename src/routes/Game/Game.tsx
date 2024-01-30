@@ -356,6 +356,7 @@ const Game = () => {
   }
 
   const getQuestionTime = (qId: number) => {
+    setLoading(true)
 
     let myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${userDetails.token}`);
@@ -392,11 +393,6 @@ const Game = () => {
         console.log("error", error);
       });
   };
-
-
-
-
-
 
   // // console.log(curQuestion)
   // console.log(playerData)
