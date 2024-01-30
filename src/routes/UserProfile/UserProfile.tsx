@@ -65,7 +65,7 @@ const RANK = ({ position, processedWinners, gameAcctId, gameId, userDetails }: a
                 </div>
             </div>
             <div className='text-white flex items-center'>
-                {processedWinners ? "Pending" : position >= 4 ? "View Result" :
+                {!processedWinners ? "Pending" : position >= 4 ? "View Result" :
                     <div className='flex text-white text-[15px] lg:text-[32px] leading-[26.11px] items-center gap-3'><img className='hidden lg:flex' src={medalMaster} />{position.toString()}
                         <button onClick={async () => {
                             localStorage.setItem('claimGameAddr', game.address)
