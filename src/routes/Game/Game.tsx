@@ -380,7 +380,7 @@ const Game = () => {
         if (result.data) {
           console.log(result)
           setTimeRemaining(Number(result.data.timeRemaining))
-
+          setErrorMessage('')
           setGatePass(true)
           setLoading(false)
         } else {
@@ -394,7 +394,7 @@ const Game = () => {
       });
   };
 
-  // // console.log(curQuestion)
+  // console.log(curQuestion)
   // console.log(playerData)
   // console.log(questions)
 
