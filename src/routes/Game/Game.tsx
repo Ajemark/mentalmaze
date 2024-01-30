@@ -25,9 +25,7 @@ const Game = () => {
   const [errorMessage, setErrorMessage] = useState('')
   const [answers, setAnswers]: any = useState([])
   const [playerData, setPlayerData]: any = useState()
-  // const [again, setagain] = useState(0)
   const [timeRemaining, setTimeRemaining]: any = useState()
-  const [creating, setcreating] = useState(false)
 
   const [submitting, setSubmitting] = useState(false)
   const [questions, setQuestions]: any = useState()
@@ -83,6 +81,9 @@ const Game = () => {
       redirect: "follow",
     };
 
+    createPlayer()
+    return
+
     const data = JSON.parse(window.atob(location.search.split('?data=')[1]))
 
     fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/player/getPlayerDetails?gameId=${data.gameId}&playersAddress=${userDetails.address}`, requestOptions)
@@ -93,8 +94,6 @@ const Game = () => {
           setPlayerData(result.gamePlayerDetails[0])
           getSingleGame()
         } else {
-
-          if (creating) return
           createPlayer()
         }
       })
@@ -110,6 +109,7 @@ const Game = () => {
     myHeaders.append("Content-Type", "application/json");
 
     const data = JSON.parse(window.atob(location.search.split("?data=")[1]));
+    console.log(data)
     const raw = JSON.stringify({
       accountId: data.accountId,
       playersAddress: userDetails.address,
@@ -122,16 +122,13 @@ const Game = () => {
       redirect: "follow",
     };
 
-    setcreating(true)
     fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/player/createGamePlayer`, requestOptions)
       .then(response => response.json())
       .then(result => {
-        // console.log(result, '                109')
-        // console.log(result.gamePlayerData?.length)
+        console.log(result)
         if (result.gamePlayerData?.length > 0 || result.gamePlayerData.id) {
           getSingleGame()
           setPlayerData(result.gamePlayerData)
-          // setLoading(false)
         }
         else {
           // console.log(result)
@@ -178,8 +175,10 @@ const Game = () => {
   const payForPass = async (gatePassFee: any) => {
 
     const tx = await mmContract.playerGames(address as String, gameAddress)
+    console.log(tx)
     if (tx[0]) {
       getPlayerDetails()
+      return
     }
 
     if (scGame[1].toLowerCase() == address?.toLowerCase()) {
@@ -224,7 +223,7 @@ const Game = () => {
   }, [game])
 
 
-
+  console.log(timeRemaining)
 
   useEffect(() => {
     if (!game) return;
@@ -269,7 +268,6 @@ const Game = () => {
         arrayofQuestion_answer: data,
       };
 
-      console.log(dataToSubmit)
       localStorage.setItem(`GameInfo`, JSON.stringify({
         dataToSubmit, game: {
           id: game.id,
@@ -277,8 +275,8 @@ const Game = () => {
         }
       }))
 
-
       setSubmitting(true)
+      setTimeRemaining(1)
       updateTimer(questions[curQuestion].id, 1)
       switchModal();
       switchModalcontent("hurray");
@@ -309,6 +307,7 @@ const Game = () => {
       }
     }))
 
+    setTimeRemaining(1)
     updateTimer(questions[curQuestion].id, 1)
     setCurQuestion(curQuestion + 1);
     setSelected();
@@ -316,6 +315,7 @@ const Game = () => {
 
   const updateTimer = (qId: number, tRm: number) => {
 
+    if (timeRemaining < 1) return
     let myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", `Bearer ${userDetails.token}`);
@@ -324,7 +324,7 @@ const Game = () => {
       "gameId": game.id,
       "questionId": qId,
       "timeRemaining": tRm,
-      "accountId": game.accountId
+      "accountId": playerData.accountId
     })
 
     console.log(raw)
@@ -356,8 +356,6 @@ const Game = () => {
   }
 
   const getQuestionTime = (qId: number) => {
-    // setLoading(true)
-    // console.log(qId)
 
     let myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${userDetails.token}`);
@@ -368,15 +366,18 @@ const Game = () => {
       redirect: "follow",
     };
 
+    console.log(playerData)
+
     fetch(
       `${import.meta.env.VITE_REACT_APP_BASE_URL
-      }/api/time/fetch-time?gameId=${game.id}&accountId=${game.accountId
+      }/api/time/fetch-time?gameId=${game.id}&accountId=${playerData.accountId
       }&questionId=${qId}`,
       requestOptions
     )
       .then((response) => response.json())
       .then((result) => {
         if (result.data) {
+          console.log(result)
           setTimeRemaining(Number(result.data.timeRemaining))
 
           setGatePass(true)
@@ -434,6 +435,8 @@ const Game = () => {
               <div className="bg-black md:pl-[52px] mb-[40px] rounded-t-[24px] md:rounded-r-[24px] flex flex-col md:flex-row">
                 <div className="border-[4px] border-blue-80 border-solid rounded-[24px] flex-1 ">
                   <GameHeader
+                    updateTimer={updateTimer}
+                    questionId={questions[curQuestion].id}
                     handleAnswers={handleAnswers}
                     timer={timeRemaining}
                   />
@@ -586,7 +589,7 @@ const Sidebar = ({ questions, curQuestion }: any) => {
 };
 
 
-const GameHeader = ({ timer, handleAnswers }: any) => {
+const GameHeader = ({ questionId, updateTimer, timer, handleAnswers }: any) => {
 
   return (
     <div className="flex justify-between py-[18px] bg-wb-100 rounded-t-[24px]  md:rounded-tl-[24px] px-[18px]">
@@ -597,7 +600,7 @@ const GameHeader = ({ timer, handleAnswers }: any) => {
             <div className='rounded-[16px] bg-blue-100 p-[8px] font-droid leading-normal text-[20px] flex items-center gap-[8px] w-fit justify-center'>
               {
 
-                <Timer targetDate={timer} handleAnswers={handleAnswers} />
+                <Timer updateTimer={updateTimer} questionId={questionId} targetDate={timer} handleAnswers={handleAnswers} />
               }
             </div>
           </div>

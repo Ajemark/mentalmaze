@@ -1,12 +1,18 @@
 import { useState, useEffect } from 'react';
 
-const Timer = ({ targetDate, handleAnswers }: any) => {
 
-    const [timeLeft, setTimeLeft]: any = useState(Number(targetDate) / 1000);
+
+const Timer = ({ updateTimer, questionId, targetDate, handleAnswers }: any) => {
+
+    console.log(targetDate)
+    const [timeLeft, setTimeLeft]: any = useState(Number(targetDate));
+
     useEffect(() => {
         const timer = setTimeout(() => {
             setTimeLeft((prev: number) => prev - 1);
+            updateTimer(questionId, timeLeft)
         }, 1000);
+
         if (timeLeft < 1) {
             clearTimeout(timer);
             setTimeout(() => {
@@ -14,6 +20,11 @@ const Timer = ({ targetDate, handleAnswers }: any) => {
             }, 10);
         }
     }, [timeLeft]);
+
+    useEffect(() => {
+        setTimeLeft(targetDate)
+    }, [targetDate])
+
 
 
     return (
