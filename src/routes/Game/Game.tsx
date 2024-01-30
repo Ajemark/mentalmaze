@@ -81,9 +81,6 @@ const Game = () => {
       redirect: "follow",
     };
 
-    createPlayer()
-    return
-
     const data = JSON.parse(window.atob(location.search.split('?data=')[1]))
 
     fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/player/getPlayerDetails?gameId=${data.gameId}&playersAddress=${userDetails.address}`, requestOptions)
