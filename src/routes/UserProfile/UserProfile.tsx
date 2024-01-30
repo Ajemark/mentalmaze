@@ -13,9 +13,11 @@ import { Pagination } from '../../component/ui/Pagination'
 
 
 
-const RANK = ({ position, processedWinners, gameId, accountId, userDetails }: any) => {
+const RANK = ({ position, processedWinners, gameAcctId, gameId, userDetails }: any) => {
 
     const [game, setGame]: any = useState()
+    const { switchModalcontent, switchModal } = useModalContext();
+
 
     const getSingleGame = () => {
         let myHeaders = new Headers();
@@ -29,7 +31,7 @@ const RANK = ({ position, processedWinners, gameId, accountId, userDetails }: an
 
         fetch(
             `${import.meta.env.VITE_REACT_APP_BASE_URL
-            }/api/game/fetch-single?gameid=${gameId}&accountId=${accountId
+            }/api/game/fetch-single?gameid=${gameId}&accountId=${gameAcctId
             }`,
             requestOptions
         )
@@ -53,8 +55,6 @@ const RANK = ({ position, processedWinners, gameId, accountId, userDetails }: an
         getSingleGame()
     }, [])
 
-    // console.log(game)
-
     return (
         <div className='flex justify-between font-droid text-[15px] lg:text-[32px] font-normal px-[16px]  lg:px-[48px] mt-[32px] grad-dar rounded-[16px] border-blue-50 border-solid border-[2px] py-[16px] md:py-[24px]'>
             <div className='col-span-2 flex items-center gap-[16px]   '>
@@ -65,8 +65,14 @@ const RANK = ({ position, processedWinners, gameId, accountId, userDetails }: an
                 </div>
             </div>
             <div className='text-white flex items-center'>
-                {!processedWinners ? "Pending" : position >= 4 ? "View Result" :
-                    <div className='flex text-white text-[15px] lg:text-[32px] leading-[26.11px] items-center gap-3'><img src={medalMaster} />{position.toString()}</div>}
+                {processedWinners ? "Pending" : position >= 4 ? "View Result" :
+                    <div className='flex text-white text-[15px] lg:text-[32px] leading-[26.11px] items-center gap-3'><img className='hidden lg:flex' src={medalMaster} />{position.toString()}
+                        <button onClick={async () => {
+                            localStorage.setItem('claimGameAddr', game.address)
+                            switchModal()
+                            switchModalcontent('claim')
+                        }} className='bg-blue-70 p-[5px] px-[10px] rounded-[5px] '>Claim</button>
+                    </div>}
             </div>
         </div>
     )
@@ -75,7 +81,7 @@ const RANK = ({ position, processedWinners, gameId, accountId, userDetails }: an
 
 const RANKS = ({ userDetails }: any) => {
 
-    const [loading, setLoading] = useState(false)
+    // const [loading, setLoading] = useState(false)
     const [pgNum, setPgNum]: any = useState(1)
     const [rank, setRank]: any = useState()
 
@@ -95,29 +101,29 @@ const RANKS = ({ userDetails }: any) => {
             .then(result => {
                 if (result.data) {
                     setRank(result.data)
-                    setLoading(false)
+                    // setLoading(false)
                 }
                 else {
                     console.log(result)
-                    setLoading(false)
+                    // setLoading(false)
                 }
             })
             .catch(error => {
-                setLoading(false)
+                // setLoading(false)
                 console.log('error', error)
             });
     }
 
     useEffect(() => {
-        setLoading(true)
+        // setLoading(true)
         if (!userDetails?.token) {
-            setLoading(false)
+            // setLoading(false)
             return
         }
         getRank()
     }, [userDetails])
 
-    console.log(loading)
+    // console.log(loading) 
 
     const handlePagination = (info: any) => {
         console.log(pgNum)
@@ -136,6 +142,7 @@ const RANKS = ({ userDetails }: any) => {
     }
 
     console.log(rank)
+
 
     return (
         <div className='flex-1 border-blue-80 py-4 border-4 rounded-3xl userProfileStat mt-[34px]'>
@@ -184,7 +191,7 @@ const ProfileHeader = ({ userDetails }: any) => {
     const navigate = useNavigate()
     const { isConnected } = useAccount();
 
-    console.log(userDetails)
+    // console.log(userDetails)
 
     useEffect(() => {
         if (!userDetails.address || !isConnected) {

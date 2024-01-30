@@ -57,6 +57,8 @@ export const GeneralBoard = (data: any) => {
 	}, [data])
 
 
+	console.log(users)
+
 	return (
 		<div className='relative text-white'>
 			<div className='w-full h-fit '>

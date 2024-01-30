@@ -58,6 +58,7 @@ const Game = () => {
     )
       .then((response) => response.json())
       .then((result) => {
+        // console.log(result)
         if (result.data) {
           setGame(result.data);
         } else {
@@ -124,8 +125,8 @@ const Game = () => {
       .then(result => {
         console.log(result)
         if (result.gamePlayerData?.length > 0 || result.gamePlayerData.id) {
-          getSingleGame()
           setPlayerData(result.gamePlayerData)
+          getSingleGame()
         }
         else {
           // console.log(result)
@@ -227,12 +228,14 @@ const Game = () => {
     if (!playerData) return;
 
     const levelQuestions = game.question.filter((g: any) => g.difficultyLevel.toLowerCase() == playerData.unlockLevel.toLowerCase())
+
     setQuestions(levelQuestions)
+
   }, [game, playerData])
 
 
   useEffect(() => {
-    if (!questions) return;
+    if (!questions || questions.length < 1) return;
     getQuestionTime(questions[curQuestion].id)
   }, [curQuestion, questions])
 
@@ -397,9 +400,9 @@ const Game = () => {
 
   // // console.log(curQuestion)
   // console.log(playerData)
-  // // // console.log(questions)
+  // console.log(questions)
 
-  // console.log(game, loading, timeRemaining, scGame)
+  console.log(game, loading, timeRemaining, scGame)
 
   return (
     <div>
