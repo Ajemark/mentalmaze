@@ -66,18 +66,18 @@ const StepperControl = ({ currentStep, steps }: { steps: (string | object)[], cu
 		if (text == "game details") {
 			return {
 				title: "Game Details",
-				text: "Please provide your name and email"
+				text: "Please provide game information"
 			}
 		}
 		else if (text == "Payment") {
 			return {
 				title: "Payments",
-				text: "A few details about your company"
+				text: "Set game rewards and gate pass"
 			}
 		}
 		else return {
 			title: "Submits",
-			text: "Start collaborating with your team"
+			text: "Publish game for challengers to judge"
 		}
 	}
 

@@ -27,7 +27,7 @@ const GameType = () => {
 							switchModal()
 							navigate('/settings')
 						}}>
-							f`all game
+							public game
 						</button>
 					</div>
 
