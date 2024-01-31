@@ -37,6 +37,8 @@ const auroraChain = {
   id: 1313161555,
   name: "Aurora Testnet",
   network: "Aurora Testnet",
+  iconBackground: "#fff",
+  iconUrl: "https://explorer.testnet.aurora.dev/assets/network_icon.svg",
   nativeCurrency: {
     decimals: 18,
     name: "Ether",

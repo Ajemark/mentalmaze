@@ -319,6 +319,19 @@ const MMAbi = [
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "gameAddress",
+				"type": "address"
+			}
+		],
+		"name": "creatorClaimReward",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
 		"inputs": [],
 		"name": "deposit",
 		"outputs": [],
