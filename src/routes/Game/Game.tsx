@@ -218,31 +218,8 @@ const Game = () => {
         return
       }
 
-
-
-
-
-
-
-
-
-      const tx = await mmContract.gatePass(gameAddress, gatePassFee)
-
-
-
-
-
-
-      if (tx) {
-        console.log(tx)
-        setErrorMessage('Gate Pass Payed for, click `PLAY NOW` to play game')
-        fetchPlayerGame()
-      }
-
-
-
-
     } catch (error: any) {
+      setLoading(false)
       console.log(error)
       if (JSON.parse(JSON.stringify(error)).info.error.data.message.includes('insufficient funds')) {
         setErrorMessage('You Do Not Have Enough ETH To Process This Transaction!')
