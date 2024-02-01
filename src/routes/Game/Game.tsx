@@ -144,6 +144,7 @@ const Game = () => {
 
 
   const fetchSCGame = async () => {
+    console.log(gameAddress)
     const tx = await mmContract.Games(gameAddress)
     return (tx);
   }
@@ -186,7 +187,8 @@ const Game = () => {
     try {
 
       console.log(scGame)
-      return
+      console.log(scGame[5])
+      // return
 
       setLoading(true)
 
@@ -195,7 +197,7 @@ const Game = () => {
 
       if (Number(allowance) >= (Number(gatePassFee))) {
 
-        const tx = await mmContract.gatePass(gameAddress, gatePassFee)
+        const tx = await mmContract.gatePass(gameAddress, scGame[5])
         if (tx) {
           console.log(tx)
           setErrorMessage('Gate Pass Payed for, click `PLAY NOW` to play game')
@@ -206,7 +208,7 @@ const Game = () => {
 
       const approved = await erc20Contract.approve(MM_ADDRESS, ((gatePassFee)).toString())
       if (approved) {
-        const tx = await mmContract.gatePass(gameAddress, gatePassFee)
+        const tx = await mmContract.gatePass(gameAddress, scGame[5])
         if (tx) {
           console.log(tx)
           setErrorMessage('Gate Pass Payed for, click `PLAY NOW` to play game')
@@ -459,7 +461,7 @@ const Game = () => {
               <div className="w-[350px] p-[24px] rounded-[8px] flex justify-center items-center flex-col h-[240px] bg-gradient-to-r from-[#032449] to-[#0B77F0]">
 
                 <div className="w-[300px] text-white h-[130px] rounded-[8px] bg-[rgba(0,0,0,0.52)]">
-                  <p className="p-2">Gate Pass : {scGame && (formatEther(scGame[6].toString()))}</p>
+                  <p className="p-2">Gate Pass : {scGame && (formatEther(scGame[7].toString()))}</p>
                   <p className="p-2">Total Reward  : {scGame && formatEther(scGame[2].toString())}</p>
                   <p className="p-2">Game Duration  : {scGame && scGame[3].toString()} hours</p>
                 </div>

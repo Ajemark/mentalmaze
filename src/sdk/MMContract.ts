@@ -29,7 +29,7 @@ export class MMContract {
 
 		let tx = await this.contract.createGame(amountDeposited, durationInHours, rewardDistribution, parseEther(pass), tokenAddress)
 		tx = await tx.wait()
-		return decode.decode(['address'], tx.logs[0].data)
+		return decode.decode(['address'], tx.logs[1].data)
 	}
 	async approveGame(gameAddress: string) {
 		let tx = await this.contract.approveGames(gameAddress)
