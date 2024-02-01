@@ -1,5 +1,5 @@
 
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import Input from "../../../../component/ui/Input"
 import { HiMinus, HiPlus } from "react-icons/hi"
 import { UserContext } from "../../../../context/UserContext"
@@ -20,10 +20,17 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
 
 
 	const updatePriceShare = (index: any, newValue: any) => {
-		const updatedArray = [...priceShare]; // Create a copy of the current array
-		updatedArray[index] = Number(newValue); // Update the element at the specified index
-		setPriceShare(updatedArray); // Update the state with the new array
+		const updatedArray = [...priceShare];
+		updatedArray[index] = Number(newValue);
+		setPriceShare(updatedArray);
 	};
+
+
+
+	// useEffect(() => {
+	// 	setSendinTx(false)
+	// }, [])
+
 
 	const [errorMessage, setErrorMessage] = useState('')
 	const [sendinTx, setSendinTx] = useState(false)
@@ -32,7 +39,7 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
 
 	const prices = (priceShare: any) => {
 		let nprice: any = []
-		priceShare.length > 1 && priceShare.map((price: any) => {
+		priceShare.length > 0 && priceShare.map((price: any) => {
 			nprice.push(parseEther(price.toString()))
 		})
 		return nprice
@@ -60,6 +67,7 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
 			const allowance = await erc20Contract.allowance(address as string, MM_ADDRESS)
 
 			console.log(allowance)
+
 			if (Number(allowance) >= (Number(amount) * 1.2)) {
 
 				const tx = await mmContract.createGame(data, ERC20)

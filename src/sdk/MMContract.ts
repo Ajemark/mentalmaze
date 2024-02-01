@@ -18,14 +18,12 @@ export class MMContract {
 		);
 	}
 
-	// constructor(address: string, signer: any, provider: any) {
-	// 	super(address, signer, provider, MMAbi);
-	// }
-
 	async createGame(data: any, tokenAddress: any) {
 		let decode = new AbiCoder()
 		const { amountDeposited, rewardDistribution, durationInHours, pass } = data
 
+		console.log(amountDeposited, rewardDistribution)
+		// return
 
 		let tx = await this.contract.createGame(amountDeposited, durationInHours, rewardDistribution, parseEther(pass), tokenAddress)
 		tx = await tx.wait()
