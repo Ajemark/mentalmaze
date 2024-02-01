@@ -4,11 +4,11 @@ import Input from "../../../../component/ui/Input"
 import { HiMinus, HiPlus } from "react-icons/hi"
 import { UserContext } from "../../../../context/UserContext"
 import { MMContract } from "../../../../sdk/MMContract"
-import { MM_ADDRESS, useEthersProvider, useEthersSigner } from "../../../../sdk"
+import { ERC20, MM_ADDRESS, useEthersProvider, useEthersSigner } from "../../../../sdk"
 import { useAccount } from "wagmi"
 import { parseEther } from "viem"
 import ReactLoading from 'react-loading';
-import { formatEther } from "ethers"
+import { ERC20Contract } from "../../../../sdk/ERC20"
 
 
 const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
@@ -53,13 +53,35 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
 
 		setSendinTx(true)
 		const mmContract = new MMContract(MM_ADDRESS, signer, provider)
+		const erc20Contract = new ERC20Contract(ERC20, signer, provider)
 		try {
-			const tx = await mmContract.createGame(data, parseEther(gameToken.toString()))
-			if (tx) {
-				setQuestionObj({ ...data, amountDeposited: gameToken, rewardDistribution: priceShare, address: tx[0] })
-				setSendinTx(false)
-				handleClick(3)
+			const amount = parseEther(gameToken)
+
+			const allowance = await erc20Contract.allowance(address as string, MM_ADDRESS)
+
+			console.log(allowance)
+			if (Number(allowance) >= (Number(amount) * 1.2)) {
+
+				const tx = await mmContract.createGame(data, ERC20)
+				if (tx) {
+					setQuestionObj({ ...data, amountDeposited: gameToken, rewardDistribution: priceShare, address: tx[0] })
+					setSendinTx(false)
+					handleClick(3)
+				}
+				return
 			}
+
+			const approved = await erc20Contract.approve(MM_ADDRESS, (Number(amount) * 1.2).toString())
+			if (approved) {
+				const tx = await mmContract.createGame(data, ERC20)
+				if (tx) {
+					setQuestionObj({ ...data, amountDeposited: gameToken, rewardDistribution: priceShare, address: tx[0] })
+					setSendinTx(false)
+					handleClick(3)
+				}
+				return
+			}
+
 		} catch (error: any) {
 			setSendinTx(false)
 			console.log(error)
@@ -91,7 +113,7 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
 										value={gameToken}
 										type='number'
 									/>
-									<p className='font-[300] text-wb-40 font-Archivo_Regular mt-[8px] leading-[17.41px] text-[14px] md:text-[16px]'> e.g 3 Aurora Token</p>
+									<p className='font-[300] text-wb-40 font-Archivo_Regular mt-[8px] leading-[17.41px] text-[14px] md:text-[16px]'> e.g 3.5 Aurora Token</p>
 
 								</div>
 
@@ -104,7 +126,7 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
 										value={pass}
 										type='number'
 									/>
-									<p className='font-[300] text-wb-40 font-Archivo_Regular mt-[8px] leading-[17.41px] text-[14px] md:text-[16px]'> e.g 3 Aurora Token</p>
+									<p className='font-[300] text-wb-40 font-Archivo_Regular mt-[8px] leading-[17.41px] text-[14px] md:text-[16px]'> e.g 3.5 Aurora Token</p>
 								</div>
 
 							</div>
@@ -196,15 +218,6 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
 									return
 								}
 								const get = async () => {
-									//@ts-ignore
-									const balance = await provider?.getBalance?.(address);
-									const balanceInEth = formatEther(balance);
-
-
-									if (gameToken > balanceInEth) {
-										setErrorMessage('You Do Not Have Enough ETH To Process This Transaction!')
-										return
-									}
 
 									const data2 = {
 										...data,
