@@ -22,13 +22,12 @@ export class MMContract {
 	// 	super(address, signer, provider, MMAbi);
 	// }
 
-	async createGame(data: any, value: BigInt) {
+	async createGame(data: any, tokenAddress: any) {
 		let decode = new AbiCoder()
 		const { amountDeposited, rewardDistribution, durationInHours, pass } = data
 
-		console.log(rewardDistribution)
 
-		let tx = await this.contract.createGame(amountDeposited, durationInHours, rewardDistribution, parseEther(pass), { value })
+		let tx = await this.contract.createGame(amountDeposited, durationInHours, rewardDistribution, parseEther(pass), tokenAddress)
 		tx = await tx.wait()
 		return decode.decode(['address'], tx.logs[0].data)
 	}
@@ -63,13 +62,13 @@ export class MMContract {
 		return tx.toString();
 	}
 
-	async claimReward(address: String) {
-		const tx = await this.contract.claimReward(address, { value: 0 })
+	async claimReward(address: String, tokenAddress: any) {
+		const tx = await this.contract.claimReward(address, tokenAddress)
 		await tx.wait()
 		return tx.toString();
 	}
-	async gatePass(address: String, value: any) {
-		const tx = await this.contract.gatePass(address, { value })
+	async gatePass(address: String, tokenAddress: any) {
+		const tx = await this.contract.gatePass(address, tokenAddress)
 		await tx.wait()
 		return tx.toString();
 	}
@@ -160,6 +159,11 @@ const MMAbi = [
 			},
 			{
 				"internalType": "address",
+				"name": "tokenAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
 				"name": "managerContract",
 				"type": "address"
 			},
@@ -198,14 +202,9 @@ const MMAbi = [
 				"type": "address"
 			},
 			{
-				"internalType": "address",
-				"name": "playerAddress",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "position",
-				"type": "uint256"
+				"internalType": "address[]",
+				"name": "playerAddresses",
+				"type": "address[]"
 			}
 		],
 		"name": "addReward",
@@ -277,6 +276,11 @@ const MMAbi = [
 				"internalType": "address",
 				"name": "gameAddress",
 				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "tokenAddress",
+				"type": "address"
 			}
 		],
 		"name": "claimReward",
@@ -305,6 +309,11 @@ const MMAbi = [
 				"internalType": "uint256",
 				"name": "pass",
 				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "tokenAddress",
+				"type": "address"
 			}
 		],
 		"name": "createGame",
@@ -323,6 +332,11 @@ const MMAbi = [
 			{
 				"internalType": "address",
 				"name": "gameAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "tokenAddress",
 				"type": "address"
 			}
 		],
@@ -394,6 +408,11 @@ const MMAbi = [
 			{
 				"internalType": "address",
 				"name": "gameAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "tokenAddress",
 				"type": "address"
 			}
 		],
@@ -598,6 +617,11 @@ const MMAbi = [
 			},
 			{
 				"internalType": "address",
+				"name": "tokenAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
 				"name": "managerContract",
 				"type": "address"
 			},
@@ -701,6 +725,24 @@ const MMAbi = [
 			}
 		],
 		"name": "withdraw",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "tokenAddress",
+				"type": "address"
+			}
+		],
+		"name": "withdrawERC20",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"

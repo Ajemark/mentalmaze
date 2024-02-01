@@ -1,7 +1,4 @@
 import { AiOutlineClockCircle } from "react-icons/ai";
-// import { IoDiamondSharp } from "react-icons/io5";
-// import messagequestion from "./../../assets/play/messagequestion.svg";
-// import moduleMobile from "./../../assets/play/moduleMobile.svg";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserContext";
 import Loading from "../../component/ui/Loading";
@@ -9,9 +6,10 @@ import { useModalContext } from "../../context/ModalContext";
 import { useAccount } from "wagmi";
 import { useNavigate } from "react-router-dom";
 import Timer from "./Timer";
-import { MM_ADDRESS, useEthersProvider, useEthersSigner } from "../../sdk";
+import { ERC20, MM_ADDRESS, useEthersProvider, useEthersSigner } from "../../sdk";
 import { MMContract } from "../../sdk/MMContract";
 import { formatEther } from "viem";
+import { ERC20Contract } from "../../sdk/ERC20";
 
 
 
@@ -142,6 +140,7 @@ const Game = () => {
   const signer = useEthersSigner();
   const provider = useEthersProvider();
   const mmContract = new MMContract(MM_ADDRESS, signer, provider)
+  const erc20Contract = new ERC20Contract(ERC20, signer, provider)
 
 
   const fetchSCGame = async () => {
@@ -185,13 +184,61 @@ const Game = () => {
     }
 
     try {
+
+      console.log(scGame)
+      return
+
       setLoading(true)
+
+
+      const allowance = await erc20Contract.allowance(address as string, MM_ADDRESS)
+
+      if (Number(allowance) >= (Number(gatePassFee))) {
+
+        const tx = await mmContract.gatePass(gameAddress, gatePassFee)
+        if (tx) {
+          console.log(tx)
+          setErrorMessage('Gate Pass Payed for, click `PLAY NOW` to play game')
+          fetchPlayerGame()
+        }
+        return
+      }
+
+      const approved = await erc20Contract.approve(MM_ADDRESS, ((gatePassFee)).toString())
+      if (approved) {
+        const tx = await mmContract.gatePass(gameAddress, gatePassFee)
+        if (tx) {
+          console.log(tx)
+          setErrorMessage('Gate Pass Payed for, click `PLAY NOW` to play game')
+          fetchPlayerGame()
+        }
+        return
+      }
+
+
+
+
+
+
+
+
+
       const tx = await mmContract.gatePass(gameAddress, gatePassFee)
+
+
+
+
+
+
       if (tx) {
         console.log(tx)
         setErrorMessage('Gate Pass Payed for, click `PLAY NOW` to play game')
         fetchPlayerGame()
       }
+
+
+
+
     } catch (error: any) {
       console.log(error)
       if (JSON.parse(JSON.stringify(error)).info.error.data.message.includes('insufficient funds')) {

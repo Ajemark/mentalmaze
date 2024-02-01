@@ -7,7 +7,7 @@ import { useModalContext } from "../context/ModalContext";
 import useMode from "../hooks/useMode";
 import { Toaster } from "react-hot-toast";
 
-import { configureChains, createConfig, sepolia, WagmiConfig } from "wagmi";
+import { configureChains, createConfig, WagmiConfig } from "wagmi";
 
 import "@rainbow-me/rainbowkit/styles.css";
 
@@ -15,34 +15,36 @@ import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { publicProvider } from "wagmi/providers/public";
 
 
-// const auroraChain = {
-//   id: 1313161554,
-//   name: "Aurora Mainnet",
-//   network: "Aurora Mainnet",
-//   nativeCurrency: {
-//     decimals: 18,
-//     name: "Ether",
-//     symbol: "ETH",
-//   },
-//   rpcUrls: {
-//     default: { http: ["https://mainnet.aurora.dev"] },
-//     public: { http: ["https://mainnet.aurora.dev"] },
-//   },
-//   blockExplorers: {
-//     default: { name: "Aurora Explorer", url: "https://explorer.aurora.dev" },
-//   }
-// }
-
 const auroraChain = {
-  id: 1313161555,
-  name: "Aurora Testnet",
-  network: "Aurora Testnet",
+  id: 1313161554,
+  name: "Aurora Mainnet",
+  network: "Aurora Mainnet",
   iconBackground: "#fff",
   iconUrl: "https://explorer.testnet.aurora.dev/assets/network_icon.svg",
   nativeCurrency: {
     decimals: 18,
     name: "Ether",
     symbol: "ETH",
+  },
+  rpcUrls: {
+    default: { http: ["https://mainnet.aurora.dev"] },
+    public: { http: ["https://mainnet.aurora.dev"] },
+  },
+  blockExplorers: {
+    default: { name: "Aurora Explorer", url: "https://explorer.aurora.dev" },
+  }
+}
+
+const auroraChainTestnet = {
+  id: 1313161555,
+  name: "Aurora",
+  network: "Aurora",
+  iconBackground: "#fff",
+  iconUrl: "https://explorer.testnet.aurora.dev/assets/network_icon.svg",
+  nativeCurrency: {
+    decimals: 18,
+    name: "Aurora",
+    symbol: "AUR",
   },
   rpcUrls: {
     default: { http: ["https://testnet.aurora.dev"] },
@@ -54,7 +56,7 @@ const auroraChain = {
 }
 
 const { chains, publicClient } = configureChains(
-  [auroraChain, sepolia],
+  [auroraChain, auroraChainTestnet],
   [publicProvider()]
 );
 

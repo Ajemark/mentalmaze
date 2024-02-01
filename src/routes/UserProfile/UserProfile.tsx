@@ -13,7 +13,7 @@ import { Pagination } from '../../component/ui/Pagination'
 
 
 
-const RANK = ({ position, processedWinners, gameAcctId, gameId, userDetails }: any) => {
+const RANK = ({ position, claimed, processedWinners, playersAddress, gameAcctId, accountId, gameId, userDetails }: any) => {
 
     const [game, setGame]: any = useState()
     const { switchModalcontent, switchModal } = useModalContext();
@@ -55,6 +55,7 @@ const RANK = ({ position, processedWinners, gameAcctId, gameId, userDetails }: a
         getSingleGame()
     }, [])
 
+
     return (
         <div className='flex justify-between font-droid text-[15px] lg:text-[32px] font-normal px-[16px]  lg:px-[48px] mt-[32px] grad-dar rounded-[16px] border-blue-50 border-solid border-[2px] py-[16px] md:py-[24px]'>
             <div className='col-span-2 flex items-center gap-[16px]   '>
@@ -67,11 +68,25 @@ const RANK = ({ position, processedWinners, gameAcctId, gameId, userDetails }: a
             <div className='text-white flex items-center'>
                 {!processedWinners ? "Pending" : position >= 4 ? "View Result" :
                     <div className='flex text-white text-[15px] lg:text-[32px] leading-[26.11px] items-center gap-3'><img className='hidden lg:flex' src={medalMaster} />{position.toString()}
-                        <button onClick={async () => {
-                            localStorage.setItem('claimGameAddr', game.address)
-                            switchModal()
-                            switchModalcontent('claim')
-                        }} className='bg-blue-70 p-[5px] px-[10px] rounded-[5px] '>Claim</button>
+                        <button
+                            disabled={claimed}
+                            onClick={async () => {
+                                localStorage.setItem('claimGameAddr', JSON.stringify({
+                                    'game': game.address,
+                                    accountId,
+                                    gameId,
+                                    playersAddress
+                                }))
+                                switchModal()
+                                switchModalcontent('claim')
+                            }}
+                            className='bg-blue-70 p-[5px] px-[10px] rounded-[5px] '
+                            style={{
+                                backgroundColor: `${claimed ? "#010C18" : ""}`,
+                                opacity: `${claimed ? '70%' : ""}`
+                            }}
+                        >
+                            {claimed ? "claimed" : "Claim"}</button>
                     </div>}
             </div>
         </div>
