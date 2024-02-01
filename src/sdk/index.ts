@@ -34,6 +34,7 @@ export function useEthersProvider({ chainId }: { chainId?: number } = {}) {
     );
 }
 
-export const MM_ADDRESS = '0x568E9e2E63d33D64ba3B7318977f731725cfe29D'
+export const MM_ADDRESS = "0x5A94802D5488293e982201018fAFa71ed6EB7823" //aurora mainnet
+// '0x568E9e2E63d33D64ba3B7318977f731725cfe29D'
 // '0xd8420f7941B95297aA7e34B9f6E85D93dC43A8E0'
 

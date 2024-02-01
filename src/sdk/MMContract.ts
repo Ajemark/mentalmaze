@@ -198,14 +198,9 @@ const MMAbi = [
 				"type": "address"
 			},
 			{
-				"internalType": "address",
-				"name": "playerAddress",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "position",
-				"type": "uint256"
+				"internalType": "address[]",
+				"name": "playerAddresses",
+				"type": "address[]"
 			}
 		],
 		"name": "addReward",

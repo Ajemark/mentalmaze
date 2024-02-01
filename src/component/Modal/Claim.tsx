@@ -4,18 +4,51 @@ import Animation from "./Connect/Animation"
 
 import { MM_ADDRESS, useEthersProvider, useEthersSigner } from '../../sdk'
 import { MMContract } from '../../sdk/MMContract'
-import { useState } from "react"
+import { useContext, useState } from "react"
+import { UserContext } from "../../context/UserContext"
 
 const Claim = () => {
   // const { switchModal } = useModalContext()
 
 
-
+  const { userDetails }: any = useContext(UserContext);
   const [errorMessage, setErrorMessage] = useState('')
   const signer = useEthersSigner();
   const provider = useEthersProvider();
   const mmContract = new MMContract(MM_ADDRESS, signer, provider)
-  const gameAddr = localStorage.getItem('claimGameAddr')
+  const data = localStorage.getItem('claimGameAddr')
+  const gameAddr = JSON.parse(data ?? '')
+
+
+  const updatePlayer = () => {
+    let myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${userDetails.token}`);
+    myHeaders.append("Content-Type", "application/json");
+
+    let requestOptions: RequestInit = {
+      method: "PUT",
+      body: data,
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/player/update-claim`, requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        console.log(result)
+        if (result.message == 'success') {
+          setErrorMessage('Reward Claimed Successfully!!')
+          setTimeout(() => {
+            location.reload()
+          }, 3000);
+        }
+
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
+
 
 
   return (
@@ -33,8 +66,13 @@ const Claim = () => {
               setErrorMessage('')
               if (gameAddr) {
                 try {
-                  const tx = await mmContract.claimReward(gameAddr)
+
+                  const tx = await mmContract.claimReward(gameAddr.game)
                   console.log(tx)
+
+                  if (tx) {
+                    updatePlayer()
+                  }
 
                 } catch (error) {
                   console.log(error)
