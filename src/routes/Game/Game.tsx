@@ -179,6 +179,7 @@ const Game = () => {
       return
     }
 
+    console.log(gatePassFee)
     if (scGame[1].toLowerCase() == address?.toLowerCase()) {
       setErrorMessage('Owners can`t play thier game!')
       return
@@ -466,7 +467,7 @@ const Game = () => {
                   <p className="p-2">Game Duration  : {scGame && scGame[3].toString()} hours</p>
                 </div>
                 <button onClick={() => {
-                  payForPass(scGame[6]);
+                  payForPass(scGame[7]);
                 }}
                   className="text-white mt-5 font-droid bg-[rgba(1,12,24,1)]  rounded-[8px] border border-[rgba(132,188,249,1)] p-2 px-5 ">Play Now</button>
                 {errorMessage != '' && <p className="text-white text-center">{errorMessage}</p>}
