@@ -2,7 +2,7 @@ import award from "./../../assets/modal/award.svg"
 import Animation from "./Connect/Animation"
 // import { useModalContext } from "../../context/ModalContext"
 
-import { MM_ADDRESS, useEthersProvider, useEthersSigner } from '../../sdk'
+import { ERC20, MM_ADDRESS, useEthersProvider, useEthersSigner } from '../../sdk'
 import { MMContract } from '../../sdk/MMContract'
 import { useContext, useState } from "react"
 import { UserContext } from "../../context/UserContext"
@@ -67,7 +67,7 @@ const Claim = () => {
               if (gameAddr) {
                 try {
 
-                  const tx = await mmContract.claimReward(gameAddr.game)
+                  const tx = await mmContract.claimReward(gameAddr.game, ERC20)
                   console.log(tx)
 
                   if (tx) {
