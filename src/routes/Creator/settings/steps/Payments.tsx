@@ -1,5 +1,5 @@
 
-import { useContext, useEffect, useState } from "react"
+import { useContext, useState } from "react"
 import Input from "../../../../component/ui/Input"
 import { HiMinus, HiPlus } from "react-icons/hi"
 import { UserContext } from "../../../../context/UserContext"
@@ -24,7 +24,6 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
 		updatedArray[index] = Number(newValue);
 		setPriceShare(updatedArray);
 	};
-
 
 
 	// useEffect(() => {
