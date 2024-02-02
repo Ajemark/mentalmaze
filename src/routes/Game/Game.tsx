@@ -10,7 +10,7 @@ import { ERC20, MM_ADDRESS, useEthersProvider, useEthersSigner } from "../../sdk
 import { MMContract } from "../../sdk/MMContract";
 import { formatEther } from "viem";
 import { ERC20Contract } from "../../sdk/ERC20";
-
+// import { ethers, AbiCoder, parseEther } from "ethers";
 
 
 const Game = () => {
@@ -144,7 +144,6 @@ const Game = () => {
 
 
   const fetchSCGame = async () => {
-    console.log(gameAddress)
     const tx = await mmContract.Games(gameAddress)
     return (tx);
   }
