@@ -6,16 +6,15 @@ import { ConnectModals } from "./Modals";
 import { useModalContext } from "../context/ModalContext";
 import useMode from "../hooks/useMode";
 import { Toaster } from "react-hot-toast";
-
-import { configureChains, createConfig, WagmiConfig } from "wagmi";
-
-import "@rainbow-me/rainbowkit/styles.css";
-
-import { connectorsForWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
-import { publicProvider } from "wagmi/providers/public";
 import { useEffect } from "react";
-import { metaMaskWallet, walletConnectWallet } from '@rainbow-me/rainbowkit/wallets';
 
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { WagmiProvider } from 'wagmi'
+import { createWeb3Modal } from "@web3modal/wagmi/react"
+import { defaultWagmiConfig } from "@web3modal/wagmi"
+
+
+const queryClient = new QueryClient()
 
 
 const auroraChain = {
@@ -58,36 +57,38 @@ const auroraChain = {
 //   }
 // }
 
-const { chains, publicClient } = configureChains(
-  [auroraChain],
-  [publicProvider()]
-);
 
 const projectId = import.meta.env.VITE_REACT_APP_WALLET_CONNECT_PROJECT_ID;
 
 
-const connectors = connectorsForWallets([
-  {
-    groupName: 'Recommended',
-    wallets: [
-      metaMaskWallet({ projectId, chains }),
-      walletConnectWallet({ projectId, chains }),
-    ],
-  },
-]);
+// Create wagmiConfig
+const metadata: any = {
+  name: 'MentalMaze App',
+  description: 'Connect To MentalMaze App',
+  url: 'https://web3modal.com',
+  icons: ['https://avatars.githubusercontent.com/u/37784886'],
+}
+
+const chains: any = [auroraChain]
+
+const wagmiConfig = defaultWagmiConfig({
+  chains,
+  projectId,
+  metadata
+})
 
 
-// const { connectors } = getDefaultWallets({
-//   appName: "MentalMaze App",
-//   projectId: projectId,
-//   chains,
-// });
+let options = {
+  defaultChain: auroraChain, // we can set it to make sure we are using Aurora mainnet by default
+  includeWalletIds: [
+    '76260019aec5a3c44dd2421bf78e80f71a6c090d932c413a287193ed79450694', //AuroraPass
+    'c57ca95b47569778a828d19178114f4db188b89b763c899ba0be274e97267d96', //Metamask
+  ]
+};
 
-const wagmiConfig = createConfig({
-  autoConnect: true,
-  connectors,
-  publicClient,
-});
+// Create modal
+createWeb3Modal({ wagmiConfig, projectId, chains, ...options })
+
 
 
 export const MainLayout = () => {
@@ -121,8 +122,8 @@ export const MainLayout = () => {
           },
         }}
       />
-      <WagmiConfig config={wagmiConfig}>
-        <RainbowKitProvider chains={chains}>
+      <WagmiProvider config={wagmiConfig}>
+        <QueryClientProvider client={queryClient}>
           <div
             className={`${challenger ? "bg-black" : "home"
               } rounded-none min-h-screen h-full flex justify-center w-full items-center  `}
@@ -146,8 +147,9 @@ export const MainLayout = () => {
               </div>
             </div>
           </div>
-        </RainbowKitProvider>
-      </WagmiConfig>
+        </QueryClientProvider>
+      </WagmiProvider>
+
     </>
   );
 };

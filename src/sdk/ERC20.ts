@@ -1,6 +1,7 @@
 
 import { ethers } from "ethers";
-import { erc20ABI } from "wagmi";
+import { erc20Abi } from "viem";
+// import { erc20ABI } from "wagmi";
 
 export class ERC20Contract {
 
@@ -13,10 +14,10 @@ export class ERC20Contract {
 		this.address = address;
 		this.signer = signer;
 		this.provider = provider;
-		this.contract = new ethers.Contract(this.address, erc20ABI, this.signer);
+		this.contract = new ethers.Contract(this.address, erc20Abi, this.signer);
 		this.contractWithProvider = new ethers.Contract(
 			this.address,
-			erc20ABI,
+			erc20Abi,
 			this.provider
 		);
 	}
