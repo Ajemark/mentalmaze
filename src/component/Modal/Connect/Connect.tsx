@@ -23,16 +23,14 @@ const Connect = () => {
   }, [])
 
 
-  const openWidget = (onComplete: any) => {
+  const openWidget = () => {
     let myWindow: any = window;
     if (myWindow.openPromo) {
       switchModal()
-      myWindow.openPromo({ onComplete: onComplete, config: { hideUpdateAppBlock: true } })
-    } else onComplete()
-  }
+      myWindow.openPromo({ onComplete: openConnectModal?.(), config: { hideUpdateAppBlock: true } })
+    } else {
 
-  const onComplete = () => {
-    console.log('complteted')
+    }
   }
 
 
@@ -72,7 +70,7 @@ const Connect = () => {
           <button
 
             className=' metamask flex gap-[24px] items-center justify-center font-droid text-[16px] md:text-[24px]  border-blue-80 '
-            onClick={() => openWidget(onComplete)}
+            onClick={openWidget}
 
           >
             <div>
