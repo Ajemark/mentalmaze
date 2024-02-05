@@ -11,8 +11,11 @@ import { configureChains, createConfig, WagmiConfig } from "wagmi";
 
 import "@rainbow-me/rainbowkit/styles.css";
 
-import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
+import { connectorsForWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { publicProvider } from "wagmi/providers/public";
+import { useEffect } from "react";
+import { metaMaskWallet, walletConnectWallet } from '@rainbow-me/rainbowkit/wallets';
+
 
 
 const auroraChain = {
@@ -62,11 +65,23 @@ const { chains, publicClient } = configureChains(
 
 const projectId = import.meta.env.VITE_REACT_APP_WALLET_CONNECT_PROJECT_ID;
 
-const { connectors } = getDefaultWallets({
-  appName: "MentalMaze App",
-  projectId: projectId,
-  chains,
-});
+
+const connectors = connectorsForWallets([
+  {
+    groupName: 'Recommended',
+    wallets: [
+      metaMaskWallet({ projectId, chains }),
+      walletConnectWallet({ projectId, chains }),
+    ],
+  },
+]);
+
+
+// const { connectors } = getDefaultWallets({
+//   appName: "MentalMaze App",
+//   projectId: projectId,
+//   chains,
+// });
 
 const wagmiConfig = createConfig({
   autoConnect: true,
@@ -74,9 +89,21 @@ const wagmiConfig = createConfig({
   publicClient,
 });
 
+
 export const MainLayout = () => {
   const { ModalMode, sideBarMode, switchSideMode, modal } = useModalContext();
   const { challenger } = useMode();
+
+  let scriptAdded = false;
+
+  useEffect(() => {
+    if (!scriptAdded) {
+      const script = document.createElement("script");
+      script.src = "https://pass.auroracloud.dev/promo.js";
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  }, []);
 
   return (
     <>
@@ -90,7 +117,7 @@ export const MainLayout = () => {
             padding: "16px",
             color: "white",
             zIndex:
-              "1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+              "999",
           },
         }}
       />

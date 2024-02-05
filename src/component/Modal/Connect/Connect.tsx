@@ -22,6 +22,20 @@ const Connect = () => {
     }
   }, [])
 
+
+  const openWidget = (onComplete: any) => {
+    let myWindow: any = window;
+    if (myWindow.openPromo) {
+      switchModal()
+      myWindow.openPromo({ onComplete: onComplete, config: { hideUpdateAppBlock: true } })
+    } else onComplete()
+  }
+
+  const onComplete = () => {
+    console.log('complteted')
+  }
+
+
   async function connectWallet() {
     try {
       openConnectModal?.()
@@ -51,6 +65,20 @@ const Connect = () => {
               <img src={metalmask} />
             </div>
             MetaMask
+          </button>
+        </div>
+
+        <div className='flex mt-8 justify-center '>
+          <button
+
+            className=' metamask flex gap-[24px] items-center justify-center font-droid text-[16px] md:text-[24px]  border-blue-80 '
+            onClick={() => openWidget(onComplete)}
+
+          >
+            <div>
+              <img src="https://explorer.testnet.aurora.dev/assets/network_icon.svg" />
+            </div>
+            Aurora Pass
           </button>
         </div>
 
