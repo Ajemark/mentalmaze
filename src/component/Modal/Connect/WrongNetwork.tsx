@@ -1,10 +1,10 @@
 import { useModalContext } from "../../../context/ModalContext"
 import Animation from "./Animation"
-import { useChainModal } from "@rainbow-me/rainbowkit"
+// import { useChainModal } from "@rainbow-me/rainbowkit"
 
 const WrongNetwork = () => {
   const { switchModal } = useModalContext()
-  const { openChainModal } = useChainModal()
+  // const { openChainModal } = useChainModal()
 
   return (
     <>
@@ -17,7 +17,7 @@ const WrongNetwork = () => {
         <button
           onClick={() => {
             switchModal()
-            openChainModal?.()
+            // openChainModal?.()
           }}
           className='flex items-center justify-center my-6 font-droid text-[24px] modalButton border-blue-80 border-solid border-[2px] w-[306px] h-[80px] rounded-[1rem] mx-auto'>
           Switch Network

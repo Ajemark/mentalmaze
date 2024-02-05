@@ -1,4 +1,4 @@
-import { useAccount, useNetwork } from 'wagmi'
+import { useAccount } from 'wagmi'
 import create from "./../../assets/create/create.svg"
 import createmobile from "./../../assets/create/createmobile.svg"
 import { useModalContext } from '../../context/ModalContext'
@@ -31,7 +31,7 @@ const Game = ({ title, image }: { title: string, image: string }) => {
 }
 
 const Create = () => {
-  const { chain } = useNetwork()
+  // const { chain } = useNetwork()
   const { userDetails }: any = useContext(UserContext)
   const { switchModal, switchModalcontent } = useModalContext()
 
@@ -101,10 +101,10 @@ const Create = () => {
                   switchModalcontent('connect')
                   return
                 }
-                if (chain?.unsupported) {
-                  switchModalcontent('wrongnetwork')
-                  return
-                }
+                // if (chain?.unsupported) {
+                //   switchModalcontent('wrongnetwork')
+                //   return
+                // }
                 switchModalcontent('gametype')
               }
               }>
@@ -130,10 +130,10 @@ const Create = () => {
                 switchModalcontent('connect')
                 return
               }
-              if (chain?.unsupported) {
-                switchModalcontent('wrongnetwork')
-                return
-              }
+              // if (chain?.unsupported) {
+              //   switchModalcontent('wrongnetwork')
+              //   return
+              // }
               switchModalcontent('gametype')
             }} className='font-droid text-[24px] leading-[28.34px] modalButton'>
               CREATE GAME

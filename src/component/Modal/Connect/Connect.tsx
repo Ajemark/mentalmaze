@@ -3,14 +3,14 @@ import metalmask from "./../../../assets/metalmask.png"
 import Animation from "./Animation";
 import { useEffect } from "react";
 import { useAccount } from "wagmi";
-import { useConnectModal } from "@rainbow-me/rainbowkit";
-
+// import { useConnectModal } from "@rainbow-me/rainbowkit";
+import { useWeb3Modal } from '@web3modal/wagmi/react';
 
 const Connect = () => {
   const { switchModalcontent, switchModal } = useModalContext()
   const { isConnected } = useAccount();
 
-  const { openConnectModal } = useConnectModal();
+  const { open } = useWeb3Modal()
 
   useEffect(() => {
     const userData = localStorage.getItem('userData')
@@ -32,13 +32,13 @@ const Connect = () => {
   }
 
   const onComplete = () => {
-    openConnectModal?.()
+    open()
   }
 
 
   async function connectWallet() {
     try {
-      openConnectModal?.()
+      open()
       switchModal()
     }
     catch (error) {

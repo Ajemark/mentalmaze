@@ -9,9 +9,10 @@ import useMode from '../../hooks/useMode'
 import { UserContext } from '../../context/UserContext'
 import { toast } from 'react-hot-toast'
 import Loading from './Loading'
-import { CustomButton } from './CustomConnectButton'
 import { useAccount } from 'wagmi'
-// type fixedType = boolean 
+import { CustomButton } from './CustomConnectButton'
+
+
 
 const Header = () => {
   const { switchModal, switchModalcontent, switchSideMode } = useModalContext()
