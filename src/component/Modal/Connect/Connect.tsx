@@ -3,7 +3,6 @@ import metalmask from "./../../../assets/metalmask.png"
 import Animation from "./Animation";
 import { useEffect } from "react";
 import { useAccount } from "wagmi";
-// import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { useWeb3Modal } from '@web3modal/wagmi/react';
 
 const Connect = () => {
@@ -73,10 +72,9 @@ const Connect = () => {
 
             className=' metamask flex gap-[24px] items-center justify-center font-droid text-[16px] md:text-[24px]  border-blue-80 '
             onClick={() => openWidget(onComplete)}
-
           >
-            <div>
-              <img src="https://explorer.testnet.aurora.dev/assets/network_icon.svg" />
+            <div className="w-11 h-11 object-fit   flex">
+              <img src="aurora.jpeg" className="w-15 h-15 " />
             </div>
             Aurora Pass
           </button>
