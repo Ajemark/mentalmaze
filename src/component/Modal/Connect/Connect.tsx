@@ -1,5 +1,4 @@
 import { useModalContext } from "../../../context/ModalContext"
-import metalmask from "./../../../assets/metalmask.png"
 import Animation from "./Animation";
 import { useEffect } from "react";
 import { useAccount } from "wagmi";
