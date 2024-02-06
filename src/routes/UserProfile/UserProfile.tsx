@@ -55,6 +55,7 @@ const RANK = ({ position, claimed, processedWinners, playersAddress, gameAcctId,
         getSingleGame()
     }, [])
 
+    console.log(game)
 
     return (
         <div className='flex justify-between font-droid text-[15px] lg:text-[32px] font-normal px-[16px]  lg:px-[48px] mt-[32px] grad-dar rounded-[16px] border-blue-50 border-solid border-[2px] py-[16px] md:py-[24px]'>
