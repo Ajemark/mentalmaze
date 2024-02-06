@@ -13,6 +13,8 @@ import { WagmiProvider } from 'wagmi'
 import { createWeb3Modal } from "@web3modal/wagmi/react"
 import { defaultWagmiConfig } from "@web3modal/wagmi"
 
+import logo from './Logo.png'
+
 
 const queryClient = new QueryClient()
 
@@ -65,8 +67,8 @@ const projectId = import.meta.env.VITE_REACT_APP_WALLET_CONNECT_PROJECT_ID;
 const metadata: any = {
   name: 'MentalMaze App',
   description: 'Connect To MentalMaze App',
-  url: 'https://web3modal.com',
-  icons: ['https://avatars.githubusercontent.com/u/37784886'],
+  url: 'https://www.mentalmaze.io',
+  icons: [logo],
 }
 
 const chains: any = [auroraChain]
