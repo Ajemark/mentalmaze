@@ -270,6 +270,7 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
             </div>
             {[
               { image: game, path: "/", title: "Games" },
+              { image: nav4, path: "/challenger", title: "Challenger" },
               // { image: cup, path: "/leaderboard", title: "Leaderboard" },
               { image: create, path: "/create-game", title: "Create game" },
               // { image: notification, path: "/", title: "Notification" },
@@ -283,7 +284,7 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
                     switchSideMode();
                   }}
                 >
-                  <img src={src.image} />{" "}
+                  <img src={src.image} className="h-[26px] " />{" "}
                   <p className="text-[16px] font-Archivo_Regular leading-[17.41px] font-medium">
                     {src.title}
                   </p>

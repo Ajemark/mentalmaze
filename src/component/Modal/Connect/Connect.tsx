@@ -1,5 +1,4 @@
 import { useModalContext } from "../../../context/ModalContext"
-import metalmask from "./../../../assets/metalmask.png"
 import Animation from "./Animation";
 import { useEffect } from "react";
 import { useAccount } from "wagmi";
@@ -61,9 +60,8 @@ const Connect = () => {
 
           >
             <div>
-              <img src={metalmask} />
+              <img src={'Metamask.png'} />
             </div>
-            MetaMask
           </button>
         </div>
 
@@ -73,10 +71,10 @@ const Connect = () => {
             className=' metamask flex gap-[24px] items-center justify-center font-droid text-[16px] md:text-[24px]  border-blue-80 '
             onClick={() => openWidget(onComplete)}
           >
-            <div className="w-11 h-11 object-fit   flex">
-              <img src="aurora.jpeg" className="w-15 h-15 " />
+            <div>
+              <img src="Aurora.png" className="h-16" />
             </div>
-            Aurora Pass
+
           </button>
         </div>
 
