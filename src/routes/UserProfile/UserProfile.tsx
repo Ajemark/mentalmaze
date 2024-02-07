@@ -251,7 +251,7 @@ const RANKS = ({ userDetails, creatorMode }: any) => {
     getAllGames();
   }, [userDetails]);
 
-  // console.log(loading)
+  console.log(loading);
 
   const handlePagination = (info: any) => {
     console.log(pgNum);
