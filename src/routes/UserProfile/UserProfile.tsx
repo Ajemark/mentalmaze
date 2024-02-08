@@ -25,6 +25,7 @@ const RANK = ({
   accountId,
   rewardEarned,
   id,
+  paymentStatus,
   gameId,
   address,
   userDetails,
@@ -92,7 +93,7 @@ const RANK = ({
   }, [stats]);
 
   if (creatorMode) {
-    console.log(scGame);
+    // console.log(scGame);
 
     return (
       <div className="flex justify-between font-droid text-[15px] lg:text-[32px] font-normal px-[16px]  lg:px-[48px] mt-[32px] grad-dar rounded-[16px] border-blue-50 border-solid border-[2px] py-[16px] md:py-[24px]">
@@ -116,7 +117,7 @@ const RANK = ({
             <div className="flex text-white text-[15px] lg:text-[32px] leading-[26.11px] items-center gap-3">
               <img className="hidden lg:flex" src={medalMaster} />
               <button
-                disabled={claimed}
+                disabled={paymentStatus}
                 onClick={async () => {
                   localStorage.setItem(
                     "claimGameAddr",
@@ -134,11 +135,11 @@ const RANK = ({
                 }}
                 className="bg-blue-70 p-[5px] px-[10px] rounded-[5px] "
                 style={{
-                  backgroundColor: `${claimed ? "#010C18" : ""}`,
-                  opacity: `${claimed ? "70%" : ""}`,
+                  backgroundColor: `${paymentStatus ? "#010C18" : ""}`,
+                  opacity: `${paymentStatus ? "70%" : ""}`,
                 }}
               >
-                {claimed ? "claimed" : "Claim"}
+                {paymentStatus ? "claimed" : "Claim"}
               </button>
             </div>
           )}
