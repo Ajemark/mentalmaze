@@ -33,7 +33,7 @@ const TitleBar = () => {
   }) => {
     return (
       <div
-        className={`outline-none cursor-pointer  rounded-[16px]  flex items-center justify-between gap-6 w-full h-[66px]  px-[16px] ${!current
+        className={`py-5 outline-none cursor-pointer  rounded-[16px]  flex items-center justify-between gap-6 w-full h-[66px]  px-[16px] ${!current
           ? "hover:headerdropDown-hover-effect hover:border-blue-main hover:border-[2px]"
           : ""
           }`}
@@ -56,8 +56,8 @@ const TitleBar = () => {
 
   return (
     <div className="text-white font-Archivo_Regular  flex w-full justify-between flex-col md:flex-row md:items-center mt-[6px] md:mt-0 h-[99px] md:h-[66px] z-50 relative">
-      <div className="flex  md:items-center gap-6">
-        <h2 className="font-normal text-[20px]    md:text-5xl">PUZZLE</h2>
+      <div className="flex  items-center md:items-center gap-6">
+        <h2 className="font-normal text-[24px]    md:text-5xl">PUZZLE</h2>
         <p className="border-blue-50 h-[24px] w-[27px] md:h-[initial] md:w-[initial] text-center md:py-4 md:px-6 rounded-lg leading-[21.76px] text-[10px] md:text-xl border-2 ">
           12
         </p>

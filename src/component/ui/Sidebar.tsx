@@ -277,7 +277,7 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
             ].map((src, index) => {
               return (
                 <div
-                  className="w-full flex items-center gap-[8px] px-[12px] h-[46px] hover:sidebarItem cursor-pointer  rounded-lg"
+                  className="w-full flex items-center gap-[8px] px-[12px] h-[46px]  font-bold hover:sidebarItem cursor-pointer  rounded-lg"
                   key={index}
                   onClick={() => {
                     navigate(src.path);
