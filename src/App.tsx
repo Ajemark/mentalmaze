@@ -5,7 +5,7 @@ import Home from "./routes/Home/Home";
 
 import UserProfile from "./routes/UserProfile/UserProfile";
 
-import { MainLayout } from "./Layout/Layout";
+import MainLayout from "./Layout/Layout";
 import LeaderShipBoard from "./routes/LeadershipBoard/LeaderShipBoard";
 import Create from "./routes/Creator/Create";
 import GameRequirement from "./routes/Creator/GameRequirement";
