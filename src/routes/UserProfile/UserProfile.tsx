@@ -475,6 +475,7 @@ const Mode = ({ creatorMode, setCreatorMode }: any) => {
 };
 
 const Stat = ({ stat, creatorMode, userData }: any) => {
+  console.log(stat);
   return (
     <div className="border-4 rounded-3xl  py-4 flex flex-col gap-8 border-blue-80 userProfileStat h-fit">
       <h2
