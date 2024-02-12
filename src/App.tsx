@@ -1,29 +1,21 @@
-import './index.css'
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom"
-import Home from './routes/Home/Home'
+import "./index.css";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Home from "./routes/Home/Home";
 // import ErrorPage from './error-page'
 
-import UserProfile from './routes/UserProfile/UserProfile'
+import UserProfile from "./routes/UserProfile/UserProfile";
 
-import { MainLayout } from './Layout/Layout'
-import LeaderShipBoard from './routes/LeadershipBoard/LeaderShipBoard'
-import Create from './routes/Creator/Create'
-import GameRequirement from './routes/Creator/GameRequirement'
-import Settings from './routes/Creator/settings'
-import Game from './routes/Game/Game'
+import MainLayout from "./Layout/Layout";
+import LeaderShipBoard from "./routes/LeadershipBoard/LeaderShipBoard";
+import Create from "./routes/Creator/Create";
+import GameRequirement from "./routes/Creator/GameRequirement";
+import Settings from "./routes/Creator/settings";
+import Game from "./routes/Game/Game";
 // import ChallengerHome from './ChallengerLayout/Pages/ChallengerHome'
-import ChallengerGames from './ChallengerLayout/Pages/ChallengerGames'
-import ChallengerGame from './ChallengerLayout/Pages/ChallengerGame'
-import Dashboard from './ChallengerLayout/Pages/Dashboard'
-import SearchScreen from './routes/Search/Search'
-
-
-
-
-
+import ChallengerGames from "./ChallengerLayout/Pages/ChallengerGames";
+import ChallengerGame from "./ChallengerLayout/Pages/ChallengerGame";
+import Dashboard from "./ChallengerLayout/Pages/Dashboard";
+import SearchScreen from "./routes/Search/Search";
 
 function App() {
   const router = createBrowserRouter([
@@ -33,35 +25,35 @@ function App() {
       children: [
         {
           path: "/",
-          element: <Home />
+          element: <Home />,
         },
         {
           path: "/profile",
-          element: <UserProfile />
+          element: <UserProfile />,
         },
         {
-          path: '/leaderboard',
-          element: <LeaderShipBoard />
+          path: "/leaderboard",
+          element: <LeaderShipBoard />,
         },
         {
           path: "/create-game",
-          element: <Create />
+          element: <Create />,
         },
         {
           path: "/settings",
-          element: <Settings />
+          element: <Settings />,
         },
         {
           path: "/game-Requirement",
-          element: <GameRequirement />
+          element: <GameRequirement />,
         },
         {
           path: "/game",
-          element: <Game />
+          element: <Game />,
         },
         {
           path: "/search",
-          element: <SearchScreen />
+          element: <SearchScreen />,
         },
         // {
         //   path: "/challenger",
@@ -69,17 +61,16 @@ function App() {
         // },
         {
           path: "/challenger/uploadedgames",
-          element: <ChallengerGames />
+          element: <ChallengerGames />,
         },
         {
           path: "/challenger/singlegame",
-          element: <ChallengerGame />
+          element: <ChallengerGame />,
         },
         {
           path: "/challenger",
-          element: <Dashboard />
-        }
-
+          element: <Dashboard />,
+        },
       ],
     },
     // {
@@ -106,10 +97,7 @@ function App() {
     // },
   ]);
 
-  return (
-    <RouterProvider router={router} />
-
-  )
+  return <RouterProvider router={router} />;
 }
 
-export default App
+export default App;

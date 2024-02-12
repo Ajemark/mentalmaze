@@ -200,7 +200,7 @@ const RANK = ({
   );
 };
 
-const RANKS = ({ userDetails, creatorMode }: any) => {
+const RANKS = ({ userDetails, setUserData, creatorMode }: any) => {
   // const [loading, setLoading] = useState(false)
   const [pgNum, setPgNum]: any = useState(1);
   const [dynamicData, setDynamicData]: any = useState();
@@ -221,7 +221,7 @@ const RANKS = ({ userDetails, creatorMode }: any) => {
     fetch(
       `${
         import.meta.env.VITE_REACT_APP_BASE_URL
-      }/api/rank?pageNumber=${pgNum}&pageSize=5&userAddress=${
+      }/api/rank?pageNumber=${pgNum}&pageSize=1005&userAddress=${
         userDetails.address
       }`,
       requestOptions
@@ -254,6 +254,7 @@ const RANKS = ({ userDetails, creatorMode }: any) => {
 
   console.log(loading);
 
+  // console.log(pgNum);
   const handlePagination = (info: any) => {
     console.log(pgNum);
     console.log(info);
@@ -308,12 +309,15 @@ const RANKS = ({ userDetails, creatorMode }: any) => {
   useEffect(() => {
     if (creatorMode) {
       setDynamicData(myGames?.fetchRes);
+
+      setUserData(myGames?.fetchRes);
       return;
     }
     setDynamicData(rank);
+    setUserData(rank);
   }, [creatorMode, rank, myGames]);
 
-  console.log(dynamicData);
+  // console.log(dynamicData);
 
   return (
     <div className="flex-1 border-blue-80 py-4 border-4 rounded-3xl userProfileStat mt-[34px]">
@@ -341,16 +345,25 @@ const RANKS = ({ userDetails, creatorMode }: any) => {
 const UserProfile = () => {
   const { userDetails }: any = useContext(UserContext);
   const [creatorMode, setCreatorMode] = useState(false);
+  const [userData, setUserData] = useState();
 
   return (
     <div className="w-full  relative z-[999] px-[16px] md:px-[52px] mt-[96px] md:mt-[176px]">
       <ProfileHeader userDetails={userDetails} />
       <Mode creatorMode={creatorMode} setCreatorMode={setCreatorMode} />
       <div className="flex mt-12 gap-[34px] flex-col md:flex-row w-full">
-        <Stat stat={userDetails.stat} />
+        <Stat
+          creatorMode={creatorMode}
+          userData={userData}
+          stat={userDetails.stat}
+        />
         <div className="w-full">
           <Level />
-          <RANKS creatorMode={creatorMode} userDetails={userDetails} />
+          <RANKS
+            setUserData={setUserData}
+            creatorMode={creatorMode}
+            userDetails={userDetails}
+          />
         </div>
       </div>
     </div>
@@ -364,8 +377,6 @@ const ProfileHeader = ({ userDetails }: any) => {
   // const[editUser,setEditUser]=useState(false)
   const navigate = useNavigate();
   const { isConnected } = useAccount();
-
-  // console.log(userDetails)
 
   useEffect(() => {
     if (!userDetails.address || !isConnected) {
@@ -463,7 +474,7 @@ const Mode = ({ creatorMode, setCreatorMode }: any) => {
   );
 };
 
-const Stat = ({ stat }: any) => {
+const Stat = ({ stat, creatorMode, userData }: any) => {
   console.log(stat);
   return (
     <div className="border-4 rounded-3xl  py-4 flex flex-col gap-8 border-blue-80 userProfileStat h-fit">
@@ -476,20 +487,20 @@ const Stat = ({ stat }: any) => {
       <div className="flex flex-col px-[30px] gap-8">
         <p className="flex flex-col items-center text-center  py-4">
           <h2 className="font-400 font-Archivo-Bold text-[30px] text-white">
-            4
+            {userData && userData.length}
           </h2>
           <p className="font-semibold font-Archivo_Regular text-wb-40">
-            Games played
+            {creatorMode ? "Games Created" : "Games played"}
           </p>
         </p>
-        <p className="flex flex-col items-center text-center py-4">
+        {/* <p className="flex flex-col items-center text-center py-4">
           <h2 className="font-400 font-Archivo-Bold text-[30px] text-white">
             4
           </h2>
           <p className="font-semibold font-Archivo_Regular text-wb-40">
             Mission Completed
           </p>
-        </p>
+        </p> */}
       </div>
     </div>
   );
@@ -507,15 +518,15 @@ const Level = () => {
             <div>
               <img src={ranking} />
             </div>
-            <p className="font-Archivo_Regular">Level 2</p>
+            <p className="font-Archivo_Regular">Level 1</p>
           </div>
           <div className="flex text-white font-Archivo_Regular text-xl">
-            200/400 MP
+            100/400 MP
           </div>
         </div>
         <div className="w-full px-[40px]">
           <div className="w-full h-2 level mt-3  rounded-xl flex">
-            <div className="h-full w-1/2 bg-blue-50 rounded-xl"></div>
+            <div className="h-full w-1/4 bg-blue-50 rounded-xl"></div>
             <div className="h-full flex-1 flex items-center relative right-1">
               <img src={Ball} />
             </div>
