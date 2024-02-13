@@ -272,7 +272,7 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
               { image: game, path: "/", title: "Games" },
               { image: nav4, path: "/challenger", title: "Challenger" },
               // { image: cup, path: "/leaderboard", title: "Leaderboard" },
-              { image: create, path: "/create-game", title: "Create game" },
+               { image: create, path: "/create-game", title: "Create game" },
               // { image: notification, path: "/", title: "Notification" },
             ].map((src, index) => {
               return (
