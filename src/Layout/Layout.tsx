@@ -13,6 +13,7 @@ import { WagmiProvider } from 'wagmi'
 import { createWeb3Modal } from "@web3modal/wagmi/react"
 import { defaultWagmiConfig } from "@web3modal/wagmi"
 
+
 import logo from './Logo.png'
 
 
@@ -87,6 +88,7 @@ let options = {
     'c57ca95b47569778a828d19178114f4db188b89b763c899ba0be274e97267d96', //Metamask
   ]
 };
+
 
 // Create modal
 createWeb3Modal({ wagmiConfig, projectId, chains, ...options })
