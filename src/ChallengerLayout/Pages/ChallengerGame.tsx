@@ -234,18 +234,18 @@ const ChallengerGame = () => {
                       }
 
                     </div>
-                    <div className='flex w-full mt-10 justify-center gap-[16px]'>
+                    <div className='flex w-full mt-10 justify-center flex-wrap gap-[16px]'>
                       {curGame?.question[curQuestion].options.map((option: any, index: any) => {
                         return (
-                          <div key={index} className='bg-[inherit]  items-center flex justify-center border-blue-main border-[3px] rounded-[8px] border-solid h-[60px] w-[60px] text-white'>
+                          <div key={index} className='p-3 bg-[inherit] items-center flex justify-center border-blue-main border-[3px] rounded-[8px] border-solid h-[60px] w-[calc(50% - 16px)] text-white'>
                             {option.toUpperCase()}
                           </div>
-                        )
+                        );
                       })}
                     </div>
-                    <div className="mx-auto w-fit">
+                    <div className="flex flex-col justify-center mx-auto w-fit">
                       <p className="text-white text-[16px] font-Archivo_Regular font-[400] leading-[17.41px] mt-[32px] mx-auto">Correct Answer</p>
-                      <button className=" border-blue-main mt-[8px] font-[900] text-[17px] md:text-[32px] font-Archivo-Bold text-white  mx-auto w-[157px] md:w-[472px] h-[59px] md:h-[84px] rounded-[8px] border-[2px] bg-blue-70]">
+                      <button className=" border-blue-main mt-[8px] font-[900] text-[17px] md:text-[32px] font-Archivo-Bold text-white  mx-auto w-[calc(50% - 16px)]  md:h-[84px] rounded-[8px] border-[2px] bg-blue-70]">
                         {curGame?.question[curQuestion].answer.toUpperCase()}
                       </button>
                     </div>
