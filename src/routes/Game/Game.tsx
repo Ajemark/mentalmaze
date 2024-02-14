@@ -5,7 +5,7 @@ import Loading from "../../component/ui/Loading";
 import { useModalContext } from "../../context/ModalContext";
 import { useAccount } from "wagmi";
 import { useNavigate } from "react-router-dom";
-// import Timer from "./Timer";
+import Timer from "./Timer";
 import { ERC20, MM_ADDRESS, useEthersProvider, useEthersSigner } from "../../sdk";
 import { MMContract } from "../../sdk/MMContract";
 import { formatEther } from "viem";
@@ -622,7 +622,7 @@ const GameHeader = ({ questionId, updateTimer, timer, handleAnswers }: any) => {
             <div className='rounded-[16px] bg-blue-100 p-[8px] font-droid leading-normal text-[20px] flex items-center gap-[8px] w-fit justify-center'>
               {
 
-                // <Timer updateTimer={updateTimer} questionId={questionId} targetDate={timer} handleAnswers={handleAnswers} />
+                <Timer updateTimer={updateTimer} questionId={questionId} targetDate={timer} handleAnswers={handleAnswers} />
               }
             </div>
           </div>
