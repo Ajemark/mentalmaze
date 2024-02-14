@@ -432,7 +432,7 @@ const Game = () => {
 
         !gatePass ?
 
-          <div className="relative  md:mr-[52px] h-fit rounded-[24px] mt-[96px] md:mt-[130px] px-[20px] ">
+          <div className="backdrop-blur-sm relative  md:mr-[52px] h-fit rounded-[24px] mt-[96px] md:mt-[130px] px-[20px] ">
 
             <div className="w-full h-[78vh] flex justify-center items-center">
               <div className="w-[350px] p-[24px] rounded-[8px] flex justify-center items-center flex-col h-[240px] bg-gradient-to-r from-[#032449] to-[#0B77F0]">
@@ -453,7 +453,7 @@ const Game = () => {
 
           : (
 
-            <div className="relative  md:mr-[52px] h-fit rounded-[24px] mt-[96px] md:mt-[130px] px-[20px] ">
+            <div className="backdrop-blur-sm relative  md:mr-[52px] h-fit rounded-[24px] mt-[96px] md:mt-[130px] px-[20px] ">
               <div className="bg-black md:pl-[52px] mb-[40px] rounded-t-[24px] md:rounded-r-[24px] flex flex-col md:flex-row">
                 <div className="border-[4px] border-blue-80 border-solid rounded-[24px] flex-1 ">
                   <GameHeader

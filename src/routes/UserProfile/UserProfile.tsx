@@ -343,7 +343,7 @@ const UserProfile = () => {
   const [creatorMode, setCreatorMode] = useState(false);
 
   return (
-    <div className="w-full  relative z-[999] px-[16px] md:px-[52px] mt-[96px] md:mt-[176px]">
+    <div className="backdrop-blur-sm w-full  relative z-[999] px-[16px] md:px-[52px] mt-[96px] md:mt-[176px]">
       <ProfileHeader userDetails={userDetails} />
       <Mode creatorMode={creatorMode} setCreatorMode={setCreatorMode} />
       <div className="flex mt-12 gap-[34px] flex-col md:flex-row w-full">

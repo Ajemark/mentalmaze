@@ -130,9 +130,9 @@ export const MainLayout = () => {
         <QueryClientProvider client={queryClient}>
           <div
             className={`${challenger ? "bg-black" : "home"
-              } rounded-none min-h-screen h-full flex justify-center w-full items-center  `}
+              } rounded-none min-h-screen h-full flex justify-center w-full items-center   `}
           >
-            <div className="fixed h-screen bottom-0 bg-overlay w-screen mix-blend-multiply backdrop-blur-[4px] bg-cover "></div>
+            <div className=" fixed h-screen bottom-0 bg-overlay w-screen mix-blend-multiply backdrop-blur-[14px] bg-cover "></div>
             <div className="mx-auto fixed w-screen h-screen  left-0 top-0 bg-bg-sky bg-cover bg-center right-0 after  bg-fixed"></div>
 
             <div className="mx-auto rounded-none flex flex-col w-full min-h-screen ">

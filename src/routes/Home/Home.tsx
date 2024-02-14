@@ -193,7 +193,7 @@ const Home = () => {
 
   console.log(liveGames)
   return (
-    <div className=" w-full h-fit mt-[96px] md:mt-[176px]">
+    <div className="backdrop-blur-sm w-full h-fit mt-[96px] md:mt-[176px]">
       <div className="relative z-[999]  px-[15px] md:px-14">
         <TitleBar />
         <div>
