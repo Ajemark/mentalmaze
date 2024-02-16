@@ -495,7 +495,7 @@ const Game = () => {
               <div className="flex flex-col items-center gap-[36px] py-[67px]">
                 {game && Object.keys(game).length > 1 && (
                   <div className="w-full px-[16px] md:px-[52px] ">
-                    <h1 className="font-droid text-center text-white text-[16px] md:text-[32px]   w-full  ">
+                    <h1 className="font-Archivo_Regular text-center text-white text-[16px] md:text-[32px]   w-full  ">
                       {questions[curQuestion].title}
                     </h1>
                     <div className="mt-[32px] flex flex-col items-center ">
@@ -504,7 +504,7 @@ const Game = () => {
                           <img src={questions[curQuestion].image} />
                         </div>
                       ) : (
-                        <p className="font-droid text-white text-center text-[16px] md:text-[22px] w-full mt-[40px]">
+                        <p className="font-Archivo_Regular text-white text-center text-[16px] md:text-[22px] w-full mt-[40px]">
                           {questions[curQuestion].image}
                         </p>
                       )}
@@ -520,7 +520,7 @@ const Game = () => {
                                 selected == option
                                   ? "bg-blue-70"
                                   : "bg-[inherit]"
-                              } items-center flex justify-center border-blue-main border-[3px] cursor-pointer rounded-[8px] border-solid h-[60px] w-[60px] text-white`}
+                              } p-3 cursor-pointer bg-[inherit] items-center flex justify-center border-blue-main border-[3px] rounded-[8px] border-solid h-[60px] w-[calc(50% - 16px)] text-white`}
                             >
                               {option.toUpperCase()}
                             </div>

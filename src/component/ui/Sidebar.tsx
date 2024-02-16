@@ -275,7 +275,7 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
               { image: game, path: "/", title: "Games" },
               { image: nav4, path: "/challenger", title: "Challenger" },
               // { image: cup, path: "/leaderboard", title: "Leaderboard" },
-              { image: create, path: "/create-game", title: "Create game" },
+               { image: create, path: "/create-game", title: "Create game" },
               // { image: notification, path: "/", title: "Notification" },
             ].map((src, index) => {
               if (
@@ -293,7 +293,7 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
               }
               return (
                 <div
-                  className="w-full flex items-center gap-[8px] px-[12px] h-[46px] hover:sidebarItem cursor-pointer  rounded-lg"
+                  className="w-full flex items-center gap-[8px] px-[12px] h-[46px]  font-bold hover:sidebarItem cursor-pointer  rounded-lg"
                   key={index}
                   onClick={() => {
                     navigate(src.path);

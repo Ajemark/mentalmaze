@@ -87,7 +87,7 @@ const Create = () => {
       <Loading />
     ) :
       games?.fetchRes?.length > 0 ?
-        <div className="grid  grid-cols-1 md:grid-cols-3 gap-x-[45px] gap-y-[44px] py-[72px]  px-[16px] mt-[96px] md:mt-[176px]">
+        <div className="backdrop-blur-sm grid  grid-cols-1 md:grid-cols-3 gap-x-[45px] gap-y-[44px] py-[72px]  px-[16px] mt-[96px] md:mt-[176px]">
           <div className='relative bg-blue-100 flex flex-col items-center py-[41.8px] h-[232px] md:h-full'>
             <div ><img src={createmobile} alt="" /></div>
             <div className='absolute bottom-[32px]  p-[1px] rounded-[8px]' style={{
@@ -116,7 +116,7 @@ const Create = () => {
           {games?.fetchRes.map((gam: any, index: number) => <Game key={index}  {...gam} />)}
         </div>
         :
-        <div className='relative h-full items-center justify-center flex w-full '>
+        <div className='backdrop-blur-sm relative h-full items-center justify-center flex w-full '>
           <div className=' absolute  flex flex-col  items-center justify-center   text-white mt-[56px] md:mt-[16px]'>
             <div>
               <img src={create} />

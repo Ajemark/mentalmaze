@@ -16,7 +16,7 @@ const SearchScreen = () => {
     }, [])
 
     return (
-        <div className=" w-[100%] h-full pt-[102px] px-[16px] md:px-[34px]">
+        <div className="backdrop-blur-sm w-[100%] h-full pt-[102px] px-[16px] md:px-[34px]">
             <div className="flex sticky md:items-center text-white mt-10 ">
                 <h2 className="font-normal text-[20px]  uppercase mr-3  md:text-5xl">
                     {searchText == '' ? 'Enter Search Term' : searchText}
