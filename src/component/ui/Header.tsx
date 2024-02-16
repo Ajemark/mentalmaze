@@ -103,8 +103,8 @@ const Header = () => {
       <div className={`${challenger ? "bg-black" : "headerbg"} px-[16px] md:px-[34px] fixed z-[1000] h-[64px]  md:h-[104px] w-full ${fixed ? "shadow-lg" : "shadow-none"}`}>
         <div className='flex justify-between items-center h-full w-full'>
           <div className='flex items-center gap-[16px] md:gap-8 justify-between w-full md:w-fit md:justify-center'>
-            <Link to={'/'} className=" flex gap-[8px] md:gap-4 text-white font-Archivo_Regular items-center text-[1rem] md:text-[22px]">
-              <img src={Logo} className=" h-5 md:h-full" />
+            <Link to={'/'} className=" flex gap-[8px] md:gap-4 text-white font-Archivo_Regular items-center text-[2rem] md:text-[22px]">
+              <img src={Logo} className=" h-10 md:h-full" />
               Mental Maze
             </Link>
             <div className="text-white text-[36px] absolute top-[2vh] right-[10vw]" onClick={switchSideMode}>

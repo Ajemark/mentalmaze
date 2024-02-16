@@ -80,7 +80,7 @@ const Dashboard = () => {
     // console.log(data)
 
     return (
-        <div className="mt-[96px]  md:mt-[104px] md:border-t-solid border-t-2 border-l-2 border-1 border-blue-50 px-[20px] relative ">
+        <div className="backdrop-blur-sm mt-[96px]  md:mt-[104px] md:border-t-solid border-t-2 border-l-2 border-1 border-blue-50 px-[20px] relative ">
             <div className='relative text-white '>
                 <div>
                     <div className='flex justify-between mb-[72px] flex-col md:flex-row md:items-center'>

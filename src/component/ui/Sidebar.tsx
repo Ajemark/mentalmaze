@@ -117,7 +117,8 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
     };
 
     fetch(
-      `${import.meta.env.VITE_REACT_APP_BASE_URL
+      `${
+        import.meta.env.VITE_REACT_APP_BASE_URL
       }/api/user/?address=${address?.toLowerCase()}`,
       requestOptions
     )
@@ -160,8 +161,7 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
     } else {
       switchModalcontent("connect");
     }
-
-  }, [address, isConnected, location.href])
+  }, [address, isConnected, location.href]);
 
   const gotToProfile = () => {
     if (!address) {
@@ -182,8 +182,9 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
 
   return width > 768 ? (
     <div
-      className={`w-[104px] h-[90vh] fixed md:flex flex-col justify-between py-[46px] left-0  z-20  opacity-[0.4000000059604645] items-center  mt-[104px] hidden ${challenger ? "bg-black" : "bg-blue-100"
-        }`}
+      className={`w-[104px] h-[90vh] fixed md:flex flex-col justify-between py-[46px] left-0  z-20  opacity-[0.4000000059604645] items-center  mt-[104px] hidden ${
+        challenger ? "bg-black" : "bg-blue-100"
+      }`}
     >
       <div className="flex flex-col gap-6 w-full">
         {[
@@ -220,9 +221,10 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
           return (
             <a
               key={index}
-              className={`w-[72px] mx-auto flex relative justify-center ${index == 0 &&
+              className={`w-[72px] mx-auto flex relative justify-center ${
+                index == 0 &&
                 "border-solid border-t-[2px] border-t-[#85BCF9] pt-[22px]"
-                }`}
+              }`}
               href={src.link}
             >
               <img src={src.image} />
@@ -234,8 +236,9 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
   ) : (
     <>
       <div
-        className={`w-full fixed bg-black h-screen z-[9999999999999] ${showSideMobile ? "block" : "hidden"
-          }`}
+        className={`w-full fixed bg-black h-screen z-[9999999999999] ${
+          showSideMobile ? "block" : "hidden"
+        }`}
         onClick={switchSideMode}
       ></div>
       <div
@@ -272,12 +275,25 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
               { image: game, path: "/", title: "Games" },
               { image: nav4, path: "/challenger", title: "Challenger" },
               // { image: cup, path: "/leaderboard", title: "Leaderboard" },
-              { image: create, path: "/create-game", title: "Create game" },
+               { image: create, path: "/create-game", title: "Create game" },
               // { image: notification, path: "/", title: "Notification" },
             ].map((src, index) => {
+              if (
+                src.title == "Challenger" &&
+                (userDetails?.role == "" || !userDetails?.role)
+              ) {
+                return;
+              }
+              if (
+                src.title == "Challenger" &&
+                userDetails?.role &&
+                userDetails?.role?.toLowerCase() != "judge"
+              ) {
+                return;
+              }
               return (
                 <div
-                  className="w-full flex items-center gap-[8px] px-[12px] h-[46px] hover:sidebarItem cursor-pointer  rounded-lg"
+                  className="w-full flex items-center gap-[8px] px-[12px] h-[46px]  font-bold hover:sidebarItem cursor-pointer  rounded-lg"
                   key={index}
                   onClick={() => {
                     navigate(src.path);

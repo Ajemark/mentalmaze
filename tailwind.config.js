@@ -6,7 +6,7 @@ export default {
   ],
   theme: {
     extend: {
-      colors:  {
+      colors: {
         'blue-50': '#2486F5',
         'blue-main': '#0B77F0',
         'white': "#FFFFFF",
@@ -34,7 +34,8 @@ export default {
         "overlay": "url('./assets/Overlay.png')",
         "connect_wallet": "url('./assets/connectwalletbg.png')",
         "hover": "url('./assets/sidebar/hover.svg')",
-        "background": "url('./assets/Background.svg')"
+        "background": "url('./assets/Background.svg')",
+        "filter": "blur(20px)"
       },
       gridTemplateColumns: {
         "custom": "minmax(468px, 1fr) minmax(350px, 1fr) minmax(250px, 1fr)"
