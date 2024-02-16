@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 const Timer = ({ updateTimer, questionId, targetDate, handleAnswers }: any) => {
-  return;
+  //   return;
   console.log(targetDate);
   const [timeLeft, setTimeLeft]: any = useState(Number(targetDate));
 
