@@ -38,7 +38,7 @@ const LeaderShipBoard = () => {
     fetch(
       `${
         import.meta.env.VITE_REACT_APP_BASE_URL
-      }/api/Leaderboard/get-leader-board-by-mp-point?pageNumber=1&pageSize=4`,
+      }/api/Leaderboard/get-leader-board-by-mp-point?pageNumber=1&pageSize=50`,
       requestOptions
     )
       .then((response) => response.json())
@@ -99,7 +99,7 @@ const LeaderShipBoard = () => {
     );
   };
 
-  // console.log(current)
+  // console.log(leaderBoards);
 
   return (
     <div className="backdrop-blur-sm">
