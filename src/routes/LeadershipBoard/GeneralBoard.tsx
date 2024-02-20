@@ -94,7 +94,9 @@ export const GeneralBoard = (data: any) => {
                           />
                         )}
                       </div>
-                      <p>{d.playerInfo?.username}</p>
+                      <p className="text-[13px] md:text-[24px]">
+                        {d.playerInfo?.username}
+                      </p>
                     </div>
 
                     <div className=" text-right text-[13px] md:text-[24px] font-medium leading-[26.11px] font-Archivo_Regular flex-1 block ">
