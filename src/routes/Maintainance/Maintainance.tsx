@@ -1,7 +1,23 @@
 import { useState } from 'react';
 
 const Maintainance = () => {
-  const [maintenanceMode, setMaintenanceMode] = useState(true)
+  const [maintenanceMode, setMaintenanceMode] = useState(true);
+
+  useEffect(() => {
+    // Simulating fetching maintenance status from an API
+    const fetchMaintenanceStatus = async () => {
+      try {
+        // Replace this with actual API call to get maintenance status
+        const response = await fetch('https://api.example.com/maintenance-status');
+        const data = await response.json();
+        setMaintenanceMode(data.isMaintenanceMode);
+      } catch (error) {
+        console.error('Error fetching maintenance status:', error);
+      }
+    };
+
+    fetchMaintenanceStatus();
+  }, []);
 
   return (
     <div>
