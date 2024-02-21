@@ -42,7 +42,7 @@ export const GeneralBoard = (data: any) => {
 
   const getUsers = async () => {
     const d = Promise.all(
-      data.data.map((data: any) => {
+      data?.data?.map((data: any) => {
         return getUser(data);
       })
     );
@@ -70,7 +70,7 @@ export const GeneralBoard = (data: any) => {
 
           {users || !loading ? (
             users?.map((d: any, i: any) => {
-              console.log(users);
+              // console.log(users);
               return (
                 <div
                   key={i}

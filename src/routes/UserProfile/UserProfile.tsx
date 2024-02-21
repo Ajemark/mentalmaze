@@ -347,6 +347,11 @@ const UserProfile = () => {
   const [creatorMode, setCreatorMode] = useState(false);
   const [userData, setUserData] = useState();
 
+  console.log(userDetails);
+  const refURL = new URL(`${location.origin}?refId=${userDetails.username}`);
+
+  console.log(refURL.href);
+
   return (
     <div className="backdrop-blur-sm w-full  relative z-[999] px-[16px] md:px-[52px] mt-[96px] md:mt-[176px]">
       <ProfileHeader userDetails={userDetails} />

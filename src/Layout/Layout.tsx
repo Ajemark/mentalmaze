@@ -93,6 +93,14 @@ const MainLayout = () => {
   let scriptAdded = false;
 
   useEffect(() => {
+    console.log(location.search.split("=")[1]);
+    const link = decodeURI(location.search);
+    console.log(link);
+    if (!link) return;
+    sessionStorage.setItem("refId", link.split("=")[1]);
+  }, [location.href]);
+
+  useEffect(() => {
     if (!scriptAdded) {
       const script = document.createElement("script");
       script.src = "https://pass.auroracloud.dev/promo.js";
