@@ -342,7 +342,7 @@ const RANKS = ({ userDetails, setUserData, creatorMode }: any) => {
 
 const UserProfile = () => {
   const { userDetails }: any = useContext(UserContext);
-  const [creatorMode, setCreatorMode] = useState(false);
+  const [creatorMode] = useState(false);
   const [userData, setUserData] = useState();
 
   return (
