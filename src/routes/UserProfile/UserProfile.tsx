@@ -4,7 +4,7 @@ import Stars from "./../../assets/userProfile/Stars.png";
 import edit from "./../../assets/userProfile/edit.png";
 import copy from "./../../assets/userProfile/copy.svg";
 import Ball from "./../../assets/userProfile/Ball.png";
-import GameImage from "./../../assets/games/Box.png";
+import GameImage from "./../../assets/userProfile/fotor-ai.png";
 import CreatedGame from "./../../assets/userProfile/fotor.png";
 import StarsM from "./../../assets/userProfile/StarsMobile.svg";
 import medalMaster from "./../../assets/Leadership/medalstarMaster.png";
@@ -359,11 +359,11 @@ const UserProfile = () => {
         <div className="w-full">
           <Level />
           <CreatedGames />
-          <RANKS
+          {/* <RANKS
             setUserData={setUserData}
             creatorMode={creatorMode}
             userDetails={userDetails}
-          />
+          /> */}
         </div>
       </div>
     </div>
@@ -377,7 +377,7 @@ const ProfileHeader = ({ userDetails }: any) => {
   // const[editUser,setEditUser]=useState(false)
   const navigate = useNavigate();
   const { isConnected } = useAccount();
-  const [creatorMode, setCreatorMode] = useState(false);
+  // const [creatorMode, setCreatorMode] = useState(false);
 
   useEffect(() => {
     if (!userDetails.address || !isConnected) {
@@ -406,7 +406,7 @@ const ProfileHeader = ({ userDetails }: any) => {
                     userDetails.profileImage
                 }
                 alt=""
-                className="w-full h-full"
+                className="w-full h-full rounded-xl"
               />
             )}
           </div>
@@ -416,16 +416,13 @@ const ProfileHeader = ({ userDetails }: any) => {
             {userDetails?.username}
           </p>
 
-          <div>
-            <img src={ranking} alt="" />
-          </div>
-
           <div className="text-wb-40 flex gap-2 items-center text-[11px] md:text-base">
+            <img src={ranking} alt="" />
             Mode: <span className="text-white">{userDetails?.role}</span>
           </div>
 
           <button
-            className="cursor-pointer flex gap-4 text-white font-Archivo_Regular border-blue-50 border-2 rounded-2xl py-[9.5px] px-[12px] md:py-4 md:px-6 h-fit mt-auto z-[10000000000000000]"
+            className="cursor-pointer flex gap-4 text-white font-Archivo_Regular border-blue-50 border-2 rounded-2xl py-[9.5px] px-[12px] md:py-4 md:px-6 h-fit mt-5 z-[10000000000000000]"
             onClick={() => {
               switchModal();
               switchModalcontent("editProfile");
@@ -438,52 +435,58 @@ const ProfileHeader = ({ userDetails }: any) => {
           {/* {editUser && } */}
         </div>
       </div>
-      <Mode creatorMode={creatorMode} setCreatorMode={setCreatorMode} />
+      {/* <Mode creatorMode={creatorMode} setCreatorMode={setCreatorMode} /> */}
 
     </div>
   );
 };
 
-const Mode = ({ creatorMode, setCreatorMode }: any) => {
-  return (
-    <div className="flex w-36 h-[70px] md:h-24 border-blue-80 border-4 rounded-3xl items-center px-6 creatorsModebuttonbg text-white py-[10px] justify-between mt-12 relative z-[999] home">
-      <p className="font-Archivo_Regular md:text-[14px] leading-[17.41px] md:leading-normal font-normal ">
-        {creatorMode ? "CREATOR’S" : "PLAYER’S"} MODE
-      </p>
-      <button
-        className="h-full w-[15px] md:w-[28px] border-blue-80 rounded-[80px] p-2 border-2 creatorsModebutton"
-        onClick={() => {
-          setCreatorMode(!creatorMode);
-        }}
-        style={{
-          background: !creatorMode
-            ? "linear-gradient(130deg, rgba(3, 36, 73, 0.45) 0%, rgba(11, 119, 240, 0.10) 100%)"
-            : "linear-gradient(130deg, #063C7A, rgba(6, 60, 122, 1))",
-        }}
-      >
-        <div
-          className={` w-[24px] md:w-[48px] h-full rounded-[100%] ${creatorMode ? "bg-blue-50" : "bg-black"
-            }`}
-          style={{
-            marginLeft: !creatorMode ? 0 : "35%",
+// const Mode = ({ creatorMode, setCreatorMode }: any) => {
+//   return (
+//     <div className="flex w-36 h-[70px] md:h-24 border-blue-80 border-4 rounded-3xl items-center px-6 creatorsModebuttonbg text-white py-[10px] justify-between mt-12 relative z-[999] home">
+//       <p className="font-Archivo_Regular md:text-[14px] leading-[17.41px] md:leading-normal font-normal ">
+//         {creatorMode ? "CREATOR’S" : "PLAYER’S"} MODE
+//       </p>
+//       <button
+//         className="h-full w-[15px] md:w-[28px] border-blue-80 rounded-[80px] p-2 border-2 creatorsModebutton"
+//         onClick={() => {
+//           setCreatorMode(!creatorMode);
+//         }}
+//         style={{
+//           background: !creatorMode
+//             ? "linear-gradient(130deg, rgba(3, 36, 73, 0.45) 0%, rgba(11, 119, 240, 0.10) 100%)"
+//             : "linear-gradient(130deg, #063C7A, rgba(6, 60, 122, 1))",
+//         }}
+//       >
+//         <div
+//           className={` w-[24px] md:w-[48px] h-full rounded-[100%] ${creatorMode ? "bg-blue-50" : "bg-black"
+//             }`}
+//           style={{
+//             marginLeft: !creatorMode ? 0 : "35%",
 
-            transition: "all 0.5s",
-          }}
-        ></div>
-      </button>
-    </div>
-  );
-};
+//             transition: "all 0.5s",
+//           }}
+//         ></div>
+//       </button>
+//     </div>
+//   );
+// };
 
 const Link = () => {
   return (
     <div className="flex w-full h-[70px] md:h-24 border-blue-80 border-4 rounded-3xl items-center px-6 creatorsModebuttonbg text-white py-[10px] justify-between mt-12 relative z-[999] home">
-      <p className="font-Archivo_Regular md:text-[24px] leading-[27.41px] md:leading-normal font-normal  border-r-blue-80 border-r-4">
+      <h2
+        className=" flex flex-row justify-center align-middle font-400 font-droidbold
+             text-white py-4 px-[20px] text-[25px] text-center border-r-blue-80 border-r-4"
+      >
         INVITE LINK
-      </p>
-      <p className="text-sm">https://mentalmaze.vercel.app/profile/gweche</p>
+      </h2>
+      <p className="text-sm font-400 text-[14px] font-Archivo_Regular text-gray-400 ">https://mentalmaze.vercel.app/profile/gweche</p>
       <button
-        className="cursor-pointer flex gap-4 text-white font-Archivo_Regular border-blue-50 border-2 rounded-2xl py-[9.5px] px-[12px] md:py-4 md:px-6 h-fit mt-auto z-[10000000000000000]">
+        style={{
+          background: 'linear-gradient(92.69deg, rgba(3, 36, 73, 0.45) 8.15%, rgba(11, 119, 240, 0.1) 99.96%)',
+        }}
+        className=" bg-blue-900 opacity-90 cursor-pointer flex gap-4 text-white font-Archivo-Bold border-blue-50 border rounded-xl py-[9.5px] px-[12px] md:py-4 md:px-6 h-fit mt-auto z-[10000000000000000]">
         <p>COPY</p>
         <img className="cursor-pointer" src={copy} />
       </button>
@@ -494,11 +497,11 @@ const Link = () => {
 const Stat = ({ stat, creatorMode, userData }: any) => {
   console.log(stat);
   return (
-    <div className="flex -flex-row justify-between">
+    <div className="flex -flex-row justify-between items-center align-middle">
       <div className="border-4 rounded-3xl mt-12  py-4 flex flex-row gap-8 border-blue-80 userProfileStat h-fit">
         <h2
-          className=" flex flex-row justify-center align-middle font-400 font-droidbold
-             text-white py-4 px-[20px] text-[25px] text-center border-r-blue-80 border-r-4"
+          className=" flex flex-row justify-center items-center align-middle font-400 font-droidbold
+             text-white px-[20px] text-[25px] text-center border-r-blue-80 border-r-4"
         >
           STATS
         </h2>
@@ -546,16 +549,16 @@ const Stat = ({ stat, creatorMode, userData }: any) => {
         </div>
       </div>
 
-      <div className="border-4 rounded-3xl mt-12  py-4 flex flex-row gap-8 border-blue-80 userProfileStat h-fit">
+      <div className="border-4 rounded-3xl mt-12  py-8 flex flex-row justify-between align-middle items-center gap-8 border-blue-80 userProfileStat h-fit">
         <h2
           className=" flex flex-row justify-center align-middle font-400 font-droidbold
              text-white py-4 px-[20px] text-[25px] text-center border-r-blue-80 border-r-4"
         >
           max
         </h2>
-        <div className="flex flex-row px-[30px] gap-8">
-          <p className="flex flex-col items-center text-center  py-4">
-            <h2 className="font-400 font-Archivo-Bold text-[18px] text-white">
+        <div className="flex flex-row justify-between align-middle items-center px-[30px] gap-8">
+          <div className="flex flex-col justify-between align-middle items-center text-center">
+            <h2 className="font-Archivo_Regular text-[18px] text-gray-400">
               Mining: 0.0
             </h2>
             <div className="w-full px-[40px]">
@@ -566,10 +569,13 @@ const Stat = ({ stat, creatorMode, userData }: any) => {
                 </div>
               </div>
             </div>
-          </p>
+          </div>
           <button
-            className="cursor-pointer flex gap-4 bg-blue-900 opacity-90 text-white font-Archivo_Regular border-blue-50 border-2 rounded-2xl py-[9.5px] px-[12px] md:py-4 md:px-6 h-fit mt-auto z-[10000000000000000]">
-            <p>CLAIM</p>
+            style={{
+              background: 'linear-gradient(92.69deg, rgba(3, 36, 73, 0.45) 8.15%, rgba(11, 119, 240, 0.1) 99.96%)',
+            }}
+            className="cursor-pointer flex gap-4 text-white font-Archivo-Bold border-blue-50 border rounded-xl py-[9px] px-[10px] md:py-4 md:px-6 h-fit mt-auto z-[10000000000000000]">
+            CLAIM
           </button>
         </div>
       </div>
@@ -583,24 +589,29 @@ const Level = () => {
       <h2 className=" font-droidbold text-[32px] text-white py-4 text-center border-b-blue-80 border-b-4">
         ACHIEVEMENTS
       </h2>
-      <div className="flex flex-row justify-between p-10">
-        <div className="flex flex-col border-blue-80 py-4 border-4 rounded-3xl">
-          <div className="p-0">
-            <img src={GameImage} className="bg-cover bg-center z-0 rounded-3xl" />
-            <div className="flex flex-row justify-between font-bold text-white text-2xl p-5 bg-blue-900 opacity-60 w-auto">
-              <div className="flex flex-col font-black">
-                <p className="z-50 px-[-16px]">Math Puzzle</p>
-                <p className="px-[16px]">250k players</p>
-              </div>
-              <button
-                className="cursor-pointer flex gap-4 bg-blue-900 opacity-90 text-white font-Archivo_Regular border-blue-50 border-2 rounded-2xl py-[9.5px] px-[12px] md:py-4 md:px-6 h-fit mt-auto z-[10000000000000000]">
-                <p>CLAIM</p>
-              </button>
+      <div className="flex flex-row justify-between items-center  p-10">
+        <div className="p-0 border-blue-80  border-4 rounded-3xl">
+          <img src={GameImage} className="bg-cover rounded-3xl bg-center z-0 w-96" />
+          <div className="flex flex-row justify-between font-bold text-white text-2xl p-5 w-auto"
+            style={{
+              background: 'linear-gradient(92.69deg, rgba(3, 36, 73, 0.45) 8.15%, rgba(11, 119, 240, 0.1) 99.96%)',
+            }}
+          >
+            <div className="flex flex-col align-middle justify-between items-center font-black">
+              <p className=" px-[12px] z-50 text-gray-400">Math Puzzle</p>
+              <p className=" px-[12px] text-gray-400 flex flex-row"><p className="font-400 text-white px-[14px]">250K</p>Players</p>
             </div>
+            <button
+              style={{
+                background: 'linear-gradient(92.69deg, rgba(3, 36, 73, 0.45) 8.15%, rgba(11, 119, 240, 0.1) 99.96%)',
+              }}
+              className="cursor-pointer text-[16px] flex gap-4 text-white font-Archivo-Bold border-blue-50 border rounded-xl py-[8px] px-[8px] md:py-4 md:px-4 h-fit mt-auto z-[10000000000000000]">
+              CLAIM
+            </button>
           </div>
         </div>
-        <div className=" border-blue-80 border-4 rounded-3xl w-[420px] p-16">
-          <div className="flex  flex-col justify-between px-[40px] mt-8">
+        <div className=" border-blue-80 border-4 rounded-3xl w-[420px] p-2 h-80 flex flex-col justify-center ">
+          <div className="flex  flex-col justify-between px-[40px] mb-10">
             <div className="flex text-wb-40 text-xl gap-2 items-center">
               <div>
                 <img src={ranking} />
@@ -633,13 +644,16 @@ const CreatedGames = () => {
         GAMES CREATED
       </h2>
       <div className="flex flex-row justify-between p-10">
-        <div className=" border-blue-80 py-4 border-4 rounded-3xl w-56 h-56 relative flex items-center justify-center">
+        <div className=" border-blue-80 border-4 rounded-3xl w-64 h-64 relative flex items-center justify-center">
           <div
             className="absolute inset-0 bg-cover bg-center z-0 rounded-3xl"
             style={{ backgroundImage: `url(${CreatedGame})` }}
           ></div>
-          <div className="relative top-10 z-10 text-white text-center">
-            <div className="bg-black bg-opacity-50 p-4 rounded">
+          <div className="relative z-10 text-white text-center"
+            style={{
+              top: "74px"
+            }}>
+            <div className="bg-black bg-opacity-40 p-7 w-fit rounded">
               <h1 className="text-2xl font-bold font-Archivo-Bold ">MATH PUZZLE</h1>
             </div>
           </div>
