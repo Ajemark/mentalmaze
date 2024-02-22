@@ -202,148 +202,149 @@ const RANK = ({
   );
 };
 
-const RANKS = ({ userDetails, setUserData, creatorMode }: any) => {
-  // const [loading, setLoading] = useState(false)
-  const [pgNum, setPgNum]: any = useState(1);
-  const [dynamicData, setDynamicData]: any = useState();
-  const [rank, setRank]: any = useState();
-  const [loading, setLoading] = useState(true);
-  const [myGames, setMyGames]: any = useState();
+// const RANKS = ({ userDetails, setUserData, creatorMode }: any) => {
+//   // const [loading, setLoading] = useState(false)
+//   const [pgNum, setPgNum]: any = useState(1);
+//   const [dynamicData, setDynamicData]: any = useState();
+//   const [rank, setRank]: any = useState();
+//   const [loading, setLoading] = useState(true);
+//   const [myGames, setMyGames]: any = useState();
 
-  const getRank = () => {
-    let myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${userDetails.token}`);
+//   const getRank = () => {
+//     let myHeaders = new Headers();
+//     myHeaders.append("Authorization", `Bearer ${userDetails.token}`);
 
-    let requestOptions: RequestInit = {
-      method: "GET",
-      headers: myHeaders,
-      redirect: "follow",
-    };
+//     let requestOptions: RequestInit = {
+//       method: "GET",
+//       headers: myHeaders,
+//       redirect: "follow",
+//     };
 
-    fetch(
-      `${import.meta.env.VITE_REACT_APP_BASE_URL
-      }/api/rank?pageNumber=${pgNum}&pageSize=1005&userAddress=${userDetails.address
-      }`,
-      requestOptions
-    )
-      .then((response) => response.json())
-      .then((result) => {
-        if (result.data) {
-          setRank(result.data);
-          // setLoading(false)
-        } else {
-          console.log(result);
-          // setLoading(false)
-        }
-      })
-      .catch((error) => {
-        // setLoading(false)
-        console.log("error", error);
-      });
-  };
+//     fetch(
+//       `${import.meta.env.VITE_REACT_APP_BASE_URL
+//       }/api/rank?pageNumber=${pgNum}&pageSize=1005&userAddress=${userDetails.address
+//       }`,
+//       requestOptions
+//     )
+//       .then((response) => response.json())
+//       .then((result) => {
+//         if (result.data) {
+//           setRank(result.data);
+//           // setLoading(false)
+//         } else {
+//           console.log(result);
+//           // setLoading(false)
+//         }
+//       })
+//       .catch((error) => {
+//         // setLoading(false)
+//         console.log("error", error);
+//       });
+//   };
 
-  useEffect(() => {
-    // setLoading(true)
-    if (!userDetails?.token) {
-      // setLoading(false)
-      return;
-    }
-    getRank();
-    getAllGames();
-  }, [userDetails]);
+//   useEffect(() => {
+//     // setLoading(true)
+//     if (!userDetails?.token) {
+//       // setLoading(false)
+//       return;
+//     }
+//     getRank();
+//     getAllGames();
+//   }, [userDetails]);
 
-  console.log(loading);
+//   console.log(loading);
 
-  // console.log(pgNum);
-  const handlePagination = (info: any) => {
-    console.log(pgNum);
-    console.log(info);
-    if (info == "next" || info == "prev") {
-      if (info == "next") {
-        setPgNum(pgNum + 1);
-        return;
-      } else {
-        if (pgNum == 1) return;
-        setPgNum(pgNum - 1);
-        return;
-      }
-    }
-    setPgNum(Number(info));
-  };
+//   // console.log(pgNum);
+//   const handlePagination = (info: any) => {
+//     console.log(pgNum);
+//     console.log(info);
+//     if (info == "next" || info == "prev") {
+//       if (info == "next") {
+//         setPgNum(pgNum + 1);
+//         return;
+//       } else {
+//         if (pgNum == 1) return;
+//         setPgNum(pgNum - 1);
+//         return;
+//       }
+//     }
+//     setPgNum(Number(info));
+//   };
 
-  const getAllGames = () => {
-    let myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${userDetails.token}`);
+//   const getAllGames = () => {
+//     let myHeaders = new Headers();
+//     myHeaders.append("Authorization", `Bearer ${userDetails.token}`);
 
-    let requestOptions: RequestInit = {
-      method: "GET",
-      headers: myHeaders,
-      redirect: "follow",
-    };
-    // =${ address?.toLowerCase()
-    fetch(
-      `${import.meta.env.VITE_REACT_APP_BASE_URL
-      }/api/game/get-product-created-by-me?pageNumber=1&pageSize=10&accountId=${userDetails?.id
-      }`,
-      requestOptions
-    )
-      .then((response) => response.json())
-      .then((result) => {
-        if (result.data) {
-          setMyGames(result.data);
-          setLoading(false);
-        } else {
-          console.log(result);
-          setLoading(false);
-        }
-      })
-      .catch((error) => {
-        console.log("error", error);
-        // setMessage('An Error Occured!, Please Try Again')
-        setLoading(false);
-      });
-  };
+//     let requestOptions: RequestInit = {
+//       method: "GET",
+//       headers: myHeaders,
+//       redirect: "follow",
+//     };
+//     // =${ address?.toLowerCase()
+//     fetch(
+//       `${import.meta.env.VITE_REACT_APP_BASE_URL
+//       }/api/game/get-product-created-by-me?pageNumber=1&pageSize=10&accountId=${userDetails?.id
+//       }`,
+//       requestOptions
+//     )
+//       .then((response) => response.json())
+//       .then((result) => {
+//         if (result.data) {
+//           setMyGames(result.data);
+//           setLoading(false);
+//         } else {
+//           console.log(result);
+//           setLoading(false);
+//         }
+//       })
+//       .catch((error) => {
+//         console.log("error", error);
+//         // setMessage('An Error Occured!, Please Try Again')
+//         setLoading(false);
+//       });
+//   };
 
-  useEffect(() => {
-    if (creatorMode) {
-      setDynamicData(myGames?.fetchRes);
+//   useEffect(() => {
+//     if (creatorMode) {
+//       setDynamicData(myGames?.fetchRes);
 
-      setUserData(myGames?.fetchRes);
-      return;
-    }
-    setDynamicData(rank);
-    setUserData(rank);
-  }, [creatorMode, rank, myGames]);
+//       setUserData(myGames?.fetchRes);
+//       return;
+//     }
+//     setDynamicData(rank);
+//     setUserData(rank);
+//   }, [creatorMode, rank, myGames]);
 
-  // console.log(dynamicData);
+//   // console.log(dynamicData);
 
-  return (
-    <div className="flex-1 border-blue-80 py-4 border-4 rounded-3xl userProfileStat mt-[34px]">
-      <h2 className=" font-droidbold text-[32px] text-white py-4 text-center border-b-blue-80 border-b-4">
-        RANK HISTORY
-      </h2>
-      <div className="md:px-[40px] px-[20px]">
-        {dynamicData?.map((item: any, i: number) => (
-          <div key={i}>
-            <RANK
-              creatorMode={creatorMode}
-              userDetails={userDetails}
-              {...item}
-            />
-          </div>
-        ))}
-      </div>
-      <div className="  py-[32px] px-[24px] h-[96px] w-full flex justify-end">
-        <Pagination num={2} handler={handlePagination} />
-      </div>
-    </div>
-  );
-};
+//   return (
+//     <div className="flex-1 border-blue-80 py-4 border-4 rounded-3xl userProfileStat mt-[34px]">
+//       <h2 className=" font-droidbold text-[32px] text-white py-4 text-center border-b-blue-80 border-b-4">
+//         RANK HISTORY
+//       </h2>
+//       <div className="md:px-[40px] px-[20px]">
+//         {dynamicData?.map((item: any, i: number) => (
+//           <div key={i}>
+//             <RANK
+//               creatorMode={creatorMode}
+//               userDetails={userDetails}
+//               {...item}
+//             />
+//           </div>
+//         ))}
+//       </div>
+//       <div className="  py-[32px] px-[24px] h-[96px] w-full flex justify-end">
+//         <Pagination num={2} handler={handlePagination} />
+//       </div>
+//     </div>
+//   );
+// };
 
 const UserProfile = () => {
   const { userDetails }: any = useContext(UserContext);
   const [creatorMode] = useState(false);
-  const [userData, setUserData] = useState();
+  const [userData] = useState();
+  // const [userData, setUserData] = useState();
 
   return (
     <div className="backdrop-blur-sm w-full  relative z-[999] px-[16px] md:px-[52px] mt-[96px] md:mt-[176px]">
