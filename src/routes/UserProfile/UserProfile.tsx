@@ -7,200 +7,200 @@ import Ball from "./../../assets/userProfile/Ball.png";
 import GameImage from "./../../assets/userProfile/fotor-ai.png";
 import CreatedGame from "./../../assets/userProfile/fotor.png";
 import StarsM from "./../../assets/userProfile/StarsMobile.svg";
-import medalMaster from "./../../assets/Leadership/medalstarMaster.png";
+//import medalMaster from "./../../assets/Leadership/medalstarMaster.png";
 import { UserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import { useModalContext } from "../../context/ModalContext";
 import { useAccount } from "wagmi";
-import { Pagination } from "../../component/ui/Pagination";
-import { MM_ADDRESS, useEthersProvider, useEthersSigner } from "../../sdk";
-import { MMContract } from "../../sdk/MMContract";
+// import { Pagination } from "../../component/ui/Pagination";
+// import { MM_ADDRESS, useEthersProvider, useEthersSigner } from "../../sdk";
+// import { MMContract } from "../../sdk/MMContract";
 
-const RANK = ({
-  position,
-  image,
-  creatorMode,
-  title,
-  claimed,
-  processedWinners,
-  playersAddress,
-  gameAcctId,
-  accountId,
-  rewardEarned,
-  id,
-  paymentStatus,
-  gameId,
-  address,
-  userDetails,
-}: any) => {
-  const [scGame, setscGame]: any = useState();
-  const signer = useEthersSigner();
-  const provider = useEthersProvider();
-  const mmContract = new MMContract(MM_ADDRESS, signer, provider);
+// const RANK = ({
+//   position,
+//   image,
+//   creatorMode,
+//   title,
+//   claimed,
+//   processedWinners,
+//   playersAddress,
+//   gameAcctId,
+//   accountId,
+//   rewardEarned,
+//   id,
+//   paymentStatus,
+//   gameId,
+//   address,
+//   userDetails,
+// }: any) => {
+//   const [scGame, setscGame]: any = useState();
+//   const signer = useEthersSigner();
+//   const provider = useEthersProvider();
+//   const mmContract = new MMContract(MM_ADDRESS, signer, provider);
 
-  const [game, setGame]: any = useState();
-  const { switchModalcontent, switchModal } = useModalContext();
+//   const [game, setGame]: any = useState();
+//   const { switchModalcontent, switchModal } = useModalContext();
 
-  const getSingleGame = () => {
-    let myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${userDetails.token}`);
+//   const getSingleGame = () => {
+//     let myHeaders = new Headers();
+//     myHeaders.append("Authorization", `Bearer ${userDetails.token}`);
 
-    let requestOptions: RequestInit = {
-      method: "GET",
-      headers: myHeaders,
-      redirect: "follow",
-    };
+//     let requestOptions: RequestInit = {
+//       method: "GET",
+//       headers: myHeaders,
+//       redirect: "follow",
+//     };
 
-    fetch(
-      `${import.meta.env.VITE_REACT_APP_BASE_URL
-      }/api/game/fetch-single?gameid=${gameId}&accountId=${gameAcctId}`,
-      requestOptions
-    )
-      .then((response) => response.json())
-      .then((result) => {
-        if (result.data) {
-          setGame(result.data);
-          // setLoading(false);
-        } else {
-          console.log(result);
-          // setLoading(false);
-        }
-      })
-      .catch((error) => {
-        // setLoading(false);
-        console.log("error", error);
-      });
-  };
+//     fetch(
+//       `${import.meta.env.VITE_REACT_APP_BASE_URL
+//       }/api/game/fetch-single?gameid=${gameId}&accountId=${gameAcctId}`,
+//       requestOptions
+//     )
+//       .then((response) => response.json())
+//       .then((result) => {
+//         if (result.data) {
+//           setGame(result.data);
+//           // setLoading(false);
+//         } else {
+//           console.log(result);
+//           // setLoading(false);
+//         }
+//       })
+//       .catch((error) => {
+//         // setLoading(false);
+//         console.log("error", error);
+//       });
+//   };
 
-  useEffect(() => {
-    if (creatorMode) return;
+//   useEffect(() => {
+//     if (creatorMode) return;
 
-    getSingleGame();
-  }, []);
+//     getSingleGame();
+//   }, []);
 
-  const getJudges = async () => {
-    if (!address) return;
-    const game = await mmContract.Games(address);
+//   const getJudges = async () => {
+//     if (!address) return;
+//     const game = await mmContract.Games(address);
 
-    return game;
-  };
+//     return game;
+//   };
 
-  const stats = getJudges();
+//   const stats = getJudges();
 
-  useEffect(() => {
-    if (!scGame)
-      (async () => {
-        setscGame(await stats);
-      })();
-  }, [stats]);
+//   useEffect(() => {
+//     if (!scGame)
+//       (async () => {
+//         setscGame(await stats);
+//       })();
+//   }, [stats]);
 
-  if (creatorMode) {
-    // console.log(scGame);
+//   if (creatorMode) {
+//     // console.log(scGame);
 
-    return (
-      <div className="flex justify-between font-droid text-[15px] lg:text-[32px] font-normal px-[16px]  lg:px-[48px] mt-[32px] grad-dar rounded-[16px] border-blue-50 border-solid border-[2px] py-[16px] md:py-[24px]">
-        <div className="col-span-2 flex items-center gap-[16px]   ">
-          <img
-            className="w-[48px] h-[48px] md:w-[72px] md:h-[72px] rounded-[8px]"
-            src={image}
-            alt="game image"
-          />
-          <div className="flex flex-col items-start text-white">
-            {" "}
-            <p>{title}</p>
-          </div>
-        </div>
-        <div className="text-white flex items-center">
-          {scGame && scGame[7].toString() == "0" ? (
-            "0 gate Pass"
-          ) : !processedWinners ? (
-            "Pending"
-          ) : (
-            <div className="flex text-white text-[15px] lg:text-[32px] leading-[26.11px] items-center gap-3">
-              <img className="hidden lg:flex" src={medalMaster} />
-              <button
-                disabled={paymentStatus}
-                onClick={async () => {
-                  localStorage.setItem(
-                    "claimGameAddr",
-                    JSON.stringify({
-                      game: id,
-                      accountId,
-                      address,
-                      gameId,
-                      playersAddress,
-                      creator: true,
-                    })
-                  );
-                  switchModal();
-                  switchModalcontent("claim");
-                }}
-                className="bg-blue-70 p-[5px] px-[10px] rounded-[5px] "
-                style={{
-                  backgroundColor: `${paymentStatus ? "#010C18" : ""}`,
-                  opacity: `${paymentStatus ? "70%" : ""}`,
-                }}
-              >
-                {paymentStatus ? "claimed" : "Claim"}
-              </button>
-            </div>
-          )}
-        </div>
-      </div>
-    );
-  }
+//     return (
+//       <div className="flex justify-between font-droid text-[15px] lg:text-[32px] font-normal px-[16px]  lg:px-[48px] mt-[32px] grad-dar rounded-[16px] border-blue-50 border-solid border-[2px] py-[16px] md:py-[24px]">
+//         <div className="col-span-2 flex items-center gap-[16px]   ">
+//           <img
+//             className="w-[48px] h-[48px] md:w-[72px] md:h-[72px] rounded-[8px]"
+//             src={image}
+//             alt="game image"
+//           />
+//           <div className="flex flex-col items-start text-white">
+//             {" "}
+//             <p>{title}</p>
+//           </div>
+//         </div>
+//         <div className="text-white flex items-center">
+//           {scGame && scGame[7].toString() == "0" ? (
+//             "0 gate Pass"
+//           ) : !processedWinners ? (
+//             "Pending"
+//           ) : (
+//             <div className="flex text-white text-[15px] lg:text-[32px] leading-[26.11px] items-center gap-3">
+//               <img className="hidden lg:flex" src={medalMaster} />
+//               <button
+//                 disabled={paymentStatus}
+//                 onClick={async () => {
+//                   localStorage.setItem(
+//                     "claimGameAddr",
+//                     JSON.stringify({
+//                       game: id,
+//                       accountId,
+//                       address,
+//                       gameId,
+//                       playersAddress,
+//                       creator: true,
+//                     })
+//                   );
+//                   switchModal();
+//                   switchModalcontent("claim");
+//                 }}
+//                 className="bg-blue-70 p-[5px] px-[10px] rounded-[5px] "
+//                 style={{
+//                   backgroundColor: `${paymentStatus ? "#010C18" : ""}`,
+//                   opacity: `${paymentStatus ? "70%" : ""}`,
+//                 }}
+//               >
+//                 {paymentStatus ? "claimed" : "Claim"}
+//               </button>
+//             </div>
+//           )}
+//         </div>
+//       </div>
+//     );
+//   }
 
-  return (
-    <div className="flex justify-between font-droid text-[15px] lg:text-[32px] font-normal px-[16px]  lg:px-[48px] mt-[32px] grad-dar rounded-[16px] border-blue-50 border-solid border-[2px] py-[16px] md:py-[24px]">
-      <div className="col-span-2 flex items-center gap-[16px]   ">
-        <img
-          className="w-[48px] h-[48px] md:w-[72px] md:h-[72px] rounded-[8px]"
-          src={game?.image}
-          alt="game image"
-        />
-        <div className="flex flex-col items-start text-white">
-          {" "}
-          <p>{game?.title}</p>
-        </div>
-      </div>
-      <div className="text-white flex items-center">
-        {!processedWinners ? (
-          "Pending"
-        ) : rewardEarned != 2 ? (
-          "View Result"
-        ) : (
-          <div className="flex text-white text-[15px] lg:text-[32px] leading-[26.11px] items-center gap-3">
-            <img className="hidden lg:flex" src={medalMaster} />
-            {position?.toString()}
-            <button
-              disabled={claimed}
-              onClick={async () => {
-                localStorage.setItem(
-                  "claimGameAddr",
-                  JSON.stringify({
-                    game: game.address,
-                    accountId,
-                    gameId,
-                    playersAddress,
-                  })
-                );
-                switchModal();
-                switchModalcontent("claim");
-              }}
-              className="bg-blue-70 p-[5px] px-[10px] rounded-[5px] "
-              style={{
-                backgroundColor: `${claimed ? "#010C18" : ""}`,
-                opacity: `${claimed ? "70%" : ""}`,
-              }}
-            >
-              {claimed ? "claimed" : "Claim"}
-            </button>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
+//   return (
+//     <div className="flex justify-between font-droid text-[15px] lg:text-[32px] font-normal px-[16px]  lg:px-[48px] mt-[32px] grad-dar rounded-[16px] border-blue-50 border-solid border-[2px] py-[16px] md:py-[24px]">
+//       <div className="col-span-2 flex items-center gap-[16px]   ">
+//         <img
+//           className="w-[48px] h-[48px] md:w-[72px] md:h-[72px] rounded-[8px]"
+//           src={game?.image}
+//           alt="game image"
+//         />
+//         <div className="flex flex-col items-start text-white">
+//           {" "}
+//           <p>{game?.title}</p>
+//         </div>
+//       </div>
+//       <div className="text-white flex items-center">
+//         {!processedWinners ? (
+//           "Pending"
+//         ) : rewardEarned != 2 ? (
+//           "View Result"
+//         ) : (
+//           <div className="flex text-white text-[15px] lg:text-[32px] leading-[26.11px] items-center gap-3">
+//             <img className="hidden lg:flex" src={medalMaster} />
+//             {position?.toString()}
+//             <button
+//               disabled={claimed}
+//               onClick={async () => {
+//                 localStorage.setItem(
+//                   "claimGameAddr",
+//                   JSON.stringify({
+//                     game: game.address,
+//                     accountId,
+//                     gameId,
+//                     playersAddress,
+//                   })
+//                 );
+//                 switchModal();
+//                 switchModalcontent("claim");
+//               }}
+//               className="bg-blue-70 p-[5px] px-[10px] rounded-[5px] "
+//               style={{
+//                 backgroundColor: `${claimed ? "#010C18" : ""}`,
+//                 opacity: `${claimed ? "70%" : ""}`,
+//               }}
+//             >
+//               {claimed ? "claimed" : "Claim"}
+//             </button>
+//           </div>
+//         )}
+//       </div>
+//     </div>
+//   );
+// };
 
 // const RANKS = ({ userDetails, setUserData, creatorMode }: any) => {
 //   // const [loading, setLoading] = useState(false)
