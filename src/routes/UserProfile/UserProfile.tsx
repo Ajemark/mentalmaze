@@ -4,7 +4,7 @@ import Stars from "./../../assets/userProfile/Stars.png";
 import edit from "./../../assets/userProfile/edit.png";
 import copy from "./../../assets/userProfile/copy.svg";
 import Ball from "./../../assets/userProfile/Ball.png";
-import GameImage from "./../../assets/userProfile/fotor-ai.png";
+import GameImage from "./../../assets/userProfile/3d-maze.png";
 import CreatedGame from "./../../assets/userProfile/fotor.png";
 import StarsM from "./../../assets/userProfile/StarsMobile.svg";
 //import medalMaster from "./../../assets/Leadership/medalstarMaster.png";
@@ -347,7 +347,7 @@ const UserProfile = () => {
   // const [userData, setUserData] = useState();
 
   return (
-    <div className="backdrop-blur-sm w-full  relative z-[999] px-[16px] md:px-[52px] mt-[96px] md:mt-[176px]">
+    <div className="backdrop-blur-sm w-full  relative px-[16px] md:px-[52px] mt-[96px] md:mt-[176px]">
       <ProfileHeader userDetails={userDetails} />
       <Link />
       <Stat
@@ -387,7 +387,11 @@ const ProfileHeader = ({ userDetails }: any) => {
   }, [isConnected]);
 
   return (
-    <div className="profile border-4 border-blue-80 w-full overflow-hidden rounded-3xl bg-blue-[#010C18] flex justify-between flex-col md:flex-row p-[24px] md:p-5 gap-[24px] md:gap-0 relative">
+    <div
+      style={{
+        background: 'linear-gradient(92.69deg, rgba(238, 18, 18, 0.5) 8.15%, rgba(242, 18, 18, 0.1) 99.96%)',
+      }}
+      className="profile border-4 border-blue-80 w-full overflow-hidden rounded-3xl bg-blue-[#010C18] flex justify-between flex-col md:flex-row p-[24px] md:p-5 gap-[24px] md:gap-0 relative">
       <div className="absolute h-full w-full ">
         <img src={Stars} className="w-full h-full blur-sm hidden md:block" />
         <img src={StarsM} className="w-full h-full blur-sm block md:hidden" />
@@ -413,7 +417,7 @@ const ProfileHeader = ({ userDetails }: any) => {
           </div>
         </div>
         <div className="font-Archivo_Regular text-sm font-normal flex flex-col gap-4 items-center text-white justify-between">
-          <p className="md:text-[32px] text-white font-normal font-droid">
+          <p className="md:text-[32px] text-red-900 font-normal font-droid">
             {userDetails?.username}
           </p>
 
@@ -475,7 +479,11 @@ const ProfileHeader = ({ userDetails }: any) => {
 
 const Link = () => {
   return (
-    <div className="flex w-full h-[70px] md:h-24 border-blue-80 border-4 rounded-3xl items-center px-6 creatorsModebuttonbg text-white py-[10px] justify-between mt-12 relative z-[999] home">
+    <div
+      style={{
+        backgroundColor: "#010c18"
+      }}
+      className="flex w-full h-[70px] md:h-24 border-blue-80 border-4 rounded-3xl items-center px-6 creatorsModebuttonbg text-white py-[10px] justify-between mt-12 relative z-[999] home">
       <h2
         className=" flex flex-row justify-center align-middle font-400 font-droidbold
              text-white py-4 px-[20px] text-[25px] text-center border-r-blue-80 border-r-4"
@@ -590,28 +598,72 @@ const Level = () => {
       <h2 className=" font-droidbold text-[32px] text-white py-4 text-center border-b-blue-80 border-b-4">
         ACHIEVEMENTS
       </h2>
-      <div className="flex flex-row justify-between items-center  p-10">
-        <div className="p-0 border-blue-80  border-4 rounded-3xl">
-          <img src={GameImage} className="bg-cover rounded-3xl bg-center z-0 w-96" />
-          <div className="flex flex-row justify-between font-bold text-white text-2xl p-5 w-auto"
-            style={{
-              background: 'linear-gradient(92.69deg, rgba(3, 36, 73, 0.45) 8.15%, rgba(11, 119, 240, 0.1) 99.96%)',
-            }}
-          >
-            <div className="flex flex-col align-middle justify-between items-center font-black">
-              <p className=" px-[12px] z-50 text-gray-400">Math Puzzle</p>
-              <p className=" px-[12px] text-gray-400 flex flex-row"><p className="font-400 text-white px-[14px]">250K</p>Players</p>
-            </div>
-            <button
+      <div className="flex flex-row justify-between items-center  p-5">
+
+
+        <div className="flex flex-row justify-between">
+          <div
+            className=" border-blue-80 border-4 rounded-3xl w-72 h-64 relative flex items-center justify-center">
+            <div
+              className="absolute inset-0 bg-cover bg-center z-0 rounded-3xl"
+              style={{ backgroundImage: `url(${CreatedGame})` }}
+            ></div>
+            <div className="flex flex-row justify-between align-middle items-center font-bold text-white text-2xl  w-[280px] p-5 z-50 bg-blue-800"
               style={{
-                background: 'linear-gradient(92.69deg, rgba(3, 36, 73, 0.45) 8.15%, rgba(11, 119, 240, 0.1) 99.96%)',
+                // background: 'linear-gradient(92.69deg, rgba(3, 36, 73, 0.45) 8.15%, rgba(11, 119, 240, 0.1) )',
+                backgroundColor: '#021b38',
+                marginTop: "160px",
+                borderRadius: "0px 0px 17px 17px"
+
               }}
-              className="cursor-pointer text-[16px] flex gap-4 text-white font-Archivo-Bold border-blue-50 border rounded-xl py-[8px] px-[8px] md:py-4 md:px-4 h-fit mt-auto z-[10000000000000000]">
-              CLAIM
-            </button>
+            >
+              <div className="flex flex-col align-middle justify-between items-center font-black">
+                <p className="z-50 text-base text-gray-400">Math Puzzle</p>
+                <p className="text-gray-400 text-base flex flex-row"><p className="font-400 text-white mx-2">10th </p> Position</p>
+              </div>
+              {/* <button
+                style={{
+                  background: 'linear-gradient(92.69deg, rgba(3, 36, 73, 0.45) 8.15%, rgba(11, 119, 240, 0.1) 99.96%)',
+                }}
+                className="cursor-pointer text-sm flex gap-4 text-white font-Archivo-Bold border-blue-50 border rounded-xl py-[8px] px-[8px] md:py-4 md:px-4 h-fit mt-auto z-[10000000000000000]">
+                CLAIM
+              </button> */}
+            </div>
           </div>
         </div>
-        <div className=" border-blue-80 border-4 rounded-3xl w-[420px] p-2 h-80 flex flex-col justify-center ">
+
+        <div className="flex flex-row justify-between">
+          <div
+            className=" border-blue-80 border-4 rounded-3xl w-72 h-64 relative flex items-center justify-center">
+            <div
+              className="absolute inset-0 bg-cover bg-center z-0 rounded-3xl"
+              style={{ backgroundImage: `url(${GameImage})` }}
+            ></div>
+            <div className="flex flex-row justify-between align-middle items-center font-bold text-white text-2xl  w-[280px] p-5 z-50 bg-blue-800"
+              style={{
+                // background: 'linear-gradient(92.69deg, rgba(3, 36, 73, 0.45) 8.15%, rgba(11, 119, 240, 0.1) )',
+                backgroundColor: '#021b38',
+                marginTop: "155px",
+                borderRadius: "0px 0px 17px 17px"
+
+              }}
+            >
+              <div className="flex flex-col align-middle justify-between items-center font-black">
+                <p className="z-50 text-base text-gray-400">Math Puzzle</p>
+                <p className="text-gray-400 text-base flex flex-row"><p className="font-400 text-white mx-2">4th </p> Position</p>
+              </div>
+              <button
+                style={{
+                  background: 'linear-gradient(92.69deg, rgba(3, 36, 73, 0.45) 8.15%, rgba(11, 119, 240, 0.1) 99.96%)',
+                }}
+                className="cursor-pointer text-sm flex gap-4 text-white font-Archivo-Bold border-blue-50 border rounded-xl py-[8px] px-[8px] md:py-4 md:px-4 h-fit mt-auto z-[10000000000000000]">
+                CLAIM
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div className=" border-blue-80 border-4 rounded-3xl  w-72 h-64 flex flex-col justify-center ">
           <div className="flex  flex-col justify-between px-[40px] mb-10">
             <div className="flex text-wb-40 text-xl gap-2 items-center">
               <div>
@@ -632,6 +684,38 @@ const Level = () => {
             </div>
           </div>
         </div>
+
+        <div className="flex flex-row justify-between">
+          <div
+            className=" border-blue-80 border-4 rounded-3xl w-72 h-64 relative flex items-center justify-center">
+            <div
+              className="absolute inset-0 bg-cover bg-center z-0 rounded-3xl"
+              style={{ backgroundImage: `url(${GameImage})` }}
+            ></div>
+            <div className="flex flex-row justify-between align-middle items-center font-bold text-white text-2xl  w-[280px] p-5 z-50 bg-blue-800"
+              style={{
+                // background: 'linear-gradient(92.69deg, rgba(3, 36, 73, 0.45) 8.15%, rgba(11, 119, 240, 0.1) )',
+                backgroundColor: '#021b38',
+                marginTop: "155px",
+                borderRadius: "0px 0px 17px 17px"
+
+              }}
+            >
+              <div className="flex flex-col align-middle justify-between items-center font-black">
+                <p className="z-50 text-base text-gray-400">Math Puzzle</p>
+                <p className="text-gray-400 text-base flex flex-row"><p className="font-400 text-white mx-2">4th </p> Position</p>
+              </div>
+              <button
+                style={{
+                  background: 'linear-gradient(92.69deg, rgba(3, 36, 73, 0.45) 8.15%, rgba(11, 119, 240, 0.1) 99.96%)',
+                }}
+                className="cursor-pointer text-sm flex gap-4 text-white font-Archivo-Bold border-blue-50 border rounded-xl py-[8px] px-[8px] md:py-4 md:px-4 h-fit mt-auto z-[10000000000000000]">
+                CLAIM
+              </button>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   );
@@ -644,18 +728,124 @@ const CreatedGames = () => {
       <h2 className=" font-droidbold text-[32px] text-white py-4 text-center border-b-blue-80 border-b-4">
         GAMES CREATED
       </h2>
-      <div className="flex flex-row justify-between p-10">
-        <div className=" border-blue-80 border-4 rounded-3xl w-64 h-64 relative flex items-center justify-center">
+      <div className="flex flex-row justify-between p-5">
+        <div className="flex flex-row justify-between">
           <div
-            className="absolute inset-0 bg-cover bg-center z-0 rounded-3xl"
-            style={{ backgroundImage: `url(${CreatedGame})` }}
-          ></div>
-          <div className="relative z-10 text-white text-center"
-            style={{
-              top: "74px"
-            }}>
-            <div className="bg-black bg-opacity-40 p-7 w-fit rounded">
-              <h1 className="text-2xl font-bold font-Archivo-Bold ">MATH PUZZLE</h1>
+            className=" border-blue-80 border-4 rounded-3xl w-72 h-64 relative flex items-center justify-center">
+            <div
+              className="absolute inset-0 bg-cover bg-center z-0 rounded-3xl"
+              style={{ backgroundImage: `url(${CreatedGame})` }}
+            ></div>
+            <div className="flex flex-row justify-between align-middle items-center font-bold text-white text-2xl  w-[280px] p-5 z-50 bg-blue-800"
+              style={{
+                // background: 'linear-gradient(92.69deg, rgba(3, 36, 73, 0.45) 8.15%, rgba(11, 119, 240, 0.1) )',
+                backgroundColor: '#021b38',
+                marginTop: "155px",
+                borderRadius: "0px 0px 17px 17px"
+
+              }}
+            >
+              <div className="flex flex-col align-middle justify-between items-center font-black">
+                <p className="z-50 text-base text-gray-400">Math Puzzle</p>
+                <p className="text-gray-400 text-base flex flex-row"><p className="font-400 text-white mx-2">250K </p> Players</p>
+              </div>
+              <button
+                style={{
+                  background: 'linear-gradient(92.69deg, rgba(3, 36, 73, 0.45) 8.15%, rgba(11, 119, 240, 0.1) 99.96%)',
+                }}
+                className="cursor-pointer text-sm flex gap-4 text-white font-Archivo-Bold border-blue-50 border rounded-xl py-[8px] px-[8px] md:py-4 md:px-4 h-fit mt-auto z-[10000000000000000]">
+                CLAIM
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-row justify-between">
+          <div
+            className=" border-blue-80 border-4 rounded-3xl w-72 h-64 relative flex items-center justify-center">
+            <div
+              className="absolute inset-0 bg-cover bg-center z-0 rounded-3xl"
+              style={{ backgroundImage: `url(${CreatedGame})` }}
+            ></div>
+            <div className="flex flex-row justify-between align-middle items-center font-bold text-white text-2xl  w-[280px] p-5 z-50 bg-blue-800"
+              style={{
+                // background: 'linear-gradient(92.69deg, rgba(3, 36, 73, 0.45) 8.15%, rgba(11, 119, 240, 0.1) )',
+                backgroundColor: '#021b38',
+                marginTop: "155px",
+                borderRadius: "0px 0px 17px 17px"
+
+              }}
+            >
+              <div className="flex flex-col align-middle justify-between items-center font-black">
+                <p className="z-50 text-base text-gray-400">Math Puzzle</p>
+                <p className="text-gray-400 text-base flex flex-row"><p className="font-400 text-white mx-2">250K </p> Players</p>
+              </div>
+              <button
+                style={{
+                  background: 'linear-gradient(92.69deg, rgba(3, 36, 73, 0.45) 8.15%, rgba(11, 119, 240, 0.1) 99.96%)',
+                }}
+                className="cursor-pointer text-sm flex gap-4 text-white font-Archivo-Bold border-blue-50 border rounded-xl py-[8px] px-[8px] md:py-4 md:px-4 h-fit mt-auto z-[10000000000000000]">
+                CLAIM
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-row justify-between">
+          <div
+            className=" border-blue-80 border-4 rounded-3xl w-72 h-64 relative flex items-center justify-center">
+            <div
+              className="absolute inset-0 bg-cover bg-center z-0 rounded-3xl"
+              style={{ backgroundImage: `url(${CreatedGame})` }}
+            ></div>
+            <div className="flex flex-row justify-between align-middle items-center font-bold text-white text-2xl  w-[280px] p-5 z-50 bg-blue-800"
+              style={{
+                // background: 'linear-gradient(92.69deg, rgba(3, 36, 73, 0.45) 8.15%, rgba(11, 119, 240, 0.1) )',
+                backgroundColor: '#021b38',
+                marginTop: "155px",
+                borderRadius: "0px 0px 17px 17px"
+
+              }}
+            >
+              <div className="flex flex-col align-middle justify-between items-center font-black">
+                <p className="z-50 text-base text-gray-400">Math Puzzle</p>
+                <p className="text-gray-400 text-base flex flex-row"><p className="font-400 text-white mx-2">250K </p> Players</p>
+              </div>
+              <button
+                style={{
+                  background: 'linear-gradient(92.69deg, rgba(3, 36, 73, 0.45) 8.15%, rgba(11, 119, 240, 0.1) 99.96%)',
+                }}
+                className="cursor-pointer text-sm flex gap-4 text-white font-Archivo-Bold border-blue-50 border rounded-xl py-[8px] px-[8px] md:py-4 md:px-4 h-fit mt-auto z-[10000000000000000]">
+                CLAIM
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-row justify-between">
+          <div
+            className=" border-blue-80 border-4 rounded-3xl w-72 h-64 relative flex items-center justify-center">
+            <div
+              className="absolute inset-0 bg-cover bg-center z-0 rounded-3xl"
+              style={{ backgroundImage: `url(${CreatedGame})` }}
+            ></div>
+            <div className="flex flex-row justify-between align-middle items-center font-bold text-white text-2xl  w-[280px] p-5 z-50 bg-blue-800"
+              style={{
+                // background: 'linear-gradient(92.69deg, rgba(3, 36, 73, 0.45) 8.15%, rgba(11, 119, 240, 0.1) )',
+                backgroundColor: '#021b38',
+                marginTop: "155px",
+                borderRadius: "0px 0px 17px 17px"
+
+              }}
+            >
+              <div className="flex flex-col align-middle justify-between items-center font-black">
+                <p className="z-50 text-base text-gray-400">Math Puzzle</p>
+                <p className="text-gray-400 text-base flex flex-row"><p className="font-400 text-white mx-2">250K </p> Players</p>
+              </div>
+              <button
+                style={{
+                  background: 'linear-gradient(92.69deg, rgba(3, 36, 73, 0.45) 8.15%, rgba(11, 119, 240, 0.1) 99.96%)',
+                }}
+                className="cursor-pointer text-sm flex gap-4 text-white font-Archivo-Bold border-blue-50 border rounded-xl py-[8px] px-[8px] md:py-4 md:px-4 h-fit mt-auto z-[10000000000000000]">
+                CLAIM
+              </button>
             </div>
           </div>
         </div>
