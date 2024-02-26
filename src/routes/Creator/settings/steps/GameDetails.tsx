@@ -612,7 +612,7 @@ const GameDetails = ({
           <Input
             type="number"
             title="What is the duration of the game?"
-            placeholder="Game duration in hours"
+            placeholder="Game duration in minutes"
             value={duration}
             setValue={setDuration}
           />

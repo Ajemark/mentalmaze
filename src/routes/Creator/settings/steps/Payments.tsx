@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Input from "../../../../component/ui/Input";
 import { HiMinus, HiPlus } from "react-icons/hi";
 import { UserContext } from "../../../../context/UserContext";
@@ -65,10 +65,17 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
     return totalShare == gameToken;
   };
 
+  //   console.log(questionObj);
+
+  //   useEffect(() => {
+  //     setSendinTx(false);
+  //   }, []);
+
   const sendTx = async (data: any) => {
+    console.log(data);
     setSendinTx(true);
-    const mmContract = new MMContract(MM_ADDRESS, signer, provider);
-    const minerContract = new MinerContract(MM_ADDRESS, signer, provider);
+    // const mmContract = new MMContract(MM_ADDRESS, signer, provider);
+    const minerContract = new MinerContract(MINER_ADDRESS, signer, provider);
     const erc20Contract = new ERC20Contract(ERC20, signer, provider);
     try {
       const amount = parseEther(gameToken);
@@ -78,21 +85,26 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
         MM_ADDRESS
       );
 
-      // console.log(allowance);
+      console.log(allowance);
 
       if (Number(allowance) >= Number(amount) * 1.2) {
         const tx = await minerContract.createGame(
           data,
           ERC20,
-          MINER_ADDRESS,
-          userDetails.invitedBy
+          MM_ADDRESS,
+          userDetails?.invitedBy ?? "0x0e4e0acb413b179d4102beb47f18d1c167c62fb3"
         );
         if (tx) {
+          console.log(tx);
           setQuestionObj({
             ...data,
             amountDeposited: gameToken,
             rewardDistribution: priceShare,
-            address: tx[0],
+            address: tx.address,
+            txHash: tx.hash,
+            isTestnet: `${
+              import.meta.env.VITE_REACT_NODE_ENV == "testnet" ? true : false
+            }`,
           });
           setSendinTx(false);
           handleClick(3);
@@ -108,15 +120,20 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
         const tx = await minerContract.createGame(
           data,
           ERC20,
-          MINER_ADDRESS,
-          userDetails.invitedBy
+          MM_ADDRESS,
+          userDetails?.invitedBy ?? "0x0e4e0acb413b179d4102beb47f18d1c167c62fb3"
         );
         if (tx) {
+          console.log(tx);
           setQuestionObj({
             ...data,
             amountDeposited: gameToken,
             rewardDistribution: priceShare,
-            address: tx[0],
+            address: tx.address,
+            txHash: tx.hash,
+            isTestnet: `${
+              import.meta.env.VITE_REACT_NODE_ENV == "testnet" ? true : false
+            }`,
           });
           setSendinTx(false);
           handleClick(3);
@@ -126,6 +143,16 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
     } catch (error: any) {
       setSendinTx(false);
       console.log(error);
+      console.log(JSON.parse(JSON.stringify(error)).code);
+      if (JSON.parse(JSON.stringify(error)).code.includes("NETWORK_ERROR")) {
+        setErrorMessage("Connected to the wrong network");
+        return;
+      }
+      if (JSON.parse(JSON.stringify(error)).code.includes("ACTION_REJECTED")) {
+        setErrorMessage("User Rejected TX");
+        return;
+      }
+
       if (
         JSON.parse(JSON.stringify(error)).info.error.data.message.includes(
           "insufficient funds"
@@ -298,7 +325,7 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
                     durationInHours: Math.abs(questionObj.gameDuration),
                     managerContract: MM_ADDRESS,
                     playersCount: 0,
-                    totalQuestion: questionObj.questions.length,
+                    totalQuestion: questionObj.questions?.length,
                     paymentStatus: true,
                     approve: false,
                     creator: address,
