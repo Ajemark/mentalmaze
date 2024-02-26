@@ -389,7 +389,7 @@ const ProfileHeader = ({ userDetails }: any) => {
   return (
     <div
       style={{
-        background: 'linear-gradient(92.69deg, rgba(238, 18, 18, 0.5) 8.15%, rgba(242, 18, 18, 0.1) 99.96%)',
+        background: 'linear-gradient(92.69deg, rgba(207, 22, 22, 0.5) 8.15%, rgba(210, 30, 30, 0.1) 99.96%)',
       }}
       className="profile border-4 border-blue-80 w-full overflow-hidden rounded-3xl bg-blue-[#010C18] flex justify-between flex-col md:flex-row p-[24px] md:p-5 gap-[24px] md:gap-0 relative">
       <div className="absolute h-full w-full ">
@@ -417,7 +417,7 @@ const ProfileHeader = ({ userDetails }: any) => {
           </div>
         </div>
         <div className="font-Archivo_Regular text-sm font-normal flex flex-col gap-4 items-center text-white justify-between">
-          <p className="md:text-[32px] text-red-900 font-normal font-droid">
+          <p className="md:text-[32px] text-red-400 font-normal font-droid">
             {userDetails?.username}
           </p>
 
@@ -483,14 +483,14 @@ const Link = () => {
       style={{
         backgroundColor: "#010c18"
       }}
-      className="flex w-full h-[70px] md:h-24 border-blue-80 border-4 rounded-3xl items-center px-6 creatorsModebuttonbg text-white py-[10px] justify-between mt-12 relative z-[999] home">
+      className=" h-fit flex flex-col md:flex-row justify-between w-full md:h-fit border-blue-80 border-4 rounded-3xl items-center md:px-6 creatorsModebuttonbg text-white py-[10px] mt-12 relative z-[999] home">
       <h2
-        className=" flex flex-row justify-center align-middle font-400 font-droidbold
-             text-white py-4 px-[20px] text-[25px] text-center border-r-blue-80 border-r-4"
+        className=" md:0 m-5 w-full md:w-fit flex flex-row justify-center align-middle font-400 font-droidbold
+             text-white py-4 px-[20px] text-[25px] md:text-[25px] text-center md:border-r-blue-80 md:border-r-4 md:border-b-0 border-b-blue-80 border-b-2"
       >
         INVITE LINK
       </h2>
-      <p className="text-sm font-400 text-[14px] font-Archivo_Regular text-gray-400 ">https://mentalmaze.vercel.app/profile/gweche</p>
+      <p className=" text-[14px] md:text-sm font-400 font-Archivo_Regular max-w-xs text-gray-400 ">https://mentalmaze.vercel.app/profile/gweche</p>
       <button
         style={{
           background: 'linear-gradient(92.69deg, rgba(3, 36, 73, 0.45) 8.15%, rgba(11, 119, 240, 0.1) 99.96%)',
@@ -506,15 +506,15 @@ const Link = () => {
 const Stat = ({ stat, creatorMode, userData }: any) => {
   console.log(stat);
   return (
-    <div className="flex -flex-row justify-between items-center align-middle">
-      <div className="border-4 rounded-3xl mt-12  py-4 flex flex-row gap-8 border-blue-80 userProfileStat h-fit">
+    <div className="flex flex-col md:flex-row md:justify-between md:items-center md:align-middle">
+      <div className="w-full border-4 rounded-3xl mt-12  py-4 flex flex-col md:flex-row gap-8 border-blue-80 userProfileStat h-fit">
         <h2
           className=" flex flex-row justify-center items-center align-middle font-400 font-droidbold
-             text-white px-[20px] text-[25px] text-center border-r-blue-80 border-r-4"
+             text-white px-[20px] text-[25px] text-center md:border-r-blue-80 md:border-r-4 md:border-b-0 border-b-blue-80 border-b-2"
         >
           STATS
         </h2>
-        <div className="flex flex-row px-[30px] gap-8">
+        <div className="flex flex-col md:flex-row px-[30px] gap-8">
           <p className="flex flex-col items-center text-center  py-4">
             <h2 className="font-400 font-Archivo-Bold text-[30px] text-white">
               {userData && userData.length}
@@ -558,14 +558,14 @@ const Stat = ({ stat, creatorMode, userData }: any) => {
         </div>
       </div>
 
-      <div className="border-4 rounded-3xl mt-12  py-8 flex flex-row justify-between align-middle items-center gap-8 border-blue-80 userProfileStat h-fit">
+      <div className="w-full border-4 rounded-3xl mt-12  py-4 flex flex-col md:flex-row justify-between align-middle items-center gap-8 border-blue-80 userProfileStat h-fit">
         <h2
-          className=" flex flex-row justify-center align-middle font-400 font-droidbold
-             text-white py-4 px-[20px] text-[25px] text-center border-r-blue-80 border-r-4"
+          className="w-full flex flex-row justify-center items-center align-middle font-400 font-droidbold
+             text-white py-4 px-[20px] text-[25px] text-center md:border-r-blue-80 md:border-r-4 md:border-b-0 border-b-blue-80 border-b-2"
         >
-          max
+          mzr
         </h2>
-        <div className="flex flex-row justify-between align-middle items-center px-[30px] gap-8">
+        <div className="flex flex-col md:flex-row justify-between align-middle items-center px-[30px] gap-8">
           <div className="flex flex-col justify-between align-middle items-center text-center">
             <h2 className="font-Archivo_Regular text-[18px] text-gray-400">
               Mining: 0.0
@@ -598,10 +598,10 @@ const Level = () => {
       <h2 className=" font-droidbold text-[32px] text-white py-4 text-center border-b-blue-80 border-b-4">
         ACHIEVEMENTS
       </h2>
-      <div className="flex flex-row justify-between items-center  p-5">
+      <div className="flex flex-col md:flex-row justify-between items-center  p-5">
 
 
-        <div className="flex flex-row justify-between">
+        <div className="flex flex-row justify-between mb-3">
           <div
             className=" border-blue-80 border-4 rounded-3xl w-72 h-64 relative flex items-center justify-center">
             <div
@@ -632,7 +632,7 @@ const Level = () => {
           </div>
         </div>
 
-        <div className="flex flex-row justify-between">
+        <div className="flex flex-row justify-between mb-3">
           <div
             className=" border-blue-80 border-4 rounded-3xl w-72 h-64 relative flex items-center justify-center">
             <div
@@ -663,7 +663,7 @@ const Level = () => {
           </div>
         </div>
 
-        <div className=" border-blue-80 border-4 rounded-3xl  w-72 h-64 flex flex-col justify-center ">
+        <div className=" border-blue-80 border-4 rounded-3xl  w-72 h-64 flex flex-col justify-center mb-3">
           <div className="flex  flex-col justify-between px-[40px] mb-10">
             <div className="flex text-wb-40 text-xl gap-2 items-center">
               <div>
@@ -685,7 +685,7 @@ const Level = () => {
           </div>
         </div>
 
-        <div className="flex flex-row justify-between">
+        <div className="flex flex-row justify-between mb-3">
           <div
             className=" border-blue-80 border-4 rounded-3xl w-72 h-64 relative flex items-center justify-center">
             <div
@@ -728,8 +728,8 @@ const CreatedGames = () => {
       <h2 className=" font-droidbold text-[32px] text-white py-4 text-center border-b-blue-80 border-b-4">
         GAMES CREATED
       </h2>
-      <div className="flex flex-row justify-between p-5">
-        <div className="flex flex-row justify-between">
+      <div className="flex flex-col md:flex-row justify-between p-5">
+        <div className="flex flex-row justify-between mb-3">
           <div
             className=" border-blue-80 border-4 rounded-3xl w-72 h-64 relative flex items-center justify-center">
             <div
@@ -759,7 +759,7 @@ const CreatedGames = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-row justify-between">
+        <div className="flex flex-row justify-between mb-3">
           <div
             className=" border-blue-80 border-4 rounded-3xl w-72 h-64 relative flex items-center justify-center">
             <div
@@ -789,7 +789,7 @@ const CreatedGames = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-row justify-between">
+        <div className="flex flex-row justify-between mb-3">
           <div
             className=" border-blue-80 border-4 rounded-3xl w-72 h-64 relative flex items-center justify-center">
             <div
@@ -819,7 +819,7 @@ const CreatedGames = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-row justify-between">
+        <div className="flex flex-row justify-between mb-3">
           <div
             className=" border-blue-80 border-4 rounded-3xl w-72 h-64 relative flex items-center justify-center">
             <div
