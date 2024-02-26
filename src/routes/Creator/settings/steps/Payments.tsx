@@ -1,8 +1,8 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import Input from "../../../../component/ui/Input";
 import { HiMinus, HiPlus } from "react-icons/hi";
 import { UserContext } from "../../../../context/UserContext";
-import { MMContract, MinerContract } from "../../../../sdk/MMContract";
+import { MinerContract } from "../../../../sdk/MMContract";
 import {
   ERC20,
   MINER_ADDRESS,

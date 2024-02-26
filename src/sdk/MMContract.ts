@@ -51,7 +51,7 @@ export class MinerContract {
     mazerAddress: any,
     invitedBy: any
   ) {
-    const tx = await this.contract.gatePass(
+    const tx = await this.contract.playGame(
       address,
       tokenAddress,
       mazerAddress,

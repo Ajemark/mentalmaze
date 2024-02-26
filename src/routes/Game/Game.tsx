@@ -158,7 +158,7 @@ const Game = () => {
   const signer = useEthersSigner();
   const provider = useEthersProvider();
   const mmContract = new MMContract(MM_ADDRESS, signer, provider);
-  const minerContract = new MinerContract(MM_ADDRESS, signer, provider);
+  const minerContract = new MinerContract(MINER_ADDRESS, signer, provider);
   const erc20Contract = new ERC20Contract(ERC20, signer, provider);
 
   const fetchSCGame = async () => {
@@ -187,23 +187,18 @@ const Game = () => {
 
   const payForPass = async (gatePassFee: any) => {
     const tx = await mmContract.playerGames(address as String, gameAddress);
-    console.log(tx);
+
     if (tx[0]) {
       getPlayerDetails();
       return;
     }
 
-    console.log(gatePassFee);
     if (scGame[1].toLowerCase() == address?.toLowerCase()) {
       setErrorMessage("Owners can`t play thier game!");
       return;
     }
 
     try {
-      console.log(scGame);
-      console.log(scGame[5]);
-      // return
-
       setLoading(true);
 
       const allowance = await erc20Contract.allowance(
@@ -215,8 +210,8 @@ const Game = () => {
         const tx = await minerContract.gatePass(
           gameAddress,
           scGame[5],
-          MINER_ADDRESS,
-          userDetails.invitedBy
+          MM_ADDRESS,
+          userDetails?.invitedBy ?? "0x0e4e0acb413b179d4102beb47f18d1c167c62fb3"
         );
         if (tx) {
           console.log(tx);
@@ -234,8 +229,8 @@ const Game = () => {
         const tx = await minerContract.gatePass(
           gameAddress,
           scGame[5],
-          MINER_ADDRESS,
-          userDetails.invitedBy
+          MM_ADDRESS,
+          userDetails?.invitedBy ?? "0x0e4e0acb413b179d4102beb47f18d1c167c62fb3"
         );
         if (tx) {
           console.log(tx);
@@ -279,7 +274,7 @@ const Game = () => {
     if (played) navigate("/");
   }, [game]);
 
-  console.log(timeRemaining);
+  //console.log(timeRemaining);
 
   useEffect(() => {
     if (!game) return;

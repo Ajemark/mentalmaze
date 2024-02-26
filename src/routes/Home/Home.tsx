@@ -153,13 +153,15 @@ const Home = () => {
     fetch(
       `${
         import.meta.env.VITE_REACT_APP_BASE_URL
-      }/api/game/fetch?pageNumber=${pgNum}&pageSize=10&filter=All`,
+      }/api/game/fetch?pageNumber=${pgNum}&pageSize=10&filter=${
+        import.meta.env.VITE_REACT_NODE_ENV == "testnet" ? "testnet" : "All"
+      }`,
       requestOptions
     )
       .then((response) => response.json())
       .then((result) => {
         if (result.data) {
-          // console.log(result.data);
+          console.log(result.data);
           setLiveGames(result.data);
           setLoading(false);
         } else {
@@ -238,9 +240,15 @@ const Home = () => {
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-[15px] gap-y-[15px] md:gap-x-[45px] md:gap-y-[44px] py-12 w-full px-0">
                   {liveGames?.fetchDataResponse?.length > 0 &&
                     liveGames?.fetchDataResponse?.map(
-                      (gam: any, index: number) => (
-                        <Game {...gam} gameAddress={gam.address} key={index} />
-                      )
+                      (gam: any, index: number) => {
+                        return (
+                          <Game
+                            {...gam}
+                            gameAddress={gam.address}
+                            key={index}
+                          />
+                        );
+                      }
                     )}
                 </div>
               )}
