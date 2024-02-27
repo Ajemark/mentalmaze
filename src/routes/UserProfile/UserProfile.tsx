@@ -483,7 +483,7 @@ const Link = () => {
       style={{
         backgroundColor: "#010c18"
       }}
-      className=" h-fit flex flex-col md:flex-row justify-between w-full md:h-fit border-blue-80 border-4 rounded-3xl items-center md:px-6 creatorsModebuttonbg text-white py-[10px] mt-12 relative z-[999] home">
+      className=" h-fit flex flex-col md:flex-row justify-between align-middle w-full md:h-fit border-blue-80 border-4 rounded-3xl items-center md:px-6 creatorsModebuttonbg text-white py-[10px] mt-12 relative z-[999] home">
       <h2
         className=" md:0 m-5 w-full md:w-fit flex flex-row justify-center align-middle font-400 font-droidbold
              text-white py-4 px-[20px] text-[25px] md:text-[25px] text-center md:border-r-blue-80 md:border-r-4 md:border-b-0 border-b-blue-80 border-b-2"
@@ -495,7 +495,7 @@ const Link = () => {
         style={{
           background: 'linear-gradient(92.69deg, rgba(3, 36, 73, 0.45) 8.15%, rgba(11, 119, 240, 0.1) 99.96%)',
         }}
-        className=" bg-blue-900 opacity-90 cursor-pointer flex gap-4 text-white font-Archivo-Bold border-blue-50 border rounded-xl py-[9.5px] px-[12px] md:py-4 md:px-6 h-fit mt-auto z-[10000000000000000]">
+        className=" bg-blue-900 opacity-90 cursor-pointer flex gap-4 text-white font-Archivo-Bold border-blue-50 border rounded-xl py-[9.5px] px-[12px] h-fit z-[10000000000000000]">
         <p>COPY</p>
         <img className="cursor-pointer" src={copy} />
       </button>
@@ -506,8 +506,8 @@ const Link = () => {
 const Stat = ({ stat, creatorMode, userData }: any) => {
   console.log(stat);
   return (
-    <div className="flex flex-col md:flex-row md:justify-between md:items-center md:align-middle">
-      <div className="w-full border-4 rounded-3xl mt-12  py-4 flex flex-col md:flex-row gap-8 border-blue-80 userProfileStat h-fit">
+    <div className="flex flex-col md:flex-row md:justify-between md:items-center md:align-middle w-full">
+      <div className="w-full border-4 rounded-3xl mt-12  py-4 md:mx-2 flex flex-col md:flex-row gap-8 border-blue-80 userProfileStat h-fit">
         <h2
           className=" flex flex-row justify-center items-center align-middle font-400 font-droidbold
              text-white px-[20px] text-[25px] text-center md:border-r-blue-80 md:border-r-4 md:border-b-0 border-b-blue-80 border-b-2"
@@ -558,14 +558,14 @@ const Stat = ({ stat, creatorMode, userData }: any) => {
         </div>
       </div>
 
-      <div className="w-full border-4 rounded-3xl mt-12  py-4 flex flex-col md:flex-row justify-between align-middle items-center gap-8 border-blue-80 userProfileStat h-fit">
+      <div className="w-full border-4 rounded-3xl mt-12  py-4 md:mx-2 flex flex-col md:flex-row justify-between align-middle items-center gap-8 border-blue-80 userProfileStat md:h-40">
         <h2
-          className="w-full flex flex-row justify-center items-center align-middle font-400 font-droidbold
+          className="w-full md:w-auto font-400 font-droidbold
              text-white py-4 px-[20px] text-[25px] text-center md:border-r-blue-80 md:border-r-4 md:border-b-0 border-b-blue-80 border-b-2"
         >
           mzr
         </h2>
-        <div className="flex flex-col md:flex-row justify-between align-middle items-center px-[30px] gap-8">
+        <div className=" w-full flex flex-col md:flex-row justify-between align-middle items-center px-[30px] gap-8">
           <div className="flex flex-col justify-between align-middle items-center text-center">
             <h2 className="font-Archivo_Regular text-[18px] text-gray-400">
               Mining: 0.0
