@@ -27,8 +27,10 @@ const Submit = () => {
       accountId: userDetails.id,
       amountDeposited: questionObj.amountDeposited,
       rewardDistribution: questionObj.rewardDistribution,
-      address: questionObj.address,
+      address: questionObj.address[0],
       description: questionObj.description,
+      txHash: questionObj.txHash,
+      isTestnet: questionObj.isTestnet,
     });
 
     let requestOptions: RequestInit = {
