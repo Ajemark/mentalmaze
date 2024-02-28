@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.20.1",
+    "@types/react-copy-to-clipboard": "^5.0.7",
     "@web3modal/wagmi": "4.0.0-alpha.0",
     "buffer": "^6.0.3",
     "ethers": "^6.7.1",
@@ -21,6 +22,7 @@
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",
     "react": "^18.2.0",
+    "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.1",
     "react-icons": "^4.10.1",
