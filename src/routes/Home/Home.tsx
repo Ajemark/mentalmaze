@@ -33,10 +33,11 @@ const TitleBar = () => {
   }) => {
     return (
       <div
-        className={`py-5 outline-none cursor-pointer  rounded-[16px]  flex items-center justify-between gap-6 w-full h-[66px]  px-[16px] ${!current
-          ? "hover:headerdropDown-hover-effect hover:border-blue-main hover:border-[2px]"
-          : ""
-          }`}
+        className={`py-5 outline-none cursor-pointer  rounded-[16px]  flex items-center justify-between gap-6 w-full h-[66px]  px-[16px] ${
+          !current
+            ? "hover:headerdropDown-hover-effect hover:border-blue-main hover:border-[2px]"
+            : ""
+        }`}
         onClick={
           current ? () => setShowDropDown(!showDropDown) : () => setCurrent(id)
         }
@@ -98,26 +99,35 @@ const Game = ({ image, id, accountId, gameAddress, finishers }: any) => {
 
   let played = false;
   for (const count in finishers) {
-    console.log(finishers[count]?.toLowerCase() == address?.toLowerCase())
-    played =
-      finishers[count]?.toLowerCase() == address?.toLowerCase();
+    console.log(finishers[count]?.toLowerCase() == address?.toLowerCase());
+    played = finishers[count]?.toLowerCase() == address?.toLowerCase();
     if (played) break;
   }
 
-  const data = window.btoa(JSON.stringify({ gameId: id, accountId, gameAddress }));
+  const data = window.btoa(
+    JSON.stringify({ gameId: id, accountId, gameAddress })
+  );
 
   return (
-    <div className="relative flex justify-center items-center w-full border-blue-100 border-[4px] border-solid" >
+    <div className="relative flex justify-center items-center w-full border-blue-100 border-[4px] border-solid">
       {image ? <img src={image} className="w-full" /> : <div></div>}
       {/* <img src={image ??''} className="w-full" /> */}
-      <div className="absolute p-[2px rounded-[8px] p-[2px]" style={{
-        "background": "linear-gradient(90deg, #032449, #0B77F0)"
-      }} >
-        <button disabled={played} className=" w-[143px] text-white py-[16px] rounded-[8px] font-droid tracking-[0.2px] left-0" style={{
-          "background": "linear-gradient(130deg, #032449 0%, #0B77F0 100%)",
-          "backdropFilter": "blur(4px)"
-        }} onClick={() => navigate('/game?data=' + data)}>
-          {played ? 'Played' : 'PLAY NOW'}
+      <div
+        className="absolute p-[2px rounded-[8px] p-[2px]"
+        style={{
+          background: "linear-gradient(90deg, #032449, #0B77F0)",
+        }}
+      >
+        <button
+          disabled={played}
+          className=" w-[143px] text-white py-[16px] rounded-[8px] font-droid tracking-[0.2px] left-0"
+          style={{
+            background: "linear-gradient(130deg, #032449 0%, #0B77F0 100%)",
+            backdropFilter: "blur(4px)",
+          }}
+          onClick={() => navigate("/game?data=" + data)}
+        >
+          {played ? "Played" : "PLAY NOW"}
         </button>
       </div>
     </div>
@@ -139,10 +149,10 @@ const Home = () => {
       headers: myHeaders,
       redirect: "follow",
     };
-    // =${ address?.toLowerCase()
     fetch(
-      `${import.meta.env.VITE_REACT_APP_BASE_URL
-      }/api/game/fetch?pageNumber=${pgNum}&pageSize=10&filter=All`,
+      `${
+        import.meta.env.VITE_REACT_APP_BASE_URL
+      }/api/game/fetch?pageNumber=${pgNum}&pageSize=10&filter=testnet`,
       requestOptions
     )
       .then((response) => response.json())
@@ -158,7 +168,6 @@ const Home = () => {
       })
       .catch((error) => {
         console.log("error", error);
-        // setMessage('An Error Occured!, Please Try Again')
         setLoading(false);
       });
   };
@@ -191,7 +200,7 @@ const Home = () => {
 
   let testing = false;
 
-  console.log(liveGames)
+  console.log(liveGames);
   return (
     <div className="backdrop-blur-sm w-full h-fit mt-[96px] md:mt-[176px]">
       <div className="relative z-[999]  px-[15px] md:px-14">
@@ -217,33 +226,33 @@ const Home = () => {
                   />
                   Loading Games ...
                 </div>
+              ) : testing ? (
+                <div className="w-full h-[40vh] text-white flex-col flex items-center justify-center">
+                  <p className="text-white text-center font-driod text-[30px]">
+                    Live Games to be shown here!
+                  </p>
+                </div>
               ) : (
-
-                testing ? (
-                  <div className="w-full h-[40vh] text-white flex-col flex items-center justify-center">
-                    <p className="text-white text-center font-driod text-[30px]">Live Games to be shown here!</p>
-                  </div>
-                ) : (
-                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-[15px] gap-y-[15px] md:gap-x-[45px] md:gap-y-[44px] py-12 w-full px-0">
-                    {liveGames?.fetchDataResponse?.length > 0 &&
-                      liveGames?.fetchDataResponse?.map(
-                        (gam: any, index: number) => <Game {...gam} gameAddress={gam.address} key={index} />
-                      )}
-                  </div>
-
-                )
-
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-[15px] gap-y-[15px] md:gap-x-[45px] md:gap-y-[44px] py-12 w-full px-0">
+                  {liveGames?.fetchDataResponse?.length > 0 &&
+                    liveGames?.fetchDataResponse?.map(
+                      (gam: any, index: number) => (
+                        <Game {...gam} gameAddress={gam.address} key={index} />
+                      )
+                    )}
+                </div>
               )}
             </div>
           )}
 
-          {!liveGames || liveGames.recordCount < 1 && !loading && (
-            <div className="w-full h-[20vh] text-white flex-col flex items-center justify-center">
-              <p className="text-white font-driod text-[30px]">
-                No live games currently!
-              </p>
-            </div>
-          )}
+          {!liveGames ||
+            (liveGames.recordCount < 1 && !loading && (
+              <div className="w-full h-[20vh] text-white flex-col flex items-center justify-center">
+                <p className="text-white font-driod text-[30px]">
+                  No live games currently!
+                </p>
+              </div>
+            ))}
 
           {!userDetails ||
             (!userDetails.token && (

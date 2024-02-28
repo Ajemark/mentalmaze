@@ -12,6 +12,10 @@ import { UserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import { useModalContext } from "../../context/ModalContext";
 import { useAccount } from "wagmi";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import { MM_ADDRESS, useEthersProvider, useEthersSigner } from "../../sdk";
+import { MMContract } from "../../sdk/MMContract";
+
 // import { Pagination } from "../../component/ui/Pagination";
 // import { MM_ADDRESS, useEthersProvider, useEthersSigner } from "../../sdk";
 // import { MMContract } from "../../sdk/MMContract";
@@ -342,29 +346,88 @@ import { useAccount } from "wagmi";
 
 const UserProfile = () => {
   const { userDetails }: any = useContext(UserContext);
-  const [creatorMode] = useState(false);
-  const [userData] = useState();
-  // const [userData, setUserData] = useState();
+
+  const [myGames, setMyGames]: any = useState();
+  const [ranks, setRanks]: any = useState();
+
+  const getRank = () => {
+    let myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${userDetails.token}`);
+
+    let requestOptions: RequestInit = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    fetch(
+      `${
+        import.meta.env.VITE_REACT_APP_BASE_URL
+      }/api/rank?pageNumber=${1}&pageSize=1005&userAddress=${
+        userDetails.address
+      }`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        if (result.data) {
+          setRanks(result.data);
+        } else {
+          console.log(result);
+        }
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
+
+  const getAllGames = () => {
+    let myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${userDetails.token}`);
+
+    let requestOptions: RequestInit = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+    fetch(
+      `${
+        import.meta.env.VITE_REACT_APP_BASE_URL
+      }/api/game/get-product-created-by-me?pageNumber=1&pageSize=10000&accountId=${
+        userDetails?.id
+      }`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        if (result.data) {
+          setMyGames(result.data.fetchRes);
+        } else {
+          console.log(result);
+        }
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
+
+  useEffect(() => {
+    if (!userDetails?.token) {
+      return;
+    }
+    getRank();
+    getAllGames();
+  }, [userDetails]);
 
   return (
     <div className="backdrop-blur-sm w-full  relative px-[16px] md:px-[52px] mt-[96px] md:mt-[176px]">
       <ProfileHeader userDetails={userDetails} />
-      <Link />
-      <Stat
-        creatorMode={creatorMode}
-        userData={userData}
-        stat={userDetails.stat}
-      />
+      <Link userDetails={userDetails} />
+      <Stat userData={{ ranks, myGames }} userDetails={userDetails} />
       <div className="flex mt-12 gap-[34px] flex-col md:flex-row w-full">
-
         <div className="w-full">
-          <Level />
-          <CreatedGames />
-          {/* <RANKS
-            setUserData={setUserData}
-            creatorMode={creatorMode}
-            userDetails={userDetails}
-          /> */}
+          <Level userDetails={userDetails} ranks={ranks} />
+          <CreatedGames userDetails={userDetails} myGames={myGames} />
         </div>
       </div>
     </div>
@@ -389,9 +452,11 @@ const ProfileHeader = ({ userDetails }: any) => {
   return (
     <div
       style={{
-        background: 'linear-gradient(92.69deg, rgba(207, 22, 22, 0.5) 8.15%, rgba(210, 30, 30, 0.1) 99.96%)',
+        background:
+          "linear-gradient(92.69deg, rgba(207, 22, 22, 0.5) 8.15%, rgba(210, 30, 30, 0.1) 99.96%)",
       }}
-      className="profile border-4 border-blue-80 w-full overflow-hidden rounded-3xl bg-blue-[#010C18] flex justify-between flex-col md:flex-row p-[24px] md:p-5 gap-[24px] md:gap-0 relative">
+      className="profile border-4 border-blue-80 w-full overflow-hidden rounded-3xl bg-blue-[#010C18] flex justify-between flex-col md:flex-row p-[24px] md:p-5 gap-[24px] md:gap-0 relative"
+    >
       <div className="absolute h-full w-full ">
         <img src={Stars} className="w-full h-full blur-sm hidden md:block" />
         <img src={StarsM} className="w-full h-full blur-sm block md:hidden" />
@@ -405,10 +470,10 @@ const ProfileHeader = ({ userDetails }: any) => {
               <img
                 src={
                   userDetails.profileImage &&
-                    userDetails.profileImage.includes("http")
+                  userDetails.profileImage.includes("http")
                     ? userDetails.profileImage
                     : "https://mentalmaze-game.infura-ipfs.io/ipfs/" +
-                    userDetails.profileImage
+                      userDetails.profileImage
                 }
                 alt=""
                 className="w-full h-full rounded-xl"
@@ -441,72 +506,50 @@ const ProfileHeader = ({ userDetails }: any) => {
         </div>
       </div>
       {/* <Mode creatorMode={creatorMode} setCreatorMode={setCreatorMode} /> */}
-
     </div>
   );
 };
 
-// const Mode = ({ creatorMode, setCreatorMode }: any) => {
-//   return (
-//     <div className="flex w-36 h-[70px] md:h-24 border-blue-80 border-4 rounded-3xl items-center px-6 creatorsModebuttonbg text-white py-[10px] justify-between mt-12 relative z-[999] home">
-//       <p className="font-Archivo_Regular md:text-[14px] leading-[17.41px] md:leading-normal font-normal ">
-//         {creatorMode ? "CREATOR’S" : "PLAYER’S"} MODE
-//       </p>
-//       <button
-//         className="h-full w-[15px] md:w-[28px] border-blue-80 rounded-[80px] p-2 border-2 creatorsModebutton"
-//         onClick={() => {
-//           setCreatorMode(!creatorMode);
-//         }}
-//         style={{
-//           background: !creatorMode
-//             ? "linear-gradient(130deg, rgba(3, 36, 73, 0.45) 0%, rgba(11, 119, 240, 0.10) 100%)"
-//             : "linear-gradient(130deg, #063C7A, rgba(6, 60, 122, 1))",
-//         }}
-//       >
-//         <div
-//           className={` w-[24px] md:w-[48px] h-full rounded-[100%] ${creatorMode ? "bg-blue-50" : "bg-black"
-//             }`}
-//           style={{
-//             marginLeft: !creatorMode ? 0 : "35%",
-
-//             transition: "all 0.5s",
-//           }}
-//         ></div>
-//       </button>
-//     </div>
-//   );
-// };
-
-const Link = () => {
+const Link = ({ userDetails }: any) => {
+  const [copyState, setCopyState] = useState("Copy");
   return (
     <div
       style={{
-        backgroundColor: "#010c18"
+        backgroundColor: "#010c18",
       }}
-      className=" h-fit flex flex-col md:flex-row justify-between align-middle w-full md:h-fit border-blue-80 border-4 rounded-3xl items-center md:px-6 creatorsModebuttonbg text-white py-[10px] mt-12 relative z-[999] home">
+      className=" h-fit flex flex-col md:flex-row justify-between align-middle w-full md:h-fit border-blue-80 border-4 rounded-3xl items-center md:px-6 creatorsModebuttonbg text-white py-[10px] mt-12 relative z-[999] home"
+    >
       <h2
         className=" md:0 m-5 w-full md:w-fit flex flex-row justify-center align-middle font-400 font-droidbold
              text-white py-4 px-[20px] text-[25px] md:text-[25px] text-center md:border-r-blue-80 md:border-r-4 md:border-b-0 border-b-blue-80 border-b-2"
       >
         INVITE LINK
       </h2>
-      <p className=" text-[14px] md:text-sm font-400 font-Archivo_Regular max-w-xs text-gray-400 ">https://mentalmaze.vercel.app/profile/gweche</p>
+      <p className=" text-[14px] md:text-sm font-400 font-Archivo_Regular max-w-xs text-gray-400 ">{`${location.origin}?ref=${userDetails?.username}`}</p>
       <button
         style={{
-          background: 'linear-gradient(92.69deg, rgba(3, 36, 73, 0.45) 8.15%, rgba(11, 119, 240, 0.1) 99.96%)',
+          background:
+            "linear-gradient(92.69deg, rgba(3, 36, 73, 0.45) 8.15%, rgba(11, 119, 240, 0.1) 99.96%)",
         }}
-        className=" bg-blue-900 opacity-90 cursor-pointer flex gap-4 text-white font-Archivo-Bold border-blue-50 border rounded-xl py-[9.5px] px-[12px] h-fit z-[10000000000000000]">
-        <p>COPY</p>
-        <img className="cursor-pointer" src={copy} />
+        className=" bg-blue-900 opacity-90 cursor-pointer flex gap-4 text-white font-Archivo-Bold border-blue-50 border rounded-xl py-[9.5px] px-[12px] h-fit z-[10000000000000000]"
+      >
+        <CopyToClipboard
+          text={`${location.origin}?ref=${userDetails?.username}`}
+          onCopy={() => setCopyState("Copied")}
+        >
+          <div className="flex">
+            <p className="mr-2">{copyState}</p>
+            <img className="cursor-pointer" src={copy} />
+          </div>
+        </CopyToClipboard>
       </button>
-    </div >
+    </div>
   );
 };
 
-const Stat = ({ stat, creatorMode, userData }: any) => {
-  console.log(stat);
+const Stat = ({ userData, userDetails }: any) => {
   return (
-    <div className="flex flex-col md:flex-row md:justify-between md:items-center md:align-middle w-full">
+    <div className="flex flex-col 2xl:flex-row md:justify-between md:items-center md:align-middle w-full">
       <div className="w-full border-4 rounded-3xl mt-12  py-4 md:mx-2 flex flex-col md:flex-row gap-8 border-blue-80 userProfileStat h-fit">
         <h2
           className=" flex flex-row justify-center items-center align-middle font-400 font-droidbold
@@ -517,21 +560,21 @@ const Stat = ({ stat, creatorMode, userData }: any) => {
         <div className="flex flex-col md:flex-row px-[30px] gap-8">
           <p className="flex flex-col items-center text-center  py-4">
             <h2 className="font-400 font-Archivo-Bold text-[30px] text-white">
-              {userData && userData.length}
+              {userData && userData.ranks?.length}
             </h2>
             <p className="font-semibold font-Archivo_Regular text-wb-40">
-              {creatorMode ? "Games Created" : "Games played"}
+              {"Games played"}
             </p>
           </p>
           <p className="flex flex-col items-center text-center py-4">
             <h2 className="font-400 font-Archivo-Bold text-[30px] text-white">
-              4
+              {userData && userData.myGames?.length}
             </h2>
             <p className="font-semibold font-Archivo_Regular text-wb-40">
               Games Created
             </p>
           </p>
-          <p className="flex flex-col items-center text-center py-4">
+          {/* <p className="flex flex-col items-center text-center py-4">
             <h2 className="font-400 font-Archivo-Bold text-[30px] text-white">
               4
             </h2>
@@ -546,7 +589,7 @@ const Stat = ({ stat, creatorMode, userData }: any) => {
             <p className="font-semibold font-Archivo_Regular text-wb-40">
               Pending Games
             </p>
-          </p>
+          </p> */}
           <p className="flex flex-col items-center text-center py-4">
             <h2 className="font-400 font-Archivo-Bold text-[30px] text-white">
               0
@@ -581,9 +624,11 @@ const Stat = ({ stat, creatorMode, userData }: any) => {
           </div>
           <button
             style={{
-              background: 'linear-gradient(92.69deg, rgba(3, 36, 73, 0.45) 8.15%, rgba(11, 119, 240, 0.1) 99.96%)',
+              background:
+                "linear-gradient(92.69deg, rgba(3, 36, 73, 0.45) 8.15%, rgba(11, 119, 240, 0.1) 99.96%)",
             }}
-            className="cursor-pointer flex gap-4 text-white font-Archivo-Bold border-blue-50 border rounded-xl py-[9px] px-[10px] md:py-4 md:px-6 h-fit mt-auto z-[10000000000000000]">
+            className="cursor-pointer flex gap-4 text-white font-Archivo-Bold border-blue-50 border rounded-xl py-[9px] px-[10px] md:py-4 md:px-6 h-fit mt-auto z-[10000000000000000]"
+          >
             CLAIM
           </button>
         </div>
@@ -592,76 +637,143 @@ const Stat = ({ stat, creatorMode, userData }: any) => {
   );
 };
 
-const Level = () => {
+const Level = ({ userDetails, ranks }: any) => {
+  const [games, setGames]: any = useState();
+  const { switchModalcontent, switchModal } = useModalContext();
+
+  const getSingleGame = async (gameId: any, gameAcctId: any) => {
+    let myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${userDetails.token}`);
+
+    let requestOptions: RequestInit = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    try {
+      let res = await fetch(
+        `${
+          import.meta.env.VITE_REACT_APP_BASE_URL
+        }/api/game/fetch-single?gameid=${gameId}&accountId=${gameAcctId}`,
+        requestOptions
+      );
+      return res.json();
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
+  useEffect(() => {
+    if (!ranks) return;
+    (async () => {
+      const d = Promise.all(
+        ranks.map(async (rank: any) => {
+          let res = getSingleGame(rank.gameId, rank.gameAcctId);
+          return (await res).data;
+        })
+      );
+      setGames(await d);
+    })();
+  }, [ranks]);
+
   return (
     <div className="flex-1 border-blue-80 py-4 border-4 rounded-3xl userProfileStat ">
       <h2 className=" font-droidbold text-[32px] text-white py-4 text-center border-b-blue-80 border-b-4">
         ACHIEVEMENTS
       </h2>
-      <div className="flex flex-col md:flex-row justify-between items-center  p-5">
+      <div className="2xl:grid-cols-3 lg:grid-cols-2 grid-cols-1 grid  p-5">
+        {ranks &&
+          games &&
+          ranks.map((rank: any, i: number) => {
+            const game = games?.filter(
+              (game: any) => game?.id == rank?.gameId
+            )[0];
 
+            return (
+              <div key={i} className="flex flex-row justify-between mb-3">
+                <div
+                  style={{
+                    backgroundImage: `url(${game.image})`,
+                    backgroundPosition: "center",
+                    backgroundSize: "cover",
+                    backgroundRepeat: "no-repeat",
+                  }}
+                  className=" border-blue-80 border-4 rounded-3xl    flex items-center justify-center"
+                >
+                  <div
+                    className="flex flex-row justify-between align-middle items-center font-bold text-white text-2xl  w-[300px] lg:w-[380px]   p-5 z-50 bg-blue-800"
+                    style={{
+                      // background: 'linear-gradient(92.69deg, rgba(3, 36, 73, 0.45) 8.15%, rgba(11, 119, 240, 0.1) )',
+                      backgroundColor: "#021b38",
+                      marginTop: "155px",
+                      borderRadius: "0px 0px 17px 17px",
+                    }}
+                  >
+                    <div className=" w-[60%]  justify-between items-center font-black">
+                      <p className="z-50 truncate text-base text-gray-400">
+                        {game?.title}
+                      </p>
+                      <p className="text-gray-400 text-base flex flex-row">
+                        <p className="font-400 text-white mr-2">
+                          {rank?.position}th{" "}
+                        </p>
+                        Position
+                      </p>
+                    </div>
 
-        <div className="flex flex-row justify-between mb-3">
-          <div
-            className=" border-blue-80 border-4 rounded-3xl w-72 h-64 relative flex items-center justify-center">
-            <div
-              className="absolute inset-0 bg-cover bg-center z-0 rounded-3xl"
-              style={{ backgroundImage: `url(${CreatedGame})` }}
-            ></div>
-            <div className="flex flex-row justify-between align-middle items-center font-bold text-white text-2xl  w-[280px] p-5 z-50 bg-blue-800"
-              style={{
-                // background: 'linear-gradient(92.69deg, rgba(3, 36, 73, 0.45) 8.15%, rgba(11, 119, 240, 0.1) )',
-                backgroundColor: '#021b38',
-                marginTop: "160px",
-                borderRadius: "0px 0px 17px 17px"
-
-              }}
-            >
-              <div className="flex flex-col align-middle justify-between items-center font-black">
-                <p className="z-50 text-base text-gray-400">Math Puzzle</p>
-                <p className="text-gray-400 text-base flex flex-row"><p className="font-400 text-white mx-2">10th </p> Position</p>
+                    {!rank.processedWinners ? (
+                      <button
+                        disabled={rank.claimed}
+                        className="cursor-pointer text-sm flex gap-4 text-white font-Archivo-Bold uppercase border-blue-50 border rounded-xl py-[8px] px-[8px] md:py-4 md:px-4 h-fit mt-auto z-[10000000000000000]"
+                        style={{
+                          backgroundColor: `${rank.claimed ? "#010C18" : ""}`,
+                          opacity: `${rank.claimed ? "70%" : ""}`,
+                        }}
+                      >
+                        Pending
+                      </button>
+                    ) : rank.rewardEarned != 2 ? (
+                      <button
+                        disabled={true}
+                        className="cursor-pointer text-sm flex gap-4 text-white font-Archivo-Bold uppercase border-blue-50 border rounded-xl py-[5px] px-[5px] md:py-3 md:px-4 h-fit mt-auto z-[10000000000000000]"
+                        style={{
+                          backgroundColor: `${rank.claimed ? "#010C18" : ""}`,
+                          opacity: `${rank.claimed ? "70%" : ""}`,
+                        }}
+                      >
+                        View Result
+                      </button>
+                    ) : (
+                      <button
+                        disabled={rank.claimed}
+                        onClick={async () => {
+                          localStorage.setItem(
+                            "claimGameAddr",
+                            JSON.stringify({
+                              game: game.address,
+                              accountId: rank.accountId,
+                              gameId: rank.gameAcctId,
+                              playersAddress: rank.playersAddress,
+                            })
+                          );
+                          switchModal();
+                          switchModalcontent("claim");
+                        }}
+                        className="cursor-pointer text-sm flex gap-4 text-white font-Archivo-Bold uppercase border-blue-50 border rounded-xl py-[8px] px-[8px] md:py-4 md:px-4 h-fit mt-auto z-[10000000000000000]"
+                        style={{
+                          backgroundColor: `${rank.claimed ? "#010C18" : ""}`,
+                          opacity: `${rank.claimed ? "70%" : ""}`,
+                        }}
+                      >
+                        {rank.claimed ? "claimed" : "Claim"}
+                      </button>
+                    )}
+                  </div>
+                </div>
               </div>
-              {/* <button
-                style={{
-                  background: 'linear-gradient(92.69deg, rgba(3, 36, 73, 0.45) 8.15%, rgba(11, 119, 240, 0.1) 99.96%)',
-                }}
-                className="cursor-pointer text-sm flex gap-4 text-white font-Archivo-Bold border-blue-50 border rounded-xl py-[8px] px-[8px] md:py-4 md:px-4 h-fit mt-auto z-[10000000000000000]">
-                CLAIM
-              </button> */}
-            </div>
-          </div>
-        </div>
-
-        <div className="flex flex-row justify-between mb-3">
-          <div
-            className=" border-blue-80 border-4 rounded-3xl w-72 h-64 relative flex items-center justify-center">
-            <div
-              className="absolute inset-0 bg-cover bg-center z-0 rounded-3xl"
-              style={{ backgroundImage: `url(${GameImage})` }}
-            ></div>
-            <div className="flex flex-row justify-between align-middle items-center font-bold text-white text-2xl  w-[280px] p-5 z-50 bg-blue-800"
-              style={{
-                // background: 'linear-gradient(92.69deg, rgba(3, 36, 73, 0.45) 8.15%, rgba(11, 119, 240, 0.1) )',
-                backgroundColor: '#021b38',
-                marginTop: "155px",
-                borderRadius: "0px 0px 17px 17px"
-
-              }}
-            >
-              <div className="flex flex-col align-middle justify-between items-center font-black">
-                <p className="z-50 text-base text-gray-400">Math Puzzle</p>
-                <p className="text-gray-400 text-base flex flex-row"><p className="font-400 text-white mx-2">4th </p> Position</p>
-              </div>
-              <button
-                style={{
-                  background: 'linear-gradient(92.69deg, rgba(3, 36, 73, 0.45) 8.15%, rgba(11, 119, 240, 0.1) 99.96%)',
-                }}
-                className="cursor-pointer text-sm flex gap-4 text-white font-Archivo-Bold border-blue-50 border rounded-xl py-[8px] px-[8px] md:py-4 md:px-4 h-fit mt-auto z-[10000000000000000]">
-                CLAIM
-              </button>
-            </div>
-          </div>
-        </div>
+            );
+          })}
 
         <div className=" border-blue-80 border-4 rounded-3xl  w-72 h-64 flex flex-col justify-center mb-3">
           <div className="flex  flex-col justify-between px-[40px] mb-10">
@@ -684,171 +796,138 @@ const Level = () => {
             </div>
           </div>
         </div>
-
-        <div className="flex flex-row justify-between mb-3">
-          <div
-            className=" border-blue-80 border-4 rounded-3xl w-72 h-64 relative flex items-center justify-center">
-            <div
-              className="absolute inset-0 bg-cover bg-center z-0 rounded-3xl"
-              style={{ backgroundImage: `url(${GameImage})` }}
-            ></div>
-            <div className="flex flex-row justify-between align-middle items-center font-bold text-white text-2xl  w-[280px] p-5 z-50 bg-blue-800"
-              style={{
-                // background: 'linear-gradient(92.69deg, rgba(3, 36, 73, 0.45) 8.15%, rgba(11, 119, 240, 0.1) )',
-                backgroundColor: '#021b38',
-                marginTop: "155px",
-                borderRadius: "0px 0px 17px 17px"
-
-              }}
-            >
-              <div className="flex flex-col align-middle justify-between items-center font-black">
-                <p className="z-50 text-base text-gray-400">Math Puzzle</p>
-                <p className="text-gray-400 text-base flex flex-row"><p className="font-400 text-white mx-2">4th </p> Position</p>
-              </div>
-              <button
-                style={{
-                  background: 'linear-gradient(92.69deg, rgba(3, 36, 73, 0.45) 8.15%, rgba(11, 119, 240, 0.1) 99.96%)',
-                }}
-                className="cursor-pointer text-sm flex gap-4 text-white font-Archivo-Bold border-blue-50 border rounded-xl py-[8px] px-[8px] md:py-4 md:px-4 h-fit mt-auto z-[10000000000000000]">
-                CLAIM
-              </button>
-            </div>
-          </div>
-        </div>
-
       </div>
     </div>
   );
 };
 
+const CreatedGames = ({ userDetails, myGames }: any) => {
+  const [loading, setLoading] = useState(true);
+  const { switchModalcontent, switchModal } = useModalContext();
 
-const CreatedGames = () => {
+  const [scGames, setscGames]: any = useState();
+  const signer = useEthersSigner();
+  const provider = useEthersProvider();
+  const mmContract = new MMContract(MM_ADDRESS, signer, provider);
+
+  useEffect(() => {
+    if (!myGames) {
+      return;
+      console.log(loading);
+    }
+    getSCGames();
+  }, [myGames]);
+
+  const getSCGames = async () => {
+    const d = Promise.all(
+      myGames.map(async (myGame: any) => {
+        return {
+          game: await mmContract.Games(myGame.address),
+          address: myGame.address,
+        };
+      })
+    );
+
+    setscGames(await d);
+    setLoading(false);
+  };
+
   return (
     <div className="flex-1 mt-12 border-blue-80 py-4 border-4 rounded-3xl userProfileStat ">
       <h2 className=" font-droidbold text-[32px] text-white py-4 text-center border-b-blue-80 border-b-4">
         GAMES CREATED
       </h2>
-      <div className="flex flex-col md:flex-row justify-between p-5">
-        <div className="flex flex-row justify-between mb-3">
-          <div
-            className=" border-blue-80 border-4 rounded-3xl w-72 h-64 relative flex items-center justify-center">
-            <div
-              className="absolute inset-0 bg-cover bg-center z-0 rounded-3xl"
-              style={{ backgroundImage: `url(${CreatedGame})` }}
-            ></div>
-            <div className="flex flex-row justify-between align-middle items-center font-bold text-white text-2xl  w-[280px] p-5 z-50 bg-blue-800"
-              style={{
-                // background: 'linear-gradient(92.69deg, rgba(3, 36, 73, 0.45) 8.15%, rgba(11, 119, 240, 0.1) )',
-                backgroundColor: '#021b38',
-                marginTop: "155px",
-                borderRadius: "0px 0px 17px 17px"
+      <div className="2xl:grid-cols-3 lg:grid-cols-2 grid-cols-1 grid  p-5">
+        {myGames &&
+          myGames?.map((myGame: any, i: any) => {
+            const scGame = scGames?.filter(
+              (scGame: any) => scGame.address == myGame.address
+            )[0];
 
-              }}
-            >
-              <div className="flex flex-col align-middle justify-between items-center font-black">
-                <p className="z-50 text-base text-gray-400">Math Puzzle</p>
-                <p className="text-gray-400 text-base flex flex-row"><p className="font-400 text-white mx-2">250K </p> Players</p>
-              </div>
-              <button
-                style={{
-                  background: 'linear-gradient(92.69deg, rgba(3, 36, 73, 0.45) 8.15%, rgba(11, 119, 240, 0.1) 99.96%)',
-                }}
-                className="cursor-pointer text-sm flex gap-4 text-white font-Archivo-Bold border-blue-50 border rounded-xl py-[8px] px-[8px] md:py-4 md:px-4 h-fit mt-auto z-[10000000000000000]">
-                CLAIM
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="flex flex-row justify-between mb-3">
-          <div
-            className=" border-blue-80 border-4 rounded-3xl w-72 h-64 relative flex items-center justify-center">
-            <div
-              className="absolute inset-0 bg-cover bg-center z-0 rounded-3xl"
-              style={{ backgroundImage: `url(${CreatedGame})` }}
-            ></div>
-            <div className="flex flex-row justify-between align-middle items-center font-bold text-white text-2xl  w-[280px] p-5 z-50 bg-blue-800"
-              style={{
-                // background: 'linear-gradient(92.69deg, rgba(3, 36, 73, 0.45) 8.15%, rgba(11, 119, 240, 0.1) )',
-                backgroundColor: '#021b38',
-                marginTop: "155px",
-                borderRadius: "0px 0px 17px 17px"
+            return (
+              <div key={i} className="flex flex-row justify-between mb-3">
+                <div
+                  style={{
+                    backgroundImage: `url(${myGame?.image})`,
+                    backgroundPosition: "center",
+                    backgroundSize: "cover",
+                    backgroundRepeat: "no-repeat",
+                  }}
+                  className=" border-blue-80 border-4 rounded-3xl     flex items-center justify-center"
+                >
+                  <div
+                    className="flex flex-row justify-between align-middle items-center font-bold text-white text-2xl w-[300px] lg:w-[380px]  p-5 z-50 bg-blue-800  "
+                    style={{
+                      backgroundColor: "#021b38",
+                      marginTop: "155px",
+                      borderRadius: "0px 0px 17px 17px",
+                    }}
+                  >
+                    <div className="flex flex-col w-[60%]  font-black">
+                      <p className="z-50 truncate text-base   text-left text-gray-400">
+                        {myGame.title}
+                      </p>
+                      <p className="text-gray-400 text-left text-base flex flex-row">
+                        <p className="font-400 text-white  mr-2">
+                          {myGame.finishers.length}
+                        </p>
+                        Players
+                      </p>
+                    </div>
 
-              }}
-            >
-              <div className="flex flex-col align-middle justify-between items-center font-black">
-                <p className="z-50 text-base text-gray-400">Math Puzzle</p>
-                <p className="text-gray-400 text-base flex flex-row"><p className="font-400 text-white mx-2">250K </p> Players</p>
+                    <div className="text-white flex items-center">
+                      {scGame?.game && scGame?.game[7].toString() == "0" ? (
+                        <button
+                          disabled={true}
+                          className="  text-sm flex  text-white font-Archivo-Bold uppercase border-blue-50 border rounded-xl py-[8px] px-[8px] md:py-4 md:px-4 h-fit mt-auto z-[10000000000000000]"
+                          style={{
+                            backgroundColor: `${
+                              myGame.paymentStatus ? "#010C18" : ""
+                            }`,
+                            opacity: ` "70%`,
+                          }}
+                        >
+                          0 gate Pass
+                        </button>
+                      ) : !myGame.processedWinners ? (
+                        "Pending"
+                      ) : (
+                        <div className="flex text-white text-[15px] lg:text-[32px] leading-[26.11px] items-center gap-3">
+                          <button
+                            disabled={myGame.paymentStatus}
+                            onClick={async () => {
+                              localStorage.setItem(
+                                "claimGameAddr",
+                                JSON.stringify({
+                                  game: myGame.id,
+                                  accountId: myGame.accountId,
+                                  address: myGame.address,
+                                  gameId: myGame.gameId,
+                                  playersAddress: userDetails.address,
+                                  creator: true,
+                                })
+                              );
+                              switchModal();
+                              switchModalcontent("claim");
+                            }}
+                            className="cursor-pointer text-sm flex  text-white font-Archivo-Bold uppercase border-blue-50 border rounded-xl py-[8px] px-[8px] md:py-4 md:px-4 h-fit mt-auto z-[10000000000000000]"
+                            style={{
+                              backgroundColor: `${
+                                myGame.paymentStatus ? "#010C18" : ""
+                              }`,
+                              opacity: `${myGame.paymentStatus ? "70%" : ""}`,
+                            }}
+                          >
+                            {myGame.paymentStatus ? "claimed" : "Claim"}
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
               </div>
-              <button
-                style={{
-                  background: 'linear-gradient(92.69deg, rgba(3, 36, 73, 0.45) 8.15%, rgba(11, 119, 240, 0.1) 99.96%)',
-                }}
-                className="cursor-pointer text-sm flex gap-4 text-white font-Archivo-Bold border-blue-50 border rounded-xl py-[8px] px-[8px] md:py-4 md:px-4 h-fit mt-auto z-[10000000000000000]">
-                CLAIM
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="flex flex-row justify-between mb-3">
-          <div
-            className=" border-blue-80 border-4 rounded-3xl w-72 h-64 relative flex items-center justify-center">
-            <div
-              className="absolute inset-0 bg-cover bg-center z-0 rounded-3xl"
-              style={{ backgroundImage: `url(${CreatedGame})` }}
-            ></div>
-            <div className="flex flex-row justify-between align-middle items-center font-bold text-white text-2xl  w-[280px] p-5 z-50 bg-blue-800"
-              style={{
-                // background: 'linear-gradient(92.69deg, rgba(3, 36, 73, 0.45) 8.15%, rgba(11, 119, 240, 0.1) )',
-                backgroundColor: '#021b38',
-                marginTop: "155px",
-                borderRadius: "0px 0px 17px 17px"
-
-              }}
-            >
-              <div className="flex flex-col align-middle justify-between items-center font-black">
-                <p className="z-50 text-base text-gray-400">Math Puzzle</p>
-                <p className="text-gray-400 text-base flex flex-row"><p className="font-400 text-white mx-2">250K </p> Players</p>
-              </div>
-              <button
-                style={{
-                  background: 'linear-gradient(92.69deg, rgba(3, 36, 73, 0.45) 8.15%, rgba(11, 119, 240, 0.1) 99.96%)',
-                }}
-                className="cursor-pointer text-sm flex gap-4 text-white font-Archivo-Bold border-blue-50 border rounded-xl py-[8px] px-[8px] md:py-4 md:px-4 h-fit mt-auto z-[10000000000000000]">
-                CLAIM
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="flex flex-row justify-between mb-3">
-          <div
-            className=" border-blue-80 border-4 rounded-3xl w-72 h-64 relative flex items-center justify-center">
-            <div
-              className="absolute inset-0 bg-cover bg-center z-0 rounded-3xl"
-              style={{ backgroundImage: `url(${CreatedGame})` }}
-            ></div>
-            <div className="flex flex-row justify-between align-middle items-center font-bold text-white text-2xl  w-[280px] p-5 z-50 bg-blue-800"
-              style={{
-                // background: 'linear-gradient(92.69deg, rgba(3, 36, 73, 0.45) 8.15%, rgba(11, 119, 240, 0.1) )',
-                backgroundColor: '#021b38',
-                marginTop: "155px",
-                borderRadius: "0px 0px 17px 17px"
-
-              }}
-            >
-              <div className="flex flex-col align-middle justify-between items-center font-black">
-                <p className="z-50 text-base text-gray-400">Math Puzzle</p>
-                <p className="text-gray-400 text-base flex flex-row"><p className="font-400 text-white mx-2">250K </p> Players</p>
-              </div>
-              <button
-                style={{
-                  background: 'linear-gradient(92.69deg, rgba(3, 36, 73, 0.45) 8.15%, rgba(11, 119, 240, 0.1) 99.96%)',
-                }}
-                className="cursor-pointer text-sm flex gap-4 text-white font-Archivo-Bold border-blue-50 border rounded-xl py-[8px] px-[8px] md:py-4 md:px-4 h-fit mt-auto z-[10000000000000000]">
-                CLAIM
-              </button>
-            </div>
-          </div>
-        </div>
+            );
+          })}
       </div>
     </div>
   );
