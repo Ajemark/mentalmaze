@@ -60,6 +60,32 @@ export class MinerContract {
     await tx.wait();
     return tx.toString();
   }
+
+  async getInvitesCount(address: string) {
+    const tx = await this.contract.inviteCount(address);
+    return tx.toString();
+  }
+
+  async claimRewards() {
+    const tx = await this.contract.claimRewards();
+    return tx.toString();
+  }
+  async getCalculateRewards(address: string) {
+    const tx = await this.contract.calculateRewards(address);
+    return tx.toString();
+  }
+  async getGamesPlayed(address: string) {
+    const tx = await this.contract.gamesPlayed(address);
+    return tx.toString();
+  }
+  async getGamesCreated(address: string) {
+    const tx = await this.contract.gamesCreated(address);
+    return tx.toString();
+  }
+  async getClaimableAmount(address: string) {
+    const tx = await this.contract.claimableAmount(address);
+    return tx.toString();
+  }
 }
 
 export class MMContract {

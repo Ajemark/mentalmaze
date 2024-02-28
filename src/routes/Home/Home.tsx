@@ -99,7 +99,6 @@ const Game = ({ image, id, accountId, gameAddress, finishers }: any) => {
 
   let played = false;
   for (const count in finishers) {
-    // console.log(finishers[count]?.toLowerCase() == address?.toLowerCase());
     played = finishers[count]?.toLowerCase() == address?.toLowerCase();
     if (played) break;
   }
@@ -149,7 +148,6 @@ const Home = () => {
       headers: myHeaders,
       redirect: "follow",
     };
-    // =${ address?.toLowerCase()
     fetch(
       `${
         import.meta.env.VITE_REACT_APP_BASE_URL
@@ -171,7 +169,6 @@ const Home = () => {
       })
       .catch((error) => {
         console.log("error", error);
-        // setMessage('An Error Occured!, Please Try Again')
         setLoading(false);
       });
   };
@@ -204,7 +201,6 @@ const Home = () => {
 
   let testing = false;
 
-  // console.log(liveGames);
   return (
     <div className="backdrop-blur-sm w-full h-fit mt-[96px] md:mt-[176px]">
       <div className="relative z-[999]  px-[15px] md:px-14">
@@ -240,15 +236,9 @@ const Home = () => {
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-[15px] gap-y-[15px] md:gap-x-[45px] md:gap-y-[44px] py-12 w-full px-0">
                   {liveGames?.fetchDataResponse?.length > 0 &&
                     liveGames?.fetchDataResponse?.map(
-                      (gam: any, index: number) => {
-                        return (
-                          <Game
-                            {...gam}
-                            gameAddress={gam.address}
-                            key={index}
-                          />
-                        );
-                      }
+                      (gam: any, index: number) => (
+                        <Game {...gam} gameAddress={gam.address} key={index} />
+                      )
                     )}
                 </div>
               )}

@@ -2,211 +2,27 @@ import { useContext, useEffect, useState } from "react";
 import ranking from "./../../assets/userProfile/ranking.png";
 import Stars from "./../../assets/userProfile/Stars.png";
 import edit from "./../../assets/userProfile/edit.png";
+import copy from "./../../assets/userProfile/copy.svg";
 import Ball from "./../../assets/userProfile/Ball.png";
 import StarsM from "./../../assets/userProfile/StarsMobile.svg";
-import medalMaster from "./../../assets/Leadership/medalstarMaster.png";
 import { UserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import { useModalContext } from "../../context/ModalContext";
 import { useAccount } from "wagmi";
-import { Pagination } from "../../component/ui/Pagination";
-import { MM_ADDRESS, useEthersProvider, useEthersSigner } from "../../sdk";
-import { MMContract } from "../../sdk/MMContract";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import {
+  MINER_ADDRESS,
+  MM_ADDRESS,
+  useEthersProvider,
+  useEthersSigner,
+} from "../../sdk";
+import { MMContract, MinerContract } from "../../sdk/MMContract";
 
-const RANK = ({
-  position,
-  image,
-  creatorMode,
-  title,
-  claimed,
-  processedWinners,
-  playersAddress,
-  gameAcctId,
-  accountId,
-  rewardEarned,
-  id,
-  paymentStatus,
-  gameId,
-  address,
-  userDetails,
-}: any) => {
-  const [scGame, setscGame]: any = useState();
-  const signer = useEthersSigner();
-  const provider = useEthersProvider();
-  const mmContract = new MMContract(MM_ADDRESS, signer, provider);
+const UserProfile = () => {
+  const { userDetails }: any = useContext(UserContext);
 
-  const [game, setGame]: any = useState();
-  const { switchModalcontent, switchModal } = useModalContext();
-
-  const getSingleGame = () => {
-    let myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${userDetails.token}`);
-
-    let requestOptions: RequestInit = {
-      method: "GET",
-      headers: myHeaders,
-      redirect: "follow",
-    };
-
-    fetch(
-      `${
-        import.meta.env.VITE_REACT_APP_BASE_URL
-      }/api/game/fetch-single?gameid=${gameId}&accountId=${gameAcctId}`,
-      requestOptions
-    )
-      .then((response) => response.json())
-      .then((result) => {
-        if (result.data) {
-          setGame(result.data);
-          // setLoading(false);
-        } else {
-          console.log(result);
-          // setLoading(false);
-        }
-      })
-      .catch((error) => {
-        // setLoading(false);
-        console.log("error", error);
-      });
-  };
-
-  useEffect(() => {
-    if (creatorMode) return;
-
-    getSingleGame();
-  }, []);
-
-  const getJudges = async () => {
-    if (!address) return;
-    const game = await mmContract.Games(address);
-
-    return game;
-  };
-
-  const stats = getJudges();
-
-  useEffect(() => {
-    if (!scGame)
-      (async () => {
-        setscGame(await stats);
-      })();
-  }, [stats]);
-
-  if (creatorMode) {
-    // console.log(scGame);
-
-    return (
-      <div className="flex justify-between font-droid text-[15px] lg:text-[32px] font-normal px-[16px]  lg:px-[48px] mt-[32px] grad-dar rounded-[16px] border-blue-50 border-solid border-[2px] py-[16px] md:py-[24px]">
-        <div className="col-span-2 flex items-center gap-[16px]   ">
-          <img
-            className="w-[48px] h-[48px] md:w-[72px] md:h-[72px] rounded-[8px]"
-            src={image}
-            alt="game image"
-          />
-          <div className="flex flex-col items-start text-white">
-            {" "}
-            <p>{title}</p>
-          </div>
-        </div>
-        <div className="text-white flex items-center">
-          {scGame && scGame[7].toString() == "0" ? (
-            "0 gate Pass"
-          ) : !processedWinners ? (
-            "Pending"
-          ) : (
-            <div className="flex text-white text-[15px] lg:text-[32px] leading-[26.11px] items-center gap-3">
-              <img className="hidden lg:flex" src={medalMaster} />
-              <button
-                disabled={paymentStatus}
-                onClick={async () => {
-                  localStorage.setItem(
-                    "claimGameAddr",
-                    JSON.stringify({
-                      game: id,
-                      accountId,
-                      address,
-                      gameId,
-                      playersAddress,
-                      creator: true,
-                    })
-                  );
-                  switchModal();
-                  switchModalcontent("claim");
-                }}
-                className="bg-blue-70 p-[5px] px-[10px] rounded-[5px] "
-                style={{
-                  backgroundColor: `${paymentStatus ? "#010C18" : ""}`,
-                  opacity: `${paymentStatus ? "70%" : ""}`,
-                }}
-              >
-                {paymentStatus ? "claimed" : "Claim"}
-              </button>
-            </div>
-          )}
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="flex justify-between font-droid text-[15px] lg:text-[32px] font-normal px-[16px]  lg:px-[48px] mt-[32px] grad-dar rounded-[16px] border-blue-50 border-solid border-[2px] py-[16px] md:py-[24px]">
-      <div className="col-span-2 flex items-center gap-[16px]   ">
-        <img
-          className="w-[48px] h-[48px] md:w-[72px] md:h-[72px] rounded-[8px]"
-          src={game?.image}
-          alt="game image"
-        />
-        <div className="flex flex-col items-start text-white">
-          {" "}
-          <p>{game?.title}</p>
-        </div>
-      </div>
-      <div className="text-white flex items-center">
-        {!processedWinners ? (
-          "Pending"
-        ) : rewardEarned != 2 ? (
-          "View Result"
-        ) : (
-          <div className="flex text-white text-[15px] lg:text-[32px] leading-[26.11px] items-center gap-3">
-            <img className="hidden lg:flex" src={medalMaster} />
-            {position?.toString()}
-            <button
-              disabled={claimed}
-              onClick={async () => {
-                localStorage.setItem(
-                  "claimGameAddr",
-                  JSON.stringify({
-                    game: game.address,
-                    accountId,
-                    gameId,
-                    playersAddress,
-                  })
-                );
-                switchModal();
-                switchModalcontent("claim");
-              }}
-              className="bg-blue-70 p-[5px] px-[10px] rounded-[5px] "
-              style={{
-                backgroundColor: `${claimed ? "#010C18" : ""}`,
-                opacity: `${claimed ? "70%" : ""}`,
-              }}
-            >
-              {claimed ? "claimed" : "Claim"}
-            </button>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
-
-const RANKS = ({ userDetails, setUserData, creatorMode }: any) => {
-  // const [loading, setLoading] = useState(false)
-  const [pgNum, setPgNum]: any = useState(1);
-  const [dynamicData, setDynamicData]: any = useState();
-  const [rank, setRank]: any = useState();
-  const [loading, setLoading] = useState(true);
   const [myGames, setMyGames]: any = useState();
+  const [ranks, setRanks]: any = useState();
 
   const getRank = () => {
     let myHeaders = new Headers();
@@ -221,7 +37,7 @@ const RANKS = ({ userDetails, setUserData, creatorMode }: any) => {
     fetch(
       `${
         import.meta.env.VITE_REACT_APP_BASE_URL
-      }/api/rank?pageNumber=${pgNum}&pageSize=1005&userAddress=${
+      }/api/rank?pageNumber=${1}&pageSize=1005&userAddress=${
         userDetails.address
       }`,
       requestOptions
@@ -229,46 +45,14 @@ const RANKS = ({ userDetails, setUserData, creatorMode }: any) => {
       .then((response) => response.json())
       .then((result) => {
         if (result.data) {
-          setRank(result.data);
-          // setLoading(false)
+          setRanks(result.data);
         } else {
           console.log(result);
-          // setLoading(false)
         }
       })
       .catch((error) => {
-        // setLoading(false)
         console.log("error", error);
       });
-  };
-
-  useEffect(() => {
-    // setLoading(true)
-    if (!userDetails?.token) {
-      // setLoading(false)
-      return;
-    }
-    getRank();
-    getAllGames();
-  }, [userDetails]);
-
-  console.log(loading);
-
-  // console.log(pgNum);
-  const handlePagination = (info: any) => {
-    console.log(pgNum);
-    console.log(info);
-    if (info == "next" || info == "prev") {
-      if (info == "next") {
-        setPgNum(pgNum + 1);
-        return;
-      } else {
-        if (pgNum == 1) return;
-        setPgNum(pgNum - 1);
-        return;
-      }
-    }
-    setPgNum(Number(info));
   };
 
   const getAllGames = () => {
@@ -280,11 +64,10 @@ const RANKS = ({ userDetails, setUserData, creatorMode }: any) => {
       headers: myHeaders,
       redirect: "follow",
     };
-    // =${ address?.toLowerCase()
     fetch(
       `${
         import.meta.env.VITE_REACT_APP_BASE_URL
-      }/api/game/get-product-created-by-me?pageNumber=1&pageSize=10&accountId=${
+      }/api/game/get-product-created-by-me?pageNumber=1&pageSize=10000&accountId=${
         userDetails?.id
       }`,
       requestOptions
@@ -292,83 +75,33 @@ const RANKS = ({ userDetails, setUserData, creatorMode }: any) => {
       .then((response) => response.json())
       .then((result) => {
         if (result.data) {
-          setMyGames(result.data);
-          setLoading(false);
+          setMyGames(result.data.fetchRes);
         } else {
           console.log(result);
-          setLoading(false);
         }
       })
       .catch((error) => {
         console.log("error", error);
-        // setMessage('An Error Occured!, Please Try Again')
-        setLoading(false);
       });
   };
 
   useEffect(() => {
-    if (creatorMode) {
-      setDynamicData(myGames?.fetchRes);
-
-      setUserData(myGames?.fetchRes);
+    if (!userDetails?.token) {
       return;
     }
-    setDynamicData(rank);
-    setUserData(rank);
-  }, [creatorMode, rank, myGames]);
-
-  // console.log(dynamicData);
+    getRank();
+    getAllGames();
+  }, [userDetails]);
 
   return (
-    <div className="flex-1 border-blue-80 py-4 border-4 rounded-3xl userProfileStat mt-[34px]">
-      <h2 className=" font-droidbold text-[32px] text-white py-4 text-center border-b-blue-80 border-b-4">
-        RANK HISTORY
-      </h2>
-      <div className="md:px-[40px] px-[20px]">
-        {dynamicData?.map((item: any, i: number) => (
-          <div key={i}>
-            <RANK
-              creatorMode={creatorMode}
-              userDetails={userDetails}
-              {...item}
-            />
-          </div>
-        ))}
-      </div>
-      <div className="  py-[32px] px-[24px] h-[96px] w-full flex justify-end">
-        <Pagination num={2} handler={handlePagination} />
-      </div>
-    </div>
-  );
-};
-
-const UserProfile = () => {
-  const { userDetails }: any = useContext(UserContext);
-  const [creatorMode, setCreatorMode] = useState(false);
-  const [userData, setUserData] = useState();
-
-  console.log(userDetails);
-  const refURL = new URL(`${location.origin}?refId=${userDetails.username}`);
-
-  console.log(refURL.href);
-
-  return (
-    <div className="backdrop-blur-sm w-full  relative z-[999] px-[16px] md:px-[52px] mt-[96px] md:mt-[176px]">
+    <div className="backdrop-blur-sm w-full  relative px-[16px] md:px-[52px] mt-[96px] md:mt-[176px]">
       <ProfileHeader userDetails={userDetails} />
-      <Mode creatorMode={creatorMode} setCreatorMode={setCreatorMode} />
+      <Link userDetails={userDetails} />
+      <Stat userData={{ ranks, myGames }} userDetails={userDetails} />
       <div className="flex mt-12 gap-[34px] flex-col md:flex-row w-full">
-        <Stat
-          creatorMode={creatorMode}
-          userData={userData}
-          stat={userDetails.stat}
-        />
         <div className="w-full">
-          <Level />
-          <RANKS
-            setUserData={setUserData}
-            creatorMode={creatorMode}
-            userDetails={userDetails}
-          />
+          <Level userDetails={userDetails} ranks={ranks} />
+          <CreatedGames userDetails={userDetails} myGames={myGames} />
         </div>
       </div>
     </div>
@@ -382,6 +115,7 @@ const ProfileHeader = ({ userDetails }: any) => {
   // const[editUser,setEditUser]=useState(false)
   const navigate = useNavigate();
   const { isConnected } = useAccount();
+  // const [creatorMode, setCreatorMode] = useState(false);
 
   useEffect(() => {
     if (!userDetails.address || !isConnected) {
@@ -390,7 +124,13 @@ const ProfileHeader = ({ userDetails }: any) => {
   }, [isConnected]);
 
   return (
-    <div className="profile border-4 border-blue-80 w-full overflow-hidden rounded-3xl bg-blue-[#010C18] flex justify-between flex-col md:flex-row p-[24px] md:p-5 gap-[24px] md:gap-0 relative">
+    <div
+      style={{
+        background:
+          "linear-gradient(92.69deg, rgba(207, 22, 22, 0.5) 8.15%, rgba(210, 30, 30, 0.1) 99.96%)",
+      }}
+      className="profile border-4 border-blue-80 w-full overflow-hidden rounded-3xl bg-blue-[#010C18] flex justify-between flex-col md:flex-row p-[24px] md:p-5 gap-[24px] md:gap-0 relative"
+    >
       <div className="absolute h-full w-full ">
         <img src={Stars} className="w-full h-full blur-sm hidden md:block" />
         <img src={StarsM} className="w-full h-full blur-sm block md:hidden" />
@@ -410,133 +150,520 @@ const ProfileHeader = ({ userDetails }: any) => {
                       userDetails.profileImage
                 }
                 alt=""
-                className="w-full h-full"
+                className="w-full h-full rounded-xl"
               />
             )}
           </div>
         </div>
-        <div className="text-white flex flex-col items-center">
-          <p className="md:text-[32px] text-white font-normal font-droid">
+        <div className="font-Archivo_Regular text-sm font-normal flex flex-col gap-4 items-center text-white justify-between">
+          <p className="md:text-[32px] text-red-400 font-normal font-droid">
             {userDetails?.username}
           </p>
 
-          <div className="font-Archivo_Regular text-sm font-normal flex justify-center gap-2 items-center">
-            <div>
-              <img src={ranking} alt="" />
-            </div>
-            <div className="text-wb-40 flex gap-2 items-center text-[11px] md:text-base">
-              Mode: <span className="text-white">{userDetails?.role}</span>
-            </div>
+          <div className="text-wb-40 flex gap-2 items-center text-[11px] md:text-base">
+            <img src={ranking} alt="" />
+            Mode: <span className="text-white">{userDetails?.role}</span>
           </div>
+
+          <button
+            className="cursor-pointer flex gap-4 text-white font-Archivo_Regular border-blue-50 border-2 rounded-2xl py-[9.5px] px-[12px] md:py-4 md:px-6 h-fit mt-5 z-[10000000000000000]"
+            onClick={() => {
+              switchModal();
+              switchModalcontent("editProfile");
+            }}
+          >
+            <img className="cursor-pointer" src={edit} />
+            <p>EDIT PROFILE</p>
+          </button>
+
+          {/* {editUser && } */}
+        </div>
+      </div>
+      {/* <Mode creatorMode={creatorMode} setCreatorMode={setCreatorMode} /> */}
+    </div>
+  );
+};
+
+const Link = ({ userDetails }: any) => {
+  const [copyState, setCopyState] = useState("Copy");
+  return (
+    <div
+      style={{
+        backgroundColor: "#010c18",
+      }}
+      className=" h-fit flex flex-col md:flex-row justify-between align-middle w-full md:h-fit border-blue-80 border-4 rounded-3xl items-center md:pr-6 creatorsModebuttonbg text-white py-[10px] mt-12 relative z-[999] home"
+    >
+      <h2
+        className=" md:0 m-5 w-full md:w-fit flex flex-row justify-center align-middle font-400 font-droidbold
+             text-white py-4 px-[14px] text-[25px] md:text-[25px] text-center md:border-r-blue-80 md:border-r-4 md:border-b-0 border-b-blue-80 border-b-2"
+      >
+        INVITE LINK
+      </h2>
+      <p className=" text-[14px] md:text-sm font-400 font-Archivo_Regular max-w-xs text-gray-400 ">{`${location.origin}?ref=${userDetails?.username}`}</p>
+      <button
+        style={{
+          background:
+            "linear-gradient(92.69deg, rgba(3, 36, 73, 0.45) 8.15%, rgba(11, 119, 240, 0.1) 99.96%)",
+        }}
+        className=" bg-blue-900 opacity-90 cursor-pointer flex gap-4 text-white font-Archivo-Bold border-blue-50 border rounded-xl py-[9.5px] px-[12px] h-fit z-[10000000000000000]"
+      >
+        <CopyToClipboard
+          text={`${location.origin}?ref=${userDetails?.username}`}
+          onCopy={() => setCopyState("Copied")}
+        >
+          <div className="flex">
+            <p className="mr-2">{copyState}</p>
+            <img className="cursor-pointer" src={copy} />
+          </div>
+        </CopyToClipboard>
+      </button>
+    </div>
+  );
+};
+
+const Stat = ({ userData, userDetails }: any) => {
+  const [data, setData]: any = useState();
+  const signer = useEthersSigner();
+  const provider = useEthersProvider();
+  const mmContract = new MinerContract(MINER_ADDRESS, signer, provider);
+
+  // useEffect(() => {
+  //   if (!userDetails.address) {
+  //     return;
+  //   }
+  //   (async () => {
+  //     let d = await getSCGames();
+  //     console.log(d);
+  //   })();
+  // }, [userDetails]);
+
+  const getSCGames = async () => {
+    const invites = await mmContract.getInvitesCount(userDetails.address);
+    const gamesCreated = await mmContract.getGamesCreated(userDetails.address);
+    const gamesPlayed = await mmContract.getGamesPlayed(userDetails.address);
+    const calculateRewards = await mmContract.getCalculateRewards(
+      userDetails.address
+    );
+    const claimableAmount = await mmContract.getClaimableAmount(
+      userDetails.address
+    );
+
+    return {
+      invites,
+      gamesCreated,
+      gamesPlayed,
+      claimableAmount,
+      calculateRewards,
+    };
+  };
+
+  const stats = getSCGames();
+
+  useEffect(() => {
+    if (!data)
+      (async () => {
+        setData(await stats);
+      })();
+  }, [stats]);
+
+  console.log(data);
+
+  console.log(data?.calculateRewards);
+  console.log(data?.claimableAmount);
+  console.log(data?.calculateRewards * 0.8 < data?.claimableAmount);
+
+  return (
+    <div className="flex flex-col 2xl:flex-row md:justify-between md:items-center md:align-middle w-full">
+      <div className="w-full border-4 rounded-3xl mt-12  py-4 md:mx-2 flex flex-col md:flex-row gap-8 border-blue-80 userProfileStat h-fit">
+        <h2
+          className=" flex flex-row justify-center items-center align-middle font-400 font-droidbold
+             text-white px-[20px] text-[25px] text-center md:border-r-blue-80 md:border-r-4 md:border-b-0 border-b-blue-80 border-b-2"
+        >
+          STATS
+        </h2>
+        <div className="flex flex-col md:flex-row px-[30px] gap-8">
+          <p className="flex flex-col items-center text-center  py-4">
+            <h2 className="font-400 font-Archivo-Bold text-[30px] text-white">
+              {data?.gamesPlayed}
+            </h2>
+            <p className="font-semibold font-Archivo_Regular text-wb-40">
+              {"Games played"}
+            </p>
+          </p>
+          <p className="flex flex-col items-center text-center py-4">
+            <h2 className="font-400 font-Archivo-Bold text-[30px] text-white">
+              {data?.gamesCreated}
+            </h2>
+            <p className="font-semibold font-Archivo_Regular text-wb-40">
+              Games Created
+            </p>
+          </p>
+          {/* <p className="flex flex-col items-center text-center py-4">
+            <h2 className="font-400 font-Archivo-Bold text-[30px] text-white">
+              4
+            </h2>
+            <p className="font-semibold font-Archivo_Regular text-wb-40">
+              Live Games
+            </p>
+          </p>
+          <p className="flex flex-col items-center text-center py-4">
+            <h2 className="font-400 font-Archivo-Bold text-[30px] text-white">
+              4
+            </h2>
+            <p className="font-semibold font-Archivo_Regular text-wb-40">
+              Pending Games
+            </p>
+          </p> */}
+          <p className="flex flex-col items-center text-center py-4">
+            <h2 className="font-400 font-Archivo-Bold text-[30px] text-white">
+              {data?.invites}
+            </h2>
+            <p className="font-semibold font-Archivo_Regular text-wb-40">
+              No of Invites
+            </p>
+          </p>
         </div>
       </div>
 
-      <button
-        className="cursor-pointer flex gap-4 text-white font-Archivo_Regular border-blue-50 border-2 rounded-2xl py-[9.5px] px-[12px] md:py-4 md:px-6 h-fit mt-auto z-[10000000000000000]"
-        onClick={() => {
-          switchModal();
-          switchModalcontent("editProfile");
-        }}
-      >
-        <img className="cursor-pointer" src={edit} />
-        <p>EDIT PROFILE</p>
-      </button>
-
-      {/* {editUser && } */}
-    </div>
-  );
-};
-
-const Mode = ({ creatorMode, setCreatorMode }: any) => {
-  return (
-    <div className="flex w-full h-[70px] md:h-24 border-blue-80 border-4 rounded-3xl items-center px-6 creatorsModebuttonbg text-white py-[10px] justify-between mt-12 relative z-[999] home">
-      <p className="font-Archivo_Regular md:text-[40px] leading-[17.41px] md:leading-normal font-normal ">
-        {creatorMode ? "CREATOR’S" : "PLAYER’S"} MODE
-      </p>
-      <button
-        className="h-full w-[64px] md:w-[128px] border-blue-80 rounded-[80px] p-2 border-2 creatorsModebutton"
-        onClick={() => {
-          setCreatorMode(!creatorMode);
-        }}
-        style={{
-          background: !creatorMode
-            ? "linear-gradient(130deg, rgba(3, 36, 73, 0.45) 0%, rgba(11, 119, 240, 0.10) 100%)"
-            : "linear-gradient(130deg, #063C7A, rgba(6, 60, 122, 1))",
-        }}
-      >
-        <div
-          className={` w-[24px] md:w-[48px] h-full rounded-[100%] ${
-            creatorMode ? "bg-blue-50" : "bg-black"
-          }`}
-          style={{
-            marginLeft: !creatorMode ? 0 : "55%",
-
-            transition: "all 0.5s",
-          }}
-        ></div>
-      </button>
-    </div>
-  );
-};
-
-const Stat = ({ stat, creatorMode, userData }: any) => {
-  console.log(stat);
-  return (
-    <div className="border-4 rounded-3xl  py-4 flex flex-col gap-8 border-blue-80 userProfileStat h-fit">
-      <h2
-        className=" font-400 font-droidbold
-             text-white py-4 px-[20px] text-[25px] text-center border-b-blue-80 border-b-4"
-      >
-        STATS
-      </h2>
-      <div className="flex flex-col px-[30px] gap-8">
-        <p className="flex flex-col items-center text-center  py-4">
-          <h2 className="font-400 font-Archivo-Bold text-[30px] text-white">
-            {userData && userData.length}
-          </h2>
-          <p className="font-semibold font-Archivo_Regular text-wb-40">
-            {creatorMode ? "Games Created" : "Games played"}
-          </p>
-        </p>
-        {/* <p className="flex flex-col items-center text-center py-4">
-          <h2 className="font-400 font-Archivo-Bold text-[30px] text-white">
-            4
-          </h2>
-          <p className="font-semibold font-Archivo_Regular text-wb-40">
-            Mission Completed
-          </p>
-        </p> */}
+      <div className="w-full border-4 rounded-3xl mt-12  py-4 md:mx-2 flex flex-col md:flex-row justify-between align-middle items-center gap-8 border-blue-80 userProfileStat md:h-40">
+        <h2
+          className="w-full md:w-auto font-400 font-droidbold
+             text-white py-4 px-[20px] text-[25px] text-center md:border-r-blue-80 md:border-r-4 md:border-b-0 border-b-blue-80 border-b-2"
+        >
+          mzr
+        </h2>
+        <div className=" w-full flex flex-col md:flex-row justify-between align-middle items-center px-[30px] gap-8">
+          <div className="flex flex-col justify-between align-middle items-center text-center">
+            <h2 className="font-Archivo_Regular text-[18px] text-gray-400">
+              Mining: {data?.claimableAmount}
+            </h2>
+            <div className="w-full px-[40px]">
+              <div className="w-full h-2 level mt-3  rounded-xl flex">
+                <div className="h-full w-full bg-blue-50 rounded-xl"></div>
+                <div className="h-full flex-1 flex items-center relative right-1">
+                  <img src={Ball} />
+                </div>
+              </div>
+            </div>
+          </div>
+          <button
+            disabled={data?.calculateRewards * 0.8 <= data?.claimableAmount}
+            onClick={async () => {
+              await mmContract.claimRewards();
+            }}
+            style={{
+              backgroundColor: `${
+                data?.calculateRewards * 0.8 <= data?.claimableAmount
+                  ? "#010C18"
+                  : ""
+              }`,
+              opacity: `${
+                data?.calculateRewards * 0.8 <= data?.claimableAmount
+                  ? "70%"
+                  : ""
+              }`,
+            }}
+            className="  flex gap-4 text-white font-Archivo-Bold border-blue-50 border rounded-xl py-[9px] px-[10px] md:py-4 md:px-6 h-fit mt-auto z-[10000000000000000]"
+          >
+            CLAIM
+          </button>
+        </div>
       </div>
     </div>
   );
 };
 
-const Level = () => {
+const Level = ({ userDetails, ranks }: any) => {
+  const [games, setGames]: any = useState();
+  const { switchModalcontent, switchModal } = useModalContext();
+
+  const getSingleGame = async (gameId: any, gameAcctId: any) => {
+    let myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${userDetails.token}`);
+
+    let requestOptions: RequestInit = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    try {
+      let res = await fetch(
+        `${
+          import.meta.env.VITE_REACT_APP_BASE_URL
+        }/api/game/fetch-single?gameid=${gameId}&accountId=${gameAcctId}`,
+        requestOptions
+      );
+      return res.json();
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
+  useEffect(() => {
+    if (!ranks) return;
+    (async () => {
+      const d = Promise.all(
+        ranks.map(async (rank: any) => {
+          let res = getSingleGame(rank.gameId, rank.gameAcctId);
+          return (await res).data;
+        })
+      );
+      setGames(await d);
+    })();
+  }, [ranks]);
+
   return (
     <div className="flex-1 border-blue-80 py-4 border-4 rounded-3xl userProfileStat ">
       <h2 className=" font-droidbold text-[32px] text-white py-4 text-center border-b-blue-80 border-b-4">
         ACHIEVEMENTS
       </h2>
-      <div>
-        <div className="flex justify-between px-[40px] mt-8">
-          <div className="flex text-wb-40 text-xl gap-2 items-center">
-            <div>
-              <img src={ranking} />
+      <div className="2xl:grid-cols-3 lg:grid-cols-2 grid-cols-1 grid  p-5">
+        {ranks &&
+          games &&
+          ranks.map((rank: any, i: number) => {
+            const game = games?.filter(
+              (game: any) => game?.id == rank?.gameId
+            )[0];
+
+            return (
+              <div key={i} className="flex flex-row justify-between mb-3">
+                <div
+                  style={{
+                    backgroundImage: `url(${game.image})`,
+                    backgroundPosition: "center",
+                    backgroundSize: "cover",
+                    backgroundRepeat: "no-repeat",
+                  }}
+                  className=" border-blue-80 border-4 rounded-3xl    flex items-center justify-center"
+                >
+                  <div
+                    className="flex flex-row justify-between align-middle items-center font-bold text-white text-2xl  w-[300px] lg:w-[380px]   p-5 z-50 bg-blue-800"
+                    style={{
+                      // background: 'linear-gradient(92.69deg, rgba(3, 36, 73, 0.45) 8.15%, rgba(11, 119, 240, 0.1) )',
+                      backgroundColor: "#021b38",
+                      marginTop: "155px",
+                      borderRadius: "0px 0px 17px 17px",
+                    }}
+                  >
+                    <div className=" w-[60%]  justify-between items-center font-black">
+                      <p className="z-50 truncate text-base text-gray-400">
+                        {game?.title}
+                      </p>
+                      <p className="text-gray-400 text-base flex flex-row">
+                        <p className="font-400 text-white mr-2">
+                          {rank?.position}th{" "}
+                        </p>
+                        Position
+                      </p>
+                    </div>
+
+                    {!rank.processedWinners ? (
+                      <button
+                        disabled={rank.claimed}
+                        className="cursor-pointer text-sm flex gap-4 text-white font-Archivo-Bold uppercase border-blue-50 border rounded-xl py-[8px] px-[8px] md:py-4 md:px-4 h-fit mt-auto z-[10000000000000000]"
+                        style={{
+                          backgroundColor: `${rank.claimed ? "#010C18" : ""}`,
+                          opacity: `${rank.claimed ? "70%" : ""}`,
+                        }}
+                      >
+                        Pending
+                      </button>
+                    ) : rank.rewardEarned != 2 ? (
+                      <button
+                        disabled={true}
+                        className="cursor-pointer text-sm flex gap-4 text-white font-Archivo-Bold uppercase border-blue-50 border rounded-xl py-[5px] px-[5px] md:py-3 md:px-4 h-fit mt-auto z-[10000000000000000]"
+                        style={{
+                          backgroundColor: `${rank.claimed ? "#010C18" : ""}`,
+                          opacity: `${rank.claimed ? "70%" : ""}`,
+                        }}
+                      >
+                        View Result
+                      </button>
+                    ) : (
+                      <button
+                        disabled={rank.claimed}
+                        onClick={async () => {
+                          localStorage.setItem(
+                            "claimGameAddr",
+                            JSON.stringify({
+                              game: game.address,
+                              accountId: rank.accountId,
+                              gameId: rank.gameAcctId,
+                              playersAddress: rank.playersAddress,
+                            })
+                          );
+                          switchModal();
+                          switchModalcontent("claim");
+                        }}
+                        className="cursor-pointer text-sm flex gap-4 text-white font-Archivo-Bold uppercase border-blue-50 border rounded-xl py-[8px] px-[8px] md:py-4 md:px-4 h-fit mt-auto z-[10000000000000000]"
+                        style={{
+                          backgroundColor: `${rank.claimed ? "#010C18" : ""}`,
+                          opacity: `${rank.claimed ? "70%" : ""}`,
+                        }}
+                      >
+                        {rank.claimed ? "claimed" : "Claim"}
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+
+        <div className=" border-blue-80 border-4 rounded-3xl  w-72 h-64 flex flex-col justify-center mb-3">
+          <div className="flex  flex-col justify-between px-[40px] mb-10">
+            <div className="flex text-wb-40 text-xl gap-2 items-center">
+              <div>
+                <img src={ranking} />
+              </div>
+              <p className="font-Archivo_Regular">Level 1</p>
             </div>
-            <p className="font-Archivo_Regular">Level 1</p>
+            <div className="flex text-white font-Archivo_Regular text-xl">
+              100/400 MP
+            </div>
           </div>
-          <div className="flex text-white font-Archivo_Regular text-xl">
-            100/400 MP
+          <div className="w-full px-[40px]">
+            <div className="w-full h-2 level mt-3  rounded-xl flex">
+              <div className="h-full w-1/4 bg-blue-50 rounded-xl"></div>
+              <div className="h-full flex-1 flex items-center relative right-1">
+                <img src={Ball} />
+              </div>
+            </div>
           </div>
         </div>
-        <div className="w-full px-[40px]">
-          <div className="w-full h-2 level mt-3  rounded-xl flex">
-            <div className="h-full w-1/4 bg-blue-50 rounded-xl"></div>
-            <div className="h-full flex-1 flex items-center relative right-1">
-              <img src={Ball} />
-            </div>
-          </div>
-        </div>
+      </div>
+    </div>
+  );
+};
+
+const CreatedGames = ({ userDetails, myGames }: any) => {
+  const [loading, setLoading] = useState(true);
+  const { switchModalcontent, switchModal } = useModalContext();
+
+  const [scGames, setscGames]: any = useState();
+  const signer = useEthersSigner();
+  const provider = useEthersProvider();
+  const mmContract = new MMContract(MM_ADDRESS, signer, provider);
+
+  useEffect(() => {
+    if (!myGames) {
+      return;
+      console.log(loading);
+    }
+    getSCGames();
+  }, [myGames]);
+
+  const getSCGames = async () => {
+    const d = Promise.all(
+      myGames.map(async (myGame: any) => {
+        return {
+          game: await mmContract.Games(myGame.address),
+          address: myGame.address,
+        };
+      })
+    );
+
+    setscGames(await d);
+    setLoading(false);
+  };
+
+  return (
+    <div className="flex-1 mt-12 border-blue-80 py-4 border-4 rounded-3xl userProfileStat ">
+      <h2 className=" font-droidbold text-[32px] text-white py-4 text-center border-b-blue-80 border-b-4">
+        GAMES CREATED
+      </h2>
+      <div className="2xl:grid-cols-3 lg:grid-cols-2 grid-cols-1 grid  p-5">
+        {myGames &&
+          myGames?.map((myGame: any, i: any) => {
+            const scGame = scGames?.filter(
+              (scGame: any) => scGame.address == myGame.address
+            )[0];
+
+            return (
+              <div key={i} className="flex flex-row justify-between mb-3">
+                <div
+                  style={{
+                    backgroundImage: `url(${myGame?.image})`,
+                    backgroundPosition: "center",
+                    backgroundSize: "cover",
+                    backgroundRepeat: "no-repeat",
+                  }}
+                  className=" border-blue-80 border-4 rounded-3xl     flex items-center justify-center"
+                >
+                  <div
+                    className="flex flex-row justify-between align-middle items-center font-bold text-white text-2xl w-[300px] lg:w-[380px]  p-5 z-50 bg-blue-800  "
+                    style={{
+                      backgroundColor: "#021b38",
+                      marginTop: "155px",
+                      borderRadius: "0px 0px 17px 17px",
+                    }}
+                  >
+                    <div className="flex flex-col w-[60%]  font-black">
+                      <p className="z-50 truncate text-base   text-left text-gray-400">
+                        {myGame.title}
+                      </p>
+                      <p className="text-gray-400 text-left text-base flex flex-row">
+                        <p className="font-400 text-white  mr-2">
+                          {myGame.finishers.length}
+                        </p>
+                        Players
+                      </p>
+                    </div>
+
+                    <div className="text-white flex items-center">
+                      {scGame?.game && scGame?.game[7].toString() == "0" ? (
+                        <button
+                          disabled={true}
+                          className="  text-sm flex  text-white font-Archivo-Bold uppercase border-blue-50 border rounded-xl py-[8px] px-[8px] md:py-4 md:px-4 h-fit mt-auto z-[10000000000000000]"
+                          style={{
+                            backgroundColor: `${
+                              myGame.paymentStatus ? "#010C18" : ""
+                            }`,
+                            opacity: ` "70%`,
+                          }}
+                        >
+                          0 gate Pass
+                        </button>
+                      ) : !myGame.processedWinners ? (
+                        "Pending"
+                      ) : (
+                        <div className="flex text-white text-[15px] lg:text-[32px] leading-[26.11px] items-center gap-3">
+                          <button
+                            disabled={myGame.paymentStatus}
+                            onClick={async () => {
+                              localStorage.setItem(
+                                "claimGameAddr",
+                                JSON.stringify({
+                                  game: myGame.id,
+                                  accountId: myGame.accountId,
+                                  address: myGame.address,
+                                  gameId: myGame.gameId,
+                                  playersAddress: userDetails.address,
+                                  creator: true,
+                                })
+                              );
+                              switchModal();
+                              switchModalcontent("claim");
+                            }}
+                            className="cursor-pointer text-sm flex  text-white font-Archivo-Bold uppercase border-blue-50 border rounded-xl py-[8px] px-[8px] md:py-4 md:px-4 h-fit mt-auto z-[10000000000000000]"
+                            style={{
+                              backgroundColor: `${
+                                myGame.paymentStatus ? "#010C18" : ""
+                              }`,
+                              opacity: `${myGame.paymentStatus ? "70%" : ""}`,
+                            }}
+                          >
+                            {myGame.paymentStatus ? "claimed" : "Claim"}
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
       </div>
     </div>
   );
