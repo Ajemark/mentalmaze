@@ -16,6 +16,7 @@ import ChallengerGames from "./ChallengerLayout/Pages/ChallengerGames";
 import ChallengerGame from "./ChallengerLayout/Pages/ChallengerGame";
 import Dashboard from "./ChallengerLayout/Pages/Dashboard";
 import SearchScreen from "./routes/Search/Search";
+import Maintainance from "./routes/Maintainance/Maintainance";
 
 function App() {
   const router = createBrowserRouter([
@@ -73,6 +74,10 @@ function App() {
         },
       ],
     },
+    {
+      path: "/maintainance",
+      element: <Maintainance />
+    }
     // {
     //   path: "/challenger",
     //   element: <ChallengerLayout />,

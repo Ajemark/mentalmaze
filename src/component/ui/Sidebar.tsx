@@ -1,6 +1,6 @@
 // import React from 'react'
 import nav1 from "./../../assets/sidebar/nav1.svg";
-// import nav2 from "./../../assets/sidebar/nav2.svg";
+import nav2 from "./../../assets/sidebar/nav2.svg";
 import nav3 from "./../../assets/sidebar/nav3.svg";
 import nav4 from "./../../assets/sidebar/nav4.svg";
 import discord from "./../../assets/sidebar/discord.svg";
@@ -12,7 +12,7 @@ import useQuery from "../../hooks/useQuery";
 import { AiOutlineClose } from "react-icons/ai";
 import { BsSearch } from "react-icons/bs";
 import useroctagon from "./../../assets/sidebar/useroctagon.svg";
-// import cup from "./../../assets/sidebar/mobile/cup.svg";
+import cup from "./../../assets/sidebar/mobile/cup.svg";
 import game from "./../../assets/sidebar/mobile/game.svg";
 // import notification from "./../../assets/sidebar/mobile/notification.svg";
 import create from "./../../assets/sidebar/mobile/create.svg";
@@ -190,7 +190,7 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
         {[
           { image: nav1, link: "/create-game", title: "Create Game" },
           { image: nav4, link: "/challenger", title: "Challenger" },
-          // { image: nav2, link: "/leaderboard", title: "leaderboard" },
+          { image: nav2, link: "/leaderboard", title: "leaderboard" },
           { image: nav3, link: "/", title: "Games" },
         ].map((src, i) => {
           if (
@@ -274,8 +274,8 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
             {[
               { image: game, path: "/", title: "Games" },
               { image: nav4, path: "/challenger", title: "Challenger" },
-              // { image: cup, path: "/leaderboard", title: "Leaderboard" },
-               { image: create, path: "/create-game", title: "Create game" },
+              { image: cup, path: "/leaderboard", title: "Leaderboard" },
+              { image: create, path: "/create-game", title: "Create game" },
               // { image: notification, path: "/", title: "Notification" },
             ].map((src, index) => {
               if (

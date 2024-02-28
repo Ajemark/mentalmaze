@@ -235,13 +235,15 @@ const Game = () => {
     } catch (error: any) {
       setLoading(false);
       console.log(error);
+      console.log(JSON.parse(JSON.stringify(error)).reason);
+
       if (
-        JSON.parse(JSON.stringify(error)).info.error.data.message.includes(
-          "insufficient funds"
+        JSON.parse(JSON.stringify(error)).reason.includes(
+          "Insufficient balance to pay pass from"
         )
       ) {
         setErrorMessage(
-          "You Do Not Have Enough ETH To Process This Transaction!"
+          "You Do Not Have Enough Aurora Tokens To Process This Transaction!"
         );
         return;
       }
@@ -280,6 +282,7 @@ const Game = () => {
   }, [game, playerData]);
 
   useEffect(() => {
+    console.log(questions);
     if (!questions || questions.length < 1) return;
     getQuestionTime(questions[curQuestion].id);
   }, [curQuestion, questions]);
@@ -444,7 +447,7 @@ const Game = () => {
   };
 
   // console.log(curQuestion)
-  // console.log(playerData)
+  console.log(playerData);
   // console.log(questions)
 
   console.log(game, loading, timeRemaining, scGame);
@@ -509,7 +512,7 @@ const Game = () => {
                         </p>
                       )}
                     </div>
-                    <div className="flex w-full mt-10 justify-center gap-[16px]">
+                    <div className="flex flex-wrap w-full mt-10 justify-center gap-[16px]">
                       {questions[curQuestion].options.map(
                         (option: any, index: any) => {
                           return (
@@ -531,7 +534,7 @@ const Game = () => {
 
                     <div className="mt-[48px] w-full flex">
                       <button
-                        className="w-full mx-auto bg-blue-50 text-white text-[15px] font-Archivo_Regular rounded-[16px] border-[2px]  w-[60%]  border-blue-main py-[16px]"
+                        className="w-full mx-auto bg-blue-50 text-white text-[15px] font-Archivo_Regular rounded-[16px] border-[2px]  lg:w-[60%]  border-blue-main py-[16px]"
                         onClick={() => handleAnswers(true)}
                       >
                         PROCEED
