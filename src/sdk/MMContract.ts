@@ -33,7 +33,10 @@ export class MMContract {
       tokenAddress
     );
     tx = await tx.wait();
-    return decode.decode(["address"], tx.logs[tx.logs.length - 1].data);
+    return {
+      addres: decode.decode(["address"], tx.logs[tx.logs.length - 1].data),
+      hash: tx.hash,
+    };
   }
   async approveGame(gameAddress: string) {
     let tx = await this.contract.approveGames(gameAddress);
