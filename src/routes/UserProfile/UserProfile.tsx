@@ -17,6 +17,7 @@ import {
   useEthersSigner,
 } from "../../sdk";
 import { MMContract, MinerContract } from "../../sdk/MMContract";
+import { formatEther } from "viem";
 
 const UserProfile = () => {
   const { userDetails }: any = useContext(UserContext);
@@ -97,7 +98,7 @@ const UserProfile = () => {
     <div className="backdrop-blur-sm w-full  relative px-[16px] md:px-[52px] mt-[96px] md:mt-[176px]">
       <ProfileHeader userDetails={userDetails} />
       <Link userDetails={userDetails} />
-      <Stat userData={{ ranks, myGames }} userDetails={userDetails} />
+      <Stat userDetails={userDetails} />
       <div className="flex mt-12 gap-[34px] flex-col md:flex-row w-full">
         <div className="w-full">
           <Level userDetails={userDetails} ranks={ranks} />
@@ -221,7 +222,7 @@ const Link = ({ userDetails }: any) => {
   );
 };
 
-const Stat = ({ userData, userDetails }: any) => {
+const Stat = ({ userDetails }: any) => {
   const [data, setData]: any = useState();
   const signer = useEthersSigner();
   const provider = useEthersProvider();
@@ -266,11 +267,11 @@ const Stat = ({ userData, userDetails }: any) => {
       })();
   }, [stats]);
 
-  console.log(data);
+  // console.log(data);
 
-  console.log(data?.calculateRewards);
-  console.log(data?.claimableAmount);
-  console.log(data?.calculateRewards * 0.8 < data?.claimableAmount);
+  // console.log(data?.calculateRewards);
+  // console.log(data?.claimableAmount);
+  // console.log(data?.calculateRewards * 0.8 < data?.claimableAmount);
 
   return (
     <div className="flex flex-col 2xl:flex-row md:justify-between md:items-center md:align-middle w-full">
@@ -335,7 +336,9 @@ const Stat = ({ userData, userDetails }: any) => {
         <div className=" w-full flex flex-col md:flex-row justify-between align-middle items-center px-[30px] gap-8">
           <div className="flex flex-col justify-between align-middle items-center text-center">
             <h2 className="font-Archivo_Regular text-[18px] text-gray-400">
-              Mining: {data?.claimableAmount}
+              Mining:{" "}
+              {data?.claimableAmount &&
+                Number(formatEther(data?.claimableAmount)).toFixed(5)}
             </h2>
             <div className="w-full px-[40px]">
               <div className="w-full h-2 level mt-3  rounded-xl flex">
