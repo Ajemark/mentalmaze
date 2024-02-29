@@ -578,6 +578,7 @@ const GameDetails = ({
               onChange={(e) => {
                 setQuestions((prev: any) => ({
                   ...prev,
+
                   answer: e.target.value.trim(),
                 }));
                 setCurQuestion((prev: any) => ({

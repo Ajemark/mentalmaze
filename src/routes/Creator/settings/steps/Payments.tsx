@@ -103,7 +103,7 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
             address: tx.address,
             txHash: tx.hash,
             isTestnet: `${
-              import.meta.env.VITE_REACT_NODE_ENV == "testnet" ? true : false
+              location.href.includes("game.mentalmaze.io") ? false : true
             }`,
           });
           setSendinTx(false);
@@ -132,7 +132,7 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
             address: tx.address,
             txHash: tx.hash,
             isTestnet: `${
-              import.meta.env.VITE_REACT_NODE_ENV == "testnet" ? true : false
+              location.href.includes("game.mentalmaze.io") ? false : true
             }`,
           });
           setSendinTx(false);

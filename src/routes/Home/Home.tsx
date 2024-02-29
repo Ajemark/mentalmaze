@@ -152,7 +152,7 @@ const Home = () => {
       `${
         import.meta.env.VITE_REACT_APP_BASE_URL
       }/api/game/fetch?pageNumber=${pgNum}&pageSize=10&filter=${
-        import.meta.env.VITE_REACT_NODE_ENV == "testnet" ? "testnet" : "All"
+        location.href.includes("game.mentalmaze.io") ? "All" : "testnet"
       }`,
       requestOptions
     )

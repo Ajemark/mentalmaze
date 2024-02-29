@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "../../../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import ReactLoading from "react-loading";
@@ -8,10 +8,6 @@ const Submit = () => {
   const { questionObj, userDetails }: any = useContext(UserContext);
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    setLoading(false);
-  }, []);
 
   const submitGameApplication = async () => {
     setLoading(true);
@@ -43,11 +39,6 @@ const Submit = () => {
       body: raw,
       redirect: "follow",
     };
-
-    console.log(raw);
-    // setLoading(false);
-
-    // return;
 
     await fetch(
       `${import.meta.env.VITE_REACT_APP_BASE_URL}/api/game/create`,
