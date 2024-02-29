@@ -2,9 +2,10 @@ import { useContext, useState } from "react";
 import Input from "../../../../component/ui/Input";
 import { HiMinus, HiPlus } from "react-icons/hi";
 import { UserContext } from "../../../../context/UserContext";
-import { MMContract } from "../../../../sdk/MMContract";
+import { MinerContract } from "../../../../sdk/MMContract";
 import {
   ERC20,
+  MINER_ADDRESS,
   MM_ADDRESS,
   useEthersProvider,
   useEthersSigner,
@@ -23,6 +24,7 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
     setQuestionObj,
     comments,
     setComments,
+    userDetails,
   }: any = useContext(UserContext);
   const { address } = useAccount();
 
@@ -63,9 +65,17 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
     return totalShare == gameToken;
   };
 
+  //   console.log(questionObj);
+
+  //   useEffect(() => {
+  //     setSendinTx(false);
+  //   }, []);
+
   const sendTx = async (data: any) => {
+    console.log(data);
     setSendinTx(true);
-    const mmContract = new MMContract(MM_ADDRESS, signer, provider);
+    // const mmContract = new MMContract(MM_ADDRESS, signer, provider);
+    const minerContract = new MinerContract(MINER_ADDRESS, signer, provider);
     const erc20Contract = new ERC20Contract(ERC20, signer, provider);
     try {
       const amount = parseEther(gameToken);
@@ -78,13 +88,19 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
       console.log(allowance);
 
       if (Number(allowance) >= Number(amount) * 1.2) {
-        const tx = await mmContract.createGame(data, ERC20);
+        const tx = await minerContract.createGame(
+          data,
+          ERC20,
+          MM_ADDRESS,
+          userDetails?.invitedBy ?? "0x0e4e0acb413b179d4102beb47f18d1c167c62fb3"
+        );
         if (tx) {
+          console.log(tx);
           setQuestionObj({
             ...data,
             amountDeposited: gameToken,
             rewardDistribution: priceShare,
-            address: tx.addres,
+            address: tx.address,
             txHash: tx.hash,
             isTestnet: `${
               location.href.includes("game.mentalmaze.io") ? false : true
@@ -101,13 +117,19 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
         (Number(amount) * 1.2).toString()
       );
       if (approved) {
-        const tx = await mmContract.createGame(data, ERC20);
+        const tx = await minerContract.createGame(
+          data,
+          ERC20,
+          MM_ADDRESS,
+          userDetails?.invitedBy ?? "0x0e4e0acb413b179d4102beb47f18d1c167c62fb3"
+        );
         if (tx) {
+          console.log(tx);
           setQuestionObj({
             ...data,
             amountDeposited: gameToken,
             rewardDistribution: priceShare,
-            address: tx.addres,
+            address: tx.address,
             txHash: tx.hash,
             isTestnet: `${
               location.href.includes("game.mentalmaze.io") ? false : true
@@ -121,6 +143,16 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
     } catch (error: any) {
       setSendinTx(false);
       console.log(error);
+      console.log(JSON.parse(JSON.stringify(error)).code);
+      if (JSON.parse(JSON.stringify(error)).code.includes("NETWORK_ERROR")) {
+        setErrorMessage("Connected to the wrong network");
+        return;
+      }
+      if (JSON.parse(JSON.stringify(error)).code.includes("ACTION_REJECTED")) {
+        setErrorMessage("User Rejected TX");
+        return;
+      }
+
       if (
         JSON.parse(JSON.stringify(error)).info.error.data.message.includes(
           "insufficient funds"
@@ -293,7 +325,7 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
                     durationInHours: Math.abs(questionObj.gameDuration),
                     managerContract: MM_ADDRESS,
                     playersCount: 0,
-                    totalQuestion: questionObj.questions.length,
+                    totalQuestion: questionObj.questions?.length,
                     paymentStatus: true,
                     approve: false,
                     creator: address,

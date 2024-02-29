@@ -10,8 +10,14 @@ import { useNavigate } from "react-router-dom";
 import { useModalContext } from "../../context/ModalContext";
 import { useAccount } from "wagmi";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { MM_ADDRESS, useEthersProvider, useEthersSigner } from "../../sdk";
-import { MMContract } from "../../sdk/MMContract";
+import {
+  MINER_ADDRESS,
+  MM_ADDRESS,
+  useEthersProvider,
+  useEthersSigner,
+} from "../../sdk";
+import { MMContract, MinerContract } from "../../sdk/MMContract";
+import { formatEther } from "viem";
 
 const UserProfile = () => {
   const { userDetails }: any = useContext(UserContext);
@@ -92,7 +98,7 @@ const UserProfile = () => {
     <div className="backdrop-blur-sm w-full  relative px-[16px] md:px-[52px] mt-[96px] md:mt-[176px]">
       <ProfileHeader userDetails={userDetails} />
       <Link userDetails={userDetails} />
-      <Stat userData={{ ranks, myGames }} />
+      <Stat userDetails={userDetails} />
       <div className="flex mt-12 gap-[34px] flex-col md:flex-row w-full">
         <div className="w-full">
           <Level userDetails={userDetails} ranks={ranks} />
@@ -186,11 +192,11 @@ const Link = ({ userDetails }: any) => {
       style={{
         backgroundColor: "#010c18",
       }}
-      className=" h-fit flex flex-col md:flex-row justify-between align-middle w-full md:h-fit border-blue-80 border-4 rounded-3xl items-center md:px-6 creatorsModebuttonbg text-white py-[10px] mt-12 relative z-[999] home"
+      className=" h-fit flex flex-col md:flex-row justify-between align-middle w-full md:h-fit border-blue-80 border-4 rounded-3xl items-center md:pr-6 creatorsModebuttonbg text-white py-[10px] mt-12 relative z-[999] home"
     >
       <h2
         className=" md:0 m-5 w-full md:w-fit flex flex-row justify-center align-middle font-400 font-droidbold
-             text-white py-4 px-[20px] text-[25px] md:text-[25px] text-center md:border-r-blue-80 md:border-r-4 md:border-b-0 border-b-blue-80 border-b-2"
+             text-white py-4 px-[14px] text-[25px] md:text-[25px] text-center md:border-r-blue-80 md:border-r-4 md:border-b-0 border-b-blue-80 border-b-2"
       >
         INVITE LINK
       </h2>
@@ -216,7 +222,57 @@ const Link = ({ userDetails }: any) => {
   );
 };
 
-const Stat = ({ userData }: any) => {
+const Stat = ({ userDetails }: any) => {
+  const [data, setData]: any = useState();
+  const signer = useEthersSigner();
+  const provider = useEthersProvider();
+  const mmContract = new MinerContract(MINER_ADDRESS, signer, provider);
+
+  // useEffect(() => {
+  //   if (!userDetails.address) {
+  //     return;
+  //   }
+  //   (async () => {
+  //     let d = await getSCGames();
+  //     console.log(d);
+  //   })();
+  // }, [userDetails]);
+
+  const getSCGames = async () => {
+    const invites = await mmContract.getInvitesCount(userDetails.address);
+    const gamesCreated = await mmContract.getGamesCreated(userDetails.address);
+    const gamesPlayed = await mmContract.getGamesPlayed(userDetails.address);
+    const calculateRewards = await mmContract.getCalculateRewards(
+      userDetails.address
+    );
+    const claimableAmount = await mmContract.getClaimableAmount(
+      userDetails.address
+    );
+
+    return {
+      invites,
+      gamesCreated,
+      gamesPlayed,
+      claimableAmount,
+      calculateRewards,
+    };
+  };
+
+  const stats = getSCGames();
+
+  useEffect(() => {
+    if (!data)
+      (async () => {
+        setData(await stats);
+      })();
+  }, [stats]);
+
+  // console.log(data);
+
+  // console.log(data?.calculateRewards);
+  // console.log(data?.claimableAmount);
+  // console.log(data?.calculateRewards * 0.8 < data?.claimableAmount);
+
   return (
     <div className="flex flex-col 2xl:flex-row md:justify-between md:items-center md:align-middle w-full">
       <div className="w-full border-4 rounded-3xl mt-12  py-4 md:mx-2 flex flex-col md:flex-row gap-8 border-blue-80 userProfileStat h-fit">
@@ -229,7 +285,7 @@ const Stat = ({ userData }: any) => {
         <div className="flex flex-col md:flex-row px-[30px] gap-8">
           <p className="flex flex-col items-center text-center  py-4">
             <h2 className="font-400 font-Archivo-Bold text-[30px] text-white">
-              {userData && userData.ranks?.length}
+              {data?.gamesPlayed}
             </h2>
             <p className="font-semibold font-Archivo_Regular text-wb-40">
               {"Games played"}
@@ -237,7 +293,7 @@ const Stat = ({ userData }: any) => {
           </p>
           <p className="flex flex-col items-center text-center py-4">
             <h2 className="font-400 font-Archivo-Bold text-[30px] text-white">
-              {userData && userData.myGames?.length}
+              {data?.gamesCreated}
             </h2>
             <p className="font-semibold font-Archivo_Regular text-wb-40">
               Games Created
@@ -261,7 +317,7 @@ const Stat = ({ userData }: any) => {
           </p> */}
           <p className="flex flex-col items-center text-center py-4">
             <h2 className="font-400 font-Archivo-Bold text-[30px] text-white">
-              0
+              {data?.invites}
             </h2>
             <p className="font-semibold font-Archivo_Regular text-wb-40">
               No of Invites
@@ -280,7 +336,9 @@ const Stat = ({ userData }: any) => {
         <div className=" w-full flex flex-col md:flex-row justify-between align-middle items-center px-[30px] gap-8">
           <div className="flex flex-col justify-between align-middle items-center text-center">
             <h2 className="font-Archivo_Regular text-[18px] text-gray-400">
-              Mining: 0.0
+              Mining:{" "}
+              {data?.claimableAmount &&
+                Number(formatEther(data?.claimableAmount)).toFixed(5)}
             </h2>
             <div className="w-full px-[40px]">
               <div className="w-full h-2 level mt-3  rounded-xl flex">
@@ -292,11 +350,23 @@ const Stat = ({ userData }: any) => {
             </div>
           </div>
           <button
-            style={{
-              background:
-                "linear-gradient(92.69deg, rgba(3, 36, 73, 0.45) 8.15%, rgba(11, 119, 240, 0.1) 99.96%)",
+            disabled={data?.calculateRewards * 0.8 <= data?.claimableAmount}
+            onClick={async () => {
+              await mmContract.claimRewards();
             }}
-            className="cursor-pointer flex gap-4 text-white font-Archivo-Bold border-blue-50 border rounded-xl py-[9px] px-[10px] md:py-4 md:px-6 h-fit mt-auto z-[10000000000000000]"
+            style={{
+              backgroundColor: `${
+                data?.calculateRewards * 0.8 <= data?.claimableAmount
+                  ? "#010C18"
+                  : ""
+              }`,
+              opacity: `${
+                data?.calculateRewards * 0.8 <= data?.claimableAmount
+                  ? "70%"
+                  : ""
+              }`,
+            }}
+            className="  flex gap-4 text-white font-Archivo-Bold border-blue-50 border rounded-xl py-[9px] px-[10px] md:py-4 md:px-6 h-fit mt-auto z-[10000000000000000]"
           >
             CLAIM
           </button>

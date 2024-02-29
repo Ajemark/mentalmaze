@@ -8,11 +8,12 @@ import { useNavigate } from "react-router-dom";
 import Timer from "./Timer";
 import {
   ERC20,
+  MINER_ADDRESS,
   MM_ADDRESS,
   useEthersProvider,
   useEthersSigner,
 } from "../../sdk";
-import { MMContract } from "../../sdk/MMContract";
+import { MMContract, MinerContract } from "../../sdk/MMContract";
 import { formatEther } from "viem";
 import { ERC20Contract } from "../../sdk/ERC20";
 // import { ethers, AbiCoder, parseEther } from "ethers";
@@ -157,6 +158,7 @@ const Game = () => {
   const signer = useEthersSigner();
   const provider = useEthersProvider();
   const mmContract = new MMContract(MM_ADDRESS, signer, provider);
+  const minerContract = new MinerContract(MINER_ADDRESS, signer, provider);
   const erc20Contract = new ERC20Contract(ERC20, signer, provider);
 
   const fetchSCGame = async () => {
@@ -185,23 +187,18 @@ const Game = () => {
 
   const payForPass = async (gatePassFee: any) => {
     const tx = await mmContract.playerGames(address as String, gameAddress);
-    console.log(tx);
+
     if (tx[0]) {
       getPlayerDetails();
       return;
     }
 
-    console.log(gatePassFee);
     if (scGame[1].toLowerCase() == address?.toLowerCase()) {
       setErrorMessage("Owners can`t play thier game!");
       return;
     }
 
     try {
-      console.log(scGame);
-      console.log(scGame[5]);
-      // return
-
       setLoading(true);
 
       const allowance = await erc20Contract.allowance(
@@ -210,7 +207,12 @@ const Game = () => {
       );
 
       if (Number(allowance) >= Number(gatePassFee)) {
-        const tx = await mmContract.gatePass(gameAddress, scGame[5]);
+        const tx = await minerContract.gatePass(
+          gameAddress,
+          scGame[5],
+          MM_ADDRESS,
+          userDetails?.invitedBy ?? "0x0e4e0acb413b179d4102beb47f18d1c167c62fb3"
+        );
         if (tx) {
           console.log(tx);
           setErrorMessage("Gate Pass Payed for, click `PLAY NOW` to play game");
@@ -224,7 +226,12 @@ const Game = () => {
         gatePassFee.toString()
       );
       if (approved) {
-        const tx = await mmContract.gatePass(gameAddress, scGame[5]);
+        const tx = await minerContract.gatePass(
+          gameAddress,
+          scGame[5],
+          MM_ADDRESS,
+          userDetails?.invitedBy ?? "0x0e4e0acb413b179d4102beb47f18d1c167c62fb3"
+        );
         if (tx) {
           console.log(tx);
           setErrorMessage("Gate Pass Payed for, click `PLAY NOW` to play game");
@@ -267,7 +274,7 @@ const Game = () => {
     if (played) navigate("/");
   }, [game]);
 
-  console.log(timeRemaining);
+  //console.log(timeRemaining);
 
   useEffect(() => {
     if (!game) return;

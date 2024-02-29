@@ -17,45 +17,45 @@ import logo from "./Logo.png";
 
 const queryClient = new QueryClient();
 
-const auroraChain = {
-  id: 1313161554,
-  name: "Aurora Mainnet",
-  network: "Aurora Mainnet",
+// const auroraChain = {
+//   id: 1313161554,
+//   name: "Aurora Mainnet",
+//   network: "Aurora Mainnet",
+//   iconBackground: "#fff",
+//   iconUrl: "https://explorer.testnet.aurora.dev/assets/network_icon.svg",
+//   nativeCurrency: {
+//     decimals: 18,
+//     name: "Ether",
+//     symbol: "ETH",
+//   },
+//   rpcUrls: {
+//     default: { http: ["https://mainnet.aurora.dev"] },
+//     public: { http: ["https://mainnet.aurora.dev"] },
+//   },
+//   blockExplorers: {
+//     default: { name: "Aurora Explorer", url: "https://explorer.aurora.dev" },
+//   },
+// };
+
+const auroraChainTestnet = {
+  id: 1313161555,
+  name: "Aurora",
+  network: "Aurora",
   iconBackground: "#fff",
   iconUrl: "https://explorer.testnet.aurora.dev/assets/network_icon.svg",
   nativeCurrency: {
     decimals: 18,
-    name: "Ether",
-    symbol: "ETH",
+    name: "Aurora",
+    symbol: "AUR",
   },
   rpcUrls: {
-    default: { http: ["https://mainnet.aurora.dev"] },
-    public: { http: ["https://mainnet.aurora.dev"] },
+    default: { http: ["https://testnet.aurora.dev"] },
+    public: { http: ["https://testnet.aurora.dev"] },
   },
   blockExplorers: {
     default: { name: "Aurora Explorer", url: "https://explorer.aurora.dev" },
   },
 };
-
-// const auroraChainTestnet = {
-//   id: 1313161555,
-//   name: "Aurora",
-//   network: "Aurora",
-//   iconBackground: "#fff",
-//   iconUrl: "https://explorer.testnet.aurora.dev/assets/network_icon.svg",
-//   nativeCurrency: {
-//     decimals: 18,
-//     name: "Aurora",
-//     symbol: "AUR",
-//   },
-//   rpcUrls: {
-//     default: { http: ["https://testnet.aurora.dev"] },
-//     public: { http: ["https://testnet.aurora.dev"] },
-//   },
-//   blockExplorers: {
-//     default: { name: "Aurora Explorer", url: "https://explorer.aurora.dev" },
-//   }
-// }
 
 const projectId = import.meta.env.VITE_REACT_APP_WALLET_CONNECT_PROJECT_ID;
 
@@ -67,7 +67,7 @@ const metadata: any = {
   icons: [logo],
 };
 
-const chains: any = [auroraChain];
+const chains: any = [auroraChainTestnet];
 
 const wagmiConfig = defaultWagmiConfig({
   chains,
@@ -76,7 +76,7 @@ const wagmiConfig = defaultWagmiConfig({
 });
 
 let options = {
-  defaultChain: auroraChain, // we can set it to make sure we are using Aurora mainnet by default
+  defaultChain: auroraChainTestnet, // we can set it to make sure we are using Aurora mainnet by default
   includeWalletIds: [
     "76260019aec5a3c44dd2421bf78e80f71a6c090d932c413a287193ed79450694", //AuroraPass
     "c57ca95b47569778a828d19178114f4db188b89b763c899ba0be274e97267d96", //Metamask
@@ -91,6 +91,14 @@ const MainLayout = () => {
   const { challenger } = useMode();
 
   let scriptAdded = false;
+
+  useEffect(() => {
+    console.log(location.search.split("=")[1]);
+    const link = decodeURI(location.search);
+    console.log(link);
+    if (!link) return;
+    sessionStorage.setItem("refId", link.split("=")[1]);
+  }, [location.href]);
 
   useEffect(() => {
     if (!scriptAdded) {
