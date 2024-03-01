@@ -54,8 +54,8 @@ const auroraChain = {
 //   },
 //   blockExplorers: {
 //     default: { name: "Aurora Explorer", url: "https://explorer.aurora.dev" },
-//   }
-// }
+//   },
+// };
 
 const projectId = import.meta.env.VITE_REACT_APP_WALLET_CONNECT_PROJECT_ID;
 
@@ -91,6 +91,14 @@ const MainLayout = () => {
   const { challenger } = useMode();
 
   let scriptAdded = false;
+
+  useEffect(() => {
+    console.log(location.search.split("=")[1]);
+    const link = decodeURI(location.search);
+    console.log(link);
+    if (!link) return;
+    sessionStorage.setItem("refId", link.split("=")[1]);
+  }, [location.href]);
 
   useEffect(() => {
     if (!scriptAdded) {

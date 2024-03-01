@@ -1,5 +1,93 @@
 import { ethers, AbiCoder, parseEther } from "ethers";
 
+export class MinerContract {
+  address: string;
+  signer: any;
+  provider: any;
+  contract: any;
+  contractWithProvider;
+  constructor(address: string, signer: any, provider: any) {
+    this.address = address;
+    this.signer = signer;
+    this.provider = provider;
+    this.contract = new ethers.Contract(this.address, MinerAbi, this.signer);
+    this.contractWithProvider = new ethers.Contract(
+      this.address,
+      MMAbi,
+      this.provider
+    );
+  }
+
+  async createGame(
+    data: any,
+    tokenAddress: any,
+    mazeAddress: any,
+    invitedBy: any
+  ) {
+    let decode = new AbiCoder();
+    const { amountDeposited, rewardDistribution, durationInHours, pass } = data;
+
+    let tx = await this.contract.createGame(
+      amountDeposited,
+      durationInHours,
+      rewardDistribution,
+      parseEther(pass),
+      tokenAddress,
+      mazeAddress,
+      invitedBy
+    );
+
+    tx = await tx.wait();
+    console.log(tx);
+    return {
+      hash: tx.hash,
+      address: decode.decode(["address"], tx.logs[tx.logs.length - 1].data),
+    };
+  }
+
+  async gatePass(
+    address: String,
+    tokenAddress: any,
+    mazerAddress: any,
+    invitedBy: any
+  ) {
+    const tx = await this.contract.playGame(
+      address,
+      tokenAddress,
+      mazerAddress,
+      invitedBy
+    );
+    await tx.wait();
+    return tx.toString();
+  }
+
+  async getInvitesCount(address: string) {
+    const tx = await this.contract.inviteCount(address);
+    return tx.toString();
+  }
+
+  async claimRewards() {
+    const tx = await this.contract.claimRewards();
+    return tx.toString();
+  }
+  async getCalculateRewards(address: string) {
+    const tx = await this.contract.calculateRewards(address);
+    return tx.toString();
+  }
+  async getGamesPlayed(address: string) {
+    const tx = await this.contract.gamesPlayed(address);
+    return tx.toString();
+  }
+  async getGamesCreated(address: string) {
+    const tx = await this.contract.gamesCreated(address);
+    return tx.toString();
+  }
+  async getClaimableAmount(address: string) {
+    const tx = await this.contract.claimableAmount(address);
+    return tx.toString();
+  }
+}
+
 export class MMContract {
   address: string;
   signer: any;
@@ -18,31 +106,64 @@ export class MMContract {
     );
   }
 
-  async createGame(data: any, tokenAddress: any) {
+  // async createGame(data: any, tokenAddress: any) {
+  //   let decode = new AbiCoder();
+  //   const { amountDeposited, rewardDistribution, durationInHours, pass } = data;
+
+  //   console.log(amountDeposited, rewardDistribution);
+  //   // return
+
+  //   let tx = await this.contract.createGame(
+  //     amountDeposited,
+  //     durationInHours,
+  //     rewardDistribution,
+  //     parseEther(pass),
+  //     tokenAddress
+  //   );
+  //   tx = await tx.wait();
+  //   return decode.decode(["address"], tx.logs[tx.logs.length - 1].data);
+  // }
+
+  async createGame(
+    data: any,
+    tokenAddress: any,
+    mazerAddress: any,
+    invitedBy: any
+  ) {
     let decode = new AbiCoder();
     const { amountDeposited, rewardDistribution, durationInHours, pass } = data;
 
-    console.log(amountDeposited, rewardDistribution);
-    // return
-
+    console.log({
+      data,
+      tokenAddress,
+      mazerAddress,
+      invitedBy,
+    });
+    // return;
     let tx = await this.contract.createGame(
       amountDeposited,
       durationInHours,
       rewardDistribution,
       parseEther(pass),
-      tokenAddress
+      tokenAddress,
+      mazerAddress,
+      invitedBy
     );
+
     tx = await tx.wait();
+    // console.log(tx);
     return {
-      addres: decode.decode(["address"], tx.logs[tx.logs.length - 1].data),
       hash: tx.hash,
+      address: decode.decode(["address"], tx.logs[tx.logs.length - 1].data),
     };
   }
+
   async approveGame(gameAddress: string) {
     let tx = await this.contract.approveGames(gameAddress);
     tx = await tx.wait();
     return tx;
   }
+
   async rejectGame(gameAddress: string) {
     let tx = await this.contract.rejectGames(gameAddress);
     tx = await tx.wait();
@@ -81,11 +202,27 @@ export class MMContract {
     return tx.toString();
   }
 
-  async gatePass(address: String, tokenAddress: any) {
-    const tx = await this.contract.gatePass(address, tokenAddress);
+  async gatePass(
+    address: String,
+    tokenAddress: any,
+    mazerAddress: any,
+    invitedBy: any
+  ) {
+    const tx = await this.contract.gatePass(
+      address,
+      tokenAddress,
+      mazerAddress,
+      invitedBy
+    );
     await tx.wait();
     return tx.toString();
   }
+
+  // async gatePass(address: String, tokenAddress: any) {
+  //   const tx = await this.contract.gatePass(address, tokenAddress);
+  //   await tx.wait();
+  //   return tx.toString();
+  // }
 
   async playerGames(userAddress: String, address: String) {
     const tx = await this.contract.playerGames(userAddress, address);
@@ -102,6 +239,699 @@ export class MMContract {
     return tx;
   }
 }
+
+const MinerAbi = [
+  {
+    inputs: [],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "spender",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "allowance",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "needed",
+        type: "uint256",
+      },
+    ],
+    name: "ERC20InsufficientAllowance",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "sender",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "balance",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "needed",
+        type: "uint256",
+      },
+    ],
+    name: "ERC20InsufficientBalance",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "approver",
+        type: "address",
+      },
+    ],
+    name: "ERC20InvalidApprover",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "receiver",
+        type: "address",
+      },
+    ],
+    name: "ERC20InvalidReceiver",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "sender",
+        type: "address",
+      },
+    ],
+    name: "ERC20InvalidSender",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "spender",
+        type: "address",
+      },
+    ],
+    name: "ERC20InvalidSpender",
+    type: "error",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "owner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "spender",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "value",
+        type: "uint256",
+      },
+    ],
+    name: "Approval",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "from",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "value",
+        type: "uint256",
+      },
+    ],
+    name: "Transfer",
+    type: "event",
+  },
+  {
+    inputs: [],
+    name: "CLAIM_INTERVAL",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "GAMES_PLAYED_REWARD",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "GAME_CREATED_REWARD",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "INVITE_REWARD",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "owner",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "spender",
+        type: "address",
+      },
+    ],
+    name: "allowance",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "allowedCaller",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "spender",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "value",
+        type: "uint256",
+      },
+    ],
+    name: "approve",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
+    ],
+    name: "balanceOf",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
+    ],
+    name: "calculateRewards",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "claimRewards",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
+    ],
+    name: "claimableAmount",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "amountDeposited",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "durationInHours",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256[]",
+        name: "rewardDistribution",
+        type: "uint256[]",
+      },
+      {
+        internalType: "uint256",
+        name: "pass",
+        type: "uint256",
+      },
+      {
+        internalType: "address",
+        name: "tokenAddress",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "mazeAddress",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "invitedBy",
+        type: "address",
+      },
+    ],
+    name: "createGame",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "decimals",
+    outputs: [
+      {
+        internalType: "uint8",
+        name: "",
+        type: "uint8",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "gamesCreated",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "gamesPlayed",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getRewardsPerSecond",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "inviteCount",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
+    ],
+    name: "inviteFriend",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "invitesMap",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "lastClaimTime",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "name",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "owner",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "gameAddress",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "tokenAddress",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "mazeAddress",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "invitedBy",
+        type: "address",
+      },
+    ],
+    name: "playGame",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "rewardsEarned",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_allowedCaller",
+        type: "address",
+      },
+    ],
+    name: "setAllowedCaller",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "symbol",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "totalEarned",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "totalSupply",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "value",
+        type: "uint256",
+      },
+    ],
+    name: "transfer",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "from",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "value",
+        type: "uint256",
+      },
+    ],
+    name: "transferFrom",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+];
 
 const MMAbi = [
   {
@@ -328,6 +1158,11 @@ const MMAbi = [
         name: "tokenAddress",
         type: "address",
       },
+      {
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
     ],
     name: "createGame",
     outputs: [
@@ -428,9 +1263,20 @@ const MMAbi = [
         name: "tokenAddress",
         type: "address",
       },
+      {
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
     ],
     name: "gatePass",
-    outputs: [],
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
     stateMutability: "payable",
     type: "function",
   },
@@ -706,6 +1552,19 @@ const MMAbi = [
       },
     ],
     name: "removeJudges",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_newAdminAddress",
+        type: "address",
+      },
+    ],
+    name: "setNewAdmin",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",

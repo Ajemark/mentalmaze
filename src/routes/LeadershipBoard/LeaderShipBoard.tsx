@@ -38,7 +38,7 @@ const LeaderShipBoard = () => {
     fetch(
       `${
         import.meta.env.VITE_REACT_APP_BASE_URL
-      }/api/Leaderboard/get-leader-board-by-mp-point?pageNumber=1&pageSize=50`,
+      }/api/Leaderboard/get-leader-board-by-mp-point?pageNumber=1&pageSize=100`,
       requestOptions
     )
       .then((response) => response.json())
@@ -62,14 +62,14 @@ const LeaderShipBoard = () => {
     setLoading(true);
     if (!userDetails.token) {
       setLeaderBoards();
+      console.log(loading);
       setLoading(false);
       return;
     }
     getLeaderBoards();
-    console.log(loading);
   }, [userDetails, address, isConnected]);
 
-  console.log(leaderBoards);
+  // console.log(leaderBoards);
   // console.log(userDetails)
 
   const DropDownComp = ({ text, current, id }: any) => {
@@ -128,8 +128,10 @@ const LeaderShipBoard = () => {
               <div className="flex items-start flex-col mt-2 px-[16px]">
                 {dropDownItem
                   .filter((item) => item.id !== current)
-                  .map((item) => (
-                    <DropDownComp {...item} current={false} />
+                  .map((item, i) => (
+                    <div key={i}>
+                      <DropDownComp {...item} current={false} />
+                    </div>
                   ))}
               </div>
             </div>

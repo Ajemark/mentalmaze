@@ -105,7 +105,7 @@ const GameDetails = ({
     const updatedOptions = curquestion.options
       ? [...curquestion.options]
       : ["", "", "", ""];
-    updatedOptions[index] = newValue;
+    updatedOptions[index] = newValue.trim();
     setQuestions({ ...questions, options: updatedOptions });
     setCurQuestion((prev: any) => ({ ...prev, options: updatedOptions }));
   };
@@ -578,11 +578,12 @@ const GameDetails = ({
               onChange={(e) => {
                 setQuestions((prev: any) => ({
                   ...prev,
-                  answer: e.target.value,
+
+                  answer: e.target.value.trim(),
                 }));
                 setCurQuestion((prev: any) => ({
                   ...prev,
-                  answer: e.target.value,
+                  answer: e.target.value.trim(),
                 }));
               }}
               value={curquestion?.answer ?? ""}

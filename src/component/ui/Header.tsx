@@ -10,7 +10,7 @@ import { UserContext } from "../../context/UserContext";
 import { toast } from "react-hot-toast";
 import Loading from "./Loading";
 import { useAccount } from "wagmi";
-import { CustomButton } from "./CustomConnectButton";
+import CustomButton from "./CustomConnectButton";
 
 const Header = () => {
   const { switchModal, switchModalcontent, switchSideMode } = useModalContext();
