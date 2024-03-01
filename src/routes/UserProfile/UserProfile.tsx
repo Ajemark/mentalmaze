@@ -10,6 +10,8 @@ import { useNavigate } from "react-router-dom";
 import { useModalContext } from "../../context/ModalContext";
 import { useAccount } from "wagmi";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+
+import ReactLoading from "react-loading";
 import {
   MINER_ADDRESS,
   MM_ADDRESS,
@@ -227,6 +229,7 @@ const Stat = ({ userDetails }: any) => {
   const signer = useEthersSigner();
   const provider = useEthersProvider();
   const mmContract = new MinerContract(MINER_ADDRESS, signer, provider);
+  const [claiming, setClaiming] = useState(false);
 
   // useEffect(() => {
   //   if (!userDetails.address) {
@@ -269,9 +272,11 @@ const Stat = ({ userDetails }: any) => {
 
   // console.log(data);
 
-  // console.log(data?.calculateRewards);
-  // console.log(data?.claimableAmount);
-  // console.log(data?.calculateRewards * 0.8 < data?.claimableAmount);
+  console.log(data?.calculateRewards);
+  console.log(data?.claimableAmount);
+  console.log(
+    data?.calculateRewards * 0.8 > Number(data?.claimableAmount ?? 0)
+  );
 
   return (
     <div className="flex flex-col 2xl:flex-row md:justify-between md:items-center md:align-middle w-full">
@@ -350,9 +355,19 @@ const Stat = ({ userDetails }: any) => {
             </div>
           </div>
           <button
-            disabled={data?.calculateRewards * 0.8 <= data?.claimableAmount}
+            disabled={
+              data?.calculateRewards * 0.8 >
+                Number(data?.claimableAmount ?? 0) || claiming
+            }
             onClick={async () => {
-              await mmContract.claimRewards();
+              try {
+                setClaiming(true);
+                await mmContract.claimRewards();
+                setClaiming(false);
+              } catch (error) {
+                setClaiming(false);
+                console.log(error);
+              }
             }}
             style={{
               backgroundColor: `${
@@ -366,9 +381,18 @@ const Stat = ({ userDetails }: any) => {
                   : ""
               }`,
             }}
-            className="  flex gap-4 text-white font-Archivo-Bold border-blue-50 border rounded-xl py-[9px] px-[10px] md:py-4 md:px-6 h-fit mt-auto z-[10000000000000000]"
+            className="  flex gap-2 text-white font-Archivo-Bold border-blue-50 border rounded-xl py-[7px] px-[8px] md:py-3 md:px-4 h-fit mt-auto z-[10000000000000000]"
           >
-            CLAIM
+            {claiming ? (
+              <ReactLoading
+                type="spin"
+                color="#0B77F0"
+                height={25}
+                width={25}
+              />
+            ) : (
+              "CLAIM"
+            )}
           </button>
         </div>
       </div>
