@@ -475,7 +475,7 @@ const Game = () => {
                   Total Reward : {scGame && formatEther(scGame[2].toString())}
                 </p>
                 <p className="p-2">
-                  Game Duration : {scGame && scGame[3].toString()} hours
+                  Game Duration : {scGame && scGame[3].toString()} minutes
                 </p>
               </div>
               <button
