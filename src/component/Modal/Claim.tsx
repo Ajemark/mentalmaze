@@ -121,6 +121,7 @@ const Claim = () => {
                       console.log(error);
                       let err = JSON.parse(JSON.stringify(error));
                       setErrorMessage(err.reason);
+                      updateGame();
                     }
                   }
                   // switchModal()
