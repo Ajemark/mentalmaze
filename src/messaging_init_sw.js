@@ -1,5 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken } from "firebase/messaging";
+import { getFirestore, doc, setDoc, addDoc, collection } from "firebase/firestore"
+
 
 const firebaseConfig = {
     apiKey: "AIzaSyAmqVLbfJrOw6mCNfnhvRECYLqvjY0YxHQ",
@@ -10,12 +12,11 @@ const firebaseConfig = {
     appId: "1:248494673484:web:591b0c6fe2fd280451aee9"
 };
 
-
-
 function requestPermission() {
     console.log('Requesting permission...');
     Notification.requestPermission().then((permission) => {
         if (permission === 'granted') {
+            console.log(firebaseConfig)
             console.log('Notification permission granted.');
             const app = initializeApp(firebaseConfig);
             const messaging = getMessaging(app);
@@ -23,6 +24,7 @@ function requestPermission() {
                 .then((currentToken) => {
                     if (currentToken) {
                         console.log("currentToken", currentToken);
+                        localStorage.setItem("fcmToken", currentToken)
                     } else {
                         console.log("Cannot find token")
                     }
@@ -30,6 +32,16 @@ function requestPermission() {
         } else {
             console.log("You dont have the permission")
         }
+    });
+}
+
+const app = initializeApp(firebaseConfig)
+const db = getFirestore(app);
+
+const fcmToken = localStorage.getItem('fcmToken');
+if (fcmToken) {
+    await setDoc(doc(db, "mental-maze-notification", "userMessagingToken"), {
+        token: fcmToken,
     });
 }
 
