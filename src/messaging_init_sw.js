@@ -23,7 +23,6 @@ function requestPermission() {
             getToken(messaging, { vapidKey: 'BDq-_mdZg2OwFSykWMpFLYXP9UdMgR63Zj7yvnmg_67eYPD1YJxUct1JNgA1VJlBT8c2LA3r3yy0i7PEWo7aNbo' })
                 .then((currentToken) => {
                     if (currentToken) {
-                        console.log("currentToken", currentToken);
                         localStorage.setItem("fcmToken", currentToken)
                     } else {
                         console.log("Cannot find token")
@@ -41,6 +40,7 @@ const db = getFirestore(app);
 const setFcmToken = async () => {
     const fcmToken = localStorage.getItem('fcmToken');
     if (fcmToken) {
+        console.log("currentToken to be stored", fcmToken);
         await setDoc(doc(db, "mental-maze-notification", "userMessagingToken"), {
             token: fcmToken,
         });
