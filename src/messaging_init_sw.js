@@ -38,11 +38,14 @@ function requestPermission() {
 const app = initializeApp(firebaseConfig)
 const db = getFirestore(app);
 
-const fcmToken = localStorage.getItem('fcmToken');
-if (fcmToken) {
-    await setDoc(doc(db, "mental-maze-notification", "userMessagingToken"), {
-        token: fcmToken,
-    });
-}
+const setFcmToken = async () => {
+    const fcmToken = localStorage.getItem('fcmToken');
+    if (fcmToken) {
+        await setDoc(doc(db, "mental-maze-notification", "userMessagingToken"), {
+            token: fcmToken,
+        });
+    }
+};
 
+setFcmToken();
 requestPermission();
