@@ -22,6 +22,7 @@ const Game = () => {
   const [loading, setLoading] = useState(false);
   const [gatePass, setGatePass] = useState(false);
   const [game, setGame]: any = useState();
+  const [gameInfo, setGameInfo]: any = useState();
   const [scGame, setScGame]: any = useState();
   const [curQuestion, setCurQuestion]: any = useState(0);
   const [selected, setSelected]: any = useState();
@@ -259,10 +260,15 @@ const Game = () => {
   };
 
   useEffect(() => {
+    // console.log(JSON.parse(window.atob(location.search.split("?data=")[1])));
     setLoading(true);
     if (!gameAddress) {
       const data = JSON.parse(window.atob(location.search.split("?data=")[1]));
       setGameAddress(data.gameAddress);
+      setGameInfo({
+        endAt: data.endAt,
+        rewardDistribution: data.rewardDistribution,
+      });
     }
 
     if (!game) return;
@@ -459,6 +465,7 @@ const Game = () => {
 
   console.log(game, loading, timeRemaining, scGame);
 
+  console.log(Date);
   return (
     <div>
       {loading || !scGame ? (
@@ -472,11 +479,10 @@ const Game = () => {
                   Gate Pass : {scGame && formatEther(scGame[7].toString())}
                 </p>
                 <p className="p-2">
-                  Total Reward : {scGame && formatEther(scGame[2].toString())}
+                  Total Reward : {scGame && formatEther(scGame[2].toString())} ~{" "}
+                  {gameInfo?.rewardDistribution?.length} Winner(s)
                 </p>
-                <p className="p-2">
-                  Game Duration : {scGame && scGame[3].toString()} minutes
-                </p>
+                <p className="p-2">Ends In: {gameInfo?.endAt} Minutes(s)</p>
               </div>
               <button
                 onClick={() => {
