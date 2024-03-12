@@ -225,7 +225,7 @@ const GameDetails = ({
         <p className="mt-[50px] text-white mb-[10px]">
           What level do you want to set up?
         </p>
-        <div className="text-white flex w-full justify-between items-center gap-1.5 text-center">
+        <div className="text-white flex w-full justify-between items-center gap-1.5  text-center">
           <button
             style={{
               backgroundColor: `#${

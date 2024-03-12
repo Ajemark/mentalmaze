@@ -8,7 +8,6 @@ import { useContext } from "react";
 
 const GameRequirement = () => {
   const { questionObj }: any = useContext(UserContext);
-  console.log(questionObj)
   const navigate = useNavigate()
   const no = false
   // const dummy = () => {

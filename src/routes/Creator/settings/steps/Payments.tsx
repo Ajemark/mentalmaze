@@ -218,7 +218,7 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
                   <HiPlus /> Add more runner Up
                 </button>
               </div>
-              <div className="flex w-full justify-between items-center gap-[16px] text-blue-50 mt-[30px] flex-wrap">
+              <div className="flex w-full justify-between items-center gap-[16px] text-blue-50 mt-[30px] flex-wrap ">
                 {priceShare.map((ele: any, i: number) => {
                   return (
                     <label key={i} className="flex-1" htmlFor="">
