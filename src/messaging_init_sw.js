@@ -41,7 +41,7 @@ const setFcmToken = async () => {
     const fcmToken = localStorage.getItem('fcmToken');
     if (fcmToken) {
         console.log("currentToken to be stored", fcmToken);
-        await setDoc(doc(db, "mental-maze-notification", "userMessagingToken"), {
+        await setDoc(doc(db, "mental-maze-notification", fcmToken), {
             token: fcmToken,
         });
     }
