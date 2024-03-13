@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken } from "firebase/messaging";
 import { getFirestore, doc, setDoc, addDoc, collection } from "firebase/firestore"
+import { isSupported } from 'firebase/messaging';
 
 
 const firebaseConfig = {
@@ -16,7 +17,6 @@ function requestPermission() {
     console.log('Requesting permission...');
     Notification.requestPermission().then((permission) => {
         if (permission === 'granted') {
-            console.log(firebaseConfig)
             console.log('Notification permission granted.');
             const app = initializeApp(firebaseConfig);
             const messaging = getMessaging(app);
@@ -47,5 +47,15 @@ const setFcmToken = async () => {
     }
 };
 
+try {
+    if (isSupported()) {
+        requestPermission()
+    } else {
+        throw new Error('Firebase messaging is not supported');
+    }
+} catch (error) {
+    console.error('Error:', error.message);
+}
+
+
 setFcmToken();
-requestPermission();
