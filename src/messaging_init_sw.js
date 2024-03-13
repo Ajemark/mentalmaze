@@ -40,7 +40,7 @@ const db = getFirestore(app);
 const setFcmToken = async () => {
     const fcmToken = localStorage.getItem('fcmToken');
     if (fcmToken) {
-        console.log("currentToken stored", fcmToken);
+        console.log("currentToken to stored", fcmToken);
         await setDoc(doc(db, "mental-maze-notification", fcmToken), {
             token: fcmToken,
         });
