@@ -117,12 +117,9 @@ const GameDetails = ({
     questions: questionsArray,
     gameDuration: duration,
     description,
+    isPrivate: questionObj.isPrivate??false
   };
 
-  console.log(questionsArray);
-  console.log(curquestion);
-
-  console.log(curIndex);
 
   return (
     <div className="">
@@ -636,9 +633,10 @@ const GameDetails = ({
             onClick={() => {
               setErrorMessage({ message: "", where: "proceed" });
               console.log(data);
-              if (Object.entries(data).length == 6) {
+              if (Object.entries(data).length == 7) {
                 for (const index in Object.entries(data)) {
                   let object = Object.entries(data)[index];
+                  if(object[0]=="isPrivate")continue
                   if (object[1] == "" || !object[1]) {
                     setErrorMessage({
                       message:

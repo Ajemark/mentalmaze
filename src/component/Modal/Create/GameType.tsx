@@ -1,10 +1,13 @@
 import { useModalContext } from "../../../context/ModalContext"
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../../context/UserContext";
+import { useContext } from "react";
 
 
 const GameType = () => {
 	const navigate = useNavigate()
 	const { switchModal } = useModalContext()
+	const { setQuestionObj }: any = useContext(UserContext);
 
 	return (
 		<>
@@ -34,14 +37,15 @@ const GameType = () => {
 
 				</div>
 
-				<div className='flex mt-5 justify-center w-full opacity-[0.2]'>
+				<div className='flex mt-5 justify-center w-full'>
 					<div className=" p-[2px rounded-[8px] w-full p-[2px]" style={{
 						"background": "linear-gradient(90deg, #032449, #0B77F0)"
 					}} >
-						<button disabled className=" w-full text-white py-[16px] rounded-[8px] font-droid tracking-[0.2px] left-0" style={{
+						<button className=" w-full text-white py-[16px] rounded-[8px] font-droid tracking-[0.2px] left-0" style={{
 							"background": "linear-gradient(130deg, #032449 0%, #0B77F0 100%)",
 							"backdropFilter": "blur(4px)"
 						}} onClick={() => {
+							localStorage.setItem("gameType", 'private') 
 							switchModal()
 							navigate('/settings')
 						}}>

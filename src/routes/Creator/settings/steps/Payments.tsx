@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Input from "../../../../component/ui/Input";
 import { HiMinus, HiPlus } from "react-icons/hi";
 import { UserContext } from "../../../../context/UserContext";
@@ -67,9 +67,9 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
 
   //   console.log(questionObj);
 
-  //   useEffect(() => {
-  //     setSendinTx(false);
-  //   }, []);
+    useEffect(() => {
+      setSendinTx(false);
+    }, []);
 
   const sendTx = async (data: any) => {
     console.log(data);
@@ -166,6 +166,8 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
       setErrorMessage("An Error Occured, Please Try Again!");
     }
   };
+
+  console.log(questionObj)
 
   return (
     <div className="px-[16px] md:px-[48px]">
