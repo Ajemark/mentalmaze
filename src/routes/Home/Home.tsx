@@ -7,6 +7,7 @@ import { UserContext } from "../../context/UserContext";
 import ReactLoading from "react-loading";
 import { useAccount } from "wagmi";
 import { Pagination } from "../../component/ui/Pagination";
+import "../../messaging_init_sw";
 
 interface ItemType {
   id: number;

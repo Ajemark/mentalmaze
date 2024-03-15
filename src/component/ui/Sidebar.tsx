@@ -206,11 +206,11 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
       </div>
       <div className="flex flex-col gap-8 w-full ">
         {[
-          { image: discord, link: "https://discord.gg/8STEwMEu" },
-          { image: telegram, link: "https://t.me/official_mentalmaze" },
+          { image: discord, link: "https://discord.gg/bFBQNUa8" },
+          { image: telegram, link: "https://t.me/Official_MMaze" },
           {
             image: twitter,
-            link: "https://twitter.com/mazemental?s=11&t=meAljIy1rKjh6LjNVYwIFQ",
+            link: "https://x.com/official_mmaze?s=21&t=meAljIy1rKjh6LjNVYwIFQ",
           },
         ].map((src, index) => {
           return (

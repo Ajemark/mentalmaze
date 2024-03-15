@@ -225,7 +225,7 @@ const GameDetails = ({
         <p className="mt-[50px] text-white mb-[10px]">
           What level do you want to set up?
         </p>
-        <div className="text-white flex w-full justify-between items-center gap-6">
+        <div className="text-white flex w-full justify-between items-center gap-1.5  text-center">
           <button
             style={{
               backgroundColor: `#${
@@ -243,7 +243,7 @@ const GameDetails = ({
                 difficultyLevel: "Easy",
               }));
             }}
-            className={`hover:bg-[#0855AB] border-2 border-blue-main rounded-xl h-[70px] px-[30px] flex-1`}
+            className={`hover:bg-[#0855AB] border-2 border-blue-main rounded-xl h-[70px] px-[30px] w-1/3  flex-1`}
           >
             Easy
           </button>
@@ -261,7 +261,7 @@ const GameDetails = ({
               }));
               setQuestionObj({ ...questionObj, difficultyLevel: "Medium" });
             }}
-            className={`border-2 border-blue-main hover:bg-[#0855AB] rounded-xl h-[70px] px-[30px] flex-1`}
+            className={`border-2 border-blue-main hover:bg-[#0855AB] rounded-xl h-[70px] w-1/3 px-[20px] flex-1`}
           >
             Medium
           </button>
@@ -281,7 +281,7 @@ const GameDetails = ({
               }));
               setQuestionObj({ ...questionObj, difficultyLevel: "Difficult" });
             }}
-            className={`border-2 border-blue-main rounded-xl hover:bg-[#0855AB] h-[70px] px-[30px] flex-1`}
+            className={`border-2 border-blue-main rounded-xl hover:bg-[#0855AB] h-[70px] w-1/3 px-[20px] flex-1`}
           >
             Difficult
           </button>
@@ -437,7 +437,7 @@ const GameDetails = ({
               >
                 +{" "}
                 {typeQuestion
-                  ? "Upload Image Instaed"
+                  ? "Upload Image Instead"
                   : "Type question instead"}
               </button>
             </div>
