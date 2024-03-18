@@ -67,9 +67,9 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
 
   //   console.log(questionObj);
 
-    useEffect(() => {
-      setSendinTx(false);
-    }, []);
+  useEffect(() => {
+    setSendinTx(false);
+  }, []);
 
   const sendTx = async (data: any) => {
     console.log(data);
@@ -102,9 +102,8 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
             rewardDistribution: priceShare,
             address: tx.address,
             txHash: tx.hash,
-            isTestnet: `${
-              location.href.includes("game.mentalmaze.io") ? false : true
-            }`,
+            isTestnet: `${location.href.includes("game.mentalmaze.io") ? false : true
+              }`,
           });
           setSendinTx(false);
           handleClick(3);
@@ -131,9 +130,8 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
             rewardDistribution: priceShare,
             address: tx.address,
             txHash: tx.hash,
-            isTestnet: `${
-              location.href.includes("game.mentalmaze.io") ? false : true
-            }`,
+            isTestnet: `${location.href.includes("game.mentalmaze.io") ? false : true
+              }`,
           });
           setSendinTx(false);
           handleClick(3);
@@ -229,10 +227,10 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
                           (i + 1 == 1
                             ? "st"
                             : i + 1 == 1
-                            ? "nd"
-                            : i + 1 == 1
-                            ? "rd"
-                            : "th")}{" "}
+                              ? "nd"
+                              : i + 1 == 1
+                                ? "rd"
+                                : "th")}{" "}
                         - Position
                       </p>
                       <input
@@ -331,6 +329,8 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
                     paymentStatus: true,
                     approve: false,
                     creator: address,
+                    isPrivate: questionObj.isPrivate,
+                    accessCode: questionObj.accessCode,
                     pass,
                   };
 

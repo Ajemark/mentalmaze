@@ -27,6 +27,7 @@ const GameType = () => {
 							"background": "linear-gradient(130deg, #032449 0%, #0B77F0 100%)",
 							"backdropFilter": "blur(4px)"
 						}} onClick={() => {
+							localStorage.removeItem("gameType") 
 							switchModal()
 							navigate('/settings')
 						}}>

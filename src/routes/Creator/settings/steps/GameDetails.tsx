@@ -117,9 +117,11 @@ const GameDetails = ({
     questions: questionsArray,
     gameDuration: duration,
     description,
-    isPrivate: questionObj.isPrivate??false
+    isPrivate: localStorage.getItem('gameType') ? true : false,
+    accessCode: localStorage.getItem('accessCode') ?? 12345
   };
 
+  console.log(data)
 
   return (
     <div className="">
@@ -222,12 +224,11 @@ const GameDetails = ({
         <p className="mt-[50px] text-white mb-[10px]">
           What level do you want to set up?
         </p>
-        <div className="text-white flex w-full justify-between items-center gap-1.5  text-center">
+        <div className="text-white flex w-full justify-between items-center gap-6">
           <button
             style={{
-              backgroundColor: `#${
-                curquestion?.difficultyLevel == "Easy" ? "0855AB" : "0D0D0D"
-              }`,
+              backgroundColor: `#${curquestion?.difficultyLevel == "Easy" ? "0855AB" : "0D0D0D"
+                }`,
             }}
             onClick={() => {
               setQuestions({});
@@ -240,15 +241,14 @@ const GameDetails = ({
                 difficultyLevel: "Easy",
               }));
             }}
-            className={`hover:bg-[#0855AB] border-2 border-blue-main rounded-xl h-[70px] px-[30px] w-1/3  flex-1`}
+            className={`hover:bg-[#0855AB] border-2 border-blue-main rounded-xl h-[70px] px-[30px] flex-1`}
           >
             Easy
           </button>
           <button
             style={{
-              backgroundColor: `#${
-                curquestion?.difficultyLevel == "Medium" ? "0855AB" : "0D0D0D"
-              }`,
+              backgroundColor: `#${curquestion?.difficultyLevel == "Medium" ? "0855AB" : "0D0D0D"
+                }`,
             }}
             onClick={() => {
               setQuestions({});
@@ -258,17 +258,16 @@ const GameDetails = ({
               }));
               setQuestionObj({ ...questionObj, difficultyLevel: "Medium" });
             }}
-            className={`border-2 border-blue-main hover:bg-[#0855AB] rounded-xl h-[70px] w-1/3 px-[20px] flex-1`}
+            className={`border-2 border-blue-main hover:bg-[#0855AB] rounded-xl h-[70px] px-[30px] flex-1`}
           >
             Medium
           </button>
           <button
             style={{
-              backgroundColor: `#${
-                curquestion?.difficultyLevel == "Difficult"
-                  ? "0855AB"
-                  : "0D0D0D"
-              }`,
+              backgroundColor: `#${curquestion?.difficultyLevel == "Difficult"
+                ? "0855AB"
+                : "0D0D0D"
+                }`,
             }}
             onClick={() => {
               setQuestions({});
@@ -278,7 +277,7 @@ const GameDetails = ({
               }));
               setQuestionObj({ ...questionObj, difficultyLevel: "Difficult" });
             }}
-            className={`border-2 border-blue-main rounded-xl hover:bg-[#0855AB] h-[70px] w-1/3 px-[20px] flex-1`}
+            className={`border-2 border-blue-main rounded-xl hover:bg-[#0855AB] h-[70px] px-[30px] flex-1`}
           >
             Difficult
           </button>
@@ -302,11 +301,10 @@ const GameDetails = ({
                         setCurIndex(num - 1);
                         setCurQuestion(questionsArray[num - 1]);
                       }}
-                      className={` w-full h-full rounded-[10px] ${
-                        num == (curIndex + 1 || numbers.length)
-                          ? "bg-blue-100"
-                          : "bg-blue-70"
-                      }`}
+                      className={` w-full h-full rounded-[10px] ${num == (curIndex + 1 || numbers.length)
+                        ? "bg-blue-100"
+                        : "bg-blue-70"
+                        }`}
                     >
                       {num}
                     </button>
@@ -434,7 +432,7 @@ const GameDetails = ({
               >
                 +{" "}
                 {typeQuestion
-                  ? "Upload Image Instead"
+                  ? "Upload Image Instaed"
                   : "Type question instead"}
               </button>
             </div>
@@ -633,10 +631,11 @@ const GameDetails = ({
             onClick={() => {
               setErrorMessage({ message: "", where: "proceed" });
               console.log(data);
-              if (Object.entries(data).length == 7) {
+              if (Object.entries(data).length == 8) {
                 for (const index in Object.entries(data)) {
                   let object = Object.entries(data)[index];
-                  if(object[0]=="isPrivate")continue
+                  if (object[0] == "isPrivate") continue
+                  if (object[0] == "accessCode") continue
                   if (object[1] == "" || !object[1]) {
                     setErrorMessage({
                       message:

@@ -31,8 +31,14 @@ const Submit = () => {
       description: questionObj.description,
       txHash: questionObj.txHash,
       isTestnet: questionObj.isTestnet,
+      isPrivate: questionObj.isPrivate.toString(),
+      accessCode: questionObj.accessCode.toString()
     });
 
+
+    console.log(raw)
+    setLoading(false);
+    // return
     let requestOptions: RequestInit = {
       method: "POST",
       headers: myHeaders,
@@ -41,14 +47,17 @@ const Submit = () => {
     };
 
     await fetch(
-      `${import.meta.env.VITE_REACT_APP_BASE_URL}/api/game/create`,
+      `${import.meta.env.VITE_REACT_APP_BASE_URL}/api/game/${questionObj.isPrivate ? "create-private" : 'create'}`,
       requestOptions
     )
       .then((response) => response.json())
       .then((result) => {
         setLoading(false);
         console.log(result);
-        if (result.message == "success") navigate("/game-Requirement");
+        if (result.message == "success") {
+          localStorage.removeItem("gameType")
+          navigate("/game-Requirement");
+        }
       })
       .catch((error) => {
         console.log("error", error);
