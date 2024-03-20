@@ -16,11 +16,13 @@ import {
 import { MMContract, MinerContract } from "../../sdk/MMContract";
 import { formatEther } from "viem";
 import { ERC20Contract } from "../../sdk/ERC20";
-// import { ethers, AbiCoder, parseEther } from "ethers";
+import AccessID from "../../component/ui/AccessID";
 
 const Game = () => {
   const [loading, setLoading] = useState(false);
   const [gatePass, setGatePass] = useState(false);
+  const [isPrivate, setIsPrivate] = useState(false);
+  const [accessApproved, setAccessApproved] = useState(false);
   const [game, setGame]: any = useState();
   const [gameInfo, setGameInfo]: any = useState();
   const [scGame, setScGame]: any = useState();
@@ -34,6 +36,7 @@ const Game = () => {
   const [submitting, setSubmitting] = useState(false);
   const [questions, setQuestions]: any = useState();
   const [gameAddress, setGameAddress]: any = useState();
+  const [accessID, setAccessID]: any = useState();
 
   const { switchModalcontent, switchModal } = useModalContext();
 
@@ -170,7 +173,7 @@ const Game = () => {
   const _scGames = fetchSCGame();
 
   useEffect(() => {
-    if (!scGame)
+    if (!scGame && accessApproved)
       (async () => {
         setScGame(await _scGames);
         fetchPlayerGame();
@@ -260,7 +263,6 @@ const Game = () => {
   };
 
   useEffect(() => {
-    // console.log(JSON.parse(window.atob(location.search.split("?data=")[1])));
     setLoading(true);
     if (!gameAddress) {
       const data = JSON.parse(window.atob(location.search.split("?data=")[1]));
@@ -269,6 +271,10 @@ const Game = () => {
         endAt: data.endAt,
         rewardDistribution: data.rewardDistribution,
       });
+      if (Number(data.endAt) < 1)
+        setErrorMessage("Game Already Ended Or Not Yet Approved");
+      setIsPrivate(data.isPrivate);
+      setAccessID(data);
     }
 
     if (!game) return;
@@ -279,8 +285,6 @@ const Game = () => {
     }
     if (played) navigate("/");
   }, [game]);
-
-  //console.log(timeRemaining);
 
   useEffect(() => {
     if (!game) return;
@@ -295,7 +299,6 @@ const Game = () => {
   }, [game, playerData]);
 
   useEffect(() => {
-    console.log(questions);
     if (!questions || questions.length < 1) return;
     getQuestionTime(questions[curQuestion].id);
   }, [curQuestion, questions]);
@@ -432,8 +435,6 @@ const Game = () => {
       redirect: "follow",
     };
 
-    console.log(playerData);
-
     fetch(
       `${import.meta.env.VITE_REACT_APP_BASE_URL}/api/time/fetch-time?gameId=${
         game.id
@@ -458,17 +459,19 @@ const Game = () => {
         console.log("error", error);
       });
   };
+  console.log(gameInfo?.endAt);
 
-  // console.log(curQuestion)
-  console.log(playerData);
-  // console.log(questions)
-
-  console.log(game, loading, timeRemaining, scGame);
-
-  console.log(Date);
   return (
     <div>
-      {loading || !scGame ? (
+      {isPrivate && !accessApproved ? (
+        <div className="relative h-[78vh] md:mr-[52px]   rounded-[24px] mt-[96px] md:mt-[130px] px-[20px] ">
+          <AccessID
+            setAccessApproved={setAccessApproved}
+            setLoading={setLoading}
+            data={accessID}
+          />
+        </div>
+      ) : loading || !scGame ? (
         <Loading />
       ) : !gatePass ? (
         <div className="relative  md:mr-[52px] h-fit rounded-[24px] mt-[96px] md:mt-[130px] px-[20px] ">
@@ -482,12 +485,20 @@ const Game = () => {
                   Total Reward : {scGame && formatEther(scGame[2].toString())} ~{" "}
                   {gameInfo?.rewardDistribution?.length} Winner(s)
                 </p>
-                <p className="p-2">Ends In: {gameInfo?.endAt} Minutes(s)</p>
+                <p className="p-2">
+                  {Number(gameInfo.endAt) > 1
+                    ? " Ends In " + gameInfo?.endAt + " Minute(s)"
+                    : "Game Already Ended Or Not Yet Approved"}
+                </p>
               </div>
               <button
                 onClick={() => {
                   payForPass(scGame[7]);
                 }}
+                style={{
+                  opacity: `${Number(gameInfo.endAt) > 1 ? "1" : "0.6"}`,
+                }}
+                disabled={Number(gameInfo.endAt) < 1}
                 className="text-white mt-5 font-droid bg-[rgba(1,12,24,1)]  rounded-[8px] border border-[rgba(132,188,249,1)] p-2 px-5 "
               >
                 Play Now

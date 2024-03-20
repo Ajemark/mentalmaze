@@ -117,11 +117,11 @@ const GameDetails = ({
     questions: questionsArray,
     gameDuration: duration,
     description,
-    isPrivate: localStorage.getItem('gameType') ? true : false,
-    accessCode: localStorage.getItem('accessCode') ?? 12345
+    isPrivate: localStorage.getItem("gameType") ? true : false,
+    accessCode: localStorage.getItem("accessCode") ?? 12345,
   };
 
-  console.log(data)
+  console.log(data);
 
   return (
     <div className="">
@@ -227,8 +227,9 @@ const GameDetails = ({
         <div className="text-white flex w-full justify-between items-center gap-6">
           <button
             style={{
-              backgroundColor: `#${curquestion?.difficultyLevel == "Easy" ? "0855AB" : "0D0D0D"
-                }`,
+              backgroundColor: `#${
+                curquestion?.difficultyLevel == "Easy" ? "0855AB" : "0D0D0D"
+              }`,
             }}
             onClick={() => {
               setQuestions({});
@@ -247,8 +248,9 @@ const GameDetails = ({
           </button>
           <button
             style={{
-              backgroundColor: `#${curquestion?.difficultyLevel == "Medium" ? "0855AB" : "0D0D0D"
-                }`,
+              backgroundColor: `#${
+                curquestion?.difficultyLevel == "Medium" ? "0855AB" : "0D0D0D"
+              }`,
             }}
             onClick={() => {
               setQuestions({});
@@ -264,10 +266,11 @@ const GameDetails = ({
           </button>
           <button
             style={{
-              backgroundColor: `#${curquestion?.difficultyLevel == "Difficult"
-                ? "0855AB"
-                : "0D0D0D"
-                }`,
+              backgroundColor: `#${
+                curquestion?.difficultyLevel == "Difficult"
+                  ? "0855AB"
+                  : "0D0D0D"
+              }`,
             }}
             onClick={() => {
               setQuestions({});
@@ -301,10 +304,11 @@ const GameDetails = ({
                         setCurIndex(num - 1);
                         setCurQuestion(questionsArray[num - 1]);
                       }}
-                      className={` w-full h-full rounded-[10px] ${num == (curIndex + 1 || numbers.length)
-                        ? "bg-blue-100"
-                        : "bg-blue-70"
-                        }`}
+                      className={` w-full h-full rounded-[10px] ${
+                        num == (curIndex + 1 || numbers.length)
+                          ? "bg-blue-100"
+                          : "bg-blue-70"
+                      }`}
                     >
                       {num}
                     </button>
@@ -634,8 +638,8 @@ const GameDetails = ({
               if (Object.entries(data).length == 8) {
                 for (const index in Object.entries(data)) {
                   let object = Object.entries(data)[index];
-                  if (object[0] == "isPrivate") continue
-                  if (object[0] == "accessCode") continue
+                  if (object[0] == "isPrivate") continue;
+                  if (object[0] == "accessCode") continue;
                   if (object[1] == "" || !object[1]) {
                     setErrorMessage({
                       message:
@@ -647,6 +651,10 @@ const GameDetails = ({
                 }
                 setImages({});
                 setQuestionObj(data);
+                localStorage.getItem("gameType") ??
+                  localStorage.removeItem("gameType");
+                localStorage.getItem("accessCode") ??
+                  localStorage.removeItem("accessCode");
                 handleClick(2);
               } else
                 setErrorMessage({
