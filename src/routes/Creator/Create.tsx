@@ -37,8 +37,6 @@ const Game = ({
     })
   );
 
-  console.log(endAt, isPrivate);
-
   const gameUrl = "/game?data=" + data;
 
   return (
@@ -70,31 +68,34 @@ const Game = ({
               {title}
             </button>
           </div>
-          <div
-            className="w-fit h-fit p-[2px] rounded-[8px]"
-            style={{
-              background: "linear-gradient(#032449, #0B77F0)",
-            }}
-          >
-            <button
-              className="font-droid text-[20px] md:text-[10px] md:leading-[28.34px] text-white py-[10px] px-[16px] rounded-[5px] border-[2px]border-[#063C7A]"
+
+          {isPrivate && (
+            <div
+              className="w-fit h-fit p-[2px] rounded-[8px]"
               style={{
-                background: "black",
-                opacity: "0.8",
-                backdropFilter: "blur(4px)",
+                background: "linear-gradient(#032449, #0B77F0)",
               }}
             >
-              <CopyToClipboard
-                text={`${location.origin}${gameUrl}`}
-                onCopy={() => setCopyState("Copied")}
+              <button
+                className="font-droid text-[20px] md:text-[10px] md:leading-[28.34px] text-white py-[10px] px-[16px] rounded-[5px] border-[2px]border-[#063C7A]"
+                style={{
+                  background: "black",
+                  opacity: "0.8",
+                  backdropFilter: "blur(4px)",
+                }}
               >
-                <div className="flex">
-                  <p className="mr-2 font-droid text-white">{copyState}</p>
-                  <img className="cursor-pointer" src={copy} />
-                </div>
-              </CopyToClipboard>
-            </button>
-          </div>
+                <CopyToClipboard
+                  text={`${location.origin}${gameUrl}`}
+                  onCopy={() => setCopyState("Copied")}
+                >
+                  <div className="flex">
+                    <p className="mr-2 font-droid text-white">{copyState}</p>
+                    <img className="cursor-pointer" src={copy} />
+                  </div>
+                </CopyToClipboard>
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
