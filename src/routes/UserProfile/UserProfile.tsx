@@ -345,9 +345,9 @@ const Stat = ({ userDetails }: any) => {
               {data?.claimableAmount &&
                 Number(formatEther(data?.claimableAmount)).toFixed(5)}
             </h2>
-            <div className="w-full px-[40px]">
+            <div className="w-full ">
               <div className="w-full h-2 level mt-3  rounded-xl flex">
-                <div className="h-full w-full bg-blue-50 rounded-xl"></div>
+                <div className="h-full w-full border bg-blue-50 rounded-xl"></div>
                 <div className="h-full flex-1 flex items-center relative right-1">
                   <img src={Ball} />
                 </div>

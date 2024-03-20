@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Input from "../../../../component/ui/Input";
 import { HiMinus, HiPlus } from "react-icons/hi";
 import { UserContext } from "../../../../context/UserContext";
@@ -67,9 +67,9 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
 
   //   console.log(questionObj);
 
-  //   useEffect(() => {
-  //     setSendinTx(false);
-  //   }, []);
+  useEffect(() => {
+    setSendinTx(false);
+  }, []);
 
   const sendTx = async (data: any) => {
     console.log(data);
@@ -102,9 +102,8 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
             rewardDistribution: priceShare,
             address: tx.address,
             txHash: tx.hash,
-            isTestnet: `${
-              location.href.includes("game.mentalmaze.io") ? false : true
-            }`,
+            isTestnet: `${location.href.includes("game.mentalmaze.io") ? false : true
+              }`,
           });
           setSendinTx(false);
           handleClick(3);
@@ -131,9 +130,8 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
             rewardDistribution: priceShare,
             address: tx.address,
             txHash: tx.hash,
-            isTestnet: `${
-              location.href.includes("game.mentalmaze.io") ? false : true
-            }`,
+            isTestnet: `${location.href.includes("game.mentalmaze.io") ? false : true
+              }`,
           });
           setSendinTx(false);
           handleClick(3);
@@ -166,6 +164,8 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
       setErrorMessage("An Error Occured, Please Try Again!");
     }
   };
+
+  console.log(questionObj)
 
   return (
     <div className="px-[16px] md:px-[48px]">
@@ -218,7 +218,7 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
                   <HiPlus /> Add more runner Up
                 </button>
               </div>
-              <div className="flex w-full justify-between items-center gap-[16px] text-blue-50 mt-[30px]">
+              <div className="flex w-full justify-between items-center gap-[16px] text-blue-50 mt-[30px] flex-wrap ">
                 {priceShare.map((ele: any, i: number) => {
                   return (
                     <label key={i} className="flex-1" htmlFor="">
@@ -227,10 +227,10 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
                           (i + 1 == 1
                             ? "st"
                             : i + 1 == 1
-                            ? "nd"
-                            : i + 1 == 1
-                            ? "rd"
-                            : "th")}{" "}
+                              ? "nd"
+                              : i + 1 == 1
+                                ? "rd"
+                                : "th")}{" "}
                         - Position
                       </p>
                       <input
@@ -329,6 +329,8 @@ const Payments = ({ handleClick }: { handleClick: (int: number) => void }) => {
                     paymentStatus: true,
                     approve: false,
                     creator: address,
+                    isPrivate: questionObj.isPrivate,
+                    accessCode: questionObj.accessCode,
                     pass,
                   };
 

@@ -1560,6 +1560,19 @@ const MMAbi = [
     inputs: [
       {
         internalType: "address",
+        name: "_newAdminAddress",
+        type: "address",
+      },
+    ],
+    name: "setNewAdmin",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
         name: "",
         type: "address",
       },

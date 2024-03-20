@@ -117,12 +117,11 @@ const GameDetails = ({
     questions: questionsArray,
     gameDuration: duration,
     description,
+    isPrivate: localStorage.getItem("gameType") ? true : false,
+    accessCode: localStorage.getItem("accessCode") ?? 12345,
   };
 
-  console.log(questionsArray);
-  console.log(curquestion);
-
-  console.log(curIndex);
+  console.log(data);
 
   return (
     <div className="">
@@ -636,9 +635,11 @@ const GameDetails = ({
             onClick={() => {
               setErrorMessage({ message: "", where: "proceed" });
               console.log(data);
-              if (Object.entries(data).length == 6) {
+              if (Object.entries(data).length == 8) {
                 for (const index in Object.entries(data)) {
                   let object = Object.entries(data)[index];
+                  if (object[0] == "isPrivate") continue;
+                  if (object[0] == "accessCode") continue;
                   if (object[1] == "" || !object[1]) {
                     setErrorMessage({
                       message:
@@ -650,6 +651,10 @@ const GameDetails = ({
                 }
                 setImages({});
                 setQuestionObj(data);
+                localStorage.getItem("gameType") ??
+                  localStorage.removeItem("gameType");
+                localStorage.getItem("accessCode") ??
+                  localStorage.removeItem("accessCode");
                 handleClick(2);
               } else
                 setErrorMessage({

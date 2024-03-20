@@ -7,6 +7,7 @@ import { UserContext } from "../../context/UserContext";
 import ReactLoading from "react-loading";
 import { useAccount } from "wagmi";
 import { Pagination } from "../../component/ui/Pagination";
+import "../../messaging_init_sw";
 
 interface ItemType {
   id: number;
@@ -93,7 +94,15 @@ const TitleBar = () => {
   );
 };
 
-const Game = ({ image, id, accountId, gameAddress, finishers }: any) => {
+const Game = ({
+  image,
+  endAt,
+  rewardDistribution,
+  id,
+  accountId,
+  gameAddress,
+  finishers,
+}: any) => {
   const navigate = useNavigate();
   const { address } = useAccount();
 
@@ -103,8 +112,21 @@ const Game = ({ image, id, accountId, gameAddress, finishers }: any) => {
     if (played) break;
   }
 
+  const currentDate = new Date();
+  const futureDate = new Date(endAt);
+  const differenceInMilliseconds = Number(futureDate) - Number(currentDate);
+  const differenceInMinutes = Math.floor(
+    differenceInMilliseconds / (1000 * 60)
+  );
+
   const data = window.btoa(
-    JSON.stringify({ gameId: id, accountId, gameAddress })
+    JSON.stringify({
+      gameId: id,
+      accountId,
+      endAt: differenceInMinutes,
+      gameAddress,
+      rewardDistribution,
+    })
   );
 
   return (

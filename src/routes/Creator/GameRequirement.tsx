@@ -1,10 +1,13 @@
 // import React from 'react'
 
 import { useNavigate } from "react-router-dom"
+import { UserContext } from "../../context/UserContext";
+import { useContext } from "react";
 
 // import { useState } from "react"
 
 const GameRequirement = () => {
+  const { questionObj }: any = useContext(UserContext);
   const navigate = useNavigate()
   const no = false
   // const dummy = () => {
@@ -19,7 +22,7 @@ const GameRequirement = () => {
         To be sure, your game meets all of our <span className="text-blue-main">requirements</span>, we will have the judges go through the game. Once they have verified the authenticity of your game guess what? It will be live.
       </p>
       <p>
-        And if otherwise, you have nothing to worry about, your deposit of 3 Aurora Token, will be refunded to your wallet.
+        And if otherwise, you have nothing to worry about, your deposit of {questionObj.amountDeposited} Aurora Token, will be refunded to your wallet.
       </p>
       <p>
         If you need further assistance, do not hesitate to reach us on discord. Our response team, will be happy to answer any question you might have.

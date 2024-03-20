@@ -23,10 +23,8 @@ import Telegram from "./../../assets/sidebar/mobile/Telegram (2).svg";
 import Twitter from "./../../assets/sidebar/mobile/Twitter.svg";
 import { useContext, useEffect, useState } from "react";
 import useMode from "../../hooks/useMode";
-import { useAccount } from "wagmi";
+import { useAccount, useChainId, useChains, useSwitchChain } from "wagmi";
 import { UserContext } from "../../context/UserContext";
-// import { toast } from "react-hot-toast";
-// import { CustomButton } from "./CustomConnectButton";
 
 interface CompType {
   showSideMobile: boolean;
@@ -84,12 +82,7 @@ const NavItemMobile = (src: { link: string; title: string; image: string }) => {
     </div>
   );
 };
-// things to take note of
-// link settings page to create mode
-// make the progress bar clickable
-// chat us on discord
-// search box
-// user cant create game if they add a certain amount
+
 const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
   const { switchModal, switchModalcontent } = useModalContext();
   const {
@@ -101,8 +94,10 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
   }: any = useContext(UserContext);
 
   const { challenger } = useMode();
-  // const { chain } = useNetwork();
+  const chain = useChains();
+  const connectedChain = useChainId();
   const { address, isConnected } = useAccount();
+  const { chains, switchChain } = useSwitchChain();
 
   const getUserDetails = () => {
     setLoading(true);
@@ -143,9 +138,9 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
     const userData = localStorage.getItem("userData");
 
     if (isConnected) {
-      // if (chain?.unsupported) {
-      //   switchModalcontent("wrongnetwork");
-      // }
+      if (chain[0].id != connectedChain) {
+        switchChain({ chainId: chains[0].id });
+      }
       if (userData && JSON.parse(userData).username) {
         if (JSON.parse(userData).address != address?.toLowerCase()) {
           localStorage.removeItem("userData");
@@ -161,7 +156,7 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
     } else {
       switchModalcontent("connect");
     }
-  }, [address, isConnected, location.href]);
+  }, [address, isConnected, chain, location.href]);
 
   const gotToProfile = () => {
     if (!address) {
@@ -211,11 +206,11 @@ const Sidebar = ({ showSideMobile, switchSideMode }: CompType) => {
       </div>
       <div className="flex flex-col gap-8 w-full ">
         {[
-          { image: discord, link: "https://discord.gg/8STEwMEu" },
-          { image: telegram, link: "https://t.me/official_mentalmaze" },
+          { image: discord, link: "https://discord.gg/bFBQNUa8" },
+          { image: telegram, link: "https://t.me/Official_MMaze" },
           {
             image: twitter,
-            link: "https://twitter.com/mazemental?s=11&t=meAljIy1rKjh6LjNVYwIFQ",
+            link: "https://x.com/official_mmaze?s=21&t=meAljIy1rKjh6LjNVYwIFQ",
           },
         ].map((src, index) => {
           return (
