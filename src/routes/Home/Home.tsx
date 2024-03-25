@@ -112,18 +112,18 @@ const Game = ({
     if (played) break;
   }
 
-  const currentDate = new Date();
-  const futureDate = new Date(endAt);
-  const differenceInMilliseconds = Number(futureDate) - Number(currentDate);
-  const differenceInMinutes = Math.floor(
-    differenceInMilliseconds / (1000 * 60)
-  );
+  // const currentDate = new Date();
+  // const futureDate = new Date(endAt);
+  // const differenceInMilliseconds = Number(futureDate) - Number(currentDate);
+  // const differenceInMinutes = Math.floor(
+  //   differenceInMilliseconds / (1000 * 60)
+  // );
 
   const data = window.btoa(
     JSON.stringify({
       gameId: id,
       accountId,
-      endAt: differenceInMinutes,
+      endAt,
       gameAddress,
       rewardDistribution,
     })

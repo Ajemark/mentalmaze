@@ -53,12 +53,13 @@ const GameType = () => {
             }}
           >
             <button
+              disabled={true}
               className=" w-full text-white py-[16px] rounded-[8px] font-droid tracking-[0.2px] left-0"
               style={{
                 background: "linear-gradient(130deg, #032449 0%, #0B77F0 100%)",
                 backdropFilter: "blur(4px)",
               }}
-              onClick={() => {
+              onClick={() => { 
                 localStorage.setItem("gameType", "private");
                 setshowAccessCodeScreen(true);
               }}
@@ -70,8 +71,7 @@ const GameType = () => {
 
         <div className="flex flex-col gap-1 mt-[80px] font-Archivo_Regular font-normal text-[15px] md:text-[20px]">
           <p className="leading-[21.76px]   text-center">
-            “Private game” is a premium feature. to create a game for free,
-            click “Fall game”
+            “Private Games are games created only for a particular audience”
           </p>
         </div>
       </div>
