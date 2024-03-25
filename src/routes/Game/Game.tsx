@@ -2,6 +2,7 @@ import { AiOutlineClockCircle } from "react-icons/ai";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserContext";
 import Loading from "../../component/ui/Loading";
+import auroraLogo from "../../assets/Aurora-logo.png";
 import { useModalContext } from "../../context/ModalContext";
 import { useAccount } from "wagmi";
 import { useNavigate } from "react-router-dom";
@@ -17,6 +18,7 @@ import { MMContract, MinerContract } from "../../sdk/MMContract";
 import { formatEther } from "viem";
 import { ERC20Contract } from "../../sdk/ERC20";
 import AccessID from "../../component/ui/AccessID";
+import CountdownTimer from "./Countdown";
 
 const Game = () => {
   const [loading, setLoading] = useState(false);
@@ -173,7 +175,7 @@ const Game = () => {
   const _scGames = fetchSCGame();
 
   useEffect(() => {
-    if (!scGame && accessApproved)
+    if (!scGame && (!isPrivate || accessApproved))
       (async () => {
         setScGame(await _scGames);
         fetchPlayerGame();
@@ -261,6 +263,10 @@ const Game = () => {
       setErrorMessage("An Error Occured, Please Try Again!");
     }
   };
+
+  // useEffect(() => {
+  //   if (loading) setLoading(false);
+  // }, [loading]);
 
   useEffect(() => {
     setLoading(true);
@@ -476,19 +482,27 @@ const Game = () => {
       ) : !gatePass ? (
         <div className="relative  md:mr-[52px] h-fit rounded-[24px] mt-[96px] md:mt-[130px] px-[20px] ">
           <div className="w-full h-[78vh] flex justify-center items-center">
-            <div className="w-[350px] p-[24px] rounded-[8px] flex justify-center items-center flex-col h-[240px] bg-gradient-to-r from-[#032449] to-[#0B77F0]">
-              <div className="w-[300px] text-white h-[130px] rounded-[8px] bg-[rgba(0,0,0,0.52)]">
-                <p className="p-2">
+            <div className="w-[400px] p-[24px] rounded-[8px] flex justify-center items-center flex-col h-[240px] bg-gradient-to-r from-[#032449] to-[#0B77F0]">
+              <div className="w-[350px] text-white h-[130px] rounded-[8px] bg-[rgba(0,0,0,0.52)]">
+                <p className="p-2 flex items-center">
                   Gate Pass : {scGame && formatEther(scGame[7].toString())}
+                  <span>
+                    <img className="w-[15px]  ml-2" src={auroraLogo} alt="" />
+                  </span>{" "}
+                </p>
+                <p className="p-2 flex items-center">
+                  Total Reward : {scGame && formatEther(scGame[2].toString())}
+                  <span>
+                    <img className="w-[15px] mx-2" src={auroraLogo} alt="" />
+                  </span>
+                  ~ {gameInfo?.rewardDistribution?.length} Winner(s)
                 </p>
                 <p className="p-2">
-                  Total Reward : {scGame && formatEther(scGame[2].toString())} ~{" "}
-                  {gameInfo?.rewardDistribution?.length} Winner(s)
-                </p>
-                <p className="p-2">
-                  {Number(gameInfo.endAt) > 1
-                    ? " Ends In " + gameInfo?.endAt + " Minute(s)"
-                    : "Game Already Ended Or Not Yet Approved"}
+                  {gameInfo.endAt ? (
+                    <CountdownTimer targetDate={gameInfo.endAt} />
+                  ) : (
+                    "Game Already Ended Or Not Yet Approved"
+                  )}
                 </p>
               </div>
               <button

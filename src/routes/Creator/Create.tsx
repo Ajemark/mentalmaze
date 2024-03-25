@@ -17,20 +17,15 @@ const Game = ({
   id,
   address,
   endAt,
+  accessCode,
 }: any) => {
   const [copyState, setCopyState] = useState("Copy");
 
-  const currentDate = new Date();
-  const futureDate = new Date(endAt);
-  const differenceInMilliseconds = Number(futureDate) - Number(currentDate);
-  const differenceInMinutes = Math.floor(
-    differenceInMilliseconds / (1000 * 60)
-  );
   const data = window.btoa(
     JSON.stringify({
       gameId: id,
       accountId,
-      endAt: differenceInMinutes,
+      endAt,
       gameAddress: address,
       rewardDistribution,
       isPrivate,
@@ -85,7 +80,10 @@ const Game = ({
                 }}
               >
                 <CopyToClipboard
-                  text={`${location.origin}${gameUrl}`}
+                  text={JSON.stringify({
+                    link: `${location.origin}${gameUrl}`,
+                    accessCode,
+                  })}
                   onCopy={() => setCopyState("Copied")}
                 >
                   <div className="flex">
@@ -157,7 +155,7 @@ const Create = () => {
   }, [userDetails, address, isConnected]);
 
   console.log(games);
-  console.log(userDetails);
+  // console.log(userDetails);
 
   return loading ? (
     <Loading />
@@ -197,7 +195,6 @@ const Create = () => {
       </div>
 
       {games?.fetchRes.map((gam: any, index: number) => {
-        console.log(gam);
         return <Game key={index} {...gam} />;
       })}
     </div>
@@ -208,7 +205,7 @@ const Create = () => {
           <img src={create} />
         </div>
         <p className="font-Archivo_Regular text-[20px] leading-[21.76px] flex flex-col gap-2 text-center mb-[48px]">
-          You know what’s better than playing games created by{" "}
+          You know what`s better than playing games created by{" "}
           <span> others? Creating your own game for others to play.</span>
         </p>
         <button

@@ -40,7 +40,7 @@ const GenerateAccessID = ({ setshowAccessCodeScreen }: any) => {
                     disabled
                     value={accessCode}
                     placeholder="Enter Agent Access Code"
-                    className="font-[400]  font-Archivo_Regular w-full text-[15px] md:text-[20px] leading-[23.61px] py-[30px] text-[#8C8C8C] rounded-[16px] md:rounded-t-[16px] bg-blue-90  mx-auto text-center"
+                    className="font-[400]  font-Archivo_Regular w-full text-[15px] md:text-[20px] leading-[23.61px] py-[30px] text-[#ffffff] rounded-[16px] md:rounded-t-[16px] bg-blue-90  mx-auto text-center"
                   />
                   <div className="flex flex-col  font-Archivo_Regular font-normal">
                     <div className="flex gap-[15px]">
